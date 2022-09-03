@@ -1,4 +1,5 @@
-import { Box, Card, Title, Text, Stack, Group } from "@mantine/core";
+import { Box, Card, Title, Text, Stack, Group, ThemeIcon } from "@mantine/core";
+import { IconExternalLink } from "@tabler/icons";
 import { EmbedComponentType } from "./types";
 
 export const UrlEmbed: EmbedComponentType = ({
@@ -12,7 +13,7 @@ export const UrlEmbed: EmbedComponentType = ({
   return (
     <Box p="md" component="a" href={src} target="_blank">
       <Card withBorder p="md" radius="md">
-        <Group spacing="md" noWrap>
+        <Group spacing="lg" noWrap>
           {thumbnail && (
             <Box
               component="img"
@@ -21,13 +22,22 @@ export const UrlEmbed: EmbedComponentType = ({
               sx={{ objectFit: "contain", width: "100px" }}
             />
           )}
-          <Stack spacing="md">
+          <Stack spacing="sm">
             <Title size="h5">{heading[0]}</Title>
             {heading[1] && <Text size="sm">{heading[1]}</Text>}
             {src && (
-              <Text color="gray" size="sm">
-                {src}
-              </Text>
+              <Group noWrap spacing="sm">
+                <ThemeIcon
+                  color="gray"
+                  variant="outline"
+                  sx={{ border: "none" }}
+                >
+                  <IconExternalLink stroke={1.5} />
+                </ThemeIcon>
+                <Text color="gray" size="sm">
+                  {src}
+                </Text>
+              </Group>
             )}
           </Stack>
         </Group>
