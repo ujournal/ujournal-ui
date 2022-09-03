@@ -1,5 +1,5 @@
 import { Either, Option } from "@sniptt/monads";
-import { GetSiteResponse, LemmyHttp } from "lemmy-js-client";
+import { GetSiteResponse, LemmyHttp } from "ujournal-lemmy-js-client";
 
 /**
  * This contains serialized data, it needs to be deserialized before use.
