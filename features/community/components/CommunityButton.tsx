@@ -2,12 +2,17 @@ import React from "react";
 import { UnstyledButton, Group, Text, Avatar } from "@mantine/core";
 import { IconSpeakerphone } from "@tabler/icons";
 
-interface MainLinkProps {
+type CommunityButtonProps = {
   image?: string;
   label: string;
-}
+  weight?: number;
+};
 
-export const CommunityButton = ({ image, label }: MainLinkProps) => {
+export const CommunityButton = ({
+  image,
+  label,
+  weight,
+}: CommunityButtonProps) => {
   return (
     <UnstyledButton
       sx={(theme) => ({
@@ -42,6 +47,7 @@ export const CommunityButton = ({ image, label }: MainLinkProps) => {
             maxWidth: 160,
             overflow: "hidden",
           }}
+          weight={weight}
         >
           {label}
         </Text>

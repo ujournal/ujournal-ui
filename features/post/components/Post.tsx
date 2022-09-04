@@ -7,7 +7,6 @@ import {
   ActionIcon,
   Menu,
   Button,
-  ThemeIcon,
 } from "@mantine/core";
 import { FC } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -20,7 +19,6 @@ import {
   IconCaretDown,
   IconCaretUp,
   IconMessageCircle2,
-  IconArrowRight,
 } from "@tabler/icons";
 import { UserButton } from "features/user/components/UserButton";
 import { CommunityButton } from "features/community/components/CommunityButton";
@@ -30,6 +28,8 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { Rate } from "baza/components/Rate";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { useTranslation } from "react-i18next";
+import { intervalToDuration } from "date-fns";
 
 export const Post: FC<
   PostView & { showBody?: boolean; showToogleBodyButton?: boolean }
@@ -38,6 +38,7 @@ export const Post: FC<
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
   const markdown = useMarkdown();
+  const { t } = useTranslation();
 
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
@@ -54,8 +55,32 @@ export const Post: FC<
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
     >
-      <Group position="apart">
-        <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
+      <Group position="apart" mt="-xs">
+        <Group
+          noWrap
+          sx={{ flex: "1 1 0", flexGrow: "unset" }}
+          spacing="xs"
+          mx="-xs"
+        >
+          <CommunityButton
+            image={community.icon.match<string | undefined>({
+              some: (name) => name,
+              none: undefined,
+            })}
+            label={Some(community.title).match<string>({
+              some: (name) => name,
+              none: () => community.name,
+            })}
+            weight={600}
+          />
+          {/* <ThemeIcon
+            color="gray"
+            size="sm"
+            variant="outline"
+            sx={{ border: "none" }}
+          >
+            <IconArrowLeft />
+          </ThemeIcon> */}
           <UserButton
             image={creator.avatar.match<string | undefined>({
               some: (name) => name,
@@ -66,24 +91,15 @@ export const Post: FC<
               none: () => creator.name,
             })}
           />
-          <ThemeIcon
-            color="gray"
-            size="sm"
-            variant="outline"
-            sx={{ border: "none" }}
-          >
-            <IconArrowRight />
-          </ThemeIcon>
-          <CommunityButton
-            image={community.icon.match<string | undefined>({
-              some: (name) => name,
-              none: undefined,
+          <Text sx={{ whiteSpace: "nowrap" }} color="gray">
+            {t("intlRelativeTime", {
+              value:
+                (intervalToDuration({
+                  start: new Date(post.published),
+                  end: new Date(),
+                }).days || 0) * -1,
             })}
-            label={Some(community.title).match<string>({
-              some: (name) => name,
-              none: () => community.name,
-            })}
-          />
+          </Text>
         </Group>
 
         <Menu withinPortal position="bottom-end" shadow="sm">
@@ -103,7 +119,7 @@ export const Post: FC<
         </Menu>
       </Group>
 
-      <Group position="apart" mt="md" mb="md">
+      <Group position="apart" mt="xs" mb="md">
         <Title size="h3" weight={600}>
           {post.name}
         </Title>
@@ -184,6 +200,10 @@ export const Post: FC<
                 onClick={handleToggleShowBody}
                 fullWidth
                 mt="md"
+                size="xs"
+                sx={(theme) => ({
+                  backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+                })}
               >
                 {_showBody ? (
                   <IconCaretUp stroke={1.5} />
@@ -197,7 +217,12 @@ export const Post: FC<
         none: undefined,
       })}
 
-      <Group position="apart" mt={largerThanMd ? "lg" : "sm"}>
+      <Group
+        position="apart"
+        mt="xs"
+        ml="-xs"
+        mb={largerThanMd ? "-xs" : undefined}
+      >
         <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
           <Button
             leftIcon={<IconMessageCircle2 stroke={1.5} />}

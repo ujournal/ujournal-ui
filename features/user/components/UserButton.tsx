@@ -9,10 +9,11 @@ import { ForwardedRef } from "react";
 type UserButtonProps = {
   image?: string;
   label: string;
+  weight?: number;
 };
 
 export const UserButtonWithoutRef = (
-  { image, label }: UserButtonProps,
+  { image, label, weight }: UserButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
   return (
@@ -48,7 +49,7 @@ export const UserButtonWithoutRef = (
             maxWidth: 160,
             overflow: "hidden",
           }}
-          weight={600}
+          weight={weight}
         >
           {label}
         </Text>

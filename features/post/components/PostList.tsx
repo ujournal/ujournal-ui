@@ -1,6 +1,6 @@
-import { Box, Container, Loader, Stack } from "@mantine/core";
+import { Container, Loader, Stack } from "@mantine/core";
 import { Post } from "./Post";
-import { FC, useCallback } from "react";
+import { FC } from "react";
 import { usePosts } from "../hooks/usePosts";
 import { DataList } from "baza/components/DataList";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
