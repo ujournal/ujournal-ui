@@ -38,8 +38,9 @@ export const AppHeader: FC = () => {
       height={60}
       p="xs"
       sx={{
-        backgroundColor: "#fff",
-        borderColor: "#F3F2F2",
+        background: "linear-gradient(135deg, #7EC0FC 0%, #D9F6A4 100%)",
+        borderWidth: 0,
+        boxShadow: "inset 0 -1px 0 0 rgba(0, 0, 0, 0.05)",
       }}
     >
       <Group position="apart">
@@ -63,6 +64,11 @@ export const AppHeader: FC = () => {
               variant="subtle"
               component="a"
               leftIcon={<IconLogin stroke={1.5} />}
+              color="transparent"
+              sx={{
+                color: "#000",
+                "&:hover": { backgroundColor: "transparent" },
+              }}
             >
               Увійти
             </Button>

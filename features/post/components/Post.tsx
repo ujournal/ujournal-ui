@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import { intervalToDuration } from "date-fns";
 import { useMemo } from "react";
 import { getTodayInLocale } from "baza/utils/date";
+import { formatShortNum } from "baza/utils/number";
 
 export const Post: FC<
   PostView & { showBody?: boolean; showToogleBodyButton?: boolean }
@@ -236,12 +237,22 @@ export const Post: FC<
         mb={largerThanMd ? "-xs" : undefined}
       >
         <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
-          <Button
-            leftIcon={<IconMessageCircle2 stroke={1.5} />}
-            variant="subtle"
+          <Tooltip
+            label={t("number_of_comments", {
+              count: counts.comments,
+              formattedCount: counts.comments,
+            })}
           >
-            Коментувати
-          </Button>
+            <Button
+              leftIcon={<IconMessageCircle2 stroke={1.5} />}
+              variant="subtle"
+            >
+              {t("number_of_comments", {
+                count: counts.comments,
+                formattedCount: formatShortNum(counts.comments),
+              })}
+            </Button>
+          </Tooltip>
         </Group>
         <Rate count={counts.score} />
       </Group>
