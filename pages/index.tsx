@@ -6,26 +6,34 @@ import { LinksList } from "baza/components/LinksList";
 import { IconTrendingUp } from "@tabler/icons";
 import { useMemo } from "react";
 import { IconFlame } from "@tabler/icons";
+import { useTranslation } from "react-i18next";
+import { capitalize } from "lodash";
 
 const Home: SitePage = () => {
-  return <PostList />;
+  return (
+    <>
+      <PostList />
+    </>
+  );
 };
 
 const HomeNavbar = () => {
+  const { t } = useTranslation();
+
   const links = useMemo(
     () => [
       {
         url: "/?order=tranding",
-        label: "Популярне",
+        label: capitalize(t("hot")),
         icon: IconFlame,
       },
       {
         url: "/?order=active",
-        label: "Активні",
+        label: capitalize(t("active")),
         icon: IconTrendingUp,
       },
     ],
-    []
+    [t]
   );
 
   return (

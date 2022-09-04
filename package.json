@@ -22,6 +22,7 @@
     "@sniptt/monads": "^0.5.10",
     "@tabler/icons": "^1.92.0",
     "@tanstack/react-query": "^4.2.3",
+    "@u-wave/react-vimeo": "^0.9.8",
     "browser-cookies": "^1.2.0",
     "class-transformer": "^0.5.1",
     "date-fns": "^2.29.2",

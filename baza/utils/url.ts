@@ -1,22 +1,13 @@
-const imageRegex = /(http)?s?:?(\/\/[^"']*\.(?:jpg|jpeg|gif|png|svg|webp))/;
-const videoRegex = /(http)?s?:?(\/\/[^"']*\.(?:mp4|webm))/;
-const youtubeRegex =
-  /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-const twitterRegex =
-  /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/;
-
-export const isImage = (url: string) => {
-  return imageRegex.test(url);
+const mediaRegExps = {
+  image: /(http)?s?:?(\/\/[^"']*\.(?:jpg|jpeg|gif|png|svg|webp))/,
+  video: /(http)?s?:?(\/\/[^"']*\.(?:mp4|webm))/,
+  youtube:
+    /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/,
+  twitter: /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/,
+  vimeo:
+    /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/,
 };
 
-export const isVideo = (url: string) => {
-  return videoRegex.test(url);
-};
-
-export const isYouTube = (url: string) => {
-  return youtubeRegex.test(url);
-};
-
-export const isTwitter = (url: string) => {
-  return twitterRegex.test(url);
+export const isMedia = (media: keyof typeof mediaRegExps, url: string) => {
+  return mediaRegExps[media].test(url);
 };

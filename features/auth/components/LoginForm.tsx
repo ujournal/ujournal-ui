@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { useForm } from "@mantine/form";
 import { Button, Group, Stack, TextInput } from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import { capitalize } from "lodash";
 
 type Values = {
   usernameOrEmail: string;
@@ -17,6 +19,7 @@ export const LoginForm: FC<{
   },
   onSubmit,
 }) => {
+  const { t } = useTranslation();
   const form = useForm({
     initialValues: values,
   });
@@ -26,13 +29,13 @@ export const LoginForm: FC<{
       <Stack spacing="sm">
         <TextInput
           withAsterisk
-          label="Юзернейм або емеіл"
+          label={capitalize(t("email_or_username"))}
           {...form.getInputProps("usernameOrEmail")}
         />
 
         <TextInput
           withAsterisk
-          label="Пароль"
+          label={capitalize(t("password"))}
           {...form.getInputProps("password")}
         />
 

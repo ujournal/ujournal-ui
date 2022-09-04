@@ -7,6 +7,7 @@ import {
   ActionIcon,
   Menu,
   Button,
+  Tooltip,
 } from "@mantine/core";
 import { FC } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -30,6 +31,8 @@ import { Rate } from "baza/components/Rate";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
 import { intervalToDuration } from "date-fns";
+import { useMemo } from "react";
+import { getTodayInLocale } from "baza/utils/date";
 
 export const Post: FC<
   PostView & { showBody?: boolean; showToogleBodyButton?: boolean }
@@ -43,6 +46,15 @@ export const Post: FC<
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
   }, [_showBody]);
+
+  const daysAgo = useMemo(
+    () =>
+      intervalToDuration({
+        start: new Date(post.published),
+        end: new Date(),
+      }).days || 0,
+    [post]
+  );
 
   return (
     <Card
@@ -91,15 +103,15 @@ export const Post: FC<
               none: () => creator.name,
             })}
           />
-          <Text sx={{ whiteSpace: "nowrap" }} color="gray">
-            {t("intlRelativeTime", {
-              value:
-                (intervalToDuration({
-                  start: new Date(post.published),
-                  end: new Date(),
-                }).days || 0) * -1,
-            })}
-          </Text>
+          <Tooltip label={new Date(post.published).toLocaleString()}>
+            <Text sx={{ whiteSpace: "nowrap" }} color="gray">
+              {daysAgo > 0
+                ? t("intlRelativeTime", {
+                    value: daysAgo * -1,
+                  })
+                : getTodayInLocale()}
+            </Text>
+          </Tooltip>
         </Group>
 
         <Menu withinPortal position="bottom-end" shadow="sm">

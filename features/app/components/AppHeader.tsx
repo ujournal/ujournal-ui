@@ -38,7 +38,7 @@ export const AppHeader: FC = () => {
       height={60}
       p="xs"
       sx={{
-        backgroundColor: "#FFF",
+        backgroundColor: "#fff",
         borderColor: "#F3F2F2",
       }}
     >

@@ -1,24 +1,26 @@
 import { AspectRatio, Box } from "@mantine/core";
-import { FC } from "react";
-import { isImage, isTwitter, isYouTube } from "baza/utils/url";
+import { isMedia } from "baza/utils/url";
 import { UrlEmbed } from "./UrlEmbed";
 import { ImageEmbed } from "./ImageEmbed";
 import { TwitterEmbed } from "./TwitterEmbed";
 import { EmbedComponentType } from "./types";
 import { YouTubeEmbed } from "./YouTubeEmbed";
+import { VimeoEmbed } from "./VimeoEmbed";
 
 enum EmbedType {
   Default = "default",
   Image = "image",
   YouTube = "youtube",
   Twitter = "twitter",
+  Vimeo = "vimeo",
 }
 
 const typeToCheckFn = {
   [EmbedType.Default]: () => false,
-  [EmbedType.Image]: isImage,
-  [EmbedType.YouTube]: isYouTube,
-  [EmbedType.Twitter]: isTwitter,
+  [EmbedType.Image]: (url: string) => isMedia("image", url),
+  [EmbedType.YouTube]: (url: string) => isMedia("youtube", url),
+  [EmbedType.Twitter]: (url: string) => isMedia("twitter", url),
+  [EmbedType.Vimeo]: (url: string) => isMedia("vimeo", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -26,6 +28,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Image]: ImageEmbed,
   [EmbedType.YouTube]: YouTubeEmbed,
   [EmbedType.Twitter]: TwitterEmbed,
+  [EmbedType.Vimeo]: VimeoEmbed,
 };
 
 const typeToAspectRatio = {
@@ -33,6 +36,7 @@ const typeToAspectRatio = {
   [EmbedType.Image]: 4 / 3,
   [EmbedType.YouTube]: 16 / 9,
   [EmbedType.Twitter]: 4 / 3,
+  [EmbedType.Vimeo]: 16 / 9,
 };
 
 export const getTypeBySrc = (src: string) => {

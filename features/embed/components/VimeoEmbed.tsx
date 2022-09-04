@@ -1,21 +1,19 @@
+import { EmbedComponentType } from "./types";
+import Vimeo from "@u-wave/react-vimeo";
+import { useCallback, useMemo, useState } from "react";
 import { Box, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconPlayerPlay } from "@tabler/icons";
-import { useState } from "react";
-import { useCallback } from "react";
-import { useMemo } from "react";
-import YouTube from "react-youtube";
-import { EmbedComponentType } from "./types";
 
-const youtubeUrlRegExp =
-  /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+const vimeoUrlRegExp =
+  /(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:[a-zA-Z0-9_\-]+)?/i;
 
-export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
+export const VimeoEmbed: EmbedComponentType = ({ src, title }) => {
   const [showed, setShowed] = useState(false);
   const videoId = useMemo(() => {
-    const mathes = src.match(youtubeUrlRegExp);
+    const mathes = src.match(vimeoUrlRegExp);
 
     if (mathes && mathes.length > 0) {
-      return mathes[2];
+      return mathes[1];
     }
 
     return undefined;
@@ -30,7 +28,7 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
       <UnstyledButton onClick={toggleShowed} sx={{ position: "relative" }}>
         <Box
           component="img"
-          src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+          src={`https://vumbnail.com/${videoId}.jpg`}
           alt={title}
           sx={{
             objectFit: "cover",
@@ -55,17 +53,13 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
     );
   }
 
-  return (
-    <YouTube
-      videoId={videoId}
-      opts={{
-        width: "100%",
-        height: "100%",
-        playerVars: {
-          // https://developers.google.com/youtube/player_parameters
-          autoplay: 1,
-        },
-      }}
-    />
-  );
+  if (videoId) {
+    return (
+      <Box sx={{ "& > *": { width: "100%", height: "100%" } }}>
+        <Vimeo video={videoId} autoplay responsive />
+      </Box>
+    );
+  }
+
+  return <Box>Incorrect videoId</Box>;
 };
