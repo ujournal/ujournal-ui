@@ -1,4 +1,3 @@
-[submodule "lemmy-translations"]
-	path = lemmy-translations
+[submodule "translations"]
+	path = translations
 	url = https://github.com/lemmynet/lemmy-translations
-	branch = main
