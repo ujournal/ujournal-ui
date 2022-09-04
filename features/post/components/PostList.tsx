@@ -8,6 +8,7 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useMemo } from "react";
 import { flattenDepth, get, map } from "lodash";
 import { Center } from "@mantine/core";
+import { PostListLoader } from "./PostListLoader";
 
 export const PostList: FC = () => {
   const posts = usePosts();
@@ -41,6 +42,7 @@ export const PostList: FC = () => {
           itemComponent={Post}
           itemKey="post.id"
           itemProps={{ containerRef }}
+          loaderComponent={PostListLoader}
         />
         <Center ref={sentryRef}>
           {posts.isSuccess && posts.isFetching && <Loader />}

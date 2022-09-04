@@ -37,7 +37,7 @@ export const UserButtonWithoutRef = (
       >
         <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
           <Avatar src={image} radius="lg" size="sm">
-            <IconUser />
+            <IconUser stroke={1.5} />
           </Avatar>
 
           <Text

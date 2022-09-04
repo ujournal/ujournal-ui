@@ -28,68 +28,65 @@ export const UrlEmbed: EmbedComponentType = ({
       target="_blank"
       rel="norefferer"
       sx={{ display: "block" }}
+      p={smallerThanSm ? "xs" : "lg"}
     >
-      <Card p={smallerThanSm ? "xs" : "lg"} radius={0}>
-        <Group spacing="lg" noWrap={smallerThanSm ? undefined : true}>
-          {thumbnail ? (
-            <Box
-              component="img"
-              src={thumbnail}
-              alt={heading[0]}
-              sx={(theme) => ({
-                objectFit: "contain",
-                width: smallerThanSm ? "100%" : "100px",
-                height: smallerThanSm ? "100px" : undefined,
-                backgroundColor: "rgba(0,0,0,0.05)",
-                borderRadius: theme.radius.sm,
-              })}
-            />
-          ) : (
-            <AspectRatio
-              ratio={16 / 9}
-              sx={{
-                width: smallerThanSm ? "100%" : "100px",
-                height: smallerThanSm ? "100px" : undefined,
-              }}
-            >
-              <Box
-                sx={(theme) => ({
-                  backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
-                  borderRadius: theme.radius.sm,
-                })}
-              >
-                <ThemeIcon
-                  color="blue"
-                  variant="outline"
-                  sx={{ border: "none" }}
-                  size="xl"
+      <Stack spacing={"xs"}>
+        <Group spacing="lg" noWrap>
+          <Box
+            sx={{
+              minWidth: "20%",
+            }}
+          >
+            <AspectRatio ratio={16 / 9}>
+              {thumbnail ? (
+                <Box
+                  component="img"
+                  src={thumbnail}
+                  alt={heading[0]}
+                  sx={(theme) => ({
+                    objectFit: "cover",
+                    backgroundColor: "rgba(0,0,0,0.05)",
+                    borderRadius: theme.radius.sm,
+                  })}
+                />
+              ) : (
+                <Box
+                  sx={(theme) => ({
+                    backgroundColor: theme.colors.blue[1],
+                    borderRadius: theme.radius.sm,
+                  })}
                 >
-                  <IconLink stroke={1.5} />
-                </ThemeIcon>
-              </Box>
+                  <ThemeIcon
+                    color="blue"
+                    variant="outline"
+                    sx={{ border: "none" }}
+                    size="xl"
+                  >
+                    <IconLink stroke={1.5} />
+                  </ThemeIcon>
+                </Box>
+              )}
             </AspectRatio>
-          )}
-          <Stack spacing="sm">
-            <Title size="h5">{heading[0]}</Title>
-            {heading[1] && <Text size="sm">{heading[1]}</Text>}
-            {src && (
-              <Group noWrap spacing="xs">
-                <ThemeIcon
-                  color="gray"
-                  variant="outline"
-                  sx={{ border: "none" }}
-                  size="sm"
-                >
-                  <IconExternalLink stroke={1.5} />
-                </ThemeIcon>
-                <Text color="gray" size="sm">
-                  {new URL(src).hostname}
-                </Text>
-              </Group>
-            )}
-          </Stack>
+          </Box>
+          <Title size="h5">{heading[0]}</Title>
         </Group>
-      </Card>
+        {heading[1] && <Text size="sm">{heading[1]}</Text>}
+        {src && (
+          <Group noWrap spacing="xs">
+            <ThemeIcon
+              color="gray"
+              variant="outline"
+              sx={{ border: "none" }}
+              size="sm"
+            >
+              <IconExternalLink stroke={1.5} />
+            </ThemeIcon>
+            <Text color="gray" size="sm">
+              {new URL(src).hostname.replace(/^www\./, "")}
+            </Text>
+          </Group>
+        )}
+      </Stack>
     </Box>
   );
 };

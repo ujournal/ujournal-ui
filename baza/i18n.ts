@@ -4,7 +4,7 @@ import uk from "translations/translations/uk.json";
 import en from "translations/translations/en.json";
 
 const intl = {
-  intlRelativeTime: "{{value, relativetime(style: short;)}}",
+  intlRelativeTime: "{{value, relativetime}}",
 };
 
 i18n.use(initReactI18next).init({

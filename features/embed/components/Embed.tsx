@@ -59,11 +59,9 @@ export const Embed: EmbedComponentType = ({
 
   return (
     <Box
-      sx={{
-        backgroundColor: "rgba(0,0,0,0.05)",
-        borderTop: `1px solid rgba(0,0,0,0.05)`,
-        borderBottom: `1px solid rgba(0,0,0,0.05)`,
-      }}
+      sx={(theme) => ({
+        backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+      })}
     >
       {aspectRatio === -1 ? (
         <Box>

@@ -2,6 +2,15 @@ import { Center, Loader } from "@mantine/core";
 import { ReactElement } from "react";
 import { ComponentType } from "react";
 import { get } from "lodash";
+import { FC } from "react";
+
+const DataListLoader: FC = () => {
+  return (
+    <Center>
+      <Loader />
+    </Center>
+  );
+};
 
 type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   data: any;
@@ -20,7 +29,7 @@ export const DataList: DataListComponentType = ({
   itemKey = "id",
   transform = (data) => data,
   itemProps = {},
-  loaderComponent: LoaderComponent = Loader,
+  loaderComponent: LoaderComponent = DataListLoader,
 }) => {
   if (isLoading) {
     return <LoaderComponent />;

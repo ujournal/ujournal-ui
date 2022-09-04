@@ -81,7 +81,7 @@ export const Post: FC<
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
       ref={ref}
-      shadow={isIntersected ? "lg" : undefined}
+      shadow="sm"
     >
       <Group position="apart" mt="-xs">
         <Group
@@ -115,7 +115,7 @@ export const Post: FC<
             label={new Date(post.published).toLocaleString()}
             openDelay={1000}
           >
-            <Text sx={{ whiteSpace: "nowrap" }} color="gray">
+            <Text sx={{ whiteSpace: "nowrap" }} color="gray" size="sm">
               {daysAgo > 0
                 ? t("intlRelativeTime", {
                     value: daysAgo * -1,
