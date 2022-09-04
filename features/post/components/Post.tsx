@@ -101,14 +101,6 @@ export const Post: FC<
             })}
             weight={600}
           />
-          {/* <ThemeIcon
-            color="gray"
-            size="sm"
-            variant="outline"
-            sx={{ border: "none" }}
-          >
-            <IconArrowLeft />
-          </ThemeIcon> */}
           <UserButton
             image={creator.avatar.match<string | undefined>({
               some: (name) => name,
@@ -119,7 +111,10 @@ export const Post: FC<
               none: () => creator.name,
             })}
           />
-          <Tooltip label={new Date(post.published).toLocaleString()}>
+          <Tooltip
+            label={new Date(post.published).toLocaleString()}
+            openDelay={1000}
+          >
             <Text sx={{ whiteSpace: "nowrap" }} color="gray">
               {daysAgo > 0
                 ? t("intlRelativeTime", {
@@ -199,6 +194,7 @@ export const Post: FC<
                   sx={(theme) => ({
                     "& a": {
                       textDecoration: "underline",
+                      textDecorationColor: theme.colors.blue[1],
                       color: theme.colors.blue,
                     },
                     "& > p:first-of-type": {
