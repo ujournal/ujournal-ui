@@ -4,7 +4,7 @@ import { useAuth } from "features/auth/hooks/useAuth";
 import { SitePage } from "types";
 import { showNotification } from "@mantine/notifications";
 import { useCallback } from "react";
-import { Container } from "@mantine/core";
+import { Card, Container } from "@mantine/core";
 import { useRouter } from "next/router";
 
 const LoginPage: SitePage = () => {
@@ -30,10 +30,12 @@ const LoginPage: SitePage = () => {
 
   return (
     <Container size="xs">
-      <LoginForm
-        values={{ usernameOrEmail: "", password: "" }}
-        onSubmit={handleLogin}
-      />
+      <Card p="md">
+        <LoginForm
+          values={{ usernameOrEmail: "", password: "" }}
+          onSubmit={handleLogin}
+        />
+      </Card>
     </Container>
   );
 };

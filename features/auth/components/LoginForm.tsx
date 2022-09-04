@@ -26,18 +26,18 @@ export const LoginForm: FC<{
       <Stack spacing="sm">
         <TextInput
           withAsterisk
-          label="Username or Email"
+          label="Юзернейм або емеіл"
           {...form.getInputProps("usernameOrEmail")}
         />
 
         <TextInput
           withAsterisk
-          label="Password"
+          label="Пароль"
           {...form.getInputProps("password")}
         />
 
         <Group position="center" mt="md">
-          <Button type="submit">Login</Button>
+          <Button type="submit">Увійти</Button>
         </Group>
       </Stack>
     </form>

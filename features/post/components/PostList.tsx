@@ -11,8 +11,6 @@ export const PostList: FC = () => {
 
   const transformPosts = useCallback((data: any) => data?.posts, []);
 
-  console.log("smallerThanMd", smallerThanSm);
-
   return (
     <Container size={690} px={0} mx={smallerThanSm ? "-md" : undefined}>
       <Stack spacing="md">

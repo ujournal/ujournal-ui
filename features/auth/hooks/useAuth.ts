@@ -54,8 +54,6 @@ export const useAuth = () => {
   const restoreSession = useCallback(() => {
     const jwt = cookies.get("jwt");
 
-    console.log("jwt", jwt);
-
     if (jwt) {
       const session = Some({ jwt, claims: jwtDecode(jwt) as Claims });
       setSession(session);
