@@ -68,24 +68,26 @@ export const UrlEmbed: EmbedComponentType = ({
               )}
             </AspectRatio>
           </Box>
-          <Title size="h5">{heading[0]}</Title>
+          <Stack spacing={4}>
+            <Title size="h5">{heading[0]}</Title>
+            {src && (
+              <Group noWrap spacing="xs">
+                <ThemeIcon
+                  color="gray"
+                  variant="outline"
+                  sx={{ border: "none" }}
+                  size="sm"
+                >
+                  <IconExternalLink stroke={1.5} />
+                </ThemeIcon>
+                <Text color="gray" size="sm">
+                  {new URL(src).hostname.replace(/^www\./, "")}
+                </Text>
+              </Group>
+            )}
+          </Stack>
         </Group>
         {heading[1] && <Text size="sm">{heading[1]}</Text>}
-        {src && (
-          <Group noWrap spacing="xs">
-            <ThemeIcon
-              color="gray"
-              variant="outline"
-              sx={{ border: "none" }}
-              size="sm"
-            >
-              <IconExternalLink stroke={1.5} />
-            </ThemeIcon>
-            <Text color="gray" size="sm">
-              {new URL(src).hostname.replace(/^www\./, "")}
-            </Text>
-          </Group>
-        )}
       </Stack>
     </Box>
   );
