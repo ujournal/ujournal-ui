@@ -9,7 +9,7 @@ import {
   Button,
   Tooltip,
 } from "@mantine/core";
-import { FC } from "react";
+import { FC, MutableRefObject } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
 import { useMarkdown } from "baza/hooks/useMarkdown";
 import {
@@ -34,15 +34,25 @@ import { intervalToDuration } from "date-fns";
 import { useMemo } from "react";
 import { getTodayInLocale } from "baza/utils/date";
 import { formatShortNum } from "baza/utils/number";
+import { useIntersection } from "@mantine/hooks";
 
 export const Post: FC<
-  PostView & { showBody?: boolean; showToogleBodyButton?: boolean }
-> = ({ creator, community, post, counts, showBody = false }) => {
+  PostView & {
+    showBody?: boolean;
+    showToogleBodyButton?: boolean;
+    containerRef?: MutableRefObject<HTMLDivElement>;
+  }
+> = ({ creator, community, post, counts, showBody = false, containerRef }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
   const markdown = useMarkdown();
   const { t } = useTranslation();
+
+  const { ref, entry } = useIntersection({
+    // root: containerRef ? containerRef.current : undefined,
+    threshold: 0,
+  });
 
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
@@ -57,16 +67,21 @@ export const Post: FC<
     [post]
   );
 
+  const isIntersected = entry?.isIntersecting;
+
   return (
     <Card
       p={largerThanMd ? "lg" : "sm"}
       radius={smallerThanSm ? 0 : "md"}
-      withBorder
+      withBorder={false}
       style={{
+        position: "relative",
         borderColor: "rgba(0, 0, 0, 0.07)",
         borderLeftWidth: smallerThanSm ? 0 : undefined,
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
+      ref={ref}
+      shadow={isIntersected ? "lg" : undefined}
     >
       <Group position="apart" mt="-xs">
         <Group
@@ -174,13 +189,18 @@ export const Post: FC<
                       content: "''",
                       background:
                         "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
+                      pointerEvents: "none",
                     },
               }}
             >
               <Text size="md">
                 <Box
                   dangerouslySetInnerHTML={{ __html: markdown.render(body) }}
-                  sx={{
+                  sx={(theme) => ({
+                    "& a": {
+                      textDecoration: "underline",
+                      color: theme.colors.blue,
+                    },
                     "& > p:first-of-type": {
                       marginTop: 0,
                     },
@@ -202,7 +222,25 @@ export const Post: FC<
                       marginLeft: -20,
                       marginRight: -20,
                     },
-                  }}
+                    "& blockquote": {
+                      backgroundColor: theme.colors.blue[0],
+                      padding: theme.spacing.xl,
+                      marginLeft: largerThanMd
+                        ? -theme.spacing.lg
+                        : -theme.spacing.sm,
+                      marginRight: largerThanMd
+                        ? -theme.spacing.lg
+                        : -theme.spacing.sm,
+                      fontSize: theme.fontSizes.xl,
+                      fontWeight: 600,
+                      "& p:first-child": {
+                        marginTop: 0,
+                      },
+                      "& p:last-child": {
+                        marginBottom: 0,
+                      },
+                    },
+                  })}
                 />
               </Text>
             </Box>

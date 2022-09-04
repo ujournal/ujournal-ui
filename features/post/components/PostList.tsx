@@ -1,6 +1,6 @@
 import { Container, Loader, Stack } from "@mantine/core";
 import { Post } from "./Post";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { usePosts } from "../hooks/usePosts";
 import { DataList } from "baza/components/DataList";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
@@ -31,10 +31,17 @@ export const PostList: FC = () => {
     return { ...posts, data };
   }, [posts]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   return (
     <Container size={690} px={0} mx={smallerThanSm ? "-md" : undefined}>
-      <Stack spacing="md">
-        <DataList {...postsMerged} component={Post} itemKey="post.id" />
+      <Stack spacing="md" ref={containerRef}>
+        <DataList
+          {...postsMerged}
+          itemComponent={Post}
+          itemKey="post.id"
+          itemProps={{ containerRef }}
+        />
         <Center ref={sentryRef}>
           {posts.isSuccess && posts.isFetching && <Loader />}
         </Center>

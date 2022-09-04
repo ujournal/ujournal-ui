@@ -1,6 +1,63 @@
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { FC } from "react";
 
 export const AppBrand: FC = () => {
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
+
+  if (smallerThanSm) {
+    return (
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13.1406 27.3105H27.0171V37.2416H13.1406V27.3105Z"
+          fill="#385AC0"
+        />
+        <path
+          d="M27.0172 2.75879V37.2415L37.6286 27.3105V2.75879H27.0172Z"
+          fill="url(#paint0_linear_515_36)"
+        />
+        <path
+          d="M13.0942 2.75879V37.1839L2.48281 27.2529V2.75879H13.0942Z"
+          fill="url(#paint1_linear_515_36)"
+        />
+        <path
+          d="M25.3846 27.3105H27.0172V37.2416L25.3846 27.3105Z"
+          fill="black"
+          fillOpacity="0.15"
+        />
+        <defs>
+          <linearGradient
+            id="paint0_linear_515_36"
+            x1="32.3229"
+            y1="2.75879"
+            x2="32.3229"
+            y2="37.2415"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#5F84F2" />
+            <stop offset="1" stopColor="#426AE1" />
+          </linearGradient>
+          <linearGradient
+            id="paint1_linear_515_36"
+            x1="7.78852"
+            y1="2.75879"
+            x2="7.78852"
+            y2="37.1839"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#FFD601" />
+            <stop offset="1" stopColor="#F1BF09" />
+          </linearGradient>
+        </defs>
+      </svg>
+    );
+  }
+
   return (
     <svg
       width="140"

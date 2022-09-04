@@ -25,7 +25,7 @@ export const CommunityList: FC = () => {
   return (
     <DataList
       {...communities}
-      component={CommunityButton}
+      itemComponent={CommunityButton}
       transform={transformCommunities}
     />
   );

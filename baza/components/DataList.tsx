@@ -5,18 +5,20 @@ import { get } from "lodash";
 
 type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   data: any;
-  component: ComponentType<TDataItem>;
   isLoading: boolean;
   transform?: (data: any) => TDataItem[] | undefined;
+  itemComponent: ComponentType<TDataItem>;
   itemKey?: string;
+  itemProps?: any;
 }) => ReactElement;
 
 export const DataList: DataListComponentType = ({
   data,
   isLoading,
-  component: Item,
+  itemComponent: Item,
   itemKey = "id",
   transform = (data) => data,
+  itemProps = {},
 }) => {
   if (isLoading) {
     return (
@@ -29,7 +31,7 @@ export const DataList: DataListComponentType = ({
   return (
     <>
       {transform(data)?.map((item: any) => (
-        <Item {...item} key={get(item, itemKey)} />
+        <Item {...item} {...itemProps} key={get(item, itemKey)} />
       ))}
     </>
   );
