@@ -8,6 +8,7 @@ type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   isLoading: boolean;
   transform?: (data: any) => TDataItem[] | undefined;
   itemComponent: ComponentType<TDataItem>;
+  loaderComponent?: ComponentType;
   itemKey?: string;
   itemProps?: any;
 }) => ReactElement;
@@ -19,13 +20,10 @@ export const DataList: DataListComponentType = ({
   itemKey = "id",
   transform = (data) => data,
   itemProps = {},
+  loaderComponent: LoaderComponent = Loader,
 }) => {
   if (isLoading) {
-    return (
-      <Center>
-        <Loader />
-      </Center>
-    );
+    return <LoaderComponent />;
   }
 
   return (

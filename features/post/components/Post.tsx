@@ -276,6 +276,7 @@ export const Post: FC<
               count: counts.comments,
               formattedCount: counts.comments,
             })}
+            openDelay={1000}
           >
             <Button
               leftIcon={<IconMessageCircle2 stroke={1.5} />}

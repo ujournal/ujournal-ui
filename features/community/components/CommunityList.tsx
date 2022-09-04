@@ -2,6 +2,7 @@ import { CommunityButton } from "features/community/components/CommunityButton";
 import { FC, useCallback } from "react";
 import { useCommunities } from "../hooks/useCommunities";
 import { DataList } from "baza/components/DataList";
+import { CommunityListLoader } from "./CommunityListLoader";
 
 export const CommunityList: FC = () => {
   const communities = useCommunities();
@@ -27,6 +28,7 @@ export const CommunityList: FC = () => {
       {...communities}
       itemComponent={CommunityButton}
       transform={transformCommunities}
+      loaderComponent={CommunityListLoader}
     />
   );
 };
