@@ -1,13 +1,20 @@
 import { Box, Card, Group, Skeleton, Stack } from "@mantine/core";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { random } from "lodash";
 import { FC } from "react";
 
 export const PostListLoader: FC = () => {
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
+
   return (
-    <Stack spacing="lg">
+    <>
       {Array.from(Array(5).keys()).map((key) => (
-        <Card p="lg" radius="md" key={key}>
-          <Stack>
+        <Card
+          p={smallerThanSm ? "xs" : "lg"}
+          radius={smallerThanSm ? undefined : "md"}
+          key={key}
+        >
+          <Stack spacing={smallerThanSm ? "sm" : "md"}>
             <Group noWrap mx="-xs" mt="-xs">
               <Group
                 spacing="xs"
@@ -47,16 +54,16 @@ export const PostListLoader: FC = () => {
               <Skeleton height={random(100, 400)} radius={0} />
             </Box>
             <Group noWrap position="apart">
-              <Skeleton width={160} height={32} radius="sm" />
+              <Skeleton width={120} height={16} radius="sm" />
               <Group spacing="xs" noWrap>
-                <Skeleton width={32} height={32} radius="sm" />
+                <Skeleton width={24} height={24} radius="sm" />
                 <Skeleton height={16} circle />
-                <Skeleton width={32} height={32} radius="sm" />
+                <Skeleton width={24} height={24} radius="sm" />
               </Group>
             </Group>
           </Stack>
         </Card>
       ))}
-    </Stack>
+    </>
   );
 };
