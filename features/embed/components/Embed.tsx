@@ -66,7 +66,7 @@ export const Embed: EmbedComponentType = ({
       }}
     >
       {aspectRatio === -1 ? (
-        <Box p="md">
+        <Box>
           <SpecificEmbedComponent
             src={src}
             title={title}

@@ -20,7 +20,7 @@ export const UrlEmbed: EmbedComponentType = ({
       rel="norefferer"
       sx={{ display: "block" }}
     >
-      <Card withBorder p="md" radius="md">
+      <Card p="sm" radius={0}>
         <Group spacing="lg" noWrap={smallerThanSm ? undefined : true}>
           {thumbnail && (
             <Box
