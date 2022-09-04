@@ -152,10 +152,10 @@ export const Post: FC<
                 <Box
                   dangerouslySetInnerHTML={{ __html: markdown.render(body) }}
                   sx={{
-                    "& p:first-child": {
+                    "& > p:first-of-type": {
                       marginTop: 0,
                     },
-                    "& p:last-child": {
+                    "& > p:last-child": {
                       marginBottom: 0,
                     },
                     "& p:empty": {
