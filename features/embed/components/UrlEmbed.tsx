@@ -1,6 +1,6 @@
 import { Box, Card, Title, Text, Stack, Group, ThemeIcon } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons";
-import { useBreakpoint } from "hooks/useBreakpoint";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { EmbedComponentType } from "./types";
 
 export const UrlEmbed: EmbedComponentType = ({

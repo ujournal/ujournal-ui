@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { GetPosts, ListingType, SortType } from "ujournal-lemmy-js-client";
 import { None, Option, Some } from "@sniptt/monads";
-import { useLemmyClient } from "hooks/useLemmyClient";
-import { useLemmyAuth } from "hooks/useLemmyAuth";
+import { useLemmyClient } from "baza/hooks/useLemmyClient";
+import { useAuth } from "features/auth/hooks/useAuth";
 
 export const usePosts = () => {
   const client = useLemmyClient();
-  const auth = useLemmyAuth();
+  const auth = useAuth();
 
   return useQuery(["posts"], async () => {
     let type_: Option<ListingType> = Some(ListingType.All);

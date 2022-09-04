@@ -5,12 +5,12 @@ import {
   SortType,
 } from "ujournal-lemmy-js-client";
 import { Option, Some } from "@sniptt/monads";
-import { useLemmyClient } from "hooks/useLemmyClient";
-import { useLemmyAuth } from "hooks/useLemmyAuth";
+import { useLemmyClient } from "baza/hooks/useLemmyClient";
+import { useAuth } from "features/auth/hooks/useAuth";
 
 export const useCommunities = () => {
   const client = useLemmyClient();
-  const auth = useLemmyAuth();
+  const auth = useAuth();
 
   return useQuery(["communities"], async () => {
     let type_: Option<ListingType> = Some(ListingType.All);

@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { FC } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
-import { useMarkdown } from "hooks/useMarkdown";
+import { useMarkdown } from "baza/hooks/useMarkdown";
 import {
   IconDots,
   IconFileZip,
@@ -28,8 +28,8 @@ import { Some } from "@sniptt/monads";
 import { Embed } from "features/embed/components/Embed";
 import { useState } from "react";
 import { useCallback } from "react";
-import { Rate } from "components/Rate";
-import { useBreakpoint } from "hooks/useBreakpoint";
+import { Rate } from "baza/components/Rate";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
 export const Post: FC<
   PostView & { showBody?: boolean; showToogleBodyButton?: boolean }

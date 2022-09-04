@@ -8,16 +8,16 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { IconLogin } from "@tabler/icons";
-import { Brand } from "components/Brand";
+import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
-import { useLemmyAuth } from "hooks/useLemmyAuth";
-import { useSite } from "hooks/useSite";
+import { useAuth } from "features/auth/hooks/useAuth";
+import { useSite } from "baza/hooks/useSite";
 import Link from "next/link";
 import { FC, useMemo } from "react";
 
 export const AppHeader: FC = () => {
   const site = useSite();
-  const auth = useLemmyAuth();
+  const auth = useAuth();
 
   const user = useMemo(
     () =>
@@ -50,7 +50,7 @@ export const AppHeader: FC = () => {
 
           <Link href="/" passHref>
             <Box component="a" sx={{ display: "block", height: "40px" }}>
-              <Brand />
+              <AppBrand />
             </Box>
           </Link>
         </Group>

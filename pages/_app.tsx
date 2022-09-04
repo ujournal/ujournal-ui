@@ -1,22 +1,34 @@
 import Head from "next/head";
-import { AppShell, MantineProvider, Navbar, ScrollArea } from "@mantine/core";
+import { MantineProvider, Navbar, ScrollArea } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { LemmyClientContext, lemmyHttpClient } from "hooks/useLemmyClient";
-import { LemmyAuthProvider } from "hooks/useLemmyAuth";
-import { markdown, MarkdownContext } from "hooks/useMarkdown";
-import { mantineTheme } from "mantine/theme";
+import { LemmyClientContext, lemmyHttpClient } from "baza/hooks/useLemmyClient";
+import { LemmyAuthProvider } from "features/auth/hooks/useAuth";
+import { markdown, MarkdownContext } from "baza/hooks/useMarkdown";
+import { mantineTheme } from "baza/mantine/theme";
 import { SiteAppProps } from "types";
 import { NotificationsProvider } from "@mantine/notifications";
-import { useBreakpoint } from "hooks/useBreakpoint";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { AppLayout } from "features/app/components/AppLayout";
 import "../styles/globals.css";
-import { AppHeader } from "features/app/components/AppHeader";
-import { useSite } from "hooks/useSite";
 
 const queryClient = new QueryClient();
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+
+  const navbar =
+    largerThanMd && Component.Navbar ? (
+      <Navbar
+        withBorder={false}
+        width={{ base: 220 }}
+        sx={{ backgroundColor: "transparent" }}
+      >
+        <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+          <Component.Navbar />
+        </Navbar.Section>
+      </Navbar>
+    ) : undefined;
 
   return (
     <>
@@ -38,38 +50,9 @@ export default function App(props: SiteAppProps) {
                   withNormalizeCSS
                   theme={mantineTheme}
                 >
-                  <AppShell
-                    padding="md"
-                    navbar={
-                      largerThanMd && Component.Navbar ? (
-                        <Navbar
-                          withBorder={false}
-                          width={{ base: 220 }}
-                          sx={{ backgroundColor: "transparent" }}
-                        >
-                          <Navbar.Section
-                            grow
-                            component={ScrollArea}
-                            mx="-xs"
-                            px="xs"
-                          >
-                            <Component.Navbar />
-                          </Navbar.Section>
-                        </Navbar>
-                      ) : undefined
-                    }
-                    header={<AppHeader />}
-                    styles={(theme) => ({
-                      main: {
-                        backgroundColor:
-                          theme.colorScheme === "dark"
-                            ? theme.colors.dark[8]
-                            : theme.colors.gray[0],
-                      },
-                    })}
-                  >
+                  <AppLayout navbar={navbar}>
                     <Component {...pageProps} />
-                  </AppShell>
+                  </AppLayout>
                 </MantineProvider>
               </QueryClientProvider>
             </LemmyClientContext.Provider>

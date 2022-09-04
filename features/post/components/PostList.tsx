@@ -2,8 +2,8 @@ import { Container, Stack } from "@mantine/core";
 import { Post } from "./Post";
 import { FC, useCallback } from "react";
 import { usePosts } from "../hooks/usePosts";
-import { DataList } from "components/DataList";
-import { useBreakpoint } from "hooks/useBreakpoint";
+import { DataList } from "baza/components/DataList";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
 export const PostList: FC = () => {
   const posts = usePosts();

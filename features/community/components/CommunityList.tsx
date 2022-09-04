@@ -1,7 +1,7 @@
 import { CommunityButton } from "features/community/components/CommunityButton";
 import { FC, useCallback } from "react";
 import { useCommunities } from "../hooks/useCommunities";
-import { DataList } from "components/DataList";
+import { DataList } from "baza/components/DataList";
 
 export const CommunityList: FC = () => {
   const communities = useCommunities();

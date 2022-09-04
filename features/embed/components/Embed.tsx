@@ -1,6 +1,6 @@
 import { AspectRatio, Box } from "@mantine/core";
 import { FC } from "react";
-import { isImage, isTwitter, isYouTube } from "utils/url";
+import { isImage, isTwitter, isYouTube } from "baza/utils/url";
 import { UrlEmbed } from "./UrlEmbed";
 import { ImageEmbed } from "./ImageEmbed";
 import { TwitterEmbed } from "./TwitterEmbed";

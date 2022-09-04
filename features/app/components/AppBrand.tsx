@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export const Brand: FC = () => {
+export const AppBrand: FC = () => {
   return (
     <svg
       width="158"

@@ -11,9 +11,9 @@ import {
   useState,
 } from "react";
 import { Login } from "ujournal-lemmy-js-client";
-import { useLemmyClient } from "./useLemmyClient";
+import { useLemmyClient } from "../../../baza/hooks/useLemmyClient";
 import cookies from "browser-cookies";
-import { useEnv } from "./useEnv";
+import { useEnv } from "../../../baza/hooks/useEnv";
 import jwtDecode from "jwt-decode";
 
 type Claims = {
@@ -46,7 +46,7 @@ export const LemmyAuthProvider: FC<{ children: ReactNode }> = ({
   );
 };
 
-export const useLemmyAuth = () => {
+export const useAuth = () => {
   const { session, setSession } = useContext(LemmyAuthContext);
   const lemmyClient = useLemmyClient();
   const { isHttps } = useEnv();
