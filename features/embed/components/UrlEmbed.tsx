@@ -1,5 +1,6 @@
 import { Box, Card, Title, Text, Stack, Group, ThemeIcon } from "@mantine/core";
 import { IconExternalLink } from "@tabler/icons";
+import { useBreakpoint } from "hooks/useBreakpoint";
 import { EmbedComponentType } from "./types";
 
 export const UrlEmbed: EmbedComponentType = ({
@@ -8,12 +9,19 @@ export const UrlEmbed: EmbedComponentType = ({
   description,
   thumbnail,
 }) => {
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const heading = [title, description].filter(Boolean);
 
   return (
-    <Box p="md" component="a" href={src} target="_blank">
+    <Box
+      component="a"
+      href={src}
+      target="_blank"
+      rel="norefferer"
+      sx={{ display: "block" }}
+    >
       <Card withBorder p="md" radius="md">
-        <Group spacing="lg" noWrap>
+        <Group spacing="lg" noWrap={smallerThanSm ? undefined : true}>
           {thumbnail && (
             <Box
               component="img"

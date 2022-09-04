@@ -32,7 +32,7 @@ export const useBreakpoint = ({
     }
 
     if (smallerThan !== undefined) {
-      query = `@media (max-width: ${theme.fn.size({
+      query = `(max-width: ${theme.fn.size({
         size: smallerThan,
         sizes: theme.breakpoints,
       })}px)`;

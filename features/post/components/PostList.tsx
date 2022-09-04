@@ -3,14 +3,18 @@ import { Post } from "./Post";
 import { FC, useCallback } from "react";
 import { usePosts } from "../hooks/usePosts";
 import { DataList } from "components/DataList";
+import { useBreakpoint } from "hooks/useBreakpoint";
 
 export const PostList: FC = () => {
   const posts = usePosts();
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
   const transformPosts = useCallback((data: any) => data?.posts, []);
 
+  console.log("smallerThanMd", smallerThanSm);
+
   return (
-    <Container size={690} px={0}>
+    <Container size={690} px={0} mx={smallerThanSm ? "-md" : undefined}>
       <Stack spacing="md">
         <DataList
           {...posts}

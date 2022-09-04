@@ -29,7 +29,7 @@ const typeToSpecificEmbedComponent = {
 };
 
 const typeToAspectRatio = {
-  [EmbedType.Default]: 2.35 / 1,
+  [EmbedType.Default]: -1,
   [EmbedType.Image]: 4 / 3,
   [EmbedType.YouTube]: 16 / 9,
   [EmbedType.Twitter]: 4 / 3,
@@ -54,20 +54,32 @@ export const Embed: EmbedComponentType = ({
     typeToAspectRatio[_type] || typeToAspectRatio[EmbedType.Default];
 
   return (
-    <AspectRatio
-      ratio={aspectRatio}
+    <Box
       sx={{
         backgroundColor: "rgba(0,0,0,0.05)",
         borderTop: `1px solid rgba(0,0,0,0.05)`,
         borderBottom: `1px solid rgba(0,0,0,0.05)`,
       }}
     >
-      <SpecificEmbedComponent
-        src={src}
-        title={title}
-        description={description}
-        thumbnail={thumbnail}
-      />
-    </AspectRatio>
+      {aspectRatio === -1 ? (
+        <Box p="md">
+          <SpecificEmbedComponent
+            src={src}
+            title={title}
+            description={description}
+            thumbnail={thumbnail}
+          />
+        </Box>
+      ) : (
+        <AspectRatio ratio={aspectRatio}>
+          <SpecificEmbedComponent
+            src={src}
+            title={title}
+            description={description}
+            thumbnail={thumbnail}
+          />
+        </AspectRatio>
+      )}
+    </Box>
   );
 };

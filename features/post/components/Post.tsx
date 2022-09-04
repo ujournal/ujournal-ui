@@ -34,6 +34,7 @@ import { useBreakpoint } from "hooks/useBreakpoint";
 export const Post: FC<
   PostView & { showBody?: boolean; showToogleBodyButton?: boolean }
 > = ({ creator, community, post, counts, showBody = false }) => {
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
   const markdown = useMarkdown();
@@ -45,9 +46,13 @@ export const Post: FC<
   return (
     <Card
       p={largerThanMd ? "lg" : "sm"}
-      radius="md"
+      radius={smallerThanSm ? 0 : "md"}
       withBorder
-      style={{ borderColor: "rgba(0, 0, 0, 0.07)" }}
+      style={{
+        borderColor: "rgba(0, 0, 0, 0.07)",
+        borderLeftWidth: smallerThanSm ? 0 : undefined,
+        borderRightWidth: smallerThanSm ? 0 : undefined,
+      }}
     >
       <Group position="apart">
         <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
