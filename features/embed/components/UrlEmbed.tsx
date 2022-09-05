@@ -71,7 +71,7 @@ export const UrlEmbed: EmbedComponentType = ({
           <Stack spacing={4}>
             <Title size="h5">{heading[0]}</Title>
             {src && (
-              <Group noWrap spacing="xs">
+              <Group noWrap spacing={6}>
                 <ThemeIcon
                   color="gray"
                   variant="outline"

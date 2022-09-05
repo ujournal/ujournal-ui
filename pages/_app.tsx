@@ -10,8 +10,8 @@ import { SiteAppProps } from "types";
 import { NotificationsProvider } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { AppLayout } from "features/app/components/AppLayout";
-import "../styles/globals.css";
 import i18n from "baza/i18n";
+import "../styles/globals.css";
 
 const queryClient = new QueryClient();
 

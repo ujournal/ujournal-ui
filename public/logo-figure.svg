@@ -1,16 +1,9 @@
 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.1406 27.3105H27.0171V37.2416H13.1406V27.3105Z" fill="#385AC0"/>
-<path d="M27.0172 2.75879V37.2415L37.6286 27.3105V2.75879H27.0172Z" fill="url(#paint0_linear_515_36)"/>
-<path d="M13.0942 2.75879V37.1839L2.48281 27.2529V2.75879H13.0942Z" fill="url(#paint1_linear_515_36)"/>
-<path d="M25.3846 27.3105H27.0172V37.2416L25.3846 27.3105Z" fill="black" fill-opacity="0.15"/>
-<defs>
-<linearGradient id="paint0_linear_515_36" x1="32.3229" y1="2.75879" x2="32.3229" y2="37.2415" gradientUnits="userSpaceOnUse">
-<stop stop-color="#5F84F2"/>
-<stop offset="1" stop-color="#426AE1"/>
-</linearGradient>
-<linearGradient id="paint1_linear_515_36" x1="7.78852" y1="2.75879" x2="7.78852" y2="37.1839" gradientUnits="userSpaceOnUse">
-<stop stop-color="#FFD601"/>
-<stop offset="1" stop-color="#F1BF09"/>
-</linearGradient>
-</defs>
+<path d="M15.0001 22H25L25 37H15L15.0001 22Z" fill="white"/>
+<path d="M22 6.5C22 8.5 22 37 22 37H25L37 27V3C37 3 27.5 3 25.5 3C23.5 3 22 4.5 22 6.5Z" fill="white"/>
+<path d="M18 6.5C18 8.5 18 37 18 37H15L3 27V3C3 3 12.5 3 14.5 3C16.5 3 18 4.5 18 6.5Z" fill="white"/>
+<path d="M16.0001 24H24L24 35H16L16.0001 24Z" fill="#385AC0"/>
+<path d="M24 7.35279C24 8.76446 24 35 24 35L32 28.5C35 26 35 26 35 24.5C35 23 35 5 35 5C35 5 27.9117 5 26.5 5C25.0883 5 24 5.94111 24 7.35279Z" fill="#4169E1"/>
+<path d="M22 24H24L23.9999 35L22 24Z" fill="black" fill-opacity="0.15"/>
+<path d="M16 7.35279C16 8.76446 16 35 16 35L8 28.5C5 26 5 26 5 24.5C5 23 5 5 5 5C5 5 12.0883 5 13.5 5C14.9117 5 16 5.94111 16 7.35279Z" fill="#F1BF09"/>
 </svg>

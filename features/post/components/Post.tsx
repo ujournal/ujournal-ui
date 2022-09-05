@@ -20,6 +20,12 @@ import {
   IconCaretDown,
   IconCaretUp,
   IconMessageCircle2,
+  IconStar,
+  IconStarOff,
+  IconCopy,
+  IconPencil,
+  IconLock,
+  IconPin,
 } from "@tabler/icons";
 import { UserButton } from "features/user/components/UserButton";
 import { CommunityButton } from "features/community/components/CommunityButton";
@@ -30,11 +36,11 @@ import { useCallback } from "react";
 import { Rate } from "baza/components/Rate";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
-import { intervalToDuration } from "date-fns";
-import { useMemo } from "react";
-import { getTodayInLocale } from "baza/utils/date";
 import { formatShortNum } from "baza/utils/number";
 import { useIntersection } from "@mantine/hooks";
+import { DateFormatted } from "baza/components/DeteFormatted";
+import Link from "next/link";
+import { capitalize } from "lodash";
 
 export const Post: FC<
   PostView & {
@@ -42,7 +48,15 @@ export const Post: FC<
     showToogleBodyButton?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
   }
-> = ({ creator, community, post, counts, showBody = false, containerRef }) => {
+> = ({
+  creator,
+  community,
+  post,
+  counts,
+  showBody = false,
+  saved,
+  containerRef,
+}) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
@@ -58,17 +72,6 @@ export const Post: FC<
     setShowBody(!_showBody);
   }, [_showBody]);
 
-  const daysAgo = useMemo(
-    () =>
-      intervalToDuration({
-        start: new Date(post.published),
-        end: new Date(),
-      }).days || 0,
-    [post]
-  );
-
-  const isIntersected = entry?.isIntersecting;
-
   return (
     <Card
       p={largerThanMd ? "lg" : "sm"}
@@ -81,7 +84,7 @@ export const Post: FC<
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
       ref={ref}
-      shadow="sm"
+      shadow="xs"
     >
       <Group position="apart" mt="-xs">
         <Group
@@ -91,6 +94,7 @@ export const Post: FC<
           mx="-xs"
         >
           <CommunityButton
+            communityId={community.id}
             image={community.icon.match<string | undefined>({
               some: (name) => name,
               none: undefined,
@@ -102,6 +106,7 @@ export const Post: FC<
             weight={600}
           />
           <UserButton
+            userId={creator.id}
             image={creator.avatar.match<string | undefined>({
               some: (name) => name,
               none: undefined,
@@ -111,18 +116,7 @@ export const Post: FC<
               none: () => creator.name,
             })}
           />
-          <Tooltip
-            label={new Date(post.published).toLocaleString()}
-            openDelay={1000}
-          >
-            <Text sx={{ whiteSpace: "nowrap" }} color="gray" size="sm">
-              {daysAgo > 0
-                ? t("intlRelativeTime", {
-                    value: daysAgo * -1,
-                  })
-                : getTodayInLocale()}
-            </Text>
-          </Tooltip>
+          <DateFormatted date={new Date(post.published)} />
         </Group>
 
         <Menu withinPortal position="bottom-end" shadow="sm">
@@ -133,19 +127,48 @@ export const Post: FC<
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item icon={<IconFileZip size={14} />}>Download zip</Menu.Item>
-            <Menu.Item icon={<IconEye size={14} />}>Preview all</Menu.Item>
+            <Menu.Item
+              icon={saved ? <IconStarOff size={14} /> : <IconStar size={14} />}
+            >
+              {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
+            </Menu.Item>
+            <Menu.Item icon={<IconCopy size={14} />}>
+              {capitalize(t("cross_post"))}
+            </Menu.Item>
+            <Menu.Item icon={<IconPencil size={14} />}>
+              {capitalize(t("edit"))}
+            </Menu.Item>
+            <Menu.Item icon={<IconLock size={14} />}>
+              {post.locked ? capitalize(t("unlock")) : capitalize(t("lock"))}
+            </Menu.Item>
+            <Menu.Item icon={<IconPin size={14} />}>
+              {post.stickied
+                ? capitalize(t("unsticky"))
+                : capitalize(t("sticky"))}
+            </Menu.Item>
             <Menu.Item icon={<IconTrash size={14} />} color="red">
-              Delete all
+              {post.deleted
+                ? capitalize(t("restore"))
+                : capitalize(t("delete"))}
+            </Menu.Item>
+            <Menu.Item icon={<IconTrash size={14} />} color="red">
+              {post.removed
+                ? capitalize(t("restore"))
+                : capitalize(t("remove"))}{" "}
+              ({t("mod")})
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </Group>
 
       <Group position="apart" mt="xs" mb="md">
-        <Title size="h3" weight={600}>
-          {post.name}
-        </Title>
+        <Link href={`/post?postId=${post.id}`} passHref>
+          <Box component="a">
+            <Title size="h3" weight={600}>
+              {post.name}
+            </Title>
+          </Box>
+        </Link>
       </Group>
 
       <Card.Section>
@@ -229,7 +252,7 @@ export const Post: FC<
                         : -theme.spacing.sm,
                       fontSize: theme.fontSizes.xl,
                       fontWeight: 600,
-                      "& p:first-child": {
+                      "& p:first-of-type": {
                         marginTop: 0,
                       },
                       "& p:last-child": {
@@ -271,23 +294,26 @@ export const Post: FC<
         mb={largerThanMd ? "-xs" : undefined}
       >
         <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
-          <Tooltip
-            label={t("number_of_comments", {
-              count: counts.comments,
-              formattedCount: counts.comments,
-            })}
-            openDelay={1000}
-          >
-            <Button
-              leftIcon={<IconMessageCircle2 stroke={1.5} />}
-              variant="subtle"
-            >
-              {t("number_of_comments", {
+          <Link href={`/post?postId=${post.id}&comments`} passHref>
+            <Tooltip
+              label={t("number_of_comments", {
                 count: counts.comments,
-                formattedCount: formatShortNum(counts.comments),
+                formattedCount: counts.comments,
               })}
-            </Button>
-          </Tooltip>
+              openDelay={1000}
+            >
+              <Button
+                component="a"
+                leftIcon={<IconMessageCircle2 stroke={1.5} />}
+                variant="subtle"
+              >
+                {t("number_of_comments", {
+                  count: counts.comments,
+                  formattedCount: formatShortNum(counts.comments),
+                })}
+              </Button>
+            </Tooltip>
+          </Link>
         </Group>
         <Rate count={counts.score} />
       </Group>

@@ -13,6 +13,7 @@ const nextConfig = {
         },
       ],
     ],
+    scrollRestoration: true,
   },
   async rewrites() {
     return [
