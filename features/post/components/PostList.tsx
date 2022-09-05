@@ -12,7 +12,7 @@ import { PostListLoader } from "./PostListLoader";
 
 export const PostList: FC = () => {
   const posts = usePosts();
-  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   const [sentryRef] = useInfiniteScroll({
     loading: posts.isLoading,
@@ -35,7 +35,7 @@ export const PostList: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Container size={690} px={0} mx={smallerThanSm ? "-md" : undefined}>
+    <Container size={690} px={0} mx={largerThanSm ? undefined : "-md"}>
       <Stack spacing="md" ref={containerRef}>
         <DataList
           {...postsMerged}
