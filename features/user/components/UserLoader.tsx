@@ -7,7 +7,7 @@ export const UserLoader: FC<{
   nameWidth?: number;
   padding?: string | number;
   opacity?: number;
-}> = ({ useRandomWidth = true, nameWidth = 100, padding = "xs", opacity }) => {
+}> = ({ useRandomWidth = true, nameWidth = 100, padding = "sm", opacity }) => {
   return (
     <Group
       spacing="xs"
