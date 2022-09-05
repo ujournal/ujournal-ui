@@ -1,12 +1,4 @@
-import {
-  Box,
-  Burger,
-  Button,
-  Group,
-  Header,
-  MediaQuery,
-  UnstyledButton,
-} from "@mantine/core";
+import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
 import { IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
@@ -14,6 +6,7 @@ import { useAuth } from "features/auth/hooks/useAuth";
 import { useSite } from "baza/hooks/useSite";
 import Link from "next/link";
 import { FC, useMemo } from "react";
+import { UserLoader } from "features/user/components/UserLoader";
 
 export const AppHeader: FC = () => {
   const site = useSite();
@@ -33,14 +26,40 @@ export const AppHeader: FC = () => {
     [site.data?.my_user]
   );
 
+  const profileMenu = useMemo(
+    () =>
+      user ? (
+        <UserMenu user={user} onLogOut={auth.logout} />
+      ) : (
+        <Link href="/login" passHref>
+          <Button
+            variant="subtle"
+            component="a"
+            leftIcon={<IconLogin stroke={1.5} />}
+            color="transparent"
+            sx={{
+              color: "#000",
+              "&:hover": { backgroundColor: "transparent" },
+            }}
+          >
+            Увійти
+          </Button>
+        </Link>
+      ),
+    [auth.logout, user]
+  );
+
   return (
     <Header
       height={60}
       p="xs"
       sx={{
-        background: "linear-gradient(135deg, #7EC0FC 0%, #D9F6A4 100%)",
+        // background: "linear-gradient(135deg, #7EC0FC 0%, #D9F6A4 100%)",
+        backgroundColor: "#fff",
         borderWidth: 0,
-        boxShadow: "inset 0 -1px 0 0 rgba(0, 0, 0, 0.05)",
+        // boxShadow: "inset 0 -1px 0 0 rgba(0, 0, 0, 0.05)",
+        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+        boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.05)",
       }}
     >
       <Group position="apart">
@@ -56,23 +75,10 @@ export const AppHeader: FC = () => {
           </Link>
         </Group>
 
-        {user ? (
-          <UserMenu user={user} onLogOut={auth.logout} />
+        {site.isLoading ? (
+          <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
         ) : (
-          <Link href="/login" passHref>
-            <Button
-              variant="subtle"
-              component="a"
-              leftIcon={<IconLogin stroke={1.5} />}
-              color="transparent"
-              sx={{
-                color: "#000",
-                "&:hover": { backgroundColor: "transparent" },
-              }}
-            >
-              Увійти
-            </Button>
-          </Link>
+          profileMenu
         )}
       </Group>
     </Header>

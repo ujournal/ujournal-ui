@@ -37,7 +37,7 @@ export const UserMenu: FC<{
         <UnstyledButton>
           <Group spacing={7}>
             <Avatar src={user.image} alt={user.name} radius="xl" size="sm" />
-            <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+            <Text weight={600} size="sm" sx={{ lineHeight: 1 }} mr={3}>
               {user.name}
             </Text>
             <IconChevronDown size={12} stroke={1.5} />

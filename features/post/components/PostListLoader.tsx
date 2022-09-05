@@ -1,5 +1,6 @@
 import { Box, Card, Group, Skeleton, Stack } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { UserLoader } from "features/user/components/UserLoader";
 import { random } from "lodash";
 import { FC } from "react";
 
@@ -30,21 +31,7 @@ export const PostListLoader: FC = () => {
                 />
                 <Skeleton height={10} radius="sm" />
               </Group>
-              <Group
-                spacing="xs"
-                noWrap
-                p="xs"
-                sx={{ width: random(100, 200) }}
-              >
-                <Skeleton
-                  width={26}
-                  height={26}
-                  circle
-                  radius={26}
-                  sx={{ minWidth: 26 }}
-                />
-                <Skeleton height={10} radius="sm" />
-              </Group>
+              <UserLoader />
             </Group>
             <Stack spacing="xs">
               <Skeleton height={16} radius="sm" />

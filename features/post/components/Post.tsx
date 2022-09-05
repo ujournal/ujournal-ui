@@ -81,7 +81,7 @@ export const Post: FC<
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
       ref={ref}
-      shadow="sm"
+      shadow="xs"
     >
       <Group position="apart" mt="-xs">
         <Group
@@ -229,7 +229,7 @@ export const Post: FC<
                         : -theme.spacing.sm,
                       fontSize: theme.fontSizes.xl,
                       fontWeight: 600,
-                      "& p:first-child": {
+                      "& p:first-of-type": {
                         marginTop: 0,
                       },
                       "& p:last-child": {

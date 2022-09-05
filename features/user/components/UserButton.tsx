@@ -1,5 +1,12 @@
 import React from "react";
-import { UnstyledButton, Group, Text, Avatar, Tooltip } from "@mantine/core";
+import {
+  UnstyledButton,
+  Group,
+  Text,
+  Avatar,
+  Tooltip,
+  Box,
+} from "@mantine/core";
 import { IconUser } from "@tabler/icons";
 import { forwardRef } from "react";
 import { ForwardedRef } from "react";
@@ -8,24 +15,21 @@ type UserButtonProps = {
   image?: string;
   label: string;
   weight?: number;
+  active?: boolean;
 };
 
 export const UserButtonWithoutRef = (
-  { image, label, weight }: UserButtonProps,
+  { image, label, weight, active = false }: UserButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) => {
   return (
     <Tooltip label={label} openDelay={1000}>
       <UnstyledButton
-        ref={ref}
+        p={4}
         sx={(theme) => ({
           display: "block",
-          width: "100%",
-          padding: theme.spacing.xs,
-          borderRadius: theme.radius.sm,
           color:
             theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-
           "&:hover": {
             backgroundColor:
               theme.colorScheme === "dark"
@@ -34,25 +38,34 @@ export const UserButtonWithoutRef = (
           },
           whiteSpace: "nowrap",
         })}
+        ref={ref}
       >
-        <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
-          <Avatar src={image} radius="lg" size="sm">
-            <IconUser stroke={1.5} />
-          </Avatar>
+        <Box
+          sx={(theme) => ({
+            backgroundColor: active ? "white" : undefined,
+            borderRadius: theme.radius.sm,
+          })}
+          p={8}
+        >
+          <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
+            <Avatar src={image} radius="lg" size="sm">
+              <IconUser stroke={1.5} />
+            </Avatar>
 
-          <Text
-            sx={{
-              textOverflow: "ellipsis",
-              minWidth: 0,
-              width: "100%",
-              maxWidth: 160,
-              overflow: "hidden",
-            }}
-            weight={weight}
-          >
-            {label}
-          </Text>
-        </Group>
+            <Text
+              sx={{
+                textOverflow: "ellipsis",
+                minWidth: 0,
+                width: "100%",
+                maxWidth: 160,
+                overflow: "hidden",
+              }}
+              weight={weight}
+            >
+              {label}
+            </Text>
+          </Group>
+        </Box>
       </UnstyledButton>
     </Tooltip>
   );
