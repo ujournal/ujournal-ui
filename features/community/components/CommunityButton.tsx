@@ -8,8 +8,10 @@ import {
   Box,
 } from "@mantine/core";
 import { IconSpeakerphone } from "@tabler/icons";
+import Link from "next/link";
 
 type CommunityButtonProps = {
+  communityId?: number;
   image?: string;
   label: string;
   weight?: number;
@@ -17,50 +19,59 @@ type CommunityButtonProps = {
 };
 
 export const CommunityButton = ({
+  communityId,
   image,
   label,
   weight,
   active = false,
 }: CommunityButtonProps) => {
   return (
-    <Tooltip label={label} openDelay={1000}>
-      <UnstyledButton
-        p={6}
-        sx={(theme) => ({
-          display: "block",
-          color:
-            theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-          whiteSpace: "nowrap",
-        })}
-      >
-        <Box
+    <Link href={`/community?communityId=${communityId}`} passHref>
+      <Tooltip label={label} openDelay={1000}>
+        <UnstyledButton
+          component="a"
+          px={6}
+          py={4}
           sx={(theme) => ({
-            backgroundColor: active ? "white" : undefined,
-            borderRadius: theme.radius.sm,
+            display: "block",
+            color:
+              theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+            whiteSpace: "nowrap",
           })}
-          p={6}
         >
-          <Group sx={{ flexWrap: "nowrap", overflow: "hidden" }} spacing={"xs"}>
-            <Avatar src={image} size="sm" radius="sm">
-              <IconSpeakerphone stroke={1.5} />
-            </Avatar>
-
-            <Text
-              size="md"
-              sx={{
-                textOverflow: "ellipsis",
-                minWidth: 0,
-                width: "100%",
-                maxWidth: 160,
-                overflow: "hidden",
-              }}
-              weight={weight}
+          <Box
+            sx={(theme) => ({
+              backgroundColor: active ? "white" : undefined,
+              borderRadius: theme.radius.sm,
+            })}
+            px={6}
+            py={8}
+          >
+            <Group
+              sx={{ flexWrap: "nowrap", overflow: "hidden" }}
+              spacing={"xs"}
             >
-              {label}
-            </Text>
-          </Group>
-        </Box>
-      </UnstyledButton>
-    </Tooltip>
+              <Avatar src={image} size="sm" radius="sm">
+                <IconSpeakerphone stroke={1.5} />
+              </Avatar>
+
+              <Text
+                size="md"
+                sx={{
+                  textOverflow: "ellipsis",
+                  minWidth: 0,
+                  width: "100%",
+                  maxWidth: 160,
+                  overflow: "hidden",
+                }}
+                weight={weight}
+              >
+                {label}
+              </Text>
+            </Group>
+          </Box>
+        </UnstyledButton>
+      </Tooltip>
+    </Link>
   );
 };

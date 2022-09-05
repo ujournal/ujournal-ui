@@ -10,8 +10,10 @@ import {
 import { IconUser } from "@tabler/icons";
 import { forwardRef } from "react";
 import { ForwardedRef } from "react";
+import Link from "next/link";
 
 type UserButtonProps = {
+  userId?: number;
   image?: string;
   label: string;
   weight?: number;
@@ -19,52 +21,57 @@ type UserButtonProps = {
 };
 
 export const UserButtonWithoutRef = (
-  { image, label, weight, active = false }: UserButtonProps,
-  ref: ForwardedRef<HTMLButtonElement>
+  { userId, image, label, weight, active = false }: UserButtonProps,
+  ref: ForwardedRef<HTMLAnchorElement>
 ) => {
   return (
-    <Tooltip label={label} openDelay={1000}>
-      <UnstyledButton
-        p={6}
-        sx={(theme) => ({
-          display: "block",
-          color:
-            theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-          whiteSpace: "nowrap",
-        })}
-        ref={ref}
-      >
-        <Box
+    <Link href={`/user?userId=${userId}`} passHref>
+      <Tooltip label={label} openDelay={1000}>
+        <UnstyledButton
+          component="a"
+          px={6}
+          py={4}
           sx={(theme) => ({
-            backgroundColor: active ? "white" : undefined,
-            borderRadius: theme.radius.sm,
+            display: "block",
+            color:
+              theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+            whiteSpace: "nowrap",
           })}
-          p={6}
+          ref={ref}
         >
-          <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
-            <Avatar src={image} radius="lg" size="sm">
-              <IconUser stroke={1.5} />
-            </Avatar>
+          <Box
+            sx={(theme) => ({
+              backgroundColor: active ? "white" : undefined,
+              borderRadius: theme.radius.sm,
+            })}
+            px={6}
+            py={8}
+          >
+            <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
+              <Avatar src={image} radius="lg" size="sm">
+                <IconUser stroke={1.5} />
+              </Avatar>
 
-            <Text
-              sx={{
-                textOverflow: "ellipsis",
-                minWidth: 0,
-                width: "100%",
-                maxWidth: 160,
-                overflow: "hidden",
-              }}
-              weight={weight}
-            >
-              {label}
-            </Text>
-          </Group>
-        </Box>
-      </UnstyledButton>
-    </Tooltip>
+              <Text
+                sx={{
+                  textOverflow: "ellipsis",
+                  minWidth: 0,
+                  width: "100%",
+                  maxWidth: 160,
+                  overflow: "hidden",
+                }}
+                weight={weight}
+              >
+                {label}
+              </Text>
+            </Group>
+          </Box>
+        </UnstyledButton>
+      </Tooltip>
+    </Link>
   );
 };
 
-export const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
+export const UserButton = forwardRef<HTMLAnchorElement, UserButtonProps>(
   UserButtonWithoutRef
 );

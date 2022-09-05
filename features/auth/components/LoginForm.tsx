@@ -34,13 +34,14 @@ export const LoginForm: FC<{
         />
 
         <TextInput
+          type="password"
           withAsterisk
           label={capitalize(t("password"))}
           {...form.getInputProps("password")}
         />
 
         <Group position="center" mt="md">
-          <Button type="submit">Увійти</Button>
+          <Button type="submit">{t("login")}</Button>
         </Group>
       </Stack>
     </form>

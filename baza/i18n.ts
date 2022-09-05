@@ -22,7 +22,7 @@ i18n.use(initReactI18next).init({
       },
     },
   },
-  lng: "uk",
+  lng: "en",
   fallbackLng: "en",
 
   interpolation: {

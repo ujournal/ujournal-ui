@@ -8,6 +8,7 @@ import {
   Stack,
 } from "@mantine/core";
 import { TablerIcon } from "@tabler/icons";
+import Link from "next/link";
 import { FC } from "react";
 
 export const LinksList: FC<{
@@ -16,54 +17,59 @@ export const LinksList: FC<{
   return (
     <Stack spacing={0}>
       {items.map(({ url, label, icon: Icon, active }) => (
-        <Tooltip label={label} key={url} openDelay={1000}>
-          <UnstyledButton
-            p={6}
-            sx={(theme) => ({
-              display: "block",
-              whiteSpace: "nowrap",
-            })}
-          >
-            <Box
+        <Link href={url} passHref key={url}>
+          <Tooltip label={label} openDelay={1000}>
+            <UnstyledButton
+              px={6}
+              py={4}
               sx={(theme) => ({
-                backgroundColor: active ? "white" : undefined,
-                borderRadius: theme.radius.sm,
+                display: "block",
+                whiteSpace: "nowrap",
               })}
-              p={6}
+              component="a"
             >
-              <Group
-                sx={{
-                  flexWrap: "nowrap",
-                  overflow: "hidden",
-                }}
-                spacing={"xs"}
+              <Box
+                sx={(theme) => ({
+                  backgroundColor: active ? "white" : undefined,
+                  borderRadius: theme.radius.md,
+                })}
+                px={6}
+                py={8}
               >
-                <ThemeIcon
-                  size="md"
-                  radius="sm"
-                  variant="outline"
-                  color="gray"
-                  sx={{ border: "none" }}
-                >
-                  <Icon stroke={1.5} />
-                </ThemeIcon>
-
-                <Text
-                  size="md"
+                <Group
                   sx={{
-                    textOverflow: "ellipsis",
-                    minWidth: 0,
-                    width: "100%",
-                    maxWidth: 160,
+                    flexWrap: "nowrap",
                     overflow: "hidden",
                   }}
+                  spacing={"xs"}
                 >
-                  {label}
-                </Text>
-              </Group>
-            </Box>
-          </UnstyledButton>
-        </Tooltip>
+                  <ThemeIcon
+                    size="md"
+                    radius="sm"
+                    variant="outline"
+                    color="gray"
+                    sx={{ border: "none" }}
+                  >
+                    <Icon stroke={1.5} />
+                  </ThemeIcon>
+
+                  <Text
+                    size="md"
+                    sx={{
+                      textOverflow: "ellipsis",
+                      minWidth: 0,
+                      width: "100%",
+                      maxWidth: 160,
+                      overflow: "hidden",
+                    }}
+                  >
+                    {label}
+                  </Text>
+                </Group>
+              </Box>
+            </UnstyledButton>
+          </Tooltip>
+        </Link>
       ))}
     </Stack>
   );

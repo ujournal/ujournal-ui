@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { capitalize } from "lodash";
 import { IconBolt } from "@tabler/icons";
 import { SortType } from "ujournal-lemmy-js-client";
-import { Embed } from "features/embed/components/Embed";
+import { useRouterQuery } from "baza/hooks/useRouterQuery";
 
 const Home: SitePage = () => {
   return (
@@ -22,37 +22,46 @@ const Home: SitePage = () => {
 
 const HomeNavbar = () => {
   const { t } = useTranslation();
+  const query = useRouterQuery<{ sort: SortType }>({ sort: SortType.Hot });
 
   const links = useMemo(
-    () => [
-      {
-        url: `/?sort=${SortType.Hot}`,
-        label: capitalize(t("hot")),
-        icon: IconFlame,
-        active: true,
-      },
-      {
-        url: `/?sort=${SortType.Active}`,
-        label: capitalize(t("active")),
-        icon: IconTrendingUp,
-      },
-      {
-        url: `/?sort=${SortType.New}`,
-        label: capitalize(t("new")),
-        icon: IconBolt,
-      },
-      {
-        url: `/?sort=${SortType.MostComments}`,
-        label: capitalize(t("most_comments")),
-        icon: IconMessageCircle2,
-      },
-      {
-        url: `/?sort=${SortType.NewComments}`,
-        label: capitalize(t("new_comments")),
-        icon: IconMessageCircle2,
-      },
-    ],
-    [t]
+    () =>
+      [
+        {
+          sort: SortType.Hot,
+          url: `/?sort=${SortType.Hot}`,
+          label: capitalize(t("hot")),
+          icon: IconFlame,
+        },
+        {
+          sort: SortType.Active,
+          url: `/?sort=${SortType.Active}`,
+          label: capitalize(t("active")),
+          icon: IconTrendingUp,
+        },
+        {
+          sort: SortType.New,
+          url: `/?sort=${SortType.New}`,
+          label: capitalize(t("new")),
+          icon: IconBolt,
+        },
+        {
+          sort: SortType.MostComments,
+          url: `/?sort=${SortType.MostComments}`,
+          label: capitalize(t("most_comments")),
+          icon: IconMessageCircle2,
+        },
+        {
+          sort: SortType.NewComments,
+          url: `/?sort=${SortType.NewComments}`,
+          label: capitalize(t("new_comments")),
+          icon: IconMessageCircle2,
+        },
+      ].map((link) => ({
+        ...link,
+        active: query.sort === link.sort,
+      })),
+    [query.sort, t]
   );
 
   return (
