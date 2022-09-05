@@ -40,6 +40,9 @@ export default function App(props: SiteAppProps) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        {/* TODO create new app in google console */}
+        {/* TODO get google client_id from some env or secrets */}
+        <meta name="google-signin-client_id" content="84647043364-fblusm9rars1rb6qhlg5e81tm38bc5co.apps.googleusercontent.com"></meta>
       </Head>
 
       <I18nextProvider i18n={i18n}>

@@ -39,8 +39,11 @@ export const LoginForm: FC<{
           {...form.getInputProps("password")}
         />
 
-        <Group position="center" mt="md">
+        <Group position="left" mt="md">
           <Button type="submit">Увійти</Button>
+        </Group>
+        <Group position="right" mt="md">
+          <div id="gs2"></div>
         </Group>
       </Stack>
     </form>
