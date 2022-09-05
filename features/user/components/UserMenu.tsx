@@ -1,11 +1,4 @@
-import {
-  Menu,
-  UnstyledButton,
-  Group,
-  Avatar,
-  useMantineTheme,
-  Text,
-} from "@mantine/core";
+import { Menu, UnstyledButton, Group, Avatar, Text } from "@mantine/core";
 import {
   IconChevronDown,
   IconSettings,
@@ -15,18 +8,15 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { FC } from "react";
-import { UserButton } from "./UserButton";
 
 export const UserMenu: FC<{
   user: { name: string; image: string };
   onLogOut: () => void;
 }> = ({ user, onLogOut }) => {
-  const theme = useMantineTheme();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   return (
     <Menu
-      width={260}
       position="bottom-end"
       transition="pop-top-right"
       onClose={() => setUserMenuOpened(false)}

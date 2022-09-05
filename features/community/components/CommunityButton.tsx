@@ -25,17 +25,11 @@ export const CommunityButton = ({
   return (
     <Tooltip label={label} openDelay={1000}>
       <UnstyledButton
-        p={4}
+        p={6}
         sx={(theme) => ({
           display: "block",
           color:
             theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-          "&:hover": {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[6]
-                : theme.colors.gray[0],
-          },
           whiteSpace: "nowrap",
         })}
       >
@@ -44,7 +38,7 @@ export const CommunityButton = ({
             backgroundColor: active ? "white" : undefined,
             borderRadius: theme.radius.sm,
           })}
-          p={8}
+          p={6}
         >
           <Group sx={{ flexWrap: "nowrap", overflow: "hidden" }} spacing={"xs"}>
             <Avatar src={image} size="sm" radius="sm">

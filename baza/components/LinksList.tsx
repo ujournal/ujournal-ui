@@ -18,19 +18,9 @@ export const LinksList: FC<{
       {items.map(({ url, label, icon: Icon, active }) => (
         <Tooltip label={label} key={url} openDelay={1000}>
           <UnstyledButton
-            p={4}
+            p={6}
             sx={(theme) => ({
               display: "block",
-              color:
-                theme.colorScheme === "dark"
-                  ? theme.colors.dark[0]
-                  : theme.black,
-              "&:hover": {
-                backgroundColor:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[6]
-                    : theme.colors.gray[0],
-              },
               whiteSpace: "nowrap",
             })}
           >
@@ -39,7 +29,7 @@ export const LinksList: FC<{
                 backgroundColor: active ? "white" : undefined,
                 borderRadius: theme.radius.sm,
               })}
-              p={8}
+              p={6}
             >
               <Group
                 sx={{
