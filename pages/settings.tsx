@@ -5,7 +5,3 @@ const SettingsPage: SitePage = () => {
 };
 
 export default SettingsPage;
-
-export function isBrowser() {
-  return typeof window !== "undefined";
-}

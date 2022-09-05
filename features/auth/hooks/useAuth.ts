@@ -11,7 +11,10 @@ import {
   useState,
 } from "react";
 import { Login } from "ujournal-lemmy-js-client";
-import { useLemmyClient, GoogleLogin } from "../../../baza/hooks/useLemmyClient";
+import {
+  useLemmyClient,
+  GoogleLogin,
+} from "../../../baza/hooks/useLemmyClient";
 import cookies from "browser-cookies";
 import { useEnv } from "../../../baza/hooks/useEnv";
 import jwtDecode from "jwt-decode";
@@ -60,12 +63,20 @@ export const useAuth = () => {
     }
   }, [setSession]);
 
-  const google_login = useCallback(
-      async ({username, email, logo_url}: {username: string; email: string; logo_url: string;}) => {
-        let expires = new Date();
-        expires.setDate(expires.getDate() + 365);
+  const loginViaGoogle = useCallback(
+    async ({
+      username,
+      email,
+      logo_url,
+    }: {
+      username: string;
+      email: string;
+      logo_url: string;
+    }) => {
+      let expires = new Date();
+      expires.setDate(expires.getDate() + 365);
 
-          console.log("google_login", username, email, logo_url);
+      console.log("google_login", username, email, logo_url);
 
       const { jwt } = await lemmyClient.login_via_google(
         new GoogleLogin({
@@ -80,13 +91,20 @@ export const useAuth = () => {
       cookies.set("jwt", jwt.unwrap(), { expires, secure: isHttps });
 
       restoreSession();
-      }, [isHttps, lemmyClient, restoreSession]
-  )
+    },
+    [isHttps, lemmyClient, restoreSession]
+  );
 
   const login = useCallback(
-      async ({usernameOrEmail, password}: {usernameOrEmail: string; password: string;}) => {
-        let expires = new Date();
-        expires.setDate(expires.getDate() + 365);
+    async ({
+      usernameOrEmail,
+      password,
+    }: {
+      usernameOrEmail: string;
+      password: string;
+    }) => {
+      let expires = new Date();
+      expires.setDate(expires.getDate() + 365);
 
       const { jwt } = await lemmyClient.login(
         new Login({
@@ -126,6 +144,7 @@ export const useAuth = () => {
   return {
     token: jwt,
     login,
-    logout, google_login,
+    logout,
+    loginViaGoogle,
   };
 };

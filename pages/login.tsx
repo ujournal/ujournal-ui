@@ -4,17 +4,9 @@ import { useAuth } from "features/auth/hooks/useAuth";
 import { SitePage } from "types";
 import { showNotification } from "@mantine/notifications";
 import { useCallback } from "react";
-import { Card, Container } from "@mantine/core";
+import { Box, Card, Container } from "@mantine/core";
 import { useRouter } from "next/router";
-import {
-  isBrowser,
-} from "./settings";
-
-var gapi: any;
-
-if (isBrowser()) {
-    gapi = require("gapi-script").gapi;
-}
+import { useEffect } from "react";
 
 const LoginPage: SitePage = () => {
   const auth = useAuth();
@@ -37,33 +29,43 @@ const LoginPage: SitePage = () => {
     { onError }
   );
 
-    if (isBrowser()) {
-        const onGoogleSignIn = user => {
-            console.log('user', user);
+  const onGoogleSignIn = useCallback(
+    async (user: any) => {
+      console.log("user", user);
 
-            let user_data = {
-                username: user.wt.Ad,
-                email: user.wt.cu,
-                logo_url: user.wt.hK,
-            }
+      let user_data = {
+        username: user.wt.Ad,
+        email: user.wt.cu,
+        logo_url: user.wt.hK,
+      };
 
-            console.log('user_data', user_data);
+      console.log("user_data", user_data);
 
-            auth.google_login(user_data);
-            showNotification({message: "Google"});
-            // TODO push after success login
-            // router.push("/");
-        }
+      auth.loginViaGoogle(user_data);
 
-        gapi.signin2.render('gs2', {
-            'scope': 'https://www.googleapis.com/auth/plus.login',
-            'width': 200,
-            'height': 50,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onGoogleSignIn
-        });
-    }
+      showNotification({ message: "Google" });
+      // TODO push after success login
+      // router.push("/");
+    },
+    [auth]
+  );
+
+  useEffect(() => {
+    (async () => {
+      const { loadGapiInsideDOM } = await import("gapi-script");
+
+      const gapi = await loadGapiInsideDOM();
+
+      gapi.signin2.render("gs2", {
+        scope: "https://www.googleapis.com/auth/plus.login",
+        width: 200,
+        height: 50,
+        longtitle: true,
+        theme: "dark",
+        onsuccess: onGoogleSignIn,
+      });
+    })();
+  }, [onGoogleSignIn]);
 
   return (
     <Container size="xs">
@@ -72,6 +74,7 @@ const LoginPage: SitePage = () => {
           values={{ usernameOrEmail: "", password: "" }}
           onSubmit={handleLogin}
         />
+        <Box id="ga2" />
       </Card>
     </Container>
   );
