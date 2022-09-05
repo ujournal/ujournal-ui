@@ -30,11 +30,10 @@ import { useCallback } from "react";
 import { Rate } from "baza/components/Rate";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
-import { intervalToDuration } from "date-fns";
 import { useMemo } from "react";
-import { getTodayInLocale } from "baza/utils/date";
 import { formatShortNum } from "baza/utils/number";
 import { useIntersection } from "@mantine/hooks";
+import { DateFormatted } from "baza/components/DeteFormatted";
 
 export const Post: FC<
   PostView & {
@@ -57,17 +56,6 @@ export const Post: FC<
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
   }, [_showBody]);
-
-  const daysAgo = useMemo(
-    () =>
-      intervalToDuration({
-        start: new Date(post.published),
-        end: new Date(),
-      }).days || 0,
-    [post]
-  );
-
-  const isIntersected = entry?.isIntersecting;
 
   return (
     <Card
@@ -111,18 +99,7 @@ export const Post: FC<
               none: () => creator.name,
             })}
           />
-          <Tooltip
-            label={new Date(post.published).toLocaleString()}
-            openDelay={1000}
-          >
-            <Text sx={{ whiteSpace: "nowrap" }} color="gray" size="sm">
-              {daysAgo > 0
-                ? t("intlRelativeTime", {
-                    value: daysAgo * -1,
-                  })
-                : getTodayInLocale()}
-            </Text>
-          </Tooltip>
+          <DateFormatted date={new Date(post.published)} />
         </Group>
 
         <Menu withinPortal position="bottom-end" shadow="sm">
