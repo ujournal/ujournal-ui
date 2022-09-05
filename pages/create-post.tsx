@@ -4,9 +4,9 @@ import { SitePage } from "types";
 
 const CreatePostPage: SitePage = () => {
   return (
-    <Container size="md">
+    <Container size={690} p={0}>
       <Card p="md">
-        <PostEditForm values={{}} onSubmit={console.log} />
+        <PostEditForm onSubmit={console.log} />
       </Card>
     </Container>
   );

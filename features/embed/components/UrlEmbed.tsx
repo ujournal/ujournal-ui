@@ -1,6 +1,5 @@
 import {
   Box,
-  Card,
   Title,
   Text,
   Stack,
@@ -69,7 +68,7 @@ export const UrlEmbed: EmbedComponentType = ({
             </AspectRatio>
           </Box>
           <Stack spacing={4}>
-            <Title size="h5">{heading[0]}</Title>
+            {heading[0] && <Title size="h5">{heading[0]}</Title>}
             {src && (
               <Group noWrap spacing={6}>
                 <ThemeIcon

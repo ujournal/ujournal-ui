@@ -1,10 +1,10 @@
-import { Box } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 import { SitePage } from "types";
 import { PostList } from "features/post/components/PostList";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
 import { IconMessageCircle2, IconTrendingUp } from "@tabler/icons";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "lodash";
@@ -75,5 +75,11 @@ const HomeNavbar = () => {
   );
 };
 
+const HomeAside: FC = () => {
+  return <></>;
+};
+
 Home.Navbar = HomeNavbar;
+Home.Aside = HomeAside;
+
 export default Home;

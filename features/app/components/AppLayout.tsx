@@ -4,12 +4,14 @@ import { AppHeader } from "./AppHeader";
 
 export const AppLayout: FC<{
   navbar?: ReactElement;
+  aside?: ReactElement;
   children: ReactElement;
-}> = ({ navbar, children }) => {
+}> = ({ navbar, aside, children }) => {
   return (
     <AppShell
       padding="md"
       navbar={navbar}
+      aside={aside}
       header={<AppHeader />}
       styles={(theme) => ({
         main: {

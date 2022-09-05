@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { I18nextProvider } from "react-i18next";
-import { MantineProvider, Navbar, ScrollArea } from "@mantine/core";
+import { Aside, Box, MantineProvider, Navbar, ScrollArea } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LemmyClientContext, lemmyHttpClient } from "baza/hooks/useLemmyClient";
 import { LemmyAuthProvider } from "features/auth/hooks/useAuth";
@@ -25,11 +25,26 @@ export default function App(props: SiteAppProps) {
         withBorder={false}
         width={{ base: 220 }}
         sx={{ backgroundColor: "transparent" }}
+        hiddenBreakpoint="md"
       >
         <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
           <Component.Navbar />
         </Navbar.Section>
       </Navbar>
+    ) : undefined;
+
+  const aside =
+    largerThanMd && Component.Aside ? (
+      <Aside
+        withBorder={false}
+        width={{ base: 220 }}
+        fixed={false}
+        sx={{ backgroundColor: "transparent" }}
+      >
+        <Aside.Section grow component={ScrollArea} mx="-xs" px="xs">
+          <Component.Aside />
+        </Aside.Section>
+      </Aside>
     ) : undefined;
 
   return (
@@ -53,7 +68,7 @@ export default function App(props: SiteAppProps) {
                     withNormalizeCSS
                     theme={mantineTheme}
                   >
-                    <AppLayout navbar={navbar}>
+                    <AppLayout navbar={navbar} aside={aside}>
                       <Component {...pageProps} />
                     </AppLayout>
                   </MantineProvider>

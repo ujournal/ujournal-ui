@@ -26,7 +26,7 @@ export const CommunityButton = ({
   active = false,
 }: CommunityButtonProps) => {
   return (
-    <Link href={`/community?communityId=${communityId}`} passHref>
+    <Link href={`?communityId=${communityId}`} passHref>
       <Tooltip label={label} openDelay={1000}>
         <UnstyledButton
           component="a"

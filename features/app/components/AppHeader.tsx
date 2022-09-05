@@ -1,5 +1,5 @@
 import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
-import { IconLogin } from "@tabler/icons";
+import { IconCirclePlus, IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/auth/hooks/useAuth";
@@ -8,11 +8,14 @@ import Link from "next/link";
 import { FC, useMemo } from "react";
 import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
+import { capitalize } from "lodash";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
 export const AppHeader: FC = () => {
   const site = useSite();
   const auth = useAuth();
   const { t } = useTranslation();
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   const user = useMemo(
     () =>
@@ -60,6 +63,7 @@ export const AppHeader: FC = () => {
         borderWidth: 0,
         borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
         boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.05)",
+        zIndex: 200,
       }}
     >
       <Group position="apart">
@@ -75,11 +79,29 @@ export const AppHeader: FC = () => {
           </Link>
         </Group>
 
-        {site.isLoading ? (
-          <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
-        ) : (
-          profileMenu
-        )}
+        <Group spacing="lg">
+          <Link href="/create-post" passHref>
+            <Button
+              leftIcon={<IconCirclePlus />}
+              component="a"
+              styles={{
+                root: {
+                  paddingRight: largerThanSm ? undefined : 12,
+                },
+                leftIcon: {
+                  marginRight: largerThanSm ? undefined : 0,
+                },
+              }}
+            >
+              {largerThanSm ? capitalize(t("create_post")) : undefined}
+            </Button>
+          </Link>
+          {site.isLoading ? (
+            <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
+          ) : (
+            profileMenu
+          )}
+        </Group>
       </Group>
     </Header>
   );
