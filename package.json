@@ -26,6 +26,7 @@
     "browser-cookies": "^1.2.0",
     "class-transformer": "^0.5.1",
     "date-fns": "^2.29.2",
+    "gapi-script": "^1.2.0",
     "i18next": "^21.9.1",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",

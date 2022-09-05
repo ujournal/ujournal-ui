@@ -6,6 +6,15 @@ import { showNotification } from "@mantine/notifications";
 import { useCallback } from "react";
 import { Card, Container } from "@mantine/core";
 import { useRouter } from "next/router";
+import {
+  isBrowser,
+} from "./settings";
+
+var gapi: any;
+
+if (isBrowser()) {
+    gapi = require("gapi-script").gapi;
+}
 
 const LoginPage: SitePage = () => {
   const auth = useAuth();
@@ -27,6 +36,34 @@ const LoginPage: SitePage = () => {
     },
     { onError }
   );
+
+    if (isBrowser()) {
+        const onGoogleSignIn = user => {
+            console.log('user', user);
+
+            let user_data = {
+                username: user.wt.Ad,
+                email: user.wt.cu,
+                logo_url: user.wt.hK,
+            }
+
+            console.log('user_data', user_data);
+
+            auth.google_login(user_data);
+            showNotification({message: "Google"});
+            // TODO push after success login
+            // router.push("/");
+        }
+
+        gapi.signin2.render('gs2', {
+            'scope': 'https://www.googleapis.com/auth/plus.login',
+            'width': 200,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onGoogleSignIn
+        });
+    }
 
   return (
     <Container size="xs">
