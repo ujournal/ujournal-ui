@@ -32,7 +32,7 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
         onClick={toggleDisplayFull}
       >
         {displayFull
-          ? `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+          ? date.toLocaleString()
           : daysAgo > 0
           ? t("intlRelativeTime", {
               value: daysAgo * -1,
