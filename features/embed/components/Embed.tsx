@@ -35,7 +35,7 @@ const typeToAspectRatio = {
   [EmbedType.Default]: -1,
   [EmbedType.Image]: 4 / 3,
   [EmbedType.YouTube]: 16 / 9,
-  [EmbedType.Twitter]: 4 / 3,
+  [EmbedType.Twitter]: -1,
   [EmbedType.Vimeo]: 16 / 9,
 };
 

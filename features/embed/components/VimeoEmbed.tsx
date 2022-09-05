@@ -25,7 +25,10 @@ export const VimeoEmbed: EmbedComponentType = ({ src, title }) => {
 
   if (!showed) {
     return (
-      <UnstyledButton onClick={toggleShowed} sx={{ position: "relative" }}>
+      <UnstyledButton
+        onClick={toggleShowed}
+        sx={{ position: "relative", userSelect: "none" }}
+      >
         <Box
           component="img"
           src={`https://vumbnail.com/${videoId}.jpg`}

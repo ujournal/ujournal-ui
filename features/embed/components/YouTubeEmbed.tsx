@@ -27,7 +27,10 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
 
   if (!showed) {
     return (
-      <UnstyledButton onClick={toggleShowed} sx={{ position: "relative" }}>
+      <UnstyledButton
+        onClick={toggleShowed}
+        sx={{ position: "relative", userSelect: "none" }}
+      >
         <Box
           component="img"
           src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
@@ -55,17 +58,21 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
     );
   }
 
-  return (
-    <YouTube
-      videoId={videoId}
-      opts={{
-        width: "100%",
-        height: "100%",
-        playerVars: {
-          // https://developers.google.com/youtube/player_parameters
-          autoplay: 1,
-        },
-      }}
-    />
-  );
+  if (videoId) {
+    return (
+      <YouTube
+        videoId={videoId}
+        opts={{
+          width: "100%",
+          height: "100%",
+          playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+          },
+        }}
+      />
+    );
+  }
+
+  return <Box>Incorrect videoId</Box>;
 };

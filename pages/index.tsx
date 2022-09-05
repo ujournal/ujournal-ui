@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { capitalize } from "lodash";
 import { IconBolt } from "@tabler/icons";
 import { SortType } from "ujournal-lemmy-js-client";
+import { Embed } from "features/embed/components/Embed";
 
 const Home: SitePage = () => {
   return (
