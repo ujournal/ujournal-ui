@@ -8,6 +8,7 @@ import { YouTubeEmbed } from "./YouTubeEmbed";
 import { VimeoEmbed } from "./VimeoEmbed";
 import { FacebookEmbed } from "./FacebookEmbed";
 import { InstagramEmbed } from "./InstagramEmbed";
+import { TelegramEmbed } from "./TelegramEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -17,6 +18,7 @@ enum EmbedType {
   Vimeo = "vimeo",
   Facebook = "facebook",
   Instagram = "instagram",
+  Telegram = "telegram",
 }
 
 const typeToCheckFn = {
@@ -27,6 +29,7 @@ const typeToCheckFn = {
   [EmbedType.Vimeo]: (url: string) => isSocialMediaUrl("vimeo", url),
   [EmbedType.Facebook]: (url: string) => isSocialMediaUrl("facebook", url),
   [EmbedType.Instagram]: (url: string) => isSocialMediaUrl("instagram", url),
+  [EmbedType.Telegram]: (url: string) => isSocialMediaUrl("telegram", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -37,6 +40,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Vimeo]: VimeoEmbed,
   [EmbedType.Facebook]: FacebookEmbed,
   [EmbedType.Instagram]: InstagramEmbed,
+  [EmbedType.Telegram]: TelegramEmbed,
 };
 
 const typeToAspectRatio = {
@@ -47,6 +51,7 @@ const typeToAspectRatio = {
   [EmbedType.Vimeo]: 16 / 9,
   [EmbedType.Facebook]: -1,
   [EmbedType.Instagram]: -1,
+  [EmbedType.Telegram]: -1,
 };
 
 export const getTypeBySrc = (src: string) => {
