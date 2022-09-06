@@ -128,7 +128,9 @@ export const PostEditForm: FC<{
 
         {form.values.url ? (
           <Box mx="-xl" sx={{ position: "relative" }}>
-            <Embed src={form.values.url} />
+            <Box sx={{ pointerEvents: "none" }}>
+              <Embed src={form.values.url} />
+            </Box>
             <ActionIcon
               variant="filled"
               onClick={handleEmbedRemove}
@@ -138,6 +140,7 @@ export const PostEditForm: FC<{
                 top: theme.spacing.sm,
                 right: theme.spacing.sm,
               })}
+              color="blue"
             >
               <IconTrash size={16} stroke={1.5} />
             </ActionIcon>

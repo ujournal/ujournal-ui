@@ -1,12 +1,12 @@
 import EditorJS, { API as EditorAPI } from "@editorjs/editorjs";
 import { Box, BoxProps } from "@mantine/core";
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef } from "react";
 import HeaderTool from "@editorjs/header";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import QuoteTool from "@editorjs/quote";
-import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorjs";
-import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsToMarkdown";
+import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
+import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";
 
 type TextEditorProps = {
   placeholder?: string;
