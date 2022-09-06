@@ -8,6 +8,7 @@ import {
   Menu,
   Button,
   Tooltip,
+  ScrollArea,
 } from "@mantine/core";
 import { FC, MutableRefObject } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -84,80 +85,86 @@ export const Post: FC<
       ref={ref}
       shadow="xs"
     >
-      <Group position="apart" mt="-xs">
-        <Group
-          noWrap
-          sx={{ flex: "1 1 0", flexGrow: "unset" }}
-          spacing="xs"
-          mx="-xs"
-        >
-          <CommunityButton
-            communityId={community.id}
-            image={community.icon.match<string | undefined>({
-              some: (name) => name,
-              none: undefined,
-            })}
-            label={Some(community.title).match<string>({
-              some: (name) => name,
-              none: () => community.name,
-            })}
-            weight={600}
-          />
-          <UserButton
-            userId={creator.id}
-            image={creator.avatar.match<string | undefined>({
-              some: (name) => name,
-              none: undefined,
-            })}
-            label={creator.display_name.match<string>({
-              some: (name) => name,
-              none: () => creator.name,
-            })}
-          />
-          <DateFormatted date={new Date(post.published)} />
+      <ScrollArea>
+        <Group position="apart" mt="-xs" noWrap>
+          <Group
+            noWrap
+            sx={{ flex: "1 1 0", flexGrow: "unset" }}
+            spacing="xs"
+            mx="-xs"
+          >
+            <CommunityButton
+              communityId={community.id}
+              image={community.icon.match<string | undefined>({
+                some: (name) => name,
+                none: undefined,
+              })}
+              label={Some(community.title).match<string>({
+                some: (name) => name,
+                none: () => community.name,
+              })}
+              weight={600}
+            />
+            <UserButton
+              userId={creator.id}
+              image={creator.avatar.match<string | undefined>({
+                some: (name) => name,
+                none: undefined,
+              })}
+              label={creator.display_name.match<string>({
+                some: (name) => name,
+                none: () => creator.name,
+              })}
+            />
+            <DateFormatted date={new Date(post.published)} />
+          </Group>
+
+          <Menu withinPortal position="bottom-end" shadow="sm">
+            <Menu.Target>
+              <ActionIcon>
+                <IconDots size={16} />
+              </ActionIcon>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Item
+                icon={
+                  saved ? <IconStarOff size={14} /> : <IconStar size={14} />
+                }
+              >
+                {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
+              </Menu.Item>
+              <Menu.Item icon={<IconCopy size={14} />}>
+                {capitalize(t("cross_post"))}
+              </Menu.Item>
+              <Link href={`/edit-post?postId=${post.id}`}>
+                <Menu.Item icon={<IconPencil size={14} />} component="a">
+                  {capitalize(t("edit"))}
+                </Menu.Item>
+              </Link>
+              <Menu.Item icon={<IconLock size={14} />}>
+                {post.locked ? capitalize(t("unlock")) : capitalize(t("lock"))}
+              </Menu.Item>
+              <Menu.Item icon={<IconPin size={14} />}>
+                {post.stickied
+                  ? capitalize(t("unsticky"))
+                  : capitalize(t("sticky"))}
+              </Menu.Item>
+              <Menu.Item icon={<IconTrash size={14} />} color="red">
+                {post.deleted
+                  ? capitalize(t("restore"))
+                  : capitalize(t("delete"))}
+              </Menu.Item>
+              <Menu.Item icon={<IconTrash size={14} />} color="red">
+                {post.removed
+                  ? capitalize(t("restore"))
+                  : capitalize(t("remove"))}{" "}
+                ({t("mod")})
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </Group>
-
-        <Menu withinPortal position="bottom-end" shadow="sm">
-          <Menu.Target>
-            <ActionIcon>
-              <IconDots size={16} />
-            </ActionIcon>
-          </Menu.Target>
-
-          <Menu.Dropdown>
-            <Menu.Item
-              icon={saved ? <IconStarOff size={14} /> : <IconStar size={14} />}
-            >
-              {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconCopy size={14} />}>
-              {capitalize(t("cross_post"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconPencil size={14} />}>
-              {capitalize(t("edit"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconLock size={14} />}>
-              {post.locked ? capitalize(t("unlock")) : capitalize(t("lock"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconPin size={14} />}>
-              {post.stickied
-                ? capitalize(t("unsticky"))
-                : capitalize(t("sticky"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconTrash size={14} />} color="red">
-              {post.deleted
-                ? capitalize(t("restore"))
-                : capitalize(t("delete"))}
-            </Menu.Item>
-            <Menu.Item icon={<IconTrash size={14} />} color="red">
-              {post.removed
-                ? capitalize(t("restore"))
-                : capitalize(t("remove"))}{" "}
-              ({t("mod")})
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-      </Group>
+      </ScrollArea>
 
       <Group position="apart" mt="xs" mb="md">
         <Link href={`/post?postId=${post.id}`} passHref>

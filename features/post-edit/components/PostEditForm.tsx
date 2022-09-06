@@ -3,7 +3,6 @@ import {
   TextInput,
   Button,
   Textarea,
-  Select,
   ActionIcon,
   Checkbox,
   Box,
@@ -17,6 +16,8 @@ import { IconPhotoUp, IconTrash } from "@tabler/icons";
 import dynamic from "next/dynamic";
 import { CommunitySelect } from "features/community/components/CommunitySelect";
 import { Embed } from "features/embed/components/Embed";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import isUrl from "validator/lib/isURL";
 
 const TextEditor = dynamic(
   async () => (await import("baza/components/TextEditor")).TextEditor,
@@ -45,6 +46,8 @@ export const PostEditForm: FC<{
   onSubmit,
 }) => {
   const { t } = useTranslation();
+
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
   const openRef = useRef<() => void>(null);
 
@@ -126,8 +129,8 @@ export const PostEditForm: FC<{
           {capitalize(t("upload_image"))}
         </Dropzone.FullScreen>
 
-        {form.values.url ? (
-          <Box mx="-xl" sx={{ position: "relative" }}>
+        {isUrl(form.values.url) ? (
+          <Box mx={smallerThanSm ? "-sm" : "-xl"} sx={{ position: "relative" }}>
             <Box sx={{ pointerEvents: "none" }}>
               <Embed src={form.values.url} />
             </Box>
@@ -150,7 +153,7 @@ export const PostEditForm: FC<{
             withAsterisk
             placeholder={`${t(
               "url"
-            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram...`}
+            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram, SoundCloud...`}
             {...form.getInputProps("url")}
             sx={{ flex: "1 1 0" }}
             styles={{
