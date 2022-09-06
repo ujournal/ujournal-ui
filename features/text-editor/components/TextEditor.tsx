@@ -1,6 +1,6 @@
 import EditorJS from "@editorjs/editorjs";
-import { Box, BoxProps } from "@mantine/core";
-import { FC, useEffect, useMemo, useRef } from "react";
+import { Box, BoxProps, Skeleton } from "@mantine/core";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 
 type TextEditorProps = {
   placeholder?: string;
@@ -12,14 +12,16 @@ export const TextEditor: FC<TextEditorProps> = ({
 }) => {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorElement = editorElementRef.current;
-  const editorRef = useRef<EditorJS>(null);
-  const editor = editorRef.current;
+  const editorRef = useRef<{ ref: EditorJS | undefined }>({ ref: undefined });
+  const editor = editorRef.current?.ref;
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     if (!editor && editorElement) {
-      new EditorJS({
+      editorRef.current.ref = new EditorJS({
         holder: editorElement,
         placeholder,
+        onReady: () => setIsLoaded(true),
       });
     }
 
@@ -34,7 +36,6 @@ export const TextEditor: FC<TextEditorProps> = ({
     <Box
       {...boxProps}
       ref={editorElementRef}
-      component="div"
       sx={{
         "& .codex-editor__redactor": {
           paddingBottom: `0 !important`,
@@ -49,7 +50,13 @@ export const TextEditor: FC<TextEditorProps> = ({
         "& .ce-paragraph[data-placeholder]:empty::before": {
           color: "#adb5bd",
         },
+        "& .codex-editor__loader": {
+          height: "auto",
+          display: "none",
+        },
       }}
-    />
+    >
+      {!isLoaded && <Skeleton height={40} />}
+    </Box>
   );
 };
