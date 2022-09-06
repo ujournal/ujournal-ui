@@ -5,6 +5,7 @@ import HeaderTool from "@editorjs/header";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import QuoteTool from "@editorjs/quote";
+import ListTool from "@editorjs/list";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";
 
@@ -57,10 +58,13 @@ export const TextEditor: FC<TextEditorProps> = ({
           class: QuoteTool,
           inlineToolbar: true,
           shortcut: "CMD+SHIFT+O",
-          // config: {
-          //   quotePlaceholder: "Enter a quote",
-          //   captionPlaceholder: "Quote's author",
-          // },
+        },
+        list: {
+          class: ListTool,
+          inlineToolbar: true,
+          config: {
+            defaultStyle: "unordered",
+          },
         },
       },
       data: convertMarkdownToEditorJs(value),

@@ -240,6 +240,11 @@
   "resolved" "https://registry.npmjs.org/@editorjs/image/-/image-2.6.2.tgz"
   "version" "2.6.2"
 
+"@editorjs/list@^1.7.0":
+  "integrity" "sha512-0k0RKbQqfV32u24UYHHz5mrmSu4wr246qqXBT7xQiS533Bfd4hzki6UGzvy4f275ULzi+egbjI3BXLkpoTh9iQ=="
+  "resolved" "https://registry.npmjs.org/@editorjs/list/-/list-1.7.0.tgz"
+  "version" "1.7.0"
+
 "@editorjs/quote@^2.4.0":
   "integrity" "sha512-IWOBWjL2ngPP63GcIAltyD9kc7OVZFma4kS+T5JRHvKKDspYsnmrxsbRmCPc+coZQzqPxXHkiOZuNMdmGX/Y3w=="
   "resolved" "https://registry.npmjs.org/@editorjs/quote/-/quote-2.4.0.tgz"
