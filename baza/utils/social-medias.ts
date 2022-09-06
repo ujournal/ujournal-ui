@@ -9,7 +9,7 @@ const socialMediaRegExps = {
   facebook:
     /^https:\/\/www\.facebook\.com\/(photo(\.php|s)|permalink\.php|media|questions|notes|[^\/]+\/(activity|posts))[\/?].*$/,
   instagram: /(?:https?:\/\/www\.)?instagram\.com\S*?\/p\/(\w{11})\/?/,
-  telegram: /(?:https?:\/\/www\.)?t\.me\S*?\/s\/(.+\/\d+)\/?/,
+  telegram: /(?:https?:\/\/www\.)?t\.me\S*?(?:\/s)?\/(.+\/\d+)\/?/,
 };
 
 export const isSocialMediaUrl = (

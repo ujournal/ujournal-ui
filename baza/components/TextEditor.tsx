@@ -41,13 +41,14 @@ export const TextEditor: FC<TextEditorProps> = ({
     <Box
       {...boxProps}
       ref={editorElementRef}
-      sx={{
+      sx={(theme) => ({
         "& .codex-editor__redactor": {
           paddingBottom: `0 !important`,
           paddingLeft: 8,
           paddingRight: 8,
           marginLeft: -8,
           marginRight: -8,
+          borderRadius: theme.radius.sm,
           "&:hover": {
             backgroundColor: "rgba(0,0,0,0.015)",
           },
@@ -59,7 +60,7 @@ export const TextEditor: FC<TextEditorProps> = ({
           height: "auto",
           display: "none",
         },
-      }}
+      })}
     >
       {!isLoaded && <Skeleton height={40} />}
     </Box>

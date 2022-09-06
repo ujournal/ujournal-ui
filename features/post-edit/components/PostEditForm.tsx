@@ -20,7 +20,7 @@ import { Embed } from "features/embed/components/Embed";
 
 const TextEditor = dynamic(
   async () =>
-    (await import("features/text-editor/components/TextEditor")).TextEditor,
+    (await import("baza/components/TextEditor")).TextEditor,
   { ssr: false }
 );
 
@@ -131,7 +131,7 @@ export const PostEditForm: FC<{
             withAsterisk
             placeholder={`${t(
               "url"
-            )} YouTube, Vimeo, Twitter, Facebook, Instagram...`}
+            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram...`}
             {...form.getInputProps("url")}
             sx={{ flex: "1 1 0" }}
             styles={{

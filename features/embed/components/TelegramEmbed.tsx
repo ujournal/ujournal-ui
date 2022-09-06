@@ -3,7 +3,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EmbedComponentType } from "./types";
 
 export const TelegramEmbed: EmbedComponentType = ({ src }) => {
-  const matches = src.match(/(?:https?:\/\/www\.)?t\.me\S*?\/s\/(.+\/\d+)\/?/);
+  const matches = src.match(
+    /(?:https?:\/\/www\.)?t\.me\S*?(?:\/s)?\/(.+\/\d+)\/?/
+  );
   const [height, setHeight] = useState<number | string>(80);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -73,7 +75,7 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
         <Box
           component="iframe"
           id={frameId}
-          src={`${src}?embed=1`}
+          src={`${src.replace("/s/", "/")}?embed=1`}
           width="100%"
           frameBorder="0"
           scrolling="no"
