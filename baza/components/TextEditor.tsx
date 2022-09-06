@@ -1,41 +1,75 @@
-import EditorJS from "@editorjs/editorjs";
-import { Box, BoxProps, Skeleton } from "@mantine/core";
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import EditorJS, { API as EditorAPI } from "@editorjs/editorjs";
+import { Box, BoxProps } from "@mantine/core";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
+import HeaderTool from "@editorjs/header";
+import ImageTool from "@editorjs/image";
+import CodeTool from "@editorjs/code";
+import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorjs";
+import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsToMarkdown";
 
 type TextEditorProps = {
   placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
 } & BoxProps;
 
 export const TextEditor: FC<TextEditorProps> = ({
   placeholder,
+  value = "",
+  onChange,
   ...boxProps
 }) => {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorElement = editorElementRef.current;
   const [editor, setEditor] = useState<EditorJS | undefined>(undefined);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  const handleEditorReady = useCallback(() => {
-    setIsLoaded(true);
-  }, []);
+  const handleEditorChange = useCallback(
+    async (editorApi: EditorAPI) => {
+      onChange(convertEditorJsToMarkdown(await editorApi.saver.save()));
+    },
+    [onChange]
+  );
 
   useEffect(() => {
     if (editorElement) {
+      console.log(convertMarkdownToEditorJs(value));
+
       const editor = new EditorJS({
         holder: editorElement,
         placeholder,
-        onReady: handleEditorReady,
+        tools: {
+          code: CodeTool,
+          image: {
+            class: ImageTool,
+            config: {
+              endpoints: {
+                byFile: "/uploadFile",
+                byUrl: "/fetchUrl",
+              },
+            },
+          },
+          header: {
+            class: HeaderTool as any,
+            config: {
+              levels: [2, 3],
+              defaultLevel: 3,
+            },
+          },
+        },
+        data: convertMarkdownToEditorJs(value),
+        onChange: handleEditorChange,
       });
 
       setEditor(editor);
 
       return () => {
         if (editor) {
-          editor.destroy();
+          editor?.destroy();
         }
       };
     }
-  }, [editorElement, handleEditorReady, placeholder]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editorElement, placeholder]);
 
   return (
     <Box
@@ -57,12 +91,14 @@ export const TextEditor: FC<TextEditorProps> = ({
           color: "#adb5bd",
         },
         "& .codex-editor__loader": {
-          height: "auto",
-          display: "none",
+          height: 60,
+        },
+        "& .ce-toolbar__actions": {
+          backgroundColor: "#fff",
+          padding: theme.spacing.xs,
+          borderRadius: theme.radius.md,
         },
       })}
-    >
-      {!isLoaded && <Skeleton height={40} />}
-    </Box>
+    />
   );
 };

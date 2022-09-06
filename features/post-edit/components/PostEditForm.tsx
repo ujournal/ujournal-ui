@@ -13,19 +13,18 @@ import { capitalize } from "lodash";
 import { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import { IconPhotoUp } from "@tabler/icons";
+import { IconPhotoUp, IconTrash } from "@tabler/icons";
 import dynamic from "next/dynamic";
 import { CommunitySelect } from "features/community/components/CommunitySelect";
 import { Embed } from "features/embed/components/Embed";
 
 const TextEditor = dynamic(
-  async () =>
-    (await import("baza/components/TextEditor")).TextEditor,
+  async () => (await import("baza/components/TextEditor")).TextEditor,
   { ssr: false }
 );
 
 type Values = {
-  community_id: -1;
+  community_id: number;
   name: string;
   url: string;
   body: string;
@@ -63,6 +62,10 @@ export const PostEditForm: FC<{
     }
   }, [openRef]);
 
+  const handleEmbedRemove = useCallback(() => {
+    form.setFieldValue("url", "");
+  }, [form]);
+
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack spacing="xs">
@@ -89,6 +92,7 @@ export const PostEditForm: FC<{
           placeholder={capitalize(t("title"))}
           {...form.getInputProps("name")}
           autosize
+          autoFocus
           styles={{
             input: {
               borderWidth: 0,
@@ -123,8 +127,20 @@ export const PostEditForm: FC<{
         </Dropzone.FullScreen>
 
         {form.values.url ? (
-          <Box mx="-xl">
+          <Box mx="-xl" sx={{ position: "relative" }}>
             <Embed src={form.values.url} />
+            <ActionIcon
+              variant="filled"
+              onClick={handleEmbedRemove}
+              radius="xl"
+              sx={(theme) => ({
+                position: "absolute",
+                top: theme.spacing.sm,
+                right: theme.spacing.sm,
+              })}
+            >
+              <IconTrash size={16} stroke={1.5} />
+            </ActionIcon>
           </Box>
         ) : (
           <TextInput
@@ -158,7 +174,11 @@ export const PostEditForm: FC<{
           />
         )}
 
-        <TextEditor placeholder={capitalize(t("body"))} mb="md" />
+        <TextEditor
+          placeholder={capitalize(t("body"))}
+          mb="md"
+          {...form.getInputProps("body")}
+        />
 
         <Checkbox
           label={t("nsfw")}

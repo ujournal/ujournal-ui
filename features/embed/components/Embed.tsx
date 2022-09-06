@@ -1,4 +1,4 @@
-import { AspectRatio, Box } from "@mantine/core";
+import { AspectRatio, Box, Center } from "@mantine/core";
 import { isSocialMediaUrl } from "baza/utils/social-medias";
 import { UrlEmbed } from "./UrlEmbed";
 import { ImageEmbed } from "./ImageEmbed";
@@ -9,6 +9,7 @@ import { VimeoEmbed } from "./VimeoEmbed";
 import { FacebookEmbed } from "./FacebookEmbed";
 import { InstagramEmbed } from "./InstagramEmbed";
 import { TelegramEmbed } from "./TelegramEmbed";
+import isUrl from "validator/lib/isURL";
 
 enum EmbedType {
   Default = "default",
@@ -65,6 +66,19 @@ export const Embed: EmbedComponentType = ({
   description,
   thumbnail,
 }) => {
+  if (!isUrl(src)) {
+    return (
+      <Box
+        sx={(theme) => ({
+          backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+          padding: theme.spacing.md,
+        })}
+      >
+        <Center>Invalid URL</Center>
+      </Box>
+    );
+  }
+
   const _type = getTypeBySrc(src) || EmbedType.Default;
 
   const SpecificEmbedComponent =
