@@ -1,6 +1,6 @@
 import EditorJS from "@editorjs/editorjs";
 import { Box, BoxProps, Skeleton } from "@mantine/core";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type TextEditorProps = {
   placeholder?: string;
@@ -12,17 +12,22 @@ export const TextEditor: FC<TextEditorProps> = ({
 }) => {
   const editorElementRef = useRef<HTMLDivElement>(null);
   const editorElement = editorElementRef.current;
-  const editorRef = useRef<{ ref: EditorJS | undefined }>({ ref: undefined });
-  const editor = editorRef.current?.ref;
+  const [editor, setEditor] = useState<EditorJS | undefined>(undefined);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  const handleEditorReady = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
 
   useEffect(() => {
     if (!editor && editorElement) {
-      editorRef.current.ref = new EditorJS({
-        holder: editorElement,
-        placeholder,
-        onReady: () => setIsLoaded(true),
-      });
+      setEditor(
+        new EditorJS({
+          holder: editorElement,
+          placeholder,
+          onReady: handleEditorReady,
+        })
+      );
     }
 
     return () => {
@@ -30,7 +35,7 @@ export const TextEditor: FC<TextEditorProps> = ({
         editor.destroy();
       }
     };
-  }, [editor, editorElement, placeholder]);
+  }, [editor, editorElement, handleEditorReady, placeholder]);
 
   return (
     <Box
