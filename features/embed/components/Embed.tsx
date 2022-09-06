@@ -1,5 +1,5 @@
 import { AspectRatio, Box, Center } from "@mantine/core";
-import { isSocialMediaUrl } from "baza/utils/social-medias";
+import { isSocialMediaUrl } from "baza/utils/socialMedia";
 import { UrlEmbed } from "./UrlEmbed";
 import { ImageEmbed } from "./ImageEmbed";
 import { TwitterEmbed } from "./TwitterEmbed";
@@ -10,6 +10,7 @@ import { FacebookEmbed } from "./FacebookEmbed";
 import { InstagramEmbed } from "./InstagramEmbed";
 import { TelegramEmbed } from "./TelegramEmbed";
 import isUrl from "validator/lib/isURL";
+import { SoundCloudEmbed } from "./SoundCloudEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -20,6 +21,7 @@ enum EmbedType {
   Facebook = "facebook",
   Instagram = "instagram",
   Telegram = "telegram",
+  SoundCloud = "soundcloud",
 }
 
 const typeToCheckFn = {
@@ -31,6 +33,7 @@ const typeToCheckFn = {
   [EmbedType.Facebook]: (url: string) => isSocialMediaUrl("facebook", url),
   [EmbedType.Instagram]: (url: string) => isSocialMediaUrl("instagram", url),
   [EmbedType.Telegram]: (url: string) => isSocialMediaUrl("telegram", url),
+  [EmbedType.SoundCloud]: (url: string) => isSocialMediaUrl("soundcloud", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -42,6 +45,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Facebook]: FacebookEmbed,
   [EmbedType.Instagram]: InstagramEmbed,
   [EmbedType.Telegram]: TelegramEmbed,
+  [EmbedType.SoundCloud]: SoundCloudEmbed,
 };
 
 const typeToAspectRatio = {
@@ -53,6 +57,7 @@ const typeToAspectRatio = {
   [EmbedType.Facebook]: -1,
   [EmbedType.Instagram]: -1,
   [EmbedType.Telegram]: -1,
+  [EmbedType.SoundCloud]: -1,
 };
 
 export const getTypeBySrc = (src: string) => {

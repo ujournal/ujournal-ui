@@ -9,6 +9,7 @@ export const FacebookEmbed: EmbedComponentType = ({ src }) => {
         p="sm"
         sx={{
           "& iframe": {
+            backgroundColor: "#fff",
             marginTop: "0 !important",
             marginBottom: "0 !important",
             marginLeft: "auto !important",

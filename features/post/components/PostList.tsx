@@ -1,7 +1,7 @@
 import { Container, Loader, Stack } from "@mantine/core";
 import { Post } from "./Post";
 import { FC, useRef } from "react";
-import { usePosts } from "../hooks/usePosts";
+import { usePostList } from "../hooks/usePostList";
 import { DataList } from "baza/components/DataList";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import useInfiniteScroll from "react-infinite-scroll-hook";
@@ -11,7 +11,7 @@ import { Center } from "@mantine/core";
 import { PostListLoader } from "./PostListLoader";
 
 export const PostList: FC = () => {
-  const posts = usePosts();
+  const posts = usePostList();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   const [sentryRef] = useInfiniteScroll({

@@ -28,7 +28,7 @@ const fetchPosts = async (
   );
 };
 
-export const usePosts = () => {
+export const usePostList = () => {
   const client = useLemmyClient();
   const auth = useAuth();
 
