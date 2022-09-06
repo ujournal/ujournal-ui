@@ -14,8 +14,6 @@ import { PostView } from "ujournal-lemmy-js-client";
 import { useMarkdown } from "baza/hooks/useMarkdown";
 import {
   IconDots,
-  IconFileZip,
-  IconEye,
   IconTrash,
   IconCaretDown,
   IconCaretUp,
@@ -41,6 +39,7 @@ import { useIntersection } from "@mantine/hooks";
 import { DateFormatted } from "baza/components/DeteFormatted";
 import Link from "next/link";
 import { capitalize } from "lodash";
+import { MarkdownText } from "baza/components/MarkdownText";
 
 export const Post: FC<
   PostView & {
@@ -60,7 +59,6 @@ export const Post: FC<
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
-  const markdown = useMarkdown();
   const { t } = useTranslation();
 
   const { ref, entry } = useIntersection({
@@ -211,56 +209,8 @@ export const Post: FC<
                     },
               }}
             >
-              <Text size="md">
-                <Box
-                  dangerouslySetInnerHTML={{ __html: markdown.render(body) }}
-                  sx={(theme) => ({
-                    "& a": {
-                      textDecoration: "underline",
-                      textDecorationColor: theme.colors.blue[1],
-                      color: theme.colors.blue,
-                    },
-                    "& > p:first-of-type": {
-                      marginTop: 0,
-                    },
-                    "& > p:last-child": {
-                      marginBottom: 0,
-                    },
-                    "& p:empty": {
-                      display: "none",
-                    },
-                    "& img": {
-                      display: "block",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      maxWidth: "100%",
-                      maxHeight: "60vh",
-                    },
-                    "& .image": {
-                      backgroundColor: "rgba(0,0,0,0.05)",
-                      marginLeft: -20,
-                      marginRight: -20,
-                    },
-                    "& blockquote": {
-                      backgroundColor: theme.colors.blue[0],
-                      padding: theme.spacing.xl,
-                      marginLeft: largerThanMd
-                        ? -theme.spacing.lg
-                        : -theme.spacing.sm,
-                      marginRight: largerThanMd
-                        ? -theme.spacing.lg
-                        : -theme.spacing.sm,
-                      fontSize: theme.fontSizes.xl,
-                      fontWeight: 600,
-                      "& p:first-of-type": {
-                        marginTop: 0,
-                      },
-                      "& p:last-child": {
-                        marginBottom: 0,
-                      },
-                    },
-                  })}
-                />
+              <Text size="md" component="div">
+                <MarkdownText text={body} />
               </Text>
             </Box>
             {!showBody && (

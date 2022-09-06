@@ -1,23 +1,33 @@
 import {
   Stack,
   TextInput,
-  Group,
   Button,
   Textarea,
   Select,
   ActionIcon,
   Checkbox,
+  Box,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { capitalize } from "lodash";
 import { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import { IconUpload } from "@tabler/icons";
+import { IconPhotoUp } from "@tabler/icons";
+import dynamic from "next/dynamic";
+import { CommunitySelect } from "features/community/components/CommunitySelect";
+import { Embed } from "features/embed/components/Embed";
+
+const TextEditor = dynamic(
+  async () =>
+    (await import("features/text-editor/components/TextEditor")).TextEditor,
+  { ssr: false }
+);
 
 type Values = {
   community_id: -1;
   name: string;
+  url: string;
   body: string;
   nsfw: boolean;
 };
@@ -29,6 +39,7 @@ export const PostEditForm: FC<{
   values = {
     community_id: -1,
     name: "",
+    url: "",
     body: "",
     nsfw: false,
   },
@@ -54,24 +65,52 @@ export const PostEditForm: FC<{
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
-      <Stack spacing="sm">
-        <Select
+      <Stack spacing="xs">
+        <CommunitySelect
           withAsterisk
-          label={capitalize(t("select_a_community"))}
-          data={[
-            { value: "react", label: "React" },
-            { value: "ng", label: "Angular" },
-            { value: "svelte", label: "Svelte" },
-            { value: "vue", label: "Vue" },
-          ]}
-          searchable
+          styles={{
+            input: {
+              borderWidth: 0,
+              paddingLeft: 8,
+              paddingRight: 8,
+              marginLeft: -8,
+              marginRight: -8,
+              "&:hover": {
+                backgroundColor: "rgba(0,0,0,0.015)",
+              },
+            },
+          }}
           {...form.getInputProps("community_id")}
+          size="md"
         />
 
-        <TextInput
+        <Textarea
           withAsterisk
-          label={capitalize(t("title"))}
+          placeholder={capitalize(t("title"))}
           {...form.getInputProps("name")}
+          autosize
+          styles={{
+            input: {
+              borderWidth: 0,
+              fontWeight: 600,
+              minHeight: 0,
+              paddingLeft: 8,
+              paddingRight: 8,
+              marginLeft: -8,
+              marginRight: -8,
+              "&:hover": {
+                backgroundColor: "rgba(0,0,0,0.015)",
+              },
+            },
+          }}
+          size={22}
+          onInput={(event) => {
+            event.currentTarget.value = event.currentTarget.value.replace(
+              /\n/g,
+              ""
+            );
+          }}
+          minRows={1}
         />
 
         <Dropzone.FullScreen
@@ -83,32 +122,51 @@ export const PostEditForm: FC<{
           {capitalize(t("upload_image"))}
         </Dropzone.FullScreen>
 
-        <TextInput
-          withAsterisk
-          label={t("url")}
-          {...form.getInputProps("url")}
-          sx={{ flex: "1 1 0" }}
-          rightSection={
-            <ActionIcon onClick={handleUploadClick}>
-              <IconUpload />
-            </ActionIcon>
-          }
-        />
+        {form.values.url ? (
+          <Box mx="-xl">
+            <Embed src={form.values.url} />
+          </Box>
+        ) : (
+          <TextInput
+            withAsterisk
+            placeholder={`${t(
+              "url"
+            )} YouTube, Vimeo, Twitter, Facebook, Instagram...`}
+            {...form.getInputProps("url")}
+            sx={{ flex: "1 1 0" }}
+            styles={{
+              input: {
+                borderWidth: 0,
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginLeft: -8,
+                marginRight: -8,
+                "&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.015)",
+                },
+              },
+            }}
+            rightSection={
+              <ActionIcon
+                onClick={handleUploadClick}
+                sx={{ backgroundColor: "#fff" }}
+              >
+                <IconPhotoUp stroke={1.5} />
+              </ActionIcon>
+            }
+            size="md"
+          />
+        )}
 
-        <Textarea
-          withAsterisk
-          label={capitalize(t("body"))}
-          autosize
-          minRows={4}
-          {...form.getInputProps("body")}
-        />
+        <TextEditor placeholder={capitalize(t("body"))} mb="md" />
 
         <Checkbox
           label={t("nsfw")}
           {...form.getInputProps("nsfw", { type: "checkbox" })}
+          mb="md"
         />
 
-        <Button type="submit">
+        <Button type="submit" size="lg">
           {isEditing ? capitalize(t("save")) : capitalize(t("create"))}
         </Button>
       </Stack>

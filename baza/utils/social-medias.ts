@@ -1,4 +1,4 @@
-const mediaRegExps = {
+const socialMediaRegExps = {
   image: /(http)?s?:?(\/\/[^"']*\.(?:jpg|jpeg|gif|png|svg|webp))/,
   video: /(http)?s?:?(\/\/[^"']*\.(?:mp4|webm))/,
   youtube:
@@ -6,8 +6,14 @@ const mediaRegExps = {
   twitter: /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)/,
   vimeo:
     /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/,
+  facebook:
+    /^https:\/\/www\.facebook\.com\/(photo(\.php|s)|permalink\.php|media|questions|notes|[^\/]+\/(activity|posts))[\/?].*$/,
+  instagram: /(?:https?:\/\/www\.)?instagram\.com\S*?\/p\/(\w{11})\/?/,
 };
 
-export const isMedia = (media: keyof typeof mediaRegExps, url: string) => {
-  return mediaRegExps[media].test(url);
+export const isSocialMediaUrl = (
+  media: keyof typeof socialMediaRegExps,
+  url: string
+) => {
+  return socialMediaRegExps[media].test(url);
 };

@@ -82,7 +82,7 @@ export const AppHeader: FC = () => {
         <Group spacing="lg">
           <Link href="/create-post" passHref>
             <Button
-              leftIcon={<IconCirclePlus />}
+              leftIcon={<IconCirclePlus stroke={1.5} />}
               component="a"
               styles={{
                 root: {

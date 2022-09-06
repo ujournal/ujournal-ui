@@ -1,11 +1,13 @@
 import { AspectRatio, Box } from "@mantine/core";
-import { isMedia } from "baza/utils/url";
+import { isSocialMediaUrl } from "baza/utils/social-medias";
 import { UrlEmbed } from "./UrlEmbed";
 import { ImageEmbed } from "./ImageEmbed";
 import { TwitterEmbed } from "./TwitterEmbed";
 import { EmbedComponentType } from "./types";
 import { YouTubeEmbed } from "./YouTubeEmbed";
 import { VimeoEmbed } from "./VimeoEmbed";
+import { FacebookEmbed } from "./FacebookEmbed";
+import { InstagramEmbed } from "./InstagramEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -13,14 +15,18 @@ enum EmbedType {
   YouTube = "youtube",
   Twitter = "twitter",
   Vimeo = "vimeo",
+  Facebook = "facebook",
+  Instagram = "instagram",
 }
 
 const typeToCheckFn = {
   [EmbedType.Default]: () => false,
-  [EmbedType.Image]: (url: string) => isMedia("image", url),
-  [EmbedType.YouTube]: (url: string) => isMedia("youtube", url),
-  [EmbedType.Twitter]: (url: string) => isMedia("twitter", url),
-  [EmbedType.Vimeo]: (url: string) => isMedia("vimeo", url),
+  [EmbedType.Image]: (url: string) => isSocialMediaUrl("image", url),
+  [EmbedType.YouTube]: (url: string) => isSocialMediaUrl("youtube", url),
+  [EmbedType.Twitter]: (url: string) => isSocialMediaUrl("twitter", url),
+  [EmbedType.Vimeo]: (url: string) => isSocialMediaUrl("vimeo", url),
+  [EmbedType.Facebook]: (url: string) => isSocialMediaUrl("facebook", url),
+  [EmbedType.Instagram]: (url: string) => isSocialMediaUrl("instagram", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -29,6 +35,8 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.YouTube]: YouTubeEmbed,
   [EmbedType.Twitter]: TwitterEmbed,
   [EmbedType.Vimeo]: VimeoEmbed,
+  [EmbedType.Facebook]: FacebookEmbed,
+  [EmbedType.Instagram]: InstagramEmbed,
 };
 
 const typeToAspectRatio = {
@@ -37,6 +45,8 @@ const typeToAspectRatio = {
   [EmbedType.YouTube]: 16 / 9,
   [EmbedType.Twitter]: -1,
   [EmbedType.Vimeo]: 16 / 9,
+  [EmbedType.Facebook]: -1,
+  [EmbedType.Instagram]: -1,
 };
 
 export const getTypeBySrc = (src: string) => {
@@ -51,6 +61,7 @@ export const Embed: EmbedComponentType = ({
   thumbnail,
 }) => {
   const _type = getTypeBySrc(src) || EmbedType.Default;
+
   const SpecificEmbedComponent =
     typeToSpecificEmbedComponent[_type] ||
     typeToSpecificEmbedComponent[EmbedType.Default];
