@@ -240,6 +240,11 @@
   "resolved" "https://registry.npmjs.org/@editorjs/image/-/image-2.6.2.tgz"
   "version" "2.6.2"
 
+"@editorjs/quote@^2.4.0":
+  "integrity" "sha512-IWOBWjL2ngPP63GcIAltyD9kc7OVZFma4kS+T5JRHvKKDspYsnmrxsbRmCPc+coZQzqPxXHkiOZuNMdmGX/Y3w=="
+  "resolved" "https://registry.npmjs.org/@editorjs/quote/-/quote-2.4.0.tgz"
+  "version" "2.4.0"
+
 "@emotion/babel-plugin@^11.10.0":
   "integrity" "sha512-xNQ57njWTFVfPAc3cjfuaPdsgLp5QOSuRsj9MA6ndEhH/AzuZM86qIQzt6rq+aGBwj3n5/TkLmU5lhAfdRmogA=="
   "resolved" "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.10.2.tgz"

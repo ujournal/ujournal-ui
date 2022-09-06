@@ -10,11 +10,13 @@ import {
 import { IconSpeakerphone } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { capitalize } from "lodash";
-import { FC, ForwardedRef, forwardRef, useMemo } from "react";
+import { FC, ForwardedRef, forwardRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useCommunities } from "../hooks/useCommunities";
 
-export const CommunitySelect: FC<SelectProps> = ({ ...props }) => {
+export const CommunitySelect: FC<
+  Omit<SelectProps, "onChange"> & { onChange: (value: number) => void }
+> = ({ onChange, ...props }) => {
   const communities = useCommunities({ limit: 1000 });
   const { t } = useTranslation();
 
@@ -32,7 +34,7 @@ export const CommunitySelect: FC<SelectProps> = ({ ...props }) => {
   const icon = useMemo(() => {
     if (props.value) {
       const option = communitiesOptions.find(
-        ({ value }) => value === props.value
+        ({ value }) => value.toString() === props.value?.toString()
       );
 
       if (option) {
@@ -47,11 +49,20 @@ export const CommunitySelect: FC<SelectProps> = ({ ...props }) => {
     return undefined;
   }, [communitiesOptions, props.value]);
 
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      onChange(Number(value));
+    },
+    [onChange]
+  );
+
   return (
     <Select
       placeholder={capitalize(t("select_a_community"))}
       searchable
       {...props}
+      value={props.value?.toString()}
+      onChange={handleSelectChange}
       itemComponent={SelectItem}
       data={communitiesOptions}
       icon={icon}

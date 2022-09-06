@@ -1,9 +1,10 @@
 import EditorJS, { API as EditorAPI } from "@editorjs/editorjs";
 import { Box, BoxProps } from "@mantine/core";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import HeaderTool from "@editorjs/header";
 import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
+import QuoteTool from "@editorjs/quote";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorjs";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsToMarkdown";
 
@@ -20,8 +21,6 @@ export const TextEditor: FC<TextEditorProps> = ({
   ...boxProps
 }) => {
   const editorElementRef = useRef<HTMLDivElement>(null);
-  const editorElement = editorElementRef.current;
-  const [editor, setEditor] = useState<EditorJS | undefined>(undefined);
 
   const handleEditorChange = useCallback(
     async (editorApi: EditorAPI) => {
@@ -30,51 +29,65 @@ export const TextEditor: FC<TextEditorProps> = ({
     [onChange]
   );
 
-  useEffect(() => {
-    if (editorElement) {
-      console.log(convertMarkdownToEditorJs(value));
+  const _editor = useMemo(() => {
+    const element = document.createElement("div");
 
-      const editor = new EditorJS({
-        holder: editorElement,
-        placeholder,
-        tools: {
-          code: CodeTool,
-          image: {
-            class: ImageTool,
-            config: {
-              endpoints: {
-                byFile: "/uploadFile",
-                byUrl: "/fetchUrl",
-              },
-            },
-          },
-          header: {
-            class: HeaderTool as any,
-            config: {
-              levels: [2, 3],
-              defaultLevel: 3,
+    const editor = new EditorJS({
+      holder: element,
+      placeholder,
+      tools: {
+        code: CodeTool,
+        image: {
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: "/uploadFile",
+              byUrl: "/fetchUrl",
             },
           },
         },
-        data: convertMarkdownToEditorJs(value),
-        onChange: handleEditorChange,
-      });
+        header: {
+          class: HeaderTool as any,
+          config: {
+            levels: [2, 3],
+            defaultLevel: 3,
+          },
+        },
+        quote: {
+          class: QuoteTool,
+          inlineToolbar: true,
+          shortcut: "CMD+SHIFT+O",
+          // config: {
+          //   quotePlaceholder: "Enter a quote",
+          //   captionPlaceholder: "Quote's author",
+          // },
+        },
+      },
+      data: convertMarkdownToEditorJs(value),
+      onChange: handleEditorChange,
+    });
 
-      setEditor(editor);
+    return { element, editor };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (editorElementRef.current) {
+      const { current } = editorElementRef;
+
+      current?.appendChild(_editor.element);
 
       return () => {
-        if (editor) {
-          editor?.destroy();
-        }
+        current?.removeChild(_editor.element);
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorElement, placeholder]);
+  }, [_editor]);
 
   return (
     <Box
       {...boxProps}
       ref={editorElementRef}
+      key="editor"
       sx={(theme) => ({
         "& .codex-editor__redactor": {
           paddingBottom: `0 !important`,
@@ -97,6 +110,12 @@ export const TextEditor: FC<TextEditorProps> = ({
           backgroundColor: "#fff",
           padding: theme.spacing.xs,
           borderRadius: theme.radius.md,
+        },
+        "& .cdx-quote__text": {
+          marginBottom: 0,
+        },
+        "& .cdx-quote__caption": {
+          display: "none",
         },
       })}
     />

@@ -16,7 +16,6 @@ export const TwitterEmbed: EmbedComponentType = ({ src }) => {
   }, []);
 
   if (matches && matches.length > 0) {
-    console.log(matches);
     const tweetId = matches[4];
 
     return (
