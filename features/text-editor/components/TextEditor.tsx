@@ -20,22 +20,22 @@ export const TextEditor: FC<TextEditorProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!editor && editorElement) {
-      setEditor(
-        new EditorJS({
-          holder: editorElement,
-          placeholder,
-          onReady: handleEditorReady,
-        })
-      );
-    }
+    if (editorElement) {
+      const editor = new EditorJS({
+        holder: editorElement,
+        placeholder,
+        onReady: handleEditorReady,
+      });
 
-    return () => {
-      if (editor) {
-        editor.destroy();
-      }
-    };
-  }, [editor, editorElement, handleEditorReady, placeholder]);
+      setEditor(editor);
+
+      return () => {
+        if (editor) {
+          editor.destroy();
+        }
+      };
+    }
+  }, [editorElement, handleEditorReady, placeholder]);
 
   return (
     <Box
