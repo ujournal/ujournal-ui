@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { capitalize } from "lodash";
+import { capitalize, shuffle } from "lodash";
 import { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
@@ -18,11 +18,23 @@ import { CommunitySelect } from "features/community/components/CommunitySelect";
 import { Embed } from "features/embed/components/Embed";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import isUrl from "validator/lib/isURL";
+import { useIntervalPhrases } from "baza/hooks/useIntervalPhrases";
 
 const TextEditor = dynamic(
   async () => (await import("baza/components/TextEditor")).TextEditor,
   { ssr: false }
 );
+
+const socialMediaNames = shuffle([
+  "YouTube",
+  "Vimeo",
+  "Twitter",
+  "Telegram",
+  "Facebook",
+  "Instagram",
+  "SoundCloud",
+  "Spotify",
+]);
 
 type Values = {
   community_id: number;
@@ -45,6 +57,8 @@ export const PostEditForm: FC<{
   },
   onSubmit,
 }) => {
+  const socialMediaName = useIntervalPhrases(socialMediaNames);
+
   const { t } = useTranslation();
 
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
@@ -151,9 +165,7 @@ export const PostEditForm: FC<{
         ) : (
           <TextInput
             withAsterisk
-            placeholder={`${t(
-              "url"
-            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram, SoundCloud, Spotify...`}
+            placeholder={`${socialMediaName} ${t("url")}`}
             {...form.getInputProps("url")}
             sx={{ flex: "1 1 0" }}
             styles={{

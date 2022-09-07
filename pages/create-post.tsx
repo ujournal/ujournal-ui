@@ -15,15 +15,11 @@ const CreatePostPage: SitePage = () => {
       >
         <PostEditForm
           values={{
-            community_id: 14,
-            body: `Фільм "На Західному фронті без змін" (All Quiet on the Western Front) розповідає захоплюючу історію молодого німецького солдата на Західному фронті Першої світової війни. Пауль та його товариші на власному досвіді переконуються, як первісна ейфорія війни змінюється розпачем та страхом, коли вони в окопах борються за своє життя та один одного. Фільм режисера Едварда Бергера заснований на однойменному всесвітньо відомому бестселері Еріха Марії Ремарка.
-
-Реліз: 28 жовтня
-
-![](https://ujournal.com.ua/pictrs/image/0c148ddc-d712-48e6-8f62-fc2fdebcd2a9.png)`,
-            name: "Трейлер На Західному фронті без змін від Netflix",
-            url: "https://www.youtube.com/watch?v=qFqgmaO15x4",
-            nsfw: true,
+            community_id: -1,
+            body: "",
+            name: "",
+            url: "",
+            nsfw: false,
           }}
           onSubmit={console.log}
         />
