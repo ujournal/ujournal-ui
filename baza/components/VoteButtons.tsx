@@ -1,5 +1,6 @@
 import { ActionIcon, Box, Group, Loader, Tooltip } from "@mantine/core";
 import { IconArrowDown, IconArrowUp } from "@tabler/icons";
+import { count } from "console";
 import { FC, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -71,7 +72,7 @@ export const VoteButtons: FC<{
         <Tooltip label={label}>
           <Box
             ref={ref}
-            sx={{
+            sx={(theme) => ({
               position: "relative",
               display: "flex",
               alignItems: "center",
@@ -140,7 +141,14 @@ export const VoteButtons: FC<{
               "& .firework .explosion::before": {
                 animation: "explosion 2s ease-in-out 1",
               },
-            }}
+              fontWeight: 600,
+              color:
+                counts.score > 0
+                  ? theme.colors.green
+                  : counts.score < 0
+                  ? theme.colors.red
+                  : theme.colors.gray,
+            })}
           >
             {counts.score}
             <div className="firework">
