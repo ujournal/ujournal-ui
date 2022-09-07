@@ -65,7 +65,7 @@ export const AppNavbar = () => {
         <LinksList items={links} />
       </Box>
 
-      <CommunityList />
+      <CommunityList activeCommunityName={query.communityName} />
     </>
   );
 };

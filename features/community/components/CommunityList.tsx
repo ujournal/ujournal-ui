@@ -4,7 +4,9 @@ import { useCommunities } from "../hooks/useCommunities";
 import { DataList } from "baza/components/DataList";
 import { CommunityListLoader } from "./CommunityListLoader";
 
-export const CommunityList: FC = () => {
+export const CommunityList: FC<{ activeCommunityName?: string }> = ({
+  activeCommunityName = "",
+}) => {
   const communities = useCommunities();
 
   const transformCommunities = useCallback(
@@ -17,10 +19,11 @@ export const CommunityList: FC = () => {
             none: undefined,
           }),
           label: community.community.title,
+          active: activeCommunityName === community.community.name,
         };
       });
     },
-    []
+    [activeCommunityName]
   );
 
   return (
