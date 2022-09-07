@@ -282,7 +282,7 @@ export const Post: FC<
           </Link>
         </Group>
         <VoteButtons
-          count={countsAndMyVote.counts.score}
+          counts={countsAndMyVote.counts}
           myVote={countsAndMyVote.myVote}
           isLoading={isVoting}
           onVoteUp={voteUp}
