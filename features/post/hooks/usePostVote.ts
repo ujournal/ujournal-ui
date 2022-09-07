@@ -8,6 +8,7 @@ import {
   PostAggregates,
 } from "ujournal-lemmy-js-client";
 import { None, Some } from "@sniptt/monads";
+import { queryClient } from "baza/reactQuery";
 
 export const usePostVote = ({
   postId,
@@ -35,11 +36,14 @@ export const usePostVote = ({
       );
 
       onSuccess({ counts, myVote: myVote.unwrap() });
+
+      await queryClient.invalidateQueries(["posts"]);
+      await queryClient.invalidateQueries(["post"]);
     }
   }, [auth.token, lemmyClient, onSuccess, postId]);
 
   const likePost = useMutation(
-    ["like"],
+    ["likePost", postId],
     async (score: number) =>
       await lemmyClient.likePost(
         new CreatePostLike({

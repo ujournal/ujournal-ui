@@ -10,7 +10,7 @@ import {
   Tooltip,
   ScrollArea,
 } from "@mantine/core";
-import { FC, MutableRefObject } from "react";
+import { FC, MutableRefObject, useEffect } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
 import {
   IconDots,
@@ -80,6 +80,13 @@ export const Post: FC<
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
   }, [_showBody]);
+
+  useEffect(() => {
+    setCountsAndMyVote({
+      counts,
+      myVote: myVote.unwrapOr(0),
+    });
+  }, [counts, myVote]);
 
   return (
     <Card

@@ -8,13 +8,16 @@ export const usePost = ({ postId }: { postId: number }) => {
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
-  return useQuery(["post", postId], async () => {
-    return await lemmyClient.getPost(
-      new GetPost({
-        id: Some(postId),
-        comment_id: None,
-        auth: auth.token.ok(),
-      })
-    );
-  });
+  return useQuery(
+    ["post", { token: auth.token.unwrapOr(""), postId }],
+    async () => {
+      return await lemmyClient.getPost(
+        new GetPost({
+          id: Some(postId),
+          comment_id: None,
+          auth: auth.token.ok(),
+        })
+      );
+    }
+  );
 };

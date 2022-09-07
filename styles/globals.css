@@ -26,3 +26,13 @@ a {
     background: black;
   }
 }
+
+@keyframes explosion {
+  0% {
+    top: 100%;
+  }
+  33%,
+  100% {
+    top: -50%;
+  }
+}

@@ -42,7 +42,7 @@ export const usePostList = ({
   const auth = useAuth();
 
   return useInfiniteQuery(
-    ["posts", auth.token.unwrapOr(""), sort, page, limit],
+    ["posts", { token: auth.token.unwrapOr(""), sort, page, limit }],
     ({ pageParam: page }) => {
       return fetchPosts(client, auth, { sort, page });
     },
@@ -50,6 +50,7 @@ export const usePostList = ({
       getNextPageParam: (_lastPage, pages) => {
         return pages.length + 1;
       },
+      refetchOnMount: true,
     }
   );
 };

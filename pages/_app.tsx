@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { I18nextProvider } from "react-i18next";
 import { Aside, Box, MantineProvider, Navbar, ScrollArea } from "@mantine/core";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { LemmyClientContext, lemmyHttpClient } from "baza/hooks/useLemmyClient";
 import { LemmyAuthProvider } from "features/auth/hooks/useAuth";
 import { markdown, MarkdownContext } from "baza/hooks/useMarkdown";
@@ -12,8 +12,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { AppLayout } from "features/app/components/AppLayout";
 import i18n from "baza/i18n";
 import "../styles/globals.css";
-
-const queryClient = new QueryClient();
+import { queryClient } from "baza/reactQuery";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
