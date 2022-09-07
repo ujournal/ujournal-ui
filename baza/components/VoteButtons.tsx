@@ -1,7 +1,6 @@
 import { ActionIcon, Box, Group, Loader, Tooltip } from "@mantine/core";
 import { IconArrowDown, IconArrowUp } from "@tabler/icons";
-import { count } from "console";
-import { FC, useEffect, useMemo, useRef } from "react";
+import { FC, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 export const VoteButtons: FC<{
