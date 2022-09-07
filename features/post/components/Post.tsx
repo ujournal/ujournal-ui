@@ -110,7 +110,7 @@ export const Post: FC<
             mx="-xs"
           >
             <CommunityButton
-              communityId={community.id}
+              communityName={community.name}
               image={community.icon.match<string | undefined>({
                 some: (name) => name,
                 none: undefined,
@@ -147,10 +147,11 @@ export const Post: FC<
                 icon={
                   saved ? <IconStarOff size={14} /> : <IconStar size={14} />
                 }
+                sx={{ display: "none" }}
               >
                 {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
               </Menu.Item>
-              <Menu.Item icon={<IconCopy size={14} />}>
+              <Menu.Item icon={<IconCopy size={14} />} sx={{ display: "none" }}>
                 {capitalize(t("cross_post"))}
               </Menu.Item>
               <Link href={`/edit-post?postId=${post.id}`}>
@@ -158,10 +159,10 @@ export const Post: FC<
                   {capitalize(t("edit"))}
                 </Menu.Item>
               </Link>
-              <Menu.Item icon={<IconLock size={14} />}>
+              <Menu.Item icon={<IconLock size={14} />} sx={{ display: "none" }}>
                 {post.locked ? capitalize(t("unlock")) : capitalize(t("lock"))}
               </Menu.Item>
-              <Menu.Item icon={<IconPin size={14} />}>
+              <Menu.Item icon={<IconPin size={14} />} sx={{ display: "none" }}>
                 {post.stickied
                   ? capitalize(t("unsticky"))
                   : capitalize(t("sticky"))}
@@ -171,7 +172,11 @@ export const Post: FC<
                   ? capitalize(t("restore"))
                   : capitalize(t("delete"))}
               </Menu.Item>
-              <Menu.Item icon={<IconTrash size={14} />} color="red">
+              <Menu.Item
+                icon={<IconTrash size={14} />}
+                color="red"
+                sx={{ display: "none" }}
+              >
                 {post.removed
                   ? capitalize(t("restore"))
                   : capitalize(t("remove"))}{" "}

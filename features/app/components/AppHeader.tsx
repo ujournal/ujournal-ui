@@ -36,7 +36,7 @@ export const AppHeader: FC = () => {
       user ? (
         <UserMenu user={user} onLogOut={auth.logout} />
       ) : (
-        <Link href="/login" passHref>
+        <Link href={{ pathname: "/login", query: {} }} passHref>
           <Button
             variant="subtle"
             component="a"
@@ -80,7 +80,7 @@ export const AppHeader: FC = () => {
             <Burger opened={false} onClick={() => {}} size="sm" />
           </MediaQuery>
 
-          <Link href="/" passHref>
+          <Link href={{ pathname: "/", query: {} }} passHref>
             <Box component="a" sx={{ display: "block", height: "40px" }}>
               <AppBrand />
             </Box>

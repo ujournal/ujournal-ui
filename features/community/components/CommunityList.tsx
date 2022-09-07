@@ -11,7 +11,7 @@ export const CommunityList: FC = () => {
     (data: ReturnType<typeof useCommunities>["data"]) => {
       return data?.communities.map((community) => {
         return {
-          communityId: community.community.id,
+          communityName: community.community.name,
           image: community.community.icon.match<string | undefined>({
             some: (icon) => icon,
             none: undefined,
@@ -29,7 +29,7 @@ export const CommunityList: FC = () => {
       itemComponent={CommunityButton}
       transform={transformCommunities}
       loaderComponent={CommunityListLoader}
-      itemKey="communityId"
+      itemKey="communityName"
     />
   );
 };

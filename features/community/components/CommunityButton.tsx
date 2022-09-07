@@ -11,7 +11,7 @@ import { IconSpeakerphone } from "@tabler/icons";
 import Link from "next/link";
 
 type CommunityButtonProps = {
-  communityId?: number;
+  communityName?: string;
   image?: string;
   label: string;
   weight?: number;
@@ -19,14 +19,20 @@ type CommunityButtonProps = {
 };
 
 export const CommunityButton = ({
-  communityId,
+  communityName,
   image,
   label,
   weight,
   active = false,
 }: CommunityButtonProps) => {
   return (
-    <Link href={`?communityId=${communityId}`} passHref>
+    <Link
+      href={{
+        pathname: "/community",
+        query: { communityName },
+      }}
+      passHref
+    >
       <Tooltip label={label} openDelay={1000}>
         <UnstyledButton
           component="a"

@@ -9,12 +9,10 @@ import { useMemo } from "react";
 import { flattenDepth, get, map } from "lodash";
 import { Center } from "@mantine/core";
 import { PostListLoader } from "./PostListLoader";
-import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { SortType } from "ujournal-lemmy-js-client";
 
-export const PostList: FC = () => {
-  const { sort } = useRouterQuery<{ sort: SortType }>({ sort: SortType.Hot });
-  const posts = usePostList({ sort });
+export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
+  posts,
+}) => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   const [sentryRef] = useInfiniteScroll({
