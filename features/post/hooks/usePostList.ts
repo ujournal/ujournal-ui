@@ -33,7 +33,7 @@ export const usePostList = () => {
   const auth = useAuth();
 
   return useInfiniteQuery(
-    ["posts"],
+    ["posts", auth.token.unwrapOr("")],
     ({ pageParam: page }) => {
       return fetchPosts(client, auth, page);
     },

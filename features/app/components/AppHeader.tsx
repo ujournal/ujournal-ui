@@ -3,23 +3,23 @@ import { IconCirclePlus, IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/auth/hooks/useAuth";
-import { useSite } from "features/app/hooks/useSite";
 import Link from "next/link";
 import { FC, useMemo } from "react";
 import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "lodash";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { useMyUserInfo } from "features/auth/hooks/useMyUserInfo";
 
 export const AppHeader: FC = () => {
-  const site = useSite();
   const auth = useAuth();
   const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
+  const myUserInfo = useMyUserInfo();
 
   const user = useMemo(
     () =>
-      site.data?.my_user.match({
+      myUserInfo.user?.match({
         some: (myUser) => ({
           name: myUser.local_user_view.person.display_name.unwrapOr(
             myUser.local_user_view.person.name
@@ -28,7 +28,7 @@ export const AppHeader: FC = () => {
         }),
         none: undefined,
       }),
-    [site.data?.my_user]
+    [myUserInfo]
   );
 
   const profileMenu = useMemo(
@@ -104,7 +104,7 @@ export const AppHeader: FC = () => {
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>
           </Link>
-          {site.isLoading ? (
+          {myUserInfo.isLoading ? (
             <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
           ) : (
             profileMenu

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { GetSite } from "ujournal-lemmy-js-client";
-import { useAuth } from "../../auth/hooks/useAuth";
+import { useAuth } from "./useAuth";
 import { useLemmyClient } from "../../../baza/hooks/useLemmyClient";
 
 export const useSite = () => {

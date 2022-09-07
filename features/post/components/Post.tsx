@@ -31,7 +31,7 @@ import { Some } from "@sniptt/monads";
 import { Embed } from "features/embed/components/Embed";
 import { useState } from "react";
 import { useCallback } from "react";
-import { Rate } from "baza/components/Rate";
+import { VoteButtons } from "baza/components/VoteButtons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
 import { formatShortNum } from "baza/utils/number";
@@ -39,6 +39,7 @@ import { DateFormatted } from "baza/components/DeteFormatted";
 import Link from "next/link";
 import { capitalize } from "lodash";
 import { MarkdownText } from "baza/components/MarkdownText";
+import { usePostVote } from "../hooks/usePostVote";
 
 export const Post: FC<
   PostView & {
@@ -46,11 +47,35 @@ export const Post: FC<
     showToogleBodyButton?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
   }
-> = ({ creator, community, post, counts, showBody = false, saved }) => {
+> = ({
+  creator,
+  community,
+  post,
+  counts,
+  my_vote: myVote,
+  showBody = false,
+  saved,
+}) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+
   const [_showBody, setShowBody] = useState<boolean>(showBody);
+
   const { t } = useTranslation();
+
+  const [countsAndMyVote, setCountsAndMyVote] = useState({
+    counts,
+    myVote: myVote.unwrapOr(0),
+  });
+
+  const {
+    voteUp,
+    voteDown,
+    isLoading: isVoting,
+  } = usePostVote({
+    postId: post.id,
+    onSuccess: setCountsAndMyVote,
+  });
 
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
@@ -256,7 +281,13 @@ export const Post: FC<
             </Tooltip>
           </Link>
         </Group>
-        <Rate count={counts.score} />
+        <VoteButtons
+          count={countsAndMyVote.counts.score}
+          myVote={countsAndMyVote.myVote}
+          isLoading={isVoting}
+          onVoteUp={voteUp}
+          onVoteDown={voteDown}
+        />
       </Group>
     </Card>
   );
