@@ -1,4 +1,4 @@
-import { Center, Container } from "@mantine/core";
+import { Container } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { Post } from "features/post/components/Post";
