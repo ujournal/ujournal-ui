@@ -5,6 +5,7 @@ import {
   IconLogout,
   IconUser,
 } from "@tabler/icons";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import Link from "next/link";
 import { useState } from "react";
 import { FC } from "react";
@@ -14,6 +15,7 @@ export const UserMenu: FC<{
   onLogOut: () => void;
 }> = ({ user, onLogOut }) => {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   return (
     <Menu
@@ -27,9 +29,11 @@ export const UserMenu: FC<{
         <UnstyledButton>
           <Group spacing={7}>
             <Avatar src={user.image} alt={user.name} radius="xl" size="sm" />
-            <Text weight={600} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-              {user.name}
-            </Text>
+            {largerThanSm && (
+              <Text weight={600} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+                {user.name}
+              </Text>
+            )}
             <IconChevronDown size={12} stroke={1.5} />
           </Group>
         </UnstyledButton>

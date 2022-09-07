@@ -1,4 +1,5 @@
 import { Group, Skeleton } from "@mantine/core";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { random } from "lodash";
 import { FC } from "react";
 
@@ -8,12 +9,20 @@ export const UserLoader: FC<{
   padding?: string | number;
   opacity?: number;
 }> = ({ useRandomWidth = true, nameWidth = 100, padding = "sm", opacity }) => {
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
+
   return (
     <Group
       spacing="xs"
       noWrap
       p={padding}
-      sx={{ width: useRandomWidth ? random(100, 200) : nameWidth }}
+      sx={{
+        width: largerThanSm
+          ? useRandomWidth
+            ? random(100, 200)
+            : nameWidth
+          : undefined,
+      }}
     >
       <Skeleton
         width={26}
@@ -22,7 +31,7 @@ export const UserLoader: FC<{
         radius={26}
         sx={{ minWidth: 26, opacity }}
       />
-      <Skeleton height={10} radius="sm" sx={{ opacity }} />
+      {largerThanSm && <Skeleton height={10} radius="sm" sx={{ opacity }} />}
     </Group>
   );
 };

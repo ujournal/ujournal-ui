@@ -46,12 +46,20 @@ export const AppHeader: FC = () => {
               color: "#000",
               "&:hover": { backgroundColor: "transparent" },
             }}
+            styles={(theme) => ({
+              root: {
+                paddingRight: largerThanSm ? undefined : theme.spacing.sm,
+              },
+              leftIcon: {
+                marginRight: largerThanSm ? undefined : 0,
+              },
+            })}
           >
-            {t("login")}
+            {largerThanSm ? t("login") : undefined}
           </Button>
         </Link>
       ),
-    [auth.logout, t, user]
+    [auth.logout, largerThanSm, t, user]
   );
 
   return (

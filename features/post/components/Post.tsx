@@ -12,7 +12,6 @@ import {
 } from "@mantine/core";
 import { FC, MutableRefObject } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
-import { useMarkdown } from "baza/hooks/useMarkdown";
 import {
   IconDots,
   IconTrash,
@@ -36,7 +35,6 @@ import { Rate } from "baza/components/Rate";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
 import { formatShortNum } from "baza/utils/number";
-import { useIntersection } from "@mantine/hooks";
 import { DateFormatted } from "baza/components/DeteFormatted";
 import Link from "next/link";
 import { capitalize } from "lodash";
@@ -48,24 +46,11 @@ export const Post: FC<
     showToogleBodyButton?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
   }
-> = ({
-  creator,
-  community,
-  post,
-  counts,
-  showBody = false,
-  saved,
-  containerRef,
-}) => {
+> = ({ creator, community, post, counts, showBody = false, saved }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
   const [_showBody, setShowBody] = useState<boolean>(showBody);
   const { t } = useTranslation();
-
-  const { ref, entry } = useIntersection({
-    // root: containerRef ? containerRef.current : undefined,
-    threshold: 0,
-  });
 
   const handleToggleShowBody = useCallback(() => {
     setShowBody(!_showBody);
@@ -82,10 +67,9 @@ export const Post: FC<
         borderLeftWidth: smallerThanSm ? 0 : undefined,
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
-      ref={ref}
       shadow="xs"
     >
-      <ScrollArea>
+      <ScrollArea sx={{ overflow: "visible !important" }}>
         <Group position="apart" mt="-xs" noWrap>
           <Group
             noWrap
