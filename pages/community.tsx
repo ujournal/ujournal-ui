@@ -1,12 +1,18 @@
 import { SitePage } from "types";
 import { PostList } from "features/post/components/PostList";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { FetchPostsParams, usePostList } from "features/post/hooks/usePostList";
+import {
+  FetchPostsParams,
+  fetchPostsParamsDefault,
+  usePostList,
+} from "features/post/hooks/usePostList";
 import { FC } from "react";
 import { AppNavbar } from "features/app/components/AppNavbar";
 
 const CommunityPage: SitePage = () => {
-  const params = useRouterQuery<FetchPostsParams>({});
+  const params = useRouterQuery<FetchPostsParams>({
+    ...fetchPostsParamsDefault,
+  });
   const posts = usePostList({ params });
 
   console.log("query (CommunityPage)", params);

@@ -24,31 +24,31 @@ export const AppNavbar = () => {
       [
         {
           sort: SortType.Hot,
-          url: `/?sort=${SortType.Hot}`,
+          url: { query: { ...query, sort: SortType.Hot } },
           label: capitalize(t("hot")),
           icon: IconFlame,
         },
         {
           sort: SortType.Active,
-          url: `/?sort=${SortType.Active}`,
+          url: { query: { ...query, sort: SortType.Active } },
           label: capitalize(t("active")),
           icon: IconTrendingUp,
         },
         {
           sort: SortType.New,
-          url: `/?sort=${SortType.New}`,
+          url: { query: { ...query, sort: SortType.New } },
           label: capitalize(t("new")),
           icon: IconBolt,
         },
         {
           sort: SortType.MostComments,
-          url: `/?sort=${SortType.MostComments}`,
+          url: { query: { ...query, sort: SortType.MostComments } },
           label: capitalize(t("most_comments")),
           icon: IconMessageCircle2,
         },
         {
           sort: SortType.NewComments,
-          url: `/?sort=${SortType.NewComments}`,
+          url: { query: { ...query, sort: SortType.NewComments } },
           label: capitalize(t("new_comments")),
           icon: IconMessageCircle2,
         },
@@ -56,7 +56,7 @@ export const AppNavbar = () => {
         ...link,
         active: query.sort === link.sort,
       })),
-    [query.sort, t]
+    [query, t]
   );
 
   return (

@@ -10,7 +10,9 @@ import {
 import { AppNavbar } from "features/app/components/AppNavbar";
 
 const FeedPage: SitePage = () => {
-  const params = useRouterQuery<FetchPostsParams>(fetchPostsParamsDefault);
+  const params = useRouterQuery<FetchPostsParams>({
+    ...fetchPostsParamsDefault,
+  });
   const posts = usePostList({ params });
 
   return (

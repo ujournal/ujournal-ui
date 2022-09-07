@@ -10,14 +10,20 @@ import {
 import { TablerIcon } from "@tabler/icons";
 import Link from "next/link";
 import { FC } from "react";
+import { UrlObject } from "url";
 
 export const LinksList: FC<{
-  items: { label: string; url: string; icon: TablerIcon; active?: boolean }[];
+  items: {
+    label: string;
+    url: string | UrlObject;
+    icon: TablerIcon;
+    active?: boolean;
+  }[];
 }> = ({ items }) => {
   return (
     <Stack spacing={0}>
       {items.map(({ url, label, icon: Icon, active }) => (
-        <Link href={url} passHref key={url}>
+        <Link href={url} passHref key={url.toString()}>
           <Tooltip label={label} openDelay={1000}>
             <UnstyledButton
               px={6}

@@ -26,7 +26,13 @@ const usePostsFetcher = (params: FetchPostsParams = {}) => {
   const auth = useAuth();
 
   const { sort, limit, communityId, communityName } = merge(
-    fetchPostsParamsDefault,
+    {
+      sort: SortType.Hot,
+      page: 1,
+      limit: 20,
+      communityId: undefined,
+      communityName: undefined,
+    },
     params
   );
 
