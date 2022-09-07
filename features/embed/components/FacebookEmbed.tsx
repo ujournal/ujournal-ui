@@ -24,5 +24,5 @@ export const FacebookEmbed: EmbedComponentType = ({ src }) => {
     );
   }
 
-  return <Box>Incorrect facebookId</Box>;
+  return <Box>Incorrect URL</Box>;
 };

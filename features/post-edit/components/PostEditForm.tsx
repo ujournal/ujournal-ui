@@ -153,7 +153,7 @@ export const PostEditForm: FC<{
             withAsterisk
             placeholder={`${t(
               "url"
-            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram, SoundCloud...`}
+            )} YouTube, Vimeo, Twitter, Telegram, Facebook, Instagram, SoundCloud, Spotify...`}
             {...form.getInputProps("url")}
             sx={{ flex: "1 1 0" }}
             styles={{

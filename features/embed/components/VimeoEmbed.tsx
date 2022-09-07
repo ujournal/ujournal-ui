@@ -64,5 +64,5 @@ export const VimeoEmbed: EmbedComponentType = ({ src, title }) => {
     );
   }
 
-  return <Box>Incorrect videoId</Box>;
+  return <Box>Incorrect URL</Box>;
 };

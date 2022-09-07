@@ -44,5 +44,5 @@ export const TwitterEmbed: EmbedComponentType = ({ src }) => {
     );
   }
 
-  return <Box>Incorrect tweetId</Box>;
+  return <Box>Incorrect URL</Box>;
 };

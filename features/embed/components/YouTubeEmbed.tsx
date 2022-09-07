@@ -74,5 +74,5 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
     );
   }
 
-  return <Box>Incorrect videoId</Box>;
+  return <Box>Incorrect URL</Box>;
 };

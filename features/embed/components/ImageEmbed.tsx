@@ -6,21 +6,9 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
   return (
     <Box
       sx={{
-        // position: "relative",
         backgroundImage: `url("${src}")`,
         backgroundSize: "cover",
         backgroundColor: "#000",
-        // "&:before": {
-        //   position: "absolute",
-        //   top: 0,
-        //   left: 0,
-        //   width: "100%",
-        //   height: "100%",
-        //   display: "block",
-        //   content: "''",
-        //   backdropFilter: "blur(100px)",
-        //   backgroundColor: "rgba(0, 0, 0, 0.5)",
-        // },
       }}
     >
       <Box
@@ -28,7 +16,6 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
         src={src}
         alt={title}
         sx={{
-          // position: "relative",
           width: "100%",
           height: "100%",
           objectFit: "contain",

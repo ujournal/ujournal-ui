@@ -93,5 +93,5 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
     );
   }
 
-  return <Box>Incorrect telegramId</Box>;
+  return <Box>Incorrect URL</Box>;
 };

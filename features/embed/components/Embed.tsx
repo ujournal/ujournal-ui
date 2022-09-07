@@ -11,6 +11,7 @@ import { InstagramEmbed } from "./InstagramEmbed";
 import { TelegramEmbed } from "./TelegramEmbed";
 import isUrl from "validator/lib/isURL";
 import { SoundCloudEmbed } from "./SoundCloudEmbed";
+import { SpotifyEmbed } from "./SpotifyEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -22,6 +23,7 @@ enum EmbedType {
   Instagram = "instagram",
   Telegram = "telegram",
   SoundCloud = "soundcloud",
+  Spotify = "spotify",
 }
 
 const typeToCheckFn = {
@@ -34,6 +36,7 @@ const typeToCheckFn = {
   [EmbedType.Instagram]: (url: string) => isSocialMediaUrl("instagram", url),
   [EmbedType.Telegram]: (url: string) => isSocialMediaUrl("telegram", url),
   [EmbedType.SoundCloud]: (url: string) => isSocialMediaUrl("soundcloud", url),
+  [EmbedType.Spotify]: (url: string) => isSocialMediaUrl("spotify", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -46,6 +49,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Instagram]: InstagramEmbed,
   [EmbedType.Telegram]: TelegramEmbed,
   [EmbedType.SoundCloud]: SoundCloudEmbed,
+  [EmbedType.Spotify]: SpotifyEmbed,
 };
 
 const typeToAspectRatio = {
@@ -58,6 +62,7 @@ const typeToAspectRatio = {
   [EmbedType.Instagram]: -1,
   [EmbedType.Telegram]: -1,
   [EmbedType.SoundCloud]: -1,
+  [EmbedType.Spotify]: -1,
 };
 
 export const getTypeBySrc = (src: string) => {

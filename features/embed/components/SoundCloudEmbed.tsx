@@ -50,5 +50,5 @@ export const SoundCloudEmbed: EmbedComponentType = ({ src: url }) => {
     );
   }
 
-  return <Box>Incorrect facebookId</Box>;
+  return <Box>Incorrect URL</Box>;
 };
