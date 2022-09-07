@@ -3,32 +3,45 @@ export function parseParagraphToMarkdown(blocks: any) {
 }
 
 export function parseMarkdownToParagraph(blocks: any) {
-  let paragraphData = {};
   if (blocks.type === "paragraph") {
-    blocks.children.forEach((item: any) => {
-      if (item.type === "text") {
-        paragraphData = {
-          data: {
-            text: item.value,
+    const item = blocks.children.find((item: any) => item.type === "image");
+
+    if (item) {
+      return {
+        data: {
+          stretched: false,
+          file: {
+            url: item.url,
+            caption: item.title,
           },
-          type: "paragraph",
-        };
-      }
-      if (item.type === "image") {
-        paragraphData = {
-          data: {
-            stretched: false,
-            file: {
-              url: item.url,
-              caption: item.title,
-            },
-            withBackground: false,
-            withBorder: false,
-          },
-          type: "image",
-        };
-      }
-    });
+          withBackground: false,
+          withBorder: false,
+        },
+        type: "image",
+      };
+    }
+
+    return {
+      data: {
+        text: blocks.children
+          .map((item: any) => {
+            if (item.type === "link") {
+              return `<a href="${item.url}">${item.children[0].value}</a>`;
+            } else if (item.type === "text") {
+              return item.value;
+            } else if (item.type === "strong") {
+              return `<b>${item.children[0].value}</b>`;
+            } else if (item.type === "emphasis") {
+              return `<i>${item.children[0].value}</i>`;
+            }
+
+            return item.value || item.children?.at(0).value;
+          })
+          .filter(Boolean)
+          .join(""),
+      },
+      type: "paragraph",
+    };
+  } else if (["strong", "emphasis"].includes(blocks.type)) {
   }
-  return paragraphData;
 }

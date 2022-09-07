@@ -3089,6 +3089,11 @@
     "react-twitter-embed" "^4.0.4"
     "react-youtube" "^7.14.0"
 
+"react-spotify-embed@^0.2.3":
+  "integrity" "sha512-T4ceNkGn5M1ry/Y39I8HyhjSxeF2qv2W4uSK8XoB12r4PWPSQyuX3LOcVV/1mycQQUzPQlgwT1E6KGITEjvcJg=="
+  "resolved" "https://registry.npmjs.org/react-spotify-embed/-/react-spotify-embed-0.2.3.tgz"
+  "version" "0.2.3"
+
 "react-textarea-autosize@8.3.4":
   "integrity" "sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ=="
   "resolved" "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz"
@@ -3146,7 +3151,7 @@
     "prop-types" "15.8.1"
     "youtube-player" "5.5.2"
 
-"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react@^16 || ^17", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^16.x || 17.x || 18.x", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=0.14.1", "react@>=16.6.0", "react@>=16.8.0", "react@>=17", "react@0.14 || 15 || 16 || 17 || 18", "react@18.2.0":
+"react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0", "react@^16 || ^17", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^16.x || 17.x || 18.x", "react@^17.0.2 || ^18.0.0-0", "react@^18.2.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=0.14.1", "react@>=16", "react@>=16.6.0", "react@>=16.8.0", "react@>=17", "react@0.14 || 15 || 16 || 17 || 18", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
