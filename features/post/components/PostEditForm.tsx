@@ -13,7 +13,7 @@ const TextEditor = dynamic(
   { ssr: false }
 );
 
-type Values = {
+export type Values = {
   community_id: number;
   name: string;
   url: string;

@@ -1,14 +1,45 @@
 import { Container, Card, Loader, Center } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { PostEditForm } from "features/post/components/PostEditForm";
+import {
+  PostEditForm,
+  Values as PostFormValues,
+} from "features/post/components/PostEditForm";
 import { usePost } from "features/post/hooks/usePost";
+import { usePostUpsert } from "features/post/hooks/usePostUpsert";
+import { capitalize } from "lodash";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 
 const EditPostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const { postId } = useRouterQuery<{ postId: number }>({ postId: -1 });
   const post = usePost({ postId });
+  const upsertPost = usePostUpsert();
+  const router = useRouter();
+  const { t } = useTranslation();
+
+  const handleSubmit = useCallback(
+    async (values: PostFormValues) => {
+      const post = await upsertPost.mutateAsync({
+        ...values,
+        postId: Number(postId),
+      });
+
+      showNotification({
+        message: capitalize(t("saved")),
+      });
+
+      router.push({
+        pathname: "/post",
+        query: { postId: post.post_view.post.id },
+      });
+    },
+    [postId, router, t, upsertPost]
+  );
 
   if (post.isSuccess) {
     return (
@@ -26,7 +57,7 @@ const EditPostPage: SitePage = () => {
               url: post.data?.post_view.post.url.unwrapOr(""),
               nsfw: post.data?.post_view.post.nsfw,
             }}
-            onSubmit={console.log}
+            onSubmit={handleSubmit}
           />
         </Card>
       </Container>

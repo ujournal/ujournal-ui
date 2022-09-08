@@ -15,8 +15,6 @@ const CommunityPage: SitePage = () => {
   });
   const posts = usePostList({ params });
 
-  console.log("query (CommunityPage)", params);
-
   return (
     <>
       <PostList posts={posts} key="communiy-feed" />

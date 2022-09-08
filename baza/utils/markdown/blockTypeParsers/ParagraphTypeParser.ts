@@ -1,5 +1,9 @@
+import TurndownService from "turndown";
+
+const turndown = new TurndownService();
+
 export function parseParagraphToMarkdown(blocks: any) {
-  return `${blocks.text}\n`;
+  return `${turndown.turndown(blocks.text)}\n`;
 }
 
 export function parseMarkdownToParagraph(blocks: any) {

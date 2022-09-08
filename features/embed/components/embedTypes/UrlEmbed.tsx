@@ -26,7 +26,6 @@ export const UrlEmbed: EmbedComponentType = ({
   const handleImageError = useCallback(
     (event: SyntheticEvent<HTMLImageElement>) => {
       if (event.target instanceof HTMLImageElement) {
-        console.log("error");
         setThumbnail(undefined);
       }
     },
