@@ -50,6 +50,7 @@ const EditPostPage: SitePage = () => {
           radius="md"
         >
           <PostForm
+            postId={post.data.post_view.post.id}
             values={{
               community_id: post.data?.post_view.post.community_id,
               body: post.data?.post_view.post.body.unwrapOr(""),

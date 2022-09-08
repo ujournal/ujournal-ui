@@ -30,7 +30,7 @@ export type Values = {
 };
 
 export const PostForm: FC<{
-  postId?: string;
+  postId?: number;
   values?: Values;
   onSubmit: (values: Values) => void;
 }> = ({
