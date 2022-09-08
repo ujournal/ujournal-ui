@@ -5,6 +5,7 @@ import {
   Checkbox,
   ActionIcon,
   Tooltip,
+  Box,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { capitalize } from "baza/utils/string";
@@ -15,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { EmbedField } from "features/embed/components/EmbedField";
 import { useUrlMetadata } from "baza/hooks/useUrlMetadata";
 import { IconCopy } from "@tabler/icons";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
 const TextEditor = dynamic(
   async () => (await import("baza/components/TextEditor")).TextEditor,
@@ -44,6 +46,7 @@ export const PostForm: FC<{
   },
   onSubmit,
 }) => {
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { t } = useTranslation();
 
   const form = useForm({
@@ -130,14 +133,27 @@ export const PostForm: FC<{
                 )}
               >
                 <ActionIcon onClick={handleCopySuggestedName}>
-                  <IconCopy />
+                  <IconCopy stroke={1.5} />
                 </ActionIcon>
               </Tooltip>
             )
           }
         />
 
-        <EmbedField {...form.getInputProps("url")} urlMetadata={urlMetadata} />
+        <Box
+          sx={(theme) => ({
+            backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+            marginLeft: -theme.spacing[smallerThanSm ? "sm" : "xl"],
+            marginRight: -theme.spacing[smallerThanSm ? "sm" : "xl"],
+            paddingLeft: theme.spacing[smallerThanSm ? "sm" : "xl"],
+            paddingRight: theme.spacing[smallerThanSm ? "sm" : "xl"],
+          })}
+        >
+          <EmbedField
+            {...form.getInputProps("url")}
+            urlMetadata={urlMetadata}
+          />
+        </Box>
 
         <TextEditor
           placeholder={capitalize(t("body"))}

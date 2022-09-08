@@ -139,9 +139,7 @@ export const EmbedField: FC<{
               paddingRight: 8,
               marginLeft: -8,
               marginRight: -8,
-              "&:hover": {
-                backgroundColor: "rgba(0,0,0,0.015)",
-              },
+              backgroundColor: "transparent",
             },
           }}
           rightSection={

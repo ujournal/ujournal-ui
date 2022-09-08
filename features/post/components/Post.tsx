@@ -10,6 +10,7 @@ import {
   Tooltip,
   ScrollArea,
   Container,
+  MantineShadow,
 } from "@mantine/core";
 import { FC, MutableRefObject, useEffect } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -47,6 +48,7 @@ export const Post: FC<
     showBody?: boolean;
     showToogleBodyButton?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
+    shadow?: MantineShadow;
   }
 > = ({
   creator,
@@ -56,6 +58,7 @@ export const Post: FC<
   my_vote: myVote,
   showBody = false,
   saved,
+  shadow,
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
@@ -96,7 +99,7 @@ export const Post: FC<
         borderLeftWidth: smallerThanSm ? 0 : undefined,
         borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
-      shadow="xs"
+      shadow={shadow}
     >
       <ScrollArea sx={{ overflow: "visible !important" }}>
         <Container size={650} p={0}>
