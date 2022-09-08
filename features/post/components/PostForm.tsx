@@ -1,12 +1,20 @@
-import { Stack, Button, Textarea, Checkbox } from "@mantine/core";
+import {
+  Stack,
+  Button,
+  Textarea,
+  Checkbox,
+  ActionIcon,
+  Tooltip,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { capitalize } from "lodash";
-import { FC } from "react";
+import { capitalize } from "baza/utils/string";
+import { FC, SyntheticEvent, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { CommunitySelect } from "features/community/components/CommunitySelect";
-
 import { useTranslation } from "react-i18next";
 import { EmbedField } from "features/embed/components/EmbedField";
+import { useUrlMetadata } from "baza/hooks/useUrlMetadata";
+import { IconCopy } from "@tabler/icons";
 
 const TextEditor = dynamic(
   async () => (await import("baza/components/TextEditor")).TextEditor,
@@ -21,10 +29,12 @@ export type Values = {
   nsfw: boolean;
 };
 
-export const PostEditForm: FC<{
+export const PostForm: FC<{
+  postId?: string;
   values?: Values;
   onSubmit: (values: Values) => void;
 }> = ({
+  postId,
   values = {
     community_id: -1,
     name: "",
@@ -40,7 +50,28 @@ export const PostEditForm: FC<{
     initialValues: values,
   });
 
-  const isEditing = true;
+  const urlMetadata = useUrlMetadata(form.values.url);
+
+  const handleNameInput = useCallback(
+    (event: SyntheticEvent<HTMLTextAreaElement>) => {
+      event.currentTarget.value = event.currentTarget.value.replace(/\n/g, "");
+    },
+    []
+  );
+
+  const handleCopySuggestedName = useCallback(() => {
+    if (urlMetadata?.data) {
+      form.setFieldValue("name", urlMetadata.data.metadata.title.unwrapOr(""));
+    }
+  }, [form, urlMetadata.data]);
+
+  const isNameSuggested = useMemo(
+    () =>
+      urlMetadata.data &&
+      urlMetadata.data.metadata.title.unwrapOr("") &&
+      form.values.name !== urlMetadata.data.metadata.title.unwrapOr(""),
+    [form.values.name, urlMetadata.data]
+  );
 
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
@@ -87,16 +118,26 @@ export const PostEditForm: FC<{
             },
           }}
           size={22}
-          onInput={(event) => {
-            event.currentTarget.value = event.currentTarget.value.replace(
-              /\n/g,
-              ""
-            );
-          }}
+          onInput={handleNameInput}
           minRows={1}
+          rightSection={
+            isNameSuggested && (
+              <Tooltip
+                label={capitalize(
+                  t("copy_suggested_title", {
+                    title: urlMetadata?.data?.metadata.title.unwrapOr(""),
+                  })
+                )}
+              >
+                <ActionIcon onClick={handleCopySuggestedName}>
+                  <IconCopy />
+                </ActionIcon>
+              </Tooltip>
+            )
+          }
         />
 
-        <EmbedField {...form.getInputProps("url")} />
+        <EmbedField {...form.getInputProps("url")} urlMetadata={urlMetadata} />
 
         <TextEditor
           placeholder={capitalize(t("body"))}
@@ -111,7 +152,7 @@ export const PostEditForm: FC<{
         />
 
         <Button type="submit" size="lg">
-          {isEditing ? capitalize(t("save")) : capitalize(t("create"))}
+          {postId ? capitalize(t("save")) : capitalize(t("create"))}
         </Button>
       </Stack>
     </form>

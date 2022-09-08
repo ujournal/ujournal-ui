@@ -8,6 +8,7 @@ import QuoteTool from "@editorjs/quote";
 import ListTool from "@editorjs/list";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";
+import { useImageUploaderFather } from "baza/hooks/useImageUploaderFather";
 
 type TextEditorProps = {
   placeholder?: string;
@@ -22,6 +23,7 @@ export const TextEditor: FC<TextEditorProps> = ({
   ...boxProps
 }) => {
   const editorElementRef = useRef<HTMLDivElement>(null);
+  const uploadImage = useImageUploaderFather();
 
   const handleEditorChange = useCallback(
     async (editorApi: EditorAPI) => {
@@ -30,8 +32,33 @@ export const TextEditor: FC<TextEditorProps> = ({
     [onChange]
   );
 
+  const uploadByFile = useCallback(
+    async (file: File) => {
+      const result = await uploadImage({ file });
+
+      if (result) {
+        return {
+          success: 1,
+          file: {
+            url: result.fileUrl,
+          },
+        };
+      }
+    },
+    [uploadImage]
+  );
+
+  const uploadByUrl = useCallback(async () => {
+    // TODO: uploadByUrl
+  }, []);
+
   const _editor = useMemo(() => {
     const element = document.createElement("div");
+
+    console.log(
+      "process.env.NEXT_PUBLIC_PICTRS_API_URL",
+      process.env.NEXT_PUBLIC_PICTRS_API_URL
+    );
 
     const editor = new EditorJS({
       holder: element,
@@ -41,9 +68,9 @@ export const TextEditor: FC<TextEditorProps> = ({
         image: {
           class: ImageTool,
           config: {
-            endpoints: {
-              byFile: "/uploadFile",
-              byUrl: "/fetchUrl",
+            uploader: {
+              uploadByFile,
+              uploadByUrl,
             },
           },
         },
@@ -111,8 +138,8 @@ export const TextEditor: FC<TextEditorProps> = ({
           height: 60,
         },
         "& .ce-toolbar__actions": {
-          backgroundColor: "#fff",
-          padding: theme.spacing.xs,
+          backgroundColor: theme.colors.gray[1],
+          padding: 4,
           borderRadius: theme.radius.md,
         },
         "& .cdx-quote__text": {

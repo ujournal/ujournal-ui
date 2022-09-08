@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { IconSpeakerphone, IconSquarePlus } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import Link from "next/link";
 import { FC, ForwardedRef, forwardRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useForm } from "@mantine/form";
 import { Button, Group, Stack, TextInput } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 
 type Values = {
   usernameOrEmail: string;

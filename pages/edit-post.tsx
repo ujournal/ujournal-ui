@@ -3,12 +3,12 @@ import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
-  PostEditForm,
+  PostForm,
   Values as PostFormValues,
-} from "features/post/components/PostEditForm";
+} from "features/post/components/PostForm";
 import { usePost } from "features/post/hooks/usePost";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -49,7 +49,7 @@ const EditPostPage: SitePage = () => {
           sx={{ overflow: "visible" }}
           radius="md"
         >
-          <PostEditForm
+          <PostForm
             values={{
               community_id: post.data?.post_view.post.community_id,
               body: post.data?.post_view.post.body.unwrapOr(""),

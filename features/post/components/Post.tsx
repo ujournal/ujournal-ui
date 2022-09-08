@@ -38,7 +38,7 @@ import { useTranslation } from "react-i18next";
 import { formatShortNum } from "baza/utils/number";
 import { DateFormatted } from "baza/components/DeteFormatted";
 import Link from "next/link";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { usePostVote } from "../hooks/usePostVote";
 

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { FC, useMemo } from "react";
 import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useSiteUser } from "features/auth/hooks/useSiteUser";
 

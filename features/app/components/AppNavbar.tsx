@@ -5,7 +5,7 @@ import { IconMessageCircle2, IconTrendingUp } from "@tabler/icons";
 import { useMemo } from "react";
 import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import { IconBolt } from "@tabler/icons";
 import { SortType } from "ujournal-lemmy-js-client";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";

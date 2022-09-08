@@ -11,7 +11,7 @@ import { TelegramEmbed } from "./embedTypes/TelegramEmbed";
 import { SoundCloudEmbed } from "./embedTypes/SoundCloudEmbed";
 import { SpotifyEmbed } from "./embedTypes/SpotifyEmbed";
 import { EmbedComponentType } from "./types";
-import isUrl from "validator/lib/isURL";
+import isUrl from "is-url";
 
 enum EmbedType {
   Default = "default",

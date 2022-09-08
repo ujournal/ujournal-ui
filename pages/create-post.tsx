@@ -2,11 +2,11 @@ import { Container, Card } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import {
-  PostEditForm,
+  PostForm,
   Values as PostFormValues,
-} from "features/post/components/PostEditForm";
+} from "features/post/components/PostForm";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
-import { capitalize } from "lodash";
+import { capitalize } from "baza/utils/string";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -41,7 +41,7 @@ const CreatePostPage: SitePage = () => {
         sx={{ overflow: "visible" }}
         radius="md"
       >
-        <PostEditForm
+        <PostForm
           values={{
             community_id: -1,
             body: "",
