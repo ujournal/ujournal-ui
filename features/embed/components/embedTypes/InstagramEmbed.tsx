@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 import { InstagramEmbed as InstagramEmbedVendor } from "react-social-media-embed";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const InstagramEmbed: EmbedComponentType = ({ src }) => {
   if (src) {

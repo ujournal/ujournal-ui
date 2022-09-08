@@ -1,6 +1,6 @@
 import { Box, Center } from "@mantine/core";
 import { FacebookEmbed as FacebookEmbedVendor } from "react-social-media-embed";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const FacebookEmbed: EmbedComponentType = ({ src }) => {
   if (src) {

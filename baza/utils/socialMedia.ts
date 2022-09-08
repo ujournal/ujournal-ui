@@ -11,7 +11,7 @@ const socialMediaRegExps = {
   instagram: /(?:https?:\/\/www\.)?instagram\.com\S*?\/p\/(\w{11})\/?/,
   telegram: /^(?:https?:\/\/www\.)?t\.me\S*?(?:\/s)?\/(.+?\/\d+)\/?/,
   soundcloud: /^(?:https?:\/\/)?soundcloud\.com\/.+?\/.+?/,
-  spotify: /^(?:https?:\/\/)?open\.spotify\.com\/album\/.+?/,
+  spotify: /^(?:https?:\/\/)?open\.spotify\.com\/(album|track)\/.+?/,
 };
 
 export const isSocialMediaUrl = (

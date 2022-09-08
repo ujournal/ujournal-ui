@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useMemo } from "react";
 import YouTube from "react-youtube";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 const youtubeUrlRegExp =
   /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;

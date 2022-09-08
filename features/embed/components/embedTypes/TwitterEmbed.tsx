@@ -2,7 +2,7 @@ import { Box, Center, Skeleton } from "@mantine/core";
 import { useCallback } from "react";
 import { useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const TwitterEmbed: EmbedComponentType = ({ src }) => {
   const [isLoad, setLoad] = useState<boolean>(false);

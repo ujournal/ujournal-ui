@@ -1,7 +1,7 @@
 import { Container, Card, Loader, Center } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { PostEditForm } from "features/post-edit/components/PostEditForm";
+import { PostEditForm } from "features/post/components/PostEditForm";
 import { usePost } from "features/post/hooks/usePost";
 import { SitePage } from "types";
 

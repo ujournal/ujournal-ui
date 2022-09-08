@@ -1,6 +1,6 @@
 import { Container, Card } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { PostEditForm } from "features/post-edit/components/PostEditForm";
+import { PostEditForm } from "features/post/components/PostEditForm";
 import { SitePage } from "types";
 
 const CreatePostPage: SitePage = () => {

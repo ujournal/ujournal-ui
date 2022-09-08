@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const TelegramEmbed: EmbedComponentType = ({ src }) => {
   const matches = src.match(

@@ -12,7 +12,7 @@ const PostPage: SitePage = () => {
   const post = usePost({ postId });
 
   return (
-    <Container size={690} px={0} mx={largerThanSm ? undefined : "-md"}>
+    <Container px={0} mx={largerThanSm ? undefined : "-md"}>
       {post.isSuccess ? (
         <Post {...post.data.post_view} showBody />
       ) : (

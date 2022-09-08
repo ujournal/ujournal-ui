@@ -1,5 +1,5 @@
 import { Box, Center } from "@mantine/core";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const SoundCloudEmbed: EmbedComponentType = ({ src: url }) => {
   if (url) {

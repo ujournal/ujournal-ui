@@ -1,17 +1,17 @@
 import { AspectRatio, Box, Center } from "@mantine/core";
 import { isSocialMediaUrl } from "baza/utils/socialMedia";
-import { UrlEmbed } from "./UrlEmbed";
-import { ImageEmbed } from "./ImageEmbed";
-import { TwitterEmbed } from "./TwitterEmbed";
+import { UrlEmbed } from "./embedTypes/UrlEmbed";
+import { ImageEmbed } from "./embedTypes/ImageEmbed";
+import { TwitterEmbed } from "./embedTypes/TwitterEmbed";
+import { YouTubeEmbed } from "./embedTypes/YouTubeEmbed";
+import { VimeoEmbed } from "./embedTypes/VimeoEmbed";
+import { FacebookEmbed } from "./embedTypes/FacebookEmbed";
+import { InstagramEmbed } from "./embedTypes/InstagramEmbed";
+import { TelegramEmbed } from "./embedTypes/TelegramEmbed";
+import { SoundCloudEmbed } from "./embedTypes/SoundCloudEmbed";
+import { SpotifyEmbed } from "./embedTypes/SpotifyEmbed";
 import { EmbedComponentType } from "./types";
-import { YouTubeEmbed } from "./YouTubeEmbed";
-import { VimeoEmbed } from "./VimeoEmbed";
-import { FacebookEmbed } from "./FacebookEmbed";
-import { InstagramEmbed } from "./InstagramEmbed";
-import { TelegramEmbed } from "./TelegramEmbed";
 import isUrl from "validator/lib/isURL";
-import { SoundCloudEmbed } from "./SoundCloudEmbed";
-import { SpotifyEmbed } from "./SpotifyEmbed";
 
 enum EmbedType {
   Default = "default",

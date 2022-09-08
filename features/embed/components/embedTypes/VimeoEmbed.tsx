@@ -1,4 +1,4 @@
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 import Vimeo from "@u-wave/react-vimeo";
 import { useCallback, useMemo, useState } from "react";
 import { Box, ThemeIcon, UnstyledButton } from "@mantine/core";

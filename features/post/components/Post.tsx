@@ -9,6 +9,7 @@ import {
   Button,
   Tooltip,
   ScrollArea,
+  Container,
 } from "@mantine/core";
 import { FC, MutableRefObject, useEffect } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -102,100 +103,115 @@ export const Post: FC<
       shadow="xs"
     >
       <ScrollArea sx={{ overflow: "visible !important" }}>
-        <Group position="apart" mt="-xs" noWrap>
-          <Group
-            noWrap
-            sx={{ flex: "1 1 0", flexGrow: "unset" }}
-            spacing="xs"
-            mx="-xs"
-          >
-            <CommunityButton
-              communityName={community.name}
-              image={community.icon.match<string | undefined>({
-                some: (name) => name,
-                none: undefined,
-              })}
-              label={Some(community.title).match<string>({
-                some: (name) => name,
-                none: () => community.name,
-              })}
-              weight={600}
-            />
-            <UserButton
-              userId={creator.id}
-              image={creator.avatar.match<string | undefined>({
-                some: (name) => name,
-                none: undefined,
-              })}
-              label={creator.display_name.match<string>({
-                some: (name) => name,
-                none: () => creator.name,
-              })}
-            />
-            <DateFormatted date={new Date(post.published)} />
-          </Group>
+        <Container size={650} p={0}>
+          <Group position="apart" mt="-xs" noWrap>
+            <Group
+              noWrap
+              sx={{ flex: "1 1 0", flexGrow: "unset" }}
+              spacing="xs"
+              mx="-xs"
+            >
+              <CommunityButton
+                communityName={community.name}
+                image={community.icon.match<string | undefined>({
+                  some: (name) => name,
+                  none: undefined,
+                })}
+                label={Some(community.title).match<string>({
+                  some: (name) => name,
+                  none: () => community.name,
+                })}
+                weight={600}
+              />
+              <UserButton
+                userId={creator.id}
+                image={creator.avatar.match<string | undefined>({
+                  some: (name) => name,
+                  none: undefined,
+                })}
+                label={creator.display_name.match<string>({
+                  some: (name) => name,
+                  none: () => creator.name,
+                })}
+              />
+              <DateFormatted date={new Date(post.published)} />
+            </Group>
 
-          <Menu withinPortal position="bottom-end" shadow="sm">
-            <Menu.Target>
-              <ActionIcon>
-                <IconDots size={16} />
-              </ActionIcon>
-            </Menu.Target>
+            <Menu withinPortal position="bottom-end" shadow="sm">
+              <Menu.Target>
+                <ActionIcon>
+                  <IconDots size={16} />
+                </ActionIcon>
+              </Menu.Target>
 
-            <Menu.Dropdown>
-              <Menu.Item
-                icon={
-                  saved ? <IconStarOff size={14} /> : <IconStar size={14} />
-                }
-                sx={{ display: "none" }}
-              >
-                {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
-              </Menu.Item>
-              <Menu.Item icon={<IconCopy size={14} />} sx={{ display: "none" }}>
-                {capitalize(t("cross_post"))}
-              </Menu.Item>
-              <Link href={`/edit-post?postId=${post.id}`}>
-                <Menu.Item icon={<IconPencil size={14} />} component="a">
-                  {capitalize(t("edit"))}
+              <Menu.Dropdown>
+                <Menu.Item
+                  icon={
+                    saved ? <IconStarOff size={14} /> : <IconStar size={14} />
+                  }
+                  sx={{ display: "none" }}
+                >
+                  {saved ? capitalize(t("unsave")) : capitalize(t("save"))}
                 </Menu.Item>
-              </Link>
-              <Menu.Item icon={<IconLock size={14} />} sx={{ display: "none" }}>
-                {post.locked ? capitalize(t("unlock")) : capitalize(t("lock"))}
-              </Menu.Item>
-              <Menu.Item icon={<IconPin size={14} />} sx={{ display: "none" }}>
-                {post.stickied
-                  ? capitalize(t("unsticky"))
-                  : capitalize(t("sticky"))}
-              </Menu.Item>
-              <Menu.Item icon={<IconTrash size={14} />} color="red">
-                {post.deleted
-                  ? capitalize(t("restore"))
-                  : capitalize(t("delete"))}
-              </Menu.Item>
-              <Menu.Item
-                icon={<IconTrash size={14} />}
-                color="red"
-                sx={{ display: "none" }}
-              >
-                {post.removed
-                  ? capitalize(t("restore"))
-                  : capitalize(t("remove"))}{" "}
-                ({t("mod")})
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Group>
+                <Menu.Item
+                  icon={<IconCopy size={14} />}
+                  sx={{ display: "none" }}
+                >
+                  {capitalize(t("cross_post"))}
+                </Menu.Item>
+                <Link href={`/edit-post?postId=${post.id}`}>
+                  <Menu.Item icon={<IconPencil size={14} />} component="a">
+                    {capitalize(t("edit"))}
+                  </Menu.Item>
+                </Link>
+                <Menu.Item
+                  icon={<IconLock size={14} />}
+                  sx={{ display: "none" }}
+                >
+                  {post.locked
+                    ? capitalize(t("unlock"))
+                    : capitalize(t("lock"))}
+                </Menu.Item>
+                <Menu.Item
+                  icon={<IconPin size={14} />}
+                  sx={{ display: "none" }}
+                >
+                  {post.stickied
+                    ? capitalize(t("unsticky"))
+                    : capitalize(t("sticky"))}
+                </Menu.Item>
+                <Menu.Item icon={<IconTrash size={14} />} color="red">
+                  {post.deleted
+                    ? capitalize(t("restore"))
+                    : capitalize(t("delete"))}
+                </Menu.Item>
+                <Menu.Item
+                  icon={<IconTrash size={14} />}
+                  color="red"
+                  sx={{ display: "none" }}
+                >
+                  {post.removed
+                    ? capitalize(t("restore"))
+                    : capitalize(t("remove"))}{" "}
+                  ({t("mod")})
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Group>
+        </Container>
       </ScrollArea>
 
-      <Group position="apart" mt="xs" mb="md">
-        <Link href={`/post?postId=${post.id}`} passHref>
-          <Box component="a">
-            <Title size="h3" weight={600}>
-              {post.name}
-            </Title>
-          </Box>
-        </Link>
-      </Group>
+      <Container size={650} p={0}>
+        <Group position="apart" mt="xs" mb="md">
+          <Link href={`/post?postId=${post.id}`} passHref>
+            <Box component="a">
+              <Title size="h3" weight={600}>
+                {post.name}
+              </Title>
+            </Box>
+          </Link>
+        </Group>
+      </Container>
 
       <Card.Section>
         {post.url.match({
@@ -211,96 +227,100 @@ export const Post: FC<
         })}
       </Card.Section>
 
-      {post.body.match({
-        some: (body) => (
-          <>
-            <Box
-              mt={largerThanMd ? "lg" : "sm"}
-              mx="-lg"
-              px="lg"
-              sx={{
-                position: "relative",
-                maxHeight: _showBody ? undefined : "100px",
-                overflow: _showBody ? undefined : "hidden",
-                "&:after": _showBody
-                  ? undefined
-                  : {
-                      position: "absolute",
-                      left: 0,
-                      bottom: 0,
-                      width: "100%",
-                      height: "100%",
-                      content: "''",
-                      background:
-                        "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
-                      pointerEvents: "none",
-                    },
-              }}
-            >
-              <Text size="md" component="div">
-                <MarkdownText text={body} />
-              </Text>
-            </Box>
-            {!showBody && (
-              <Button
-                variant="light"
-                radius="md"
-                onClick={handleToggleShowBody}
-                fullWidth
-                mt="md"
-                size="xs"
-                sx={(theme) => ({
-                  backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
-                })}
+      <Container size={650} p={0}>
+        {post.body.match({
+          some: (body) => (
+            <>
+              <Box
+                mt={largerThanMd ? "lg" : "sm"}
+                mx="-lg"
+                px="lg"
+                sx={{
+                  position: "relative",
+                  maxHeight: _showBody ? undefined : "100px",
+                  overflow: _showBody ? undefined : "hidden",
+                  "&:after": _showBody
+                    ? undefined
+                    : {
+                        position: "absolute",
+                        left: 0,
+                        bottom: 0,
+                        width: "100%",
+                        height: "100%",
+                        content: "''",
+                        background:
+                          "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
+                        pointerEvents: "none",
+                      },
+                }}
               >
-                {_showBody ? (
-                  <IconCaretUp stroke={1.5} />
-                ) : (
-                  <IconCaretDown stroke={1.5} />
-                )}
-              </Button>
-            )}
-          </>
-        ),
-        none: undefined,
-      })}
+                <Text size="md" component="div">
+                  <MarkdownText text={body} />
+                </Text>
+              </Box>
+              {!showBody && (
+                <Button
+                  variant="light"
+                  radius="md"
+                  onClick={handleToggleShowBody}
+                  fullWidth
+                  mt="md"
+                  size="xs"
+                  sx={(theme) => ({
+                    backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+                  })}
+                >
+                  {_showBody ? (
+                    <IconCaretUp stroke={1.5} />
+                  ) : (
+                    <IconCaretDown stroke={1.5} />
+                  )}
+                </Button>
+              )}
+            </>
+          ),
+          none: undefined,
+        })}
+      </Container>
 
-      <Group
-        position="apart"
-        mt="xs"
-        ml="-xs"
-        mb={largerThanMd ? "-xs" : undefined}
-      >
-        <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
-          <Link href={`/post?postId=${post.id}&comments`} passHref>
-            <Tooltip
-              label={t("number_of_comments", {
-                count: counts.comments,
-                formattedCount: counts.comments,
-              })}
-              openDelay={1000}
-            >
-              <Button
-                component="a"
-                leftIcon={<IconMessageCircle2 stroke={1.5} />}
-                variant="subtle"
-              >
-                {t("number_of_comments", {
+      <Container size={650} p={0}>
+        <Group
+          position="apart"
+          mt="xs"
+          ml="-xs"
+          mb={largerThanMd ? "-xs" : undefined}
+        >
+          <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
+            <Link href={`/post?postId=${post.id}&comments`} passHref>
+              <Tooltip
+                label={t("number_of_comments", {
                   count: counts.comments,
-                  formattedCount: formatShortNum(counts.comments),
+                  formattedCount: counts.comments,
                 })}
-              </Button>
-            </Tooltip>
-          </Link>
+                openDelay={1000}
+              >
+                <Button
+                  component="a"
+                  leftIcon={<IconMessageCircle2 stroke={1.5} />}
+                  variant="subtle"
+                >
+                  {t("number_of_comments", {
+                    count: counts.comments,
+                    formattedCount: formatShortNum(counts.comments),
+                  })}
+                </Button>
+              </Tooltip>
+            </Link>
+          </Group>
+          <VoteButtons
+            counts={countsAndMyVote.counts}
+            myVote={countsAndMyVote.myVote}
+            isLoading={isVoting}
+            onVoteUp={voteUp}
+            onVoteDown={voteDown}
+          />
         </Group>
-        <VoteButtons
-          counts={countsAndMyVote.counts}
-          myVote={countsAndMyVote.myVote}
-          isLoading={isVoting}
-          onVoteUp={voteUp}
-          onVoteDown={voteDown}
-        />
-      </Group>
+      </Container>
     </Card>
   );
 };

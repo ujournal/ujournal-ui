@@ -1,5 +1,5 @@
 import { Box } from "@mantine/core";
-import { EmbedComponentType } from "./types";
+import { EmbedComponentType } from "../types";
 
 export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
   // eslint-disable-next-line @next/next/no-img-element
