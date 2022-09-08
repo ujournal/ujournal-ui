@@ -16,7 +16,7 @@ export const CommentList: FC<{
   const { t } = useTranslation();
 
   return (
-    <Card>
+    <Card radius="md">
       <Container size={650} p={0}>
         <Stack>
           <Title size="h3">

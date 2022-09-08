@@ -30,7 +30,7 @@ const LoginPage: SitePage = () => {
 
   return (
     <Container size="xs">
-      <Card p="md">
+      <Card p="lg" radius="md">
         <LoginForm
           values={{ usernameOrEmail: "", password: "" }}
           onSubmit={handleLogin}
