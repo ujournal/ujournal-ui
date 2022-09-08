@@ -35,7 +35,9 @@ export const usePostVote = ({
         })
       );
 
-      onSuccess({ counts, myVote: myVote.unwrap() });
+      console.log(myVote);
+
+      onSuccess({ counts, myVote: myVote.unwrapOr(0) });
 
       await queryClient.invalidateQueries(["post"]);
     }
@@ -64,9 +66,15 @@ export const usePostVote = ({
     [likePost]
   );
 
+  const voteZero = useCallback(
+    async () => await likePost.mutateAsync(0),
+    [likePost]
+  );
+
   return {
     isLoading: likePost.isLoading,
     voteUp,
     voteDown,
+    voteZero,
   };
 };

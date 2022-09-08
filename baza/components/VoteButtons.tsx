@@ -9,16 +9,18 @@ export const VoteButtons: FC<{
     upvotes: number;
     downvotes: number;
   };
-  isLoading?: boolean;
   myVote?: number;
-  onVoteUp: () => void;
-  onVoteDown: () => void;
+  vote: {
+    isLoading?: boolean;
+    voteUp: () => void;
+    voteDown: () => void;
+    voteZero: () => void;
+  };
 }> = ({
   counts = { score: 0, upvotes: 0, downvotes: 0 },
-  isLoading = false,
+
   myVote = 0,
-  onVoteUp,
-  onVoteDown,
+  vote: { isLoading = false, voteUp, voteDown, voteZero },
 }) => {
   const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
@@ -42,24 +44,13 @@ export const VoteButtons: FC<{
     return `${points} • ${upvotes} • ${downvotes}`;
   }, [counts.downvotes, counts.score, counts.upvotes, t]);
 
-  // useEffect(() => {
-  //   if (ref.current) {
-  //     const el = ref.current.querySelector<HTMLDivElement>(
-  //       ".firework .explosion::before"
-  //     );
-  //     if (el) {
-  //       el.style.animation = "explosion 2s ease-in-out 1";
-  //     }
-  //   }
-  // }, [counts.score]);
-
   return (
     <Group noWrap align="center">
       <Tooltip label={t("downvote")}>
         <ActionIcon
           color="blue"
           variant="subtle"
-          onClick={onVoteDown}
+          onClick={myVote === 1 ? voteZero : voteDown}
           disabled={myVote === -1}
         >
           <IconArrowDown stroke={1.5} />
@@ -171,7 +162,7 @@ export const VoteButtons: FC<{
         <ActionIcon
           color="blue"
           variant="subtle"
-          onClick={onVoteUp}
+          onClick={myVote === -1 ? voteZero : voteUp}
           disabled={myVote === 1}
         >
           <IconArrowUp stroke={1.5} />

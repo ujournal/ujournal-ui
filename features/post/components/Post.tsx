@@ -69,11 +69,7 @@ export const Post: FC<
     myVote: myVote.unwrapOr(0),
   });
 
-  const {
-    voteUp,
-    voteDown,
-    isLoading: isVoting,
-  } = usePostVote({
+  const vote = usePostVote({
     postId: post.id,
     onSuccess: setCountsAndMyVote,
   });
@@ -318,9 +314,7 @@ export const Post: FC<
           <VoteButtons
             counts={countsAndMyVote.counts}
             myVote={countsAndMyVote.myVote}
-            isLoading={isVoting}
-            onVoteUp={voteUp}
-            onVoteDown={voteDown}
+            vote={vote}
           />
         </Group>
       </Container>
