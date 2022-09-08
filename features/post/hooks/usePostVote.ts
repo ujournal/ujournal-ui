@@ -35,8 +35,6 @@ export const usePostVote = ({
         })
       );
 
-      console.log(myVote);
-
       onSuccess({ counts, myVote: myVote.unwrapOr(0) });
 
       await queryClient.invalidateQueries(["post"]);

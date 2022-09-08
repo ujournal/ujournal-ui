@@ -55,11 +55,6 @@ export const TextEditor: FC<TextEditorProps> = ({
   const _editor = useMemo(() => {
     const element = document.createElement("div");
 
-    console.log(
-      "process.env.NEXT_PUBLIC_PICTRS_API_URL",
-      process.env.NEXT_PUBLIC_PICTRS_API_URL
-    );
-
     const editor = new EditorJS({
       holder: element,
       placeholder,

@@ -15,8 +15,6 @@ export const CommentList: FC<{
 }> = ({ counts, data, isLoading }) => {
   const { t } = useTranslation();
 
-  console.log("buildCommentsTree(data)", buildCommentsTree(data));
-
   return (
     <Card>
       <Container size={650} p={0}>
