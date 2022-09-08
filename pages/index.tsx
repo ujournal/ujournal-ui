@@ -17,7 +17,8 @@ const FeedPage: SitePage = () => {
 
   useEffect(() => {
     posts.refetch();
-  }, [posts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
