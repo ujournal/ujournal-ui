@@ -1,6 +1,6 @@
 import { SitePage } from "types";
 import { PostList } from "features/post/components/PostList";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -14,6 +14,10 @@ const FeedPage: SitePage = () => {
     ...fetchPostsParamsDefault,
   });
   const posts = usePostList({ params });
+
+  useEffect(() => {
+    posts.refetch();
+  }, [posts]);
 
   return (
     <>

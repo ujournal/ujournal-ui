@@ -37,7 +37,6 @@ export const usePostVote = ({
 
       onSuccess({ counts, myVote: myVote.unwrap() });
 
-      await queryClient.invalidateQueries(["posts"]);
       await queryClient.invalidateQueries(["post"]);
     }
   }, [auth.token, lemmyClient, onSuccess, postId]);
