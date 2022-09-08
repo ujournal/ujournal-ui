@@ -1,6 +1,12 @@
 import Head from "next/head";
 import { I18nextProvider } from "react-i18next";
-import { Aside, MantineProvider, Navbar, ScrollArea } from "@mantine/core";
+import {
+  Aside,
+  Drawer,
+  MantineProvider,
+  Navbar,
+  ScrollArea,
+} from "@mantine/core";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { LemmyClientContext, lemmyHttpClient } from "baza/hooks/useLemmyClient";
 import { LemmyAuthProvider } from "features/auth/hooks/useAuth";
@@ -16,33 +22,6 @@ import { queryClient } from "baza/reactQuery";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
-  const largerThanMd = useBreakpoint({ largerThan: "md" });
-
-  const navbar = largerThanMd ? (
-    <Navbar
-      withBorder={false}
-      width={{ base: 220 }}
-      sx={{ backgroundColor: "transparent" }}
-      hiddenBreakpoint="md"
-    >
-      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-        {Component.Navbar && <Component.Navbar />}
-      </Navbar.Section>
-    </Navbar>
-  ) : undefined;
-
-  const aside = largerThanMd ? (
-    <Aside
-      withBorder={false}
-      width={{ base: 220 }}
-      fixed={false}
-      sx={{ backgroundColor: "transparent" }}
-    >
-      <Aside.Section grow component={ScrollArea} mx="-xs" px="xs">
-        {Component.Aside && <Component.Aside />}
-      </Aside.Section>
-    </Aside>
-  ) : undefined;
 
   return (
     <>
@@ -65,7 +44,10 @@ export default function App(props: SiteAppProps) {
                     withNormalizeCSS
                     theme={mantineTheme}
                   >
-                    <AppLayout navbar={navbar} aside={aside}>
+                    <AppLayout
+                      navbar={Component.Navbar && <Component.Navbar />}
+                      aside={Component.Aside && <Component.Aside />}
+                    >
                       <Component {...pageProps} />
                     </AppLayout>
                   </MantineProvider>

@@ -80,7 +80,7 @@ export const EmbedField: FC<{
           updateNotification({
             id: "image-uploading",
             color: "red",
-            message: "Error",
+            message: `Oops. Something went wrong`,
             icon: <IconCheck size={16} />,
             autoClose: 2000,
           });

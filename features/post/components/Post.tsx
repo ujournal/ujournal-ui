@@ -294,7 +294,7 @@ export const Post: FC<
           mb={largerThanMd ? "-xs" : undefined}
         >
           <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
-            <Link href={`/post?postId=${post.id}&comments`} passHref>
+            <Link href={`/post?postId=${post.id}#comments`} passHref>
               <Tooltip
                 label={t("number_of_comments", {
                   count: counts.comments,

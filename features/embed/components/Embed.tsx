@@ -72,7 +72,7 @@ export const getTypeBySrc = (src: string) => {
 
 export const Embed: EmbedComponentType = ({
   src,
-  title = "Untitled",
+  title,
   description,
   thumbnail,
 }) => {

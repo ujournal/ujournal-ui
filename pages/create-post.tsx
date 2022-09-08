@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
+import { IconCheck } from "@tabler/icons";
 
 const CreatePostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -20,16 +21,27 @@ const CreatePostPage: SitePage = () => {
 
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
-      const post = await upsertPost.mutateAsync(values);
+      try {
+        const post = await upsertPost.mutateAsync(values);
 
-      showNotification({
-        message: capitalize(t("saved")),
-      });
+        showNotification({
+          color: "teal",
+          icon: <IconCheck size={16} />,
+          message: capitalize(t("saved")),
+        });
 
-      router.push({
-        pathname: "/post",
-        query: { postId: post.post_view.post.id },
-      });
+        router.push({
+          pathname: "/post",
+          query: { postId: post.post_view.post.id },
+        });
+      } catch (error) {
+        showNotification({
+          color: "red",
+          message: `Oops. Something went wrong`,
+          icon: <IconCheck size={16} />,
+          autoClose: 2000,
+        });
+      }
     },
     [router, t, upsertPost]
   );

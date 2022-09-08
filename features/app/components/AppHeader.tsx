@@ -11,7 +11,7 @@ import { capitalize } from "baza/utils/string";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useSiteUser } from "features/auth/hooks/useSiteUser";
 
-export const AppHeader: FC = () => {
+export const AppHeader: FC<{ onMenu?: () => void }> = ({ onMenu }) => {
   const auth = useAuth();
   const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -77,7 +77,7 @@ export const AppHeader: FC = () => {
       <Group position="apart">
         <Group>
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
-            <Burger opened={false} onClick={() => {}} size="sm" />
+            <Burger opened={false} onClick={onMenu} size="sm" />
           </MediaQuery>
 
           <Link href={{ pathname: "/", query: {} }} passHref>
