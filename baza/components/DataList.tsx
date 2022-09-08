@@ -14,7 +14,7 @@ const DataListLoader: FC = () => {
 
 type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   data: any;
-  isLoading: boolean;
+  isLoading?: boolean;
   transform?: (data: any) => TDataItem[] | undefined;
   itemComponent: ComponentType<TDataItem>;
   loaderComponent?: ComponentType;

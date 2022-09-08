@@ -3,7 +3,10 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useMarkdown } from "baza/hooks/useMarkdown";
 import { FC, useCallback, MouseEvent } from "react";
 
-export const MarkdownText: FC<{ text: string }> = ({ text }) => {
+export const MarkdownText: FC<{
+  text: string;
+  withContentMargins?: boolean;
+}> = ({ text, withContentMargins = true }) => {
   const markdown = useMarkdown();
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
@@ -44,8 +47,8 @@ export const MarkdownText: FC<{ text: string }> = ({ text }) => {
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.05)",
-          marginLeft: -20,
-          marginRight: -20,
+          marginLeft: withContentMargins ? -20 : undefined,
+          marginRight: withContentMargins ? -20 : undefined,
         },
         "& blockquote": {
           backgroundColor: theme.colors.blue[0],
