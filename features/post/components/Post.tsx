@@ -203,7 +203,10 @@ export const Post: FC<
 
       <Container size={650} p={0}>
         <Group position="apart" mt="xs" mb="md">
-          <Link href={`/post?postId=${post.id}`} passHref>
+          <Link
+            href={{ pathname: "/post", query: { postId: post.id } }}
+            passHref
+          >
             <Box component="a">
               <Title size="h3" weight={600}>
                 {post.name}

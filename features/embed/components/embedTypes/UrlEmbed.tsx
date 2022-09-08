@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { IconExternalLink, IconLink } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { EmbedComponentType } from "../types";
 
 export const UrlEmbed: EmbedComponentType = ({
@@ -20,6 +21,21 @@ export const UrlEmbed: EmbedComponentType = ({
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const heading = [title, description].filter(Boolean);
+  const [_thumbnail, setThumbnail] = useState<string | undefined>(thumbnail);
+
+  const handleImageError = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
+      if (event.target instanceof HTMLImageElement) {
+        console.log("error");
+        setThumbnail(undefined);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    setThumbnail(thumbnail);
+  }, [thumbnail]);
 
   return (
     <Box
@@ -39,16 +55,17 @@ export const UrlEmbed: EmbedComponentType = ({
               }}
             >
               <AspectRatio ratio={16 / 9}>
-                {thumbnail ? (
+                {_thumbnail ? (
                   <Box
                     component="img"
-                    src={thumbnail}
+                    src={_thumbnail}
                     alt={heading[0]}
                     sx={(theme) => ({
                       objectFit: "cover",
-                      backgroundColor: "rgba(0,0,0,0.05)",
+                      backgroundColor: theme.colors.blue[1],
                       borderRadius: theme.radius.sm,
                     })}
+                    onError={handleImageError}
                   />
                 ) : (
                   <Box

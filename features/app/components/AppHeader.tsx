@@ -9,13 +9,13 @@ import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "lodash";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { useMyUserInfo } from "features/auth/hooks/useMyUserInfo";
+import { useSiteUser } from "features/auth/hooks/useSiteUser";
 
 export const AppHeader: FC = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
-  const { myUserInfo, isLoading: isUserInfoLoading } = useMyUserInfo();
+  const { myUserInfo, isLoading: isUserInfoLoading } = useSiteUser();
 
   const user = useMemo(
     () =>

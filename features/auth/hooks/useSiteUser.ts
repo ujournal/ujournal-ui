@@ -6,10 +6,10 @@ import { useSite } from "./useSite";
 import { Option, None } from "@sniptt/monads";
 import { useCallback } from "react";
 
-export const useMyUserInfo = () => {
-  const site = useSite();
+export const useSiteUser = () => {
+  const { data, isLoading } = useSite();
 
-  const myUserInfo = site.data?.my_user;
+  const myUserInfo = data?.my_user;
 
   const canMod = useCallback(
     (
@@ -164,6 +164,7 @@ export const useMyUserInfo = () => {
   );
 
   return {
+    isLoading,
     myUserInfo,
     canMod,
     canAdmin,
@@ -174,6 +175,5 @@ export const useMyUserInfo = () => {
     amCommunityCreator,
     amSiteCreator,
     amTopMod,
-    isLoading: site.isLoading,
   };
 };

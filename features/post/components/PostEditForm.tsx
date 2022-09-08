@@ -81,6 +81,9 @@ export const PostEditForm: FC<{
               "&:hover": {
                 backgroundColor: "rgba(0,0,0,0.015)",
               },
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
             },
           }}
           size={22}

@@ -1,5 +1,5 @@
 import { TextInput, ActionIcon, Box, Tooltip } from "@mantine/core";
-import { ChangeEvent, FC, useCallback, useRef } from "react";
+import { ChangeEvent, FC, useCallback, useEffect, useRef } from "react";
 import { IconPhotoUp, IconTrash } from "@tabler/icons";
 import { Embed } from "features/embed/components/Embed";
 import isUrl from "validator/lib/isURL";
@@ -8,6 +8,9 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { capitalize, shuffle } from "lodash";
 import { useIntervalPhrases } from "baza/hooks/useIntervalPhrases";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { useQuery } from "@tanstack/react-query";
+import { useLemmyClient } from "baza/hooks/useLemmyClient";
+import { GetSiteMetadata } from "ujournal-lemmy-js-client";
 
 const socialMediaNames = shuffle([
   "YouTube",
@@ -24,7 +27,21 @@ export const EmbedField: FC<{
   value: string;
   onChange: (value: string) => void;
 }> = ({ value, onChange }) => {
+  const lemmyClient = useLemmyClient();
+
   const openRef = useRef<() => void>(null);
+
+  const urlMetadata = useQuery(["urlMetadata", value], async () => {
+    if (isUrl(value)) {
+      return await lemmyClient.getSiteMetadata(
+        new GetSiteMetadata({
+          url: value,
+        })
+      );
+    }
+
+    return undefined;
+  });
 
   const socialMediaName = useIntervalPhrases(socialMediaNames);
 
@@ -65,7 +82,12 @@ export const EmbedField: FC<{
       {isUrl(value) ? (
         <Box mx={smallerThanSm ? "-sm" : "-xl"} sx={{ position: "relative" }}>
           <Box sx={{ pointerEvents: "none" }}>
-            <Embed src={value} />
+            <Embed
+              src={value}
+              title={urlMetadata.data?.metadata.title.unwrapOr("")}
+              description={urlMetadata.data?.metadata.description.unwrapOr("")}
+              thumbnail={urlMetadata.data?.metadata.image.unwrapOr("")}
+            />
           </Box>
           <ActionIcon
             variant="filled"
