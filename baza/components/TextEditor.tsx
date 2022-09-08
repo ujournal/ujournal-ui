@@ -48,8 +48,13 @@ export const TextEditor: FC<TextEditorProps> = ({
     [uploadImage]
   );
 
-  const uploadByUrl = useCallback(async () => {
-    // TODO: uploadByUrl
+  const uploadByUrl = useCallback(async (url: string) => {
+    return Promise.resolve({
+      success: 1,
+      file: {
+        url,
+      },
+    });
   }, []);
 
   const _editor = useMemo(() => {
