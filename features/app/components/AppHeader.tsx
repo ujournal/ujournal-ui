@@ -15,11 +15,11 @@ export const AppHeader: FC = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
-  const myUserInfo = useMyUserInfo();
+  const { myUserInfo, isLoading: isUserInfoLoading } = useMyUserInfo();
 
   const user = useMemo(
     () =>
-      myUserInfo.user?.match({
+      myUserInfo?.match({
         some: (myUser) => ({
           name: myUser.local_user_view.person.display_name.unwrapOr(
             myUser.local_user_view.person.name
@@ -104,7 +104,7 @@ export const AppHeader: FC = () => {
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>
           </Link>
-          {myUserInfo.isLoading ? (
+          {isUserInfoLoading ? (
             <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
           ) : (
             profileMenu

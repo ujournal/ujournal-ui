@@ -1,15 +1,25 @@
 import { Box } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useMarkdown } from "baza/hooks/useMarkdown";
-import { FC } from "react";
+import { FC, useCallback, MouseEvent } from "react";
 
 export const MarkdownText: FC<{ text: string }> = ({ text }) => {
   const markdown = useMarkdown();
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
+  const handleContentClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (event.target instanceof HTMLAnchorElement) {
+        event.target.setAttribute("target", "_blank");
+      }
+    },
+    []
+  );
+
   return (
     <Box
       dangerouslySetInnerHTML={{ __html: markdown.render(text) }}
+      onClick={handleContentClick}
       sx={(theme) => ({
         "& a": {
           textDecoration: "underline",
