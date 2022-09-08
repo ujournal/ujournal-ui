@@ -1,5 +1,5 @@
 import { Center, Loader } from "@mantine/core";
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 import { ComponentType } from "react";
 import { get } from "lodash";
 import { FC } from "react";
@@ -22,22 +22,29 @@ type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   itemProps?: any;
 }) => ReactElement;
 
-export const DataList: DataListComponentType = ({
-  data,
-  isLoading,
-  itemComponent: Item,
-  itemKey = "id",
-  transform = (data) => data,
-  itemProps = {},
-  loaderComponent: LoaderComponent = DataListLoader,
-}) => {
+export const DataList: DataListComponentType = (params) => {
+  const {
+    data,
+    isLoading,
+    itemComponent: Item,
+    itemKey = "id",
+    transform = (data) => data,
+    itemProps = {},
+    loaderComponent: LoaderComponent = DataListLoader,
+  } = params;
+
+  const items = useMemo(
+    () => (transform ? transform(data) : []),
+    [data, transform]
+  );
+
   if (isLoading) {
     return <LoaderComponent />;
   }
 
   return (
     <>
-      {transform(data)?.map((item: any) => (
+      {items.map((item: any) => (
         <Item {...item} {...itemProps} key={get(item, itemKey)} />
       ))}
     </>

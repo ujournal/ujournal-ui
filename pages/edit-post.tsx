@@ -26,7 +26,10 @@ const EditPostPage: SitePage = () => {
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
       try {
-        const post = await upsertPost.mutateAsync(values);
+        const post = await upsertPost.mutateAsync({
+          ...values,
+          postId: Number(postId),
+        });
 
         showNotification({
           color: "teal",
@@ -47,7 +50,7 @@ const EditPostPage: SitePage = () => {
         });
       }
     },
-    [router, t, upsertPost]
+    [postId, router, t, upsertPost]
   );
 
   if (post.isSuccess) {
@@ -67,6 +70,7 @@ const EditPostPage: SitePage = () => {
               url: post.data?.post_view.post.url.unwrapOr(""),
               nsfw: post.data?.post_view.post.nsfw,
             }}
+            isLoading={upsertPost.isLoading}
             onSubmit={handleSubmit}
           />
         </Card>

@@ -61,6 +61,7 @@ const CreatePostPage: SitePage = () => {
             url: "",
             nsfw: false,
           }}
+          isLoading={upsertPost.isLoading}
           onSubmit={handleSubmit}
         />
       </Card>

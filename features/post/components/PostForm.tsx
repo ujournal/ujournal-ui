@@ -34,6 +34,7 @@ export type Values = {
 export const PostForm: FC<{
   postId?: number;
   values?: Values;
+  isLoading?: boolean;
   onSubmit: (values: Values) => void;
 }> = ({
   postId,
@@ -44,6 +45,7 @@ export const PostForm: FC<{
     body: "",
     nsfw: false,
   },
+  isLoading = false,
   onSubmit,
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
@@ -167,7 +169,7 @@ export const PostForm: FC<{
           mb="md"
         />
 
-        <Button type="submit" size="lg">
+        <Button type="submit" size="lg" loading={isLoading}>
           {postId ? capitalize(t("save")) : capitalize(t("create"))}
         </Button>
       </Stack>
