@@ -32,7 +32,7 @@ const PostPage: SitePage = () => {
 
       <Container px={0} mx={largerThanSm ? undefined : "-md"}>
         <Card radius={smallerThanSm ? 0 : "md"}>
-          <Container size={650} px={0} sx={{ width: "100%" }}>
+          <Container size={650} px={0}>
             <Stack>
               <Title size="h3" id="comments">
                 {t("number_of_comments", {
@@ -43,11 +43,13 @@ const PostPage: SitePage = () => {
                 })}
               </Title>
 
-              <Box>
+              {/* <Box sx={{ width: "100%" }}>
                 <CommentForm values={{}} onSubmit={console.log} />
-              </Box>
+              </Box> */}
 
-              <CommentList {...post} data={post.data?.comments || []} />
+              <Box sx={{ width: "100%" }}>
+                <CommentList {...post} data={post.data?.comments || []} />
+              </Box>
             </Stack>
           </Container>
         </Card>
