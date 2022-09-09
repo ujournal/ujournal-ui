@@ -7,6 +7,12 @@ You can re-define variables by add `.env.local` file.
 
 ## Getting Started
 
+Install dependencies:
+
+```bash
+npm install
+```
+
 First, run the development server:
 
 ```bash
