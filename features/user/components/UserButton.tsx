@@ -6,6 +6,7 @@ import {
   Avatar,
   Tooltip,
   Box,
+  ButtonProps,
 } from "@mantine/core";
 import { IconUser } from "@tabler/icons";
 import { forwardRef } from "react";
@@ -18,16 +19,17 @@ type UserButtonProps = {
   label: string;
   weight?: number;
   active?: boolean;
-};
+} & ButtonProps;
 
 export const UserButtonWithoutRef = (
-  { userId, image, label, weight, active = false }: UserButtonProps,
+  { userId, image, label, weight, active = false, ...props }: UserButtonProps,
   ref: ForwardedRef<HTMLAnchorElement>
 ) => {
   return (
     <Link href={`/user?userId=${userId}`} passHref>
       <Tooltip label={label} openDelay={1000}>
         <UnstyledButton
+          {...props}
           component="a"
           px={6}
           py={4}

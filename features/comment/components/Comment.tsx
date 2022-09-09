@@ -23,26 +23,12 @@ export const Comment: FC<CommentView & { children: CommentView[] }> = ({
             (creator.name as unknown as string)
           }
           weight={600}
+          ml="-sm"
         />
       </Group>
       <Stack spacing={0}>
-        <Group sx={{ alignItems: "stretch" }} noWrap spacing={0}>
-          <Box
-            sx={(theme) => ({
-              borderLeft: "1px solid",
-              borderBottom: "1px solid",
-              borderColor: hasChildren ? theme.colors.gray[4] : "transparent",
-              minWidth: 24,
-              marginBottom: -24,
-              marginLeft: 24,
-              borderBottomLeftRadius: 24,
-            })}
-          />
-          <Box sx={{ flex: "1 1 0" }}>
-            <MarkdownText text={comment.content} withContentMargins={false} />
-          </Box>
-        </Group>
-        <Stack sx={{ marginLeft: 42 }} spacing={0}>
+        <MarkdownText text={comment.content} withContentMargins={false} />
+        <Stack pl="md" spacing={0} sx={{ borderLeft: "1px solid grey" }}>
           <DataList data={children} itemComponent={Comment} />
         </Stack>
       </Stack>
