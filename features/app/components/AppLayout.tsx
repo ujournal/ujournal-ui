@@ -9,8 +9,8 @@ export const AppLayout: FC<{
   children: ReactElement;
 }> = ({ navbar, aside, children }) => {
   const [navbarOpened, setNavbarOpened] = useState<boolean>(false);
-  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
-  const largerThanSm = useBreakpoint({ largerThan: "sm" });
+  const smallerThanMd = useBreakpoint({ smallerThan: "md" });
+  const largerThanMd = useBreakpoint({ largerThan: "md" });
 
   const toggleNavbar = useCallback(() => {
     setNavbarOpened((opened) => !opened);
@@ -21,7 +21,7 @@ export const AppLayout: FC<{
       <AppShell
         padding="md"
         navbar={
-          largerThanSm && navbar ? (
+          largerThanMd && navbar ? (
             <Navbar
               withBorder={false}
               width={{ base: 220 }}
@@ -35,7 +35,7 @@ export const AppLayout: FC<{
           ) : undefined
         }
         aside={
-          largerThanSm && aside ? (
+          largerThanMd && aside ? (
             <Aside
               withBorder={false}
               width={{ base: 220 }}
@@ -46,8 +46,11 @@ export const AppLayout: FC<{
                 grow
                 component={ScrollArea}
                 mx="-xs"
-                px="xs"
-                py="sm"
+                styles={{
+                  viewport: {
+                    overflowWrap: "anywhere",
+                  },
+                }}
               >
                 {aside}
               </Aside.Section>
@@ -64,7 +67,7 @@ export const AppLayout: FC<{
         {children}
       </AppShell>
 
-      {smallerThanSm && (
+      {smallerThanMd && (
         <Drawer
           opened={navbarOpened}
           onClose={toggleNavbar}

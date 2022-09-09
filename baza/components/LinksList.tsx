@@ -23,7 +23,7 @@ export const LinksList: FC<{
   return (
     <Stack spacing={0}>
       {items.map(({ url, label, icon: Icon, active }) => (
-        <Link href={url} passHref key={url.toString()}>
+        <Link href={`${url}_${label}`} passHref key={url.toString()}>
           <Tooltip label={label} openDelay={1000}>
             <UnstyledButton
               px={6}
