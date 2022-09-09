@@ -38,9 +38,9 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
                       ? t("intlRelativeTime", {
                           value: daysAgo * -1,
                       })
-                      : (new Date().getUTCHours() - date.getHours()) > 0
-                          ? Math.abs((new Date().getUTCHours() - date.getHours())) + " год."
-                          : Math.abs((new Date().getUTCMinutes() - date.getMinutes())) + " хв."
+                      : (new Date().getHours() - date.getHours()) > 0
+                          ? Math.abs((new Date().getHours() - date.getHours())) + " год."
+                          : Math.abs((new Date().getMinutes() - date.getMinutes())) + " хв."
           }
       </Text>
     </Tooltip>
