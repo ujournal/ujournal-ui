@@ -1,4 +1,4 @@
-import { Box, Group, Stack } from "@mantine/core";
+import { Box, Group, Stack, Tooltip } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { UserButton } from "features/user/components/UserButton";
@@ -37,22 +37,33 @@ export const Comment: FC<
           py={0}
         />
       </Group>
-      <Stack spacing={0}>
+      <Stack spacing={2}>
+        <MarkdownText text={comment.content} withContentMargins={false} />
         {showPost && post && (
-          <Box sx={{ fontWeight: 600, fontSize: asSmall ? 14 : undefined }}>
-            <Link
-              href={{ pathname: "/post", query: { postId: post.id } }}
-              passHref
-            >
-              <a>{post.name}</a>
-            </Link>
-          </Box>
+          <Tooltip label={post.name} width={200} sx={{ whiteSpace: "normal" }}>
+            <Box>
+              <Link
+                href={{ pathname: "/post", query: { postId: post.id } }}
+                passHref
+              >
+                <Box
+                  component="a"
+                  sx={{
+                    display: "block",
+                    fontWeight: 600,
+                    fontSize: 14,
+                    maxWidth: 200,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {post.name}
+                </Box>
+              </Link>
+            </Box>
+          </Tooltip>
         )}
-        <MarkdownText
-          text={comment.content}
-          withContentMargins={false}
-          fontSize={asSmall ? 14 : undefined}
-        />
         {children.length > 0 && (
           <Stack
             pl="md"
