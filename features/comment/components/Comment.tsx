@@ -40,7 +40,10 @@ export const Comment: FC<
       <Stack spacing={2}>
         <MarkdownText text={comment.content} withContentMargins={false} />
         {showPost && post && (
-          <Tooltip label={post.name} width={200} sx={{ whiteSpace: "normal" }}>
+          <Tooltip
+            label={post.name}
+            sx={{ whiteSpace: "normal", maxWidth: 200 }}
+          >
             <Box>
               <Link
                 href={{ pathname: "/post", query: { postId: post.id } }}

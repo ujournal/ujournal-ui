@@ -55,6 +55,9 @@ export const MarkdownText: FC<
           marginLeft: withContentMargins ? -20 : undefined,
           marginRight: withContentMargins ? -20 : undefined,
         },
+        "& .image video": {
+          display: "block",
+        },
         "& blockquote": {
           backgroundColor: theme.colors.blue[0],
           padding: theme.spacing.xl,
