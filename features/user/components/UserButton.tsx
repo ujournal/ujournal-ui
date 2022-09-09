@@ -29,10 +29,10 @@ export const UserButtonWithoutRef = (
     <Link href={`/user?userId=${userId}`} passHref>
       <Tooltip label={label} openDelay={1000}>
         <UnstyledButton
-          {...props}
-          component="a"
           px={6}
           py={4}
+          {...props}
+          component="a"
           sx={(theme) => ({
             display: "block",
             color:

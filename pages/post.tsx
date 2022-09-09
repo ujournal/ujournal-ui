@@ -16,31 +16,23 @@ const PostPage: SitePage = () => {
   const post = usePost({ postId });
 
   return (
-    <Stack spacing="md">
-      <Container
-        px={0}
-        mx={largerThanSm ? undefined : "-md"}
-        sx={{ flex: "1 1 0", width: "100%" }}
-      >
+    <>
+      <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess ? (
-          <Post {...post.data.post_view} showBody />
+          <Post {...post.data.post_view} showBody commentsAsText />
         ) : (
           <PostLoader />
         )}
       </Container>
 
-      <Container
-        px={0}
-        mx={largerThanSm ? undefined : "-md"}
-        sx={{ flex: "1 1 0", width: "100%" }}
-      >
+      <Container px={0} mx={largerThanSm ? undefined : "-md"}>
         <CommentList
           {...post}
           data={post.data?.comments || []}
           counts={post.data?.post_view.counts}
         />
       </Container>
-    </Stack>
+    </>
   );
 };
 

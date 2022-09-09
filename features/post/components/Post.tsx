@@ -47,6 +47,7 @@ export const Post: FC<
   PostView & {
     showBody?: boolean;
     showToogleBodyButton?: boolean;
+    commentsAsText?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
     shadow?: MantineShadow;
   }
@@ -57,6 +58,7 @@ export const Post: FC<
   counts,
   my_vote: myVote,
   showBody = false,
+  commentsAsText = false,
   saved,
   shadow,
 }) => {
@@ -293,26 +295,35 @@ export const Post: FC<
           mb={largerThanMd ? "-xs" : undefined}
         >
           <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
-            <Link href={`/post?postId=${post.id}#comments`} passHref>
-              <Tooltip
-                label={t("number_of_comments", {
+            {commentsAsText ? (
+              <Box sx={{ whiteSpace: "nowrap", fontWeight: 600 }} p="sm">
+                {t("number_of_comments", {
                   count: counts.comments,
-                  formattedCount: counts.comments,
+                  formattedCount: formatShortNum(counts.comments),
                 })}
-                openDelay={1000}
-              >
-                <Button
-                  component="a"
-                  leftIcon={<IconMessageCircle2 stroke={1.5} />}
-                  variant="subtle"
-                >
-                  {t("number_of_comments", {
+              </Box>
+            ) : (
+              <Link href={`/post?postId=${post.id}#comments`} passHref>
+                <Tooltip
+                  label={t("number_of_comments", {
                     count: counts.comments,
-                    formattedCount: formatShortNum(counts.comments),
+                    formattedCount: counts.comments,
                   })}
-                </Button>
-              </Tooltip>
-            </Link>
+                  openDelay={1000}
+                >
+                  <Button
+                    component="a"
+                    leftIcon={<IconMessageCircle2 stroke={1.5} />}
+                    variant="subtle"
+                  >
+                    {t("number_of_comments", {
+                      count: counts.comments,
+                      formattedCount: formatShortNum(counts.comments),
+                    })}
+                  </Button>
+                </Tooltip>
+              </Link>
+            )}
           </Group>
           <VoteButtons
             counts={countsAndMyVote.counts}
