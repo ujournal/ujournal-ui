@@ -41,6 +41,7 @@ export const AppLayout: FC<{
               width={{ base: 220 }}
               fixed={false}
               sx={{ backgroundColor: "transparent" }}
+              p="sm"
             >
               <Aside.Section grow component={ScrollArea} mx="-xs" px="xs">
                 {aside}

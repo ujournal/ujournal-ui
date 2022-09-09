@@ -8,6 +8,7 @@ import {
   usePostList,
 } from "features/post/hooks/usePostList";
 import { AppNavbar } from "features/app/components/AppNavbar";
+import { AppAside } from "features/app/components/AppAside";
 
 const FeedPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -25,10 +26,6 @@ const FeedPage: SitePage = () => {
       <PostList posts={posts} key="home-feed" />
     </>
   );
-};
-
-const AppAside: FC = () => {
-  return <></>;
 };
 
 FeedPage.Navbar = AppNavbar;

@@ -8,17 +8,19 @@ import {
   ListingType,
 } from "ujournal-lemmy-js-client";
 
-export const useCommentList = (params: {
-  postId?: number;
-  parentId?: number;
-  sort?: CommentSortType;
-  maxDepth?: number;
-}) => {
+export const useCommentList = (
+  params: {
+    postId?: number;
+    parentId?: number;
+    sort?: CommentSortType;
+    maxDepth?: number;
+  } = {}
+) => {
   const { sort = CommentSortType.Hot, maxDepth = 8, parentId, postId } = params;
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
-  return useQuery(["commentList", postId], async () => {
+  return useQuery(["commentList", parentId, postId], async () => {
     return await lemmyClient.getComments(
       new GetComments({
         post_id: postId ? Some(postId) : None,

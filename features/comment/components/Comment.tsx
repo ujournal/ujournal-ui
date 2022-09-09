@@ -7,7 +7,7 @@ import { CommentView } from "ujournal-lemmy-js-client";
 
 export const Comment: FC<
   CommentView & { children: CommentView[]; asChild?: boolean }
-> = ({ comment, creator, children, asChild }) => {
+> = ({ comment, creator, children = [], asChild }) => {
   return (
     <Stack spacing={0} sx={{ position: "relative" }}>
       <Group>
@@ -25,20 +25,22 @@ export const Comment: FC<
       </Group>
       <Stack spacing={0}>
         <MarkdownText text={comment.content} withContentMargins={false} />
-        <Stack
-          pl="md"
-          spacing={0}
-          sx={(theme) => ({
-            borderLeft: "1px solid",
-            borderColor: theme.colors.gray[3],
-          })}
-        >
-          <DataList
-            data={children}
-            itemComponent={Comment}
-            itemProps={{ asChild: true }}
-          />
-        </Stack>
+        {children.length > 0 && (
+          <Stack
+            pl="md"
+            spacing={0}
+            sx={(theme) => ({
+              borderLeft: "1px solid",
+              borderColor: theme.colors.gray[3],
+            })}
+          >
+            <DataList
+              data={children}
+              itemComponent={Comment}
+              itemProps={{ asChild: true }}
+            />
+          </Stack>
+        )}
       </Stack>
       {asChild && (
         <Box
