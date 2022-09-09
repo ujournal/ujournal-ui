@@ -14,6 +14,7 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
   posts,
 }) => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
+  const smallerThanMd = useBreakpoint({ smallerThan: "md" });
 
   const [sentryRef] = useInfiniteScroll({
     loading: posts.isLoading,
@@ -36,7 +37,11 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Container size={690} px={0} mx={largerThanSm ? undefined : "-md"}>
+    <Container
+      size={smallerThanMd ? undefined : 690}
+      px={0}
+      mx={largerThanSm ? undefined : "-md"}
+    >
       <Stack spacing="md" ref={containerRef}>
         <DataList
           {...postsMerged}

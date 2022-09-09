@@ -42,18 +42,21 @@ export const CommentList: FC<{
           })}
         </Title>
       )}
-      <DataList
-        isLoading={isLoading}
-        data={
-          showAsTree
-            ? transformCommentsToTree(data)
-            : transformCommentsFromCommentsView(data)
-        }
-        itemComponent={Comment}
-        itemKey="comment.id"
-        loaderComponent={CommentListLoader}
-        itemProps={{ asSmall: lightweight, showPost }}
-      />
+      
+      <Stack spacing={0}>
+        <DataList
+          isLoading={isLoading}
+          data={
+            showAsTree
+              ? transformCommentsToTree(data)
+              : transformCommentsFromCommentsView(data)
+          }
+          itemComponent={Comment}
+          itemKey="comment.id"
+          loaderComponent={CommentListLoader}
+          itemProps={{ showPost }}
+        />
+      </Stack>
     </Stack>
   );
 

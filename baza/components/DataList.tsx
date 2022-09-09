@@ -19,7 +19,9 @@ type DataListComponentType = <TDataItem extends { [key: string]: any }>(props: {
   itemComponent: ComponentType<TDataItem>;
   loaderComponent?: ComponentType;
   itemKey?: string;
-  itemProps?: any;
+  itemProps?:
+    | { [key: string]: any }
+    | ((item: any, key: number) => { [key: string]: any });
 }) => ReactElement;
 
 export const DataList: DataListComponentType = (params) => {
@@ -34,7 +36,7 @@ export const DataList: DataListComponentType = (params) => {
   } = params;
 
   const items = useMemo(
-    () => (transform ? transform(data) : []),
+    () => (transform ? transform(data) || [] : []),
     [data, transform]
   );
 
@@ -42,10 +44,16 @@ export const DataList: DataListComponentType = (params) => {
     return <LoaderComponent />;
   }
 
+  const isItemPropsFn = itemProps instanceof Function;
+
   return (
     <>
-      {items.map((item: any) => (
-        <Item {...item} {...itemProps} key={get(item, itemKey)} />
+      {items.map((item: any, index: number) => (
+        <Item
+          {...item}
+          {...(isItemPropsFn ? itemProps(item, index) : itemProps)}
+          key={get(item, itemKey)}
+        />
       ))}
     </>
   );

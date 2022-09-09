@@ -9,87 +9,92 @@ import { CommentView } from "ujournal-lemmy-js-client";
 export const Comment: FC<
   CommentView & {
     children: CommentView[];
-    asChild?: boolean;
-    asSmall?: boolean;
     showPost?: boolean;
+    decoration?: undefined | "middle" | "end";
   }
 > = ({
   comment,
   creator,
   post,
   children = [],
-  asChild = false,
-  asSmall = false,
   showPost = false,
+  decoration,
 }) => {
   return (
-    <Stack spacing={0} sx={{ position: "relative" }}>
-      <Group>
-        <UserButton
-          userId={creator.id}
-          image={creator.avatar as unknown as string}
-          label={
-            (creator.display_name as unknown as string) ||
-            (creator.name as unknown as string)
-          }
-          weight={600}
-          ml="-sm"
-          py={0}
-        />
-      </Group>
-      <Stack spacing={2}>
-        <MarkdownText text={comment.content} withContentMargins={false} />
-        {showPost && post && (
-          <Tooltip
-            label={post.name}
-            sx={{ whiteSpace: "normal", maxWidth: 200 }}
-          >
-            <Box>
-              <Link
-                href={{ pathname: "/post", query: { postId: post.id } }}
-                passHref
-              >
-                <Box
-                  component="a"
-                  sx={{
-                    display: "block",
-                    fontWeight: 600,
-                    fontSize: 14,
-                    maxWidth: 200,
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
+    <Stack
+      spacing={0}
+      sx={(theme) => ({
+        position: "relative",
+        marginLeft: decoration ? theme.spacing.md : undefined,
+        "&:before": {
+          position: "absolute",
+          top: 0,
+          left: -16,
+          height: "100%",
+          content: "''",
+          borderLeft:
+            decoration === "middle"
+              ? `1px solid ${theme.colors.gray[4]}`
+              : undefined,
+        },
+      })}
+    >
+      <Stack spacing={0}>
+        <Group spacing={0}>
+          <UserButton
+            userId={creator.id}
+            image={creator.avatar as unknown as string}
+            label={
+              (creator.display_name as unknown as string) ||
+              (creator.name as unknown as string)
+            }
+            weight={600}
+            ml="-sm"
+            py={0}
+          />
+          <span>{decoration}</span>
+        </Group>
+
+        <Stack spacing={2}>
+          <MarkdownText text={comment.content} withContentMargins={false} />
+
+          {showPost && post && (
+            <Tooltip
+              label={post.name}
+              sx={{ whiteSpace: "normal", maxWidth: 200 }}
+            >
+              <Box>
+                <Link
+                  href={{ pathname: "/post", query: { postId: post.id } }}
+                  passHref
                 >
-                  {post.name}
-                </Box>
-              </Link>
-            </Box>
-          </Tooltip>
-        )}
-        {children.length > 0 && (
-          <Stack
-            pl="md"
-            spacing={0}
-            sx={(theme) => ({
-              borderLeft: "1px solid",
-              borderColor: theme.colors.gray[3],
-            })}
-          >
-            <DataList
-              data={children}
-              itemComponent={Comment}
-              itemProps={{ asChild: true }}
-            />
-          </Stack>
-        )}
+                  <Box
+                    component="a"
+                    sx={{
+                      display: "block",
+                      fontWeight: 600,
+                      fontSize: 14,
+                      maxWidth: 200,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {post.name}
+                  </Box>
+                </Link>
+              </Box>
+            </Tooltip>
+          )}
+        </Stack>
       </Stack>
-      {asChild && (
+
+      {decoration && (
         <Box
           sx={(theme) => ({
             position: "absolute",
             top: 0,
-            left: -17,
+            left: -16,
             width: 14,
             height: 24,
             borderStyle: "solid",
@@ -101,6 +106,19 @@ export const Comment: FC<
             borderBottomLeftRadius: theme.radius.md,
           })}
         />
+      )}
+
+      {children.length > 0 && (
+        <Stack spacing={0} data-hhh="1">
+          <DataList
+            data={children}
+            itemComponent={Comment}
+            itemProps={(_item, index) => ({
+              asChild: true,
+              decoration: children.length - 1 === index ? "end" : "middle",
+            })}
+          />
+        </Stack>
       )}
     </Stack>
   );

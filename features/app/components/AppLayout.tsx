@@ -1,4 +1,12 @@
-import { AppShell, Aside, Drawer, Navbar, ScrollArea } from "@mantine/core";
+import {
+  AppShell,
+  Aside,
+  Box,
+  Drawer,
+  Group,
+  Navbar,
+  ScrollArea,
+} from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { AppHeader } from "./AppHeader";
@@ -9,6 +17,7 @@ export const AppLayout: FC<{
   children: ReactElement;
 }> = ({ navbar, aside, children }) => {
   const [navbarOpened, setNavbarOpened] = useState<boolean>(false);
+  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const smallerThanMd = useBreakpoint({ smallerThan: "md" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
@@ -72,7 +81,7 @@ export const AppLayout: FC<{
           opened={navbarOpened}
           onClose={toggleNavbar}
           padding="xl"
-          size="75%"
+          size={smallerThanSm ? "100%" : "75%"}
           styles={{
             drawer: {
               backgroundColor: "#f2f2f2",
@@ -80,7 +89,10 @@ export const AppLayout: FC<{
             },
           }}
         >
-          {navbar}
+          <Group noWrap align="flex-start">
+            <Box>{navbar}</Box>
+            <Box>{aside}</Box>
+          </Group>
         </Drawer>
       )}
     </>
