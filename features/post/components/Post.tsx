@@ -135,7 +135,7 @@ export const Post: FC<
                   none: () => creator.name,
                 })}
               />
-              <DateFormatted date={new Date(post.published)} />
+              <DateFormatted date={new Date(post.published + "Z")} />
             </Group>
 
             <Menu withinPortal position="bottom-end" shadow="sm">

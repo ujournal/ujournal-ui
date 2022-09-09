@@ -31,13 +31,17 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
         size="sm"
         onClick={toggleDisplayFull}
       >
-        {displayFull
-          ? date.toLocaleString()
-          : daysAgo > 0
-          ? t("intlRelativeTime", {
-              value: daysAgo * -1,
-            })
-          : getTodayInLocale()}
+          {
+              displayFull
+                  ? date.toLocaleString()
+                  : daysAgo > 0
+                      ? t("intlRelativeTime", {
+                          value: daysAgo * -1,
+                      })
+                      : (new Date().getUTCHours() - date.getHours()) > 0
+                          ? Math.abs((new Date().getUTCHours() - date.getHours())) + " год."
+                          : Math.abs((new Date().getUTCMinutes() - date.getMinutes())) + " хв."
+          }
       </Text>
     </Tooltip>
   );
