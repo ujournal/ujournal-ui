@@ -1,9 +1,9 @@
 import { LemmyHttp } from "ujournal-lemmy-js-client";
 import { createContext, useContext } from "react";
 
-const baseUrl = "/_api";
-
-export const lemmyHttpClient = new LemmyHttp(baseUrl);
+export const lemmyHttpClient = new LemmyHttp(
+  process.env.NEXT_PUBLIC_LEMMY_API_URL
+);
 
 export const LemmyClientContext = createContext(lemmyHttpClient);
 
