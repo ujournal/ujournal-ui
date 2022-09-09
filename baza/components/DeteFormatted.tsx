@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import i18n from "i18next";
 
 export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
     const {t} = useTranslation();
     const [displayFull, setDisplayFull] = useState<boolean>(false);
+    const rtf = new Intl.RelativeTimeFormat(i18n.language, { style: "short" });
 
     const publishInterval = useMemo(
         () => {
@@ -36,12 +38,10 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
                     displayFull
                         ? date.toLocaleString()
                         : publishInterval.days > 0
-                            ? t("intlRelativeTime", {
-                                value: publishInterval.days * -1,
-                            })
+                            ? rtf.format(publishInterval.days * -1, "day")
                             : publishInterval.hours > 0
-                                ? publishInterval.hours + " год."
-                                : publishInterval.minutes + " хв."
+                                ? rtf.format(publishInterval.hours * -1, "hour")
+                                : rtf.format(publishInterval.minutes * -1, "minute")
                 }
             </Text>
         </Tooltip>
