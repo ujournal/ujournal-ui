@@ -29,6 +29,7 @@ export const transformCommentsFromCommentsView = (comments: CommentView[]) => {
         id: creator.id,
         display_name: creator.display_name.unwrapOr(""),
         name: creator.name,
+        avatar: creator.avatar.unwrapOr(""),
       },
       post,
     };
