@@ -35,7 +35,7 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
                 {
                     displayFull
                         ? date.toLocaleString()
-                        : publishInterval.days ?? 0 > 0
+                        : publishInterval.days > 0
                             ? t("intlRelativeTime", {
                                 value: publishInterval.days * -1,
                             })
