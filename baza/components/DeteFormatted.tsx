@@ -9,7 +9,6 @@ import i18n from "i18next";
 export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
     const {t} = useTranslation();
     const [displayFull, setDisplayFull] = useState<boolean>(false);
-    const rtf = new Intl.RelativeTimeFormat(i18n.language, { style: "short" });
 
     const publishInterval = useMemo(
         () => {
@@ -18,7 +17,16 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
                     start: date,
                     end: new Date(),
                 });
-            return {days, hours, minutes};
+            
+            const rtf = new Intl.RelativeTimeFormat(i18n.language, { style: "short" });
+            
+            return displayFull
+                ? date.toLocaleString()
+                : days > 0
+                    ? rtf.format(days * -1, "day")
+                    : hours > 0
+                        ? rtf.format(hours * -1, "hour")
+                        : rtf.format(minutes * -1, "minute");
         }, [date]
     );
 
@@ -34,15 +42,7 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
                 size="sm"
                 onClick={toggleDisplayFull}
             >
-                {
-                    displayFull
-                        ? date.toLocaleString()
-                        : publishInterval.days > 0
-                            ? rtf.format(publishInterval.days * -1, "day")
-                            : publishInterval.hours > 0
-                                ? rtf.format(publishInterval.hours * -1, "hour")
-                                : rtf.format(publishInterval.minutes * -1, "minute")
-                }
+                {publishInterval}
             </Text>
         </Tooltip>
     );
