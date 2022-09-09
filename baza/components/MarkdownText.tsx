@@ -7,8 +7,9 @@ export const MarkdownText: FC<
   BoxProps & {
     text: string;
     withContentMargins?: boolean;
+    fontSize?: number;
   }
-> = ({ text, withContentMargins = true, ...props }) => {
+> = ({ text, withContentMargins = true, fontSize, ...props }) => {
   const markdown = useMarkdown();
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
@@ -27,6 +28,7 @@ export const MarkdownText: FC<
       dangerouslySetInnerHTML={{ __html: markdown.render(text) }}
       onClick={handleContentClick}
       sx={(theme) => ({
+        fontSize,
         "& a": {
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],

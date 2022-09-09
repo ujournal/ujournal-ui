@@ -2,12 +2,26 @@ import { Box, Group, Stack } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { UserButton } from "features/user/components/UserButton";
+import Link from "next/link";
 import { FC } from "react";
 import { CommentView } from "ujournal-lemmy-js-client";
 
 export const Comment: FC<
-  CommentView & { children: CommentView[]; asChild?: boolean }
-> = ({ comment, creator, children = [], asChild }) => {
+  CommentView & {
+    children: CommentView[];
+    asChild?: boolean;
+    asSmall?: boolean;
+    showPost?: boolean;
+  }
+> = ({
+  comment,
+  creator,
+  post,
+  children = [],
+  asChild = false,
+  asSmall = false,
+  showPost = false,
+}) => {
   return (
     <Stack spacing={0} sx={{ position: "relative" }}>
       <Group>
@@ -24,7 +38,21 @@ export const Comment: FC<
         />
       </Group>
       <Stack spacing={0}>
-        <MarkdownText text={comment.content} withContentMargins={false} />
+        {showPost && post && (
+          <Box sx={{ fontWeight: 600, fontSize: asSmall ? 14 : undefined }}>
+            <Link
+              href={{ pathname: "/post", query: { postId: post.id } }}
+              passHref
+            >
+              <a>{post.name}</a>
+            </Link>
+          </Box>
+        )}
+        <MarkdownText
+          text={comment.content}
+          withContentMargins={false}
+          fontSize={asSmall ? 14 : undefined}
+        />
         {children.length > 0 && (
           <Stack
             pl="md"

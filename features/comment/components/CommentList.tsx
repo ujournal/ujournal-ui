@@ -17,8 +17,16 @@ export const CommentList: FC<{
   data: any[];
   counts?: PostAggregates;
   showAsTree?: boolean;
+  showPost?: boolean;
   lightweight?: boolean;
-}> = ({ counts, data, isLoading, showAsTree = true, lightweight = false }) => {
+}> = ({
+  counts,
+  data,
+  isLoading,
+  showAsTree = true,
+  lightweight = false,
+  showPost = false,
+}) => {
   const { t } = useTranslation();
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
@@ -44,6 +52,7 @@ export const CommentList: FC<{
         itemComponent={Comment}
         itemKey="comment.id"
         loaderComponent={CommentListLoader}
+        itemProps={{ asSmall: lightweight, showPost }}
       />
     </Stack>
   );

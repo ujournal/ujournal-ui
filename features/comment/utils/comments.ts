@@ -19,7 +19,7 @@ export const transformCommentsToTree = (
 };
 
 export const transformCommentsFromCommentsView = (comments: CommentView[]) => {
-  return comments.map(({ comment, creator }) => {
+  return comments.map(({ comment, creator, post }) => {
     return {
       comment: {
         id: comment.id,
@@ -30,6 +30,7 @@ export const transformCommentsFromCommentsView = (comments: CommentView[]) => {
         display_name: creator.display_name.unwrapOr(""),
         name: creator.name,
       },
+      post,
     };
   });
 };

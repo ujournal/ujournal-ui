@@ -11,6 +11,7 @@ export const AppAside: FC = () => {
       isLoading={isLoading}
       lightweight
       showAsTree={false}
+      showPost
     />
   );
 };
