@@ -1,15 +1,17 @@
-import { Box, Group, Stack, Tooltip } from "@mantine/core";
+import { Box, Button, Group, Stack, Tooltip } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
 import { MarkdownText } from "baza/components/MarkdownText";
+import { capitalize } from "baza/utils/string";
 import { UserButton } from "features/user/components/UserButton";
 import Link from "next/link";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { CommentView } from "ujournal-lemmy-js-client";
 
 export const Comment: FC<
   CommentView & {
     children: CommentView[];
-    showPost?: boolean;
+    compact?: boolean;
     decoration?: undefined | "middle" | "end";
   }
 > = ({
@@ -17,9 +19,11 @@ export const Comment: FC<
   creator,
   post,
   children = [],
-  showPost = false,
+  compact = false,
   decoration,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Stack
       spacing={0}
@@ -34,7 +38,7 @@ export const Comment: FC<
           content: "''",
           borderLeft:
             decoration === "middle"
-              ? `1px solid ${theme.colors.gray[4]}`
+              ? `1px solid ${theme.colors.gray[3]}`
               : undefined,
         },
       })}
@@ -52,13 +56,31 @@ export const Comment: FC<
             ml="-sm"
             py={0}
           />
-          <span>{decoration}</span>
         </Group>
 
         <Stack spacing={2}>
           <MarkdownText text={comment.content} withContentMargins={false} />
 
-          {showPost && post && (
+          {!compact && (
+            <Box>
+              <Button
+                color="gray"
+                p={0}
+                variant="subtle"
+                sx={{
+                  height: "auto",
+                  fontWeight: 500,
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+              >
+                {capitalize(t("reply"))}
+              </Button>
+            </Box>
+          )}
+
+          {compact && post && (
             <Tooltip
               label={post.name}
               sx={{ whiteSpace: "normal", maxWidth: 200 }}
@@ -98,7 +120,7 @@ export const Comment: FC<
             width: 14,
             height: 24,
             borderStyle: "solid",
-            borderColor: theme.colors.gray[4],
+            borderColor: theme.colors.gray[3],
             borderLeftWidth: 1,
             borderBottomWidth: 1,
             borderTopWidth: 0,
@@ -109,7 +131,7 @@ export const Comment: FC<
       )}
 
       {children.length > 0 && (
-        <Stack spacing={0} data-hhh="1">
+        <Stack spacing={0}>
           <DataList
             data={children}
             itemComponent={Comment}

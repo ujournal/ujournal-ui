@@ -18,55 +18,32 @@ export const CommentList: FC<{
   counts?: PostAggregates;
   showAsTree?: boolean;
   showPost?: boolean;
-  lightweight?: boolean;
-}> = ({
-  counts,
-  data,
-  isLoading,
-  showAsTree = true,
-  lightweight = false,
-  showPost = false,
-}) => {
-  const { t } = useTranslation();
+  compact?: boolean;
+}> = ({ data, isLoading, showAsTree = true, compact = false }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
   const list = (
-    <Stack spacing="md">
-      {lightweight ? (
-        <Title size="h4">{t("comments")}</Title>
-      ) : (
-        <Title size="h3" id="comments">
-          {t("number_of_comments", {
-            count: counts?.comments || 0,
-            formattedCount: formatShortNum(counts?.comments || 0),
-          })}
-        </Title>
-      )}
-      
-      <Stack spacing={0}>
-        <DataList
-          isLoading={isLoading}
-          data={
-            showAsTree
-              ? transformCommentsToTree(data)
-              : transformCommentsFromCommentsView(data)
-          }
-          itemComponent={Comment}
-          itemKey="comment.id"
-          loaderComponent={CommentListLoader}
-          itemProps={{ showPost }}
-        />
-      </Stack>
+    <Stack spacing={compact ? "sm" : 0}>
+      <DataList
+        isLoading={isLoading}
+        data={
+          showAsTree
+            ? transformCommentsToTree(data)
+            : transformCommentsFromCommentsView(data)
+        }
+        itemComponent={Comment}
+        itemKey="comment.id"
+        loaderComponent={CommentListLoader}
+        itemProps={{ compact }}
+      />
     </Stack>
   );
 
-  return lightweight ? (
+  return compact ? (
     list
   ) : (
-    <Card radius={smallerThanSm ? 0 : "md"}>
-      <Container size={650} p={0}>
-        {list}
-      </Container>
-    </Card>
+    <Container size={650} p={0}>
+      {list}
+    </Container>
   );
 };
