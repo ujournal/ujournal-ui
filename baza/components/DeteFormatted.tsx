@@ -3,11 +3,9 @@ import { intervalToDuration } from "date-fns";
 import { useState } from "react";
 import { useCallback } from "react";
 import { FC, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 
 export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
-  const { t } = useTranslation();
   const [displayFull, setDisplayFull] = useState<boolean>(false);
 
   const publishInterval = useMemo(() => {
