@@ -6,6 +6,8 @@ import {
   ActionIcon,
   Tooltip,
   Box,
+  Menu,
+  Popover,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { capitalize } from "baza/utils/string";
@@ -15,7 +17,7 @@ import { CommunitySelect } from "features/community/components/CommunitySelect";
 import { useTranslation } from "react-i18next";
 import { EmbedField } from "features/embed/components/EmbedField";
 import { useUrlMetadata } from "baza/hooks/useUrlMetadata";
-import { IconCopy } from "@tabler/icons";
+import { IconCopy, IconSettings } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
 const TextEditor = dynamic(
@@ -163,15 +165,34 @@ export const PostForm: FC<{
           {...form.getInputProps("body")}
         />
 
-        <Checkbox
-          label={t("nsfw")}
-          {...form.getInputProps("nsfw", { type: "checkbox" })}
-          mb="md"
-        />
-
-        <Button type="submit" size="lg" loading={isLoading}>
-          {postId ? capitalize(t("save")) : capitalize(t("create"))}
-        </Button>
+        <Button.Group>
+          <Popover trapFocus position="bottom" withArrow shadow="md">
+            <Popover.Target>
+              <Button
+                size="lg"
+                loading={isLoading}
+                leftIcon={<IconSettings stroke={1.5} />}
+                pr="sm"
+              />
+            </Popover.Target>
+            <Popover.Dropdown
+              sx={(theme) => ({
+                background:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[7]
+                    : theme.white,
+              })}
+            >
+              <Checkbox
+                label={t("nsfw")}
+                {...form.getInputProps("nsfw", { type: "checkbox" })}
+              />
+            </Popover.Dropdown>
+          </Popover>
+          <Button type="submit" size="lg" loading={isLoading} fullWidth>
+            {postId ? capitalize(t("save")) : capitalize(t("create"))}
+          </Button>
+        </Button.Group>
       </Stack>
     </form>
   );
