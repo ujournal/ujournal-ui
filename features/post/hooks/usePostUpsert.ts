@@ -22,7 +22,7 @@ export const usePostUpsert = () => {
       };
 
       if (values.postId) {
-        queryClient.invalidateQueries(["post"]);
+        await queryClient.invalidateQueries(["post"]);
 
         return await lemmyClient.editPost(
           new EditPost({

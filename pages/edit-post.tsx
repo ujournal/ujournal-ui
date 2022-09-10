@@ -14,6 +14,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 import { IconCheck } from "@tabler/icons";
+import { queryClient } from "baza/reactQuery";
 
 const EditPostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -36,6 +37,8 @@ const EditPostPage: SitePage = () => {
           icon: <IconCheck size={16} />,
           message: capitalize(t("saved")),
         });
+
+        await queryClient.invalidateQueries(["post"]);
 
         router.push({
           pathname: "/post",
