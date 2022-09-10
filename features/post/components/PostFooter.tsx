@@ -46,7 +46,12 @@ export const PostFooter: FC<{
         ml="-xs"
         mb={largerThanMd ? "-xs" : undefined}
       >
-        <Group noWrap sx={{ flex: "1 1 0", flexGrow: "unset" }} spacing="xs">
+        <Group
+          noWrap
+          sx={{ flex: "1 1 0", flexGrow: "unset" }}
+          spacing="xs"
+          align="center"
+        >
           {commentsAsText ? (
             <Box sx={{ whiteSpace: "nowrap", fontWeight: 600 }} p="sm">
               {t("number_of_comments", {

@@ -1,4 +1,4 @@
-import { Box, Button, Group, Stack, Tooltip } from "@mantine/core";
+import { Box, Button, Card, Group, Stack, Tooltip } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { capitalize } from "baza/utils/string";
@@ -6,14 +6,14 @@ import { UserButton } from "features/user/components/UserButton";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CommentView } from "ujournal-lemmy-js-client";
 import { DateFormatted } from "../../../baza/components/DeteFormatted";
 import { VoteButtons } from "../../../baza/components/VoteButtons";
 import { useCommentVote } from "../hooks/useCommentVote";
+import { CommentInternal } from "../utils/comments";
 
 export const Comment: FC<
-  CommentView & {
-    children: CommentView[];
+  CommentInternal & {
+    children: CommentInternal[];
     compact?: boolean;
     decoration?: undefined | "middle" | "end";
   }
@@ -31,7 +31,7 @@ export const Comment: FC<
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
     counts,
-    myVote: myVote as unknown as number,
+    myVote,
   });
 
   const vote = useCommentVote({
@@ -42,7 +42,7 @@ export const Comment: FC<
   useEffect(() => {
     setCountsAndMyVote({
       counts,
-      myVote: myVote as unknown as number,
+      myVote,
     });
   }, [counts, myVote]);
 
@@ -65,86 +65,94 @@ export const Comment: FC<
         },
       })}
     >
-      <Stack spacing={0}>
-        <Group spacing={0}>
-          <UserButton
-            userId={creator.id}
-            image={creator.avatar as unknown as string}
-            label={
-              (creator.display_name as unknown as string) ||
-              (creator.name as unknown as string)
-            }
-            weight={600}
-            ml="-sm"
-            py={0}
-          />
-        </Group>
+      <Card
+        p={4}
+        m={-4}
+        sx={(theme) => ({
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: theme.fn.lighten(theme.colors.gray[1], 0.5),
+          },
+        })}
+      >
+        <Stack spacing={0}>
+          <Group spacing={0}>
+            <UserButton
+              userId={creator.id}
+              image={creator.avatar as unknown as string}
+              label={
+                (creator.display_name as unknown as string) ||
+                (creator.name as unknown as string)
+              }
+              weight={600}
+              ml="-sm"
+              py={0}
+            />
+            {comment?.published != null ? (
+              <DateFormatted date={new Date(comment.published + "Z")} />
+            ) : null}
+          </Group>
 
-        <Group>
-          {comment?.published != null ? (
-            <DateFormatted date={new Date(comment.published + "Z")} />
-          ) : null}
-        </Group>
+          <Stack spacing={2}>
+            <MarkdownText text={comment.content} withContentMargins={false} />
 
-        <Stack spacing={2}>
-          <MarkdownText text={comment.content} withContentMargins={false} />
-
-          {!compact && (
-            <Box>
-              <Group position="apart">
-                <Button
-                  color="gray"
-                  p={0}
-                  variant="subtle"
-                  sx={{
-                    height: "auto",
-                    fontWeight: 500,
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                    },
-                  }}
-                >
-                  {capitalize(t("reply"))}
-                </Button>
-                <VoteButtons
-                  counts={countsAndMyVote.counts}
-                  myVote={countsAndMyVote.myVote}
-                  vote={vote}
-                />
-              </Group>
-            </Box>
-          )}
-
-          {compact && post && (
-            <Tooltip
-              label={post.name}
-              sx={{ whiteSpace: "normal", maxWidth: 200 }}
-            >
+            {!compact && (
               <Box>
-                <Link
-                  href={{ pathname: "/post", query: { postId: post.id } }}
-                  passHref
-                >
-                  <Box
-                    component="a"
+                <Group position="apart">
+                  <Button
+                    color="gray"
+                    p={0}
+                    variant="subtle"
                     sx={{
-                      display: "block",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      maxWidth: 200,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      height: "auto",
+                      fontWeight: 500,
+                      "&:hover": {
+                        backgroundColor: "transparent",
+                      },
                     }}
                   >
-                    {post.name}
-                  </Box>
-                </Link>
+                    {capitalize(t("reply"))}
+                  </Button>
+                  <VoteButtons
+                    counts={countsAndMyVote.counts}
+                    myVote={countsAndMyVote.myVote}
+                    vote={vote}
+                  />
+                </Group>
               </Box>
-            </Tooltip>
-          )}
+            )}
+
+            {compact && post && (
+              <Tooltip
+                label={post.name}
+                sx={{ whiteSpace: "normal", maxWidth: 200 }}
+              >
+                <Box>
+                  <Link
+                    href={{ pathname: "/post", query: { postId: post.id } }}
+                    passHref
+                  >
+                    <Box
+                      component="a"
+                      sx={{
+                        display: "block",
+                        fontWeight: 600,
+                        fontSize: 14,
+                        maxWidth: 200,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {post.name}
+                    </Box>
+                  </Link>
+                </Box>
+              </Tooltip>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
+      </Card>
 
       {decoration && (
         <Box
@@ -174,6 +182,7 @@ export const Comment: FC<
               asChild: true,
               decoration: children.length - 1 === index ? "end" : "middle",
             })}
+            itemKey="comment.id"
           />
         </Stack>
       )}

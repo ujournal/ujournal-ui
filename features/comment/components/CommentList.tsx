@@ -1,9 +1,6 @@
-import { Card, Container, Stack, Title } from "@mantine/core";
+import { Container, Stack } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
-import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { formatShortNum } from "baza/utils/number";
-import { FC } from "react";
-import { useTranslation } from "react-i18next";
+import { FC, useMemo } from "react";
 import { PostAggregates } from "ujournal-lemmy-js-client";
 import {
   transformCommentsToTree,
@@ -20,17 +17,20 @@ export const CommentList: FC<{
   showPost?: boolean;
   compact?: boolean;
 }> = ({ data, isLoading, showAsTree = true, compact = false }) => {
-  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
+
+  const commentsList = useMemo(
+    () =>
+      showAsTree
+        ? transformCommentsToTree(data)
+        : transformCommentsFromCommentsView(data),
+    [data, showAsTree]
+  );
 
   const list = (
     <Stack spacing={compact ? "sm" : 0}>
       <DataList
         isLoading={isLoading}
-        data={
-          showAsTree
-            ? transformCommentsToTree(data)
-            : transformCommentsFromCommentsView(data)
-        }
+        data={commentsList}
         itemComponent={Comment}
         itemKey="comment.id"
         loaderComponent={CommentListLoader}
