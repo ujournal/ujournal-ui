@@ -31,7 +31,7 @@ export const Comment: FC<
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
     counts,
-    myVote: myVote.unwrapOr(0),
+    myVote: myVote as unknown as number,
   });
 
   const vote = useCommentVote({
@@ -42,7 +42,7 @@ export const Comment: FC<
   useEffect(() => {
     setCountsAndMyVote({
       counts,
-      myVote: myVote.unwrapOr(0),
+      myVote: myVote as unknown as number,
     });
   }, [counts, myVote]);
 
