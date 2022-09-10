@@ -3,13 +3,8 @@ import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/auth/hooks/useAuth";
 import { useCallback } from "react";
 import {
-  CommentAggregates, CreateCommentLike,
-  CreatePostLike,
-  GetPost,
-  PostAggregates,
+  CommentAggregates, CommentResponse, CreateCommentLike,
 } from "ujournal-lemmy-js-client";
-import { None, Some } from "@sniptt/monads";
-import { queryClient } from "baza/reactQuery";
 
 export const useCommentVote = ({
   commentId,
@@ -24,35 +19,25 @@ export const useCommentVote = ({
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
-  /*const handleCommentVoteSuccess = useCallback(async () => {
+  const handleCommentVoteSuccess = useCallback(async (r : CommentResponse) => {
     if (onSuccess) {
-      const {
-        post_view: { my_vote: myVote, counts },
-      } = await lemmyClient.getPost(
-        new GetPost({
-          id: Some(commentId),
-          comment_id: None,
-          auth: auth.token.ok(),
-        })
-      );
-
-      onSuccess({ counts, myVote: myVote.unwrapOr(0) });
-
-      await queryClient.invalidateQueries(["post"]);
+      onSuccess({counts: r.comment_view.counts,
+        myVote: r.comment_view.my_vote.unwrapOr(0)});
     }
-  }, [auth.token, lemmyClient, onSuccess, commentId]);*/
+  }, [auth.token, lemmyClient, onSuccess, commentId]);
 
   const likeComment = useMutation(
-    ["likePost", commentId],
+    ["likeComment", commentId],
     async (score: number) =>
-      await lemmyClient.likeComment(
-        new CreateCommentLike({
-          comment_id: commentId,
-          score,
-          auth: auth.token.unwrap(),
-        })
-      ),
-    { onSuccess: ()=>{} }
+    {
+      return await lemmyClient.likeComment(
+          new CreateCommentLike({
+            comment_id: commentId,
+            score,
+            auth: auth.token.unwrap(),
+          })
+      )
+    },  { onSuccess: handleCommentVoteSuccess }
   );
 
   const voteUp = useCallback(
