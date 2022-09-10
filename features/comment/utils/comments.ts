@@ -35,11 +35,17 @@ export const transformCommentsToTree = (
               },
               creator: {
                 id: creator.id,
-                display_name: Some(creator.display_name).unwrapOr(""),
+                display_name:
+                  "type" in creator.display_name
+                    ? creator.display_name.unwrapOr("")
+                    : creator.display_name,
                 name: creator.name,
-                avatar: Some(creator.avatar).unwrapOr(""),
+                avatar:
+                  "type" in creator.avatar
+                    ? Some(creator.avatar).unwrapOr("")
+                    : creator.avatar,
               },
-              my_vote: Some(my_vote).unwrapOr(0),
+              my_vote: "type" in my_vote ? Some(my_vote).unwrapOr(0) : my_vote,
               post,
               counts,
               children: transformCommentsToTree(comments, comment.id),
