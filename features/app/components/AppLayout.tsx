@@ -1,12 +1,12 @@
 import {
   AppShell,
   Aside,
-  Box,
   Drawer,
-  Group,
   Navbar,
   ScrollArea,
+  Tabs,
 } from "@mantine/core";
+import { IconLayoutSidebar, IconLayoutSidebarRight } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { FC, ReactElement, useCallback, useState } from "react";
 import { AppHeader } from "./AppHeader";
@@ -89,10 +89,26 @@ export const AppLayout: FC<{
             },
           }}
         >
-          <Group noWrap align="flex-start">
-            <Box>{navbar}</Box>
-            <Box>{aside}</Box>
-          </Group>
+          <Tabs defaultValue="navbar" sx={{ marginTop: -44 }}>
+            <Tabs.List>
+              <Tabs.Tab
+                value="navbar"
+                icon={<IconLayoutSidebar stroke={1.5} />}
+              />
+              <Tabs.Tab
+                value="aside"
+                icon={<IconLayoutSidebarRight stroke={1.5} />}
+              />
+            </Tabs.List>
+
+            <Tabs.Panel value="navbar" pt="xs">
+              {navbar}
+            </Tabs.Panel>
+
+            <Tabs.Panel value="aside" pt="xs">
+              {aside}
+            </Tabs.Panel>
+          </Tabs>
         </Drawer>
       )}
     </>
