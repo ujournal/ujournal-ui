@@ -135,6 +135,8 @@ export const EmbedField: FC<{
           styles={{
             input: {
               borderWidth: 0,
+              paddingTop: 24,
+              paddingBottom: 24,
               paddingLeft: 8,
               paddingRight: 8,
               marginLeft: -8,
