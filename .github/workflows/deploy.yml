@@ -1,10 +1,9 @@
-name: Deploy
+name: Deploy via SSH
 
 on:
   push:
     branches:
       - main
-      - v1
 
 jobs:
   build:
@@ -19,13 +18,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-      - name: Setup yarn
-        run: npm install -g yarn
       - name: Install npm dependencies
-        run: yarn install
+        run: npm install
       - name: Run build task
         run: npm run build --if-present
-      - name: Deploy to Server (dist)
+      - name: Deploy to Server (out/)
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
@@ -34,4 +31,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
-          EXCLUDE: "/dist/, /node_modules/"
+          EXCLUDE: "/out/, /node_modules/"
