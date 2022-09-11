@@ -2,11 +2,12 @@ import { Box, Card, Container, Stack, Title } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { formatShortNum } from "baza/utils/number";
-import { CommentForm } from "features/comment/components/CommentForm";
+import { AppNavbar } from "features/app/components/AppNavbar";
 import { CommentList } from "features/comment/components/CommentList";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 
@@ -57,5 +58,12 @@ const PostPage: SitePage = () => {
     </>
   );
 };
+
+const Aside: FC = () => {
+  return null;
+};
+
+PostPage.Navbar = AppNavbar;
+PostPage.Aside = Aside;
 
 export default PostPage;

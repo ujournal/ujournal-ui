@@ -4,18 +4,24 @@ import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/auth/hooks/useAuth";
 import Link from "next/link";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useSiteUser } from "features/auth/hooks/useSiteUser";
+import { useMenuToggle } from "baza/hooks/useMenuToggle";
 
-export const AppHeader: FC<{ onMenu?: () => void }> = ({ onMenu }) => {
+export const AppHeader: FC = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const { myUserInfo, isLoading: isUserInfoLoading } = useSiteUser();
+  const { toggle: toggleMenu } = useMenuToggle();
+
+  const handleToggleMenu = useCallback(() => {
+    toggleMenu();
+  }, [toggleMenu]);
 
   const user = useMemo(
     () =>
@@ -77,7 +83,7 @@ export const AppHeader: FC<{ onMenu?: () => void }> = ({ onMenu }) => {
       <Group position="apart">
         <Group>
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
-            <Burger opened={false} onClick={onMenu} size="sm" />
+            <Burger opened={false} onClick={handleToggleMenu} size="sm" />
           </MediaQuery>
 
           <Link href={{ pathname: "/", query: {} }} passHref>
@@ -104,6 +110,7 @@ export const AppHeader: FC<{ onMenu?: () => void }> = ({ onMenu }) => {
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>
           </Link>
+
           {isUserInfoLoading ? (
             <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
           ) : (

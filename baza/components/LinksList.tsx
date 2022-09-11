@@ -8,8 +8,8 @@ import {
   Stack,
 } from "@mantine/core";
 import { TablerIcon } from "@tabler/icons";
-import Link from "next/link";
-import { FC } from "react";
+import { useRouter } from "next/router";
+import { FC, SyntheticEvent, useCallback } from "react";
 import { UrlObject } from "url";
 
 export const LinksList: FC<{
@@ -19,63 +19,77 @@ export const LinksList: FC<{
     icon: TablerIcon;
     active?: boolean;
   }[];
-}> = ({ items }) => {
+  onLinkClick?: () => void;
+}> = ({ items, onLinkClick }) => {
+  const router = useRouter();
+
+  const handleButtonClick = useCallback(
+    (event: SyntheticEvent<HTMLAnchorElement>) => {
+      router.push(JSON.parse(event.currentTarget.dataset.url as string));
+
+      if (onLinkClick) {
+        onLinkClick();
+      }
+    },
+    [onLinkClick, router]
+  );
+
   return (
     <Stack spacing={0}>
       {items.map(({ url, label, icon: Icon, active }) => (
-        <Link href={url} passHref key={JSON.stringify(url)}>
-          <Tooltip label={label} openDelay={1000}>
-            <UnstyledButton
-              px={6}
-              py={4}
+        <Tooltip label={label} openDelay={1000} key={JSON.stringify(url)}>
+          <UnstyledButton
+            px={6}
+            py={4}
+            sx={{
+              display: "block",
+              whiteSpace: "nowrap",
+            }}
+            component="a"
+            onClick={handleButtonClick}
+            data-url={JSON.stringify(url)}
+          >
+            <Box
               sx={(theme) => ({
-                display: "block",
-                whiteSpace: "nowrap",
+                backgroundColor: active ? "white" : undefined,
+                borderRadius: theme.radius.md,
               })}
-              component="a"
+              px={6}
+              py={8}
             >
-              <Box
-                sx={(theme) => ({
-                  backgroundColor: active ? "white" : undefined,
-                  borderRadius: theme.radius.md,
-                })}
-                px={6}
-                py={8}
+              <Group
+                sx={{
+                  flexWrap: "nowrap",
+                  overflow: "hidden",
+                }}
+                spacing={"xs"}
               >
-                <Group
+                <ThemeIcon
+                  size="md"
+                  radius="sm"
+                  variant="outline"
+                  color="gray"
+                  sx={{ border: "none" }}
+                >
+                  <Icon stroke={1.5} />
+                </ThemeIcon>
+
+                <Text
+                  size="md"
                   sx={{
-                    flexWrap: "nowrap",
+                    textOverflow: "ellipsis",
+                    minWidth: 0,
+                    width: "100%",
+                    maxWidth: 160,
                     overflow: "hidden",
                   }}
-                  spacing={"xs"}
                 >
-                  <ThemeIcon
-                    size="md"
-                    radius="sm"
-                    variant="outline"
-                    color="gray"
-                    sx={{ border: "none" }}
-                  >
-                    <Icon stroke={1.5} />
-                  </ThemeIcon>
-
-                  <Text
-                    size="md"
-                    sx={{
-                      textOverflow: "ellipsis",
-                      minWidth: 0,
-                      width: "100%",
-                      maxWidth: 160,
-                      overflow: "hidden",
-                    }}
-                  >
-                    {label}
-                  </Text>
-                </Group>
-              </Box>
-            </UnstyledButton>
-          </Tooltip>
-        </Link>
+                  {label}
+                </Text>
+              </Group>
+            </Box>
+          </UnstyledButton>
+        </Tooltip>
       ))}
     </Stack>
   );

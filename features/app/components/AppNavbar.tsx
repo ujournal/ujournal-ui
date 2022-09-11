@@ -2,7 +2,7 @@ import { Box } from "@mantine/core";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
 import { IconMessageCircle2, IconTrendingUp } from "@tabler/icons";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
@@ -13,9 +13,15 @@ import {
   FetchPostsParams,
   fetchPostsParamsDefault,
 } from "features/post/hooks/usePostList";
+import { useMenuToggle } from "baza/hooks/useMenuToggle";
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
+  const { toggle: toggleMenu } = useMenuToggle();
+
+  const handleToggleMenu = useCallback(() => {
+    toggleMenu(false);
+  }, [toggleMenu]);
 
   const query = useRouterQuery<FetchPostsParams>(fetchPostsParamsDefault);
 
@@ -24,31 +30,37 @@ export const AppNavbar = () => {
       [
         {
           sort: SortType.Hot,
-          url: { query: { ...query, sort: SortType.Hot } },
+          url: { pathname: "/", query: { ...query, sort: SortType.Hot } },
           label: capitalize(t("hot")),
           icon: IconFlame,
         },
         {
           sort: SortType.Active,
-          url: { query: { ...query, sort: SortType.Active } },
+          url: { pathname: "/", query: { ...query, sort: SortType.Active } },
           label: capitalize(t("active")),
           icon: IconTrendingUp,
         },
         {
           sort: SortType.New,
-          url: { query: { ...query, sort: SortType.New } },
+          url: { pathname: "/", query: { ...query, sort: SortType.New } },
           label: capitalize(t("new")),
           icon: IconBolt,
         },
         {
           sort: SortType.MostComments,
-          url: { query: { ...query, sort: SortType.MostComments } },
+          url: {
+            pathname: "/",
+            query: { ...query, sort: SortType.MostComments },
+          },
           label: capitalize(t("most_comments")),
           icon: IconMessageCircle2,
         },
         {
           sort: SortType.NewComments,
-          url: { query: { ...query, sort: SortType.NewComments } },
+          url: {
+            pathname: "/",
+            query: { ...query, sort: SortType.NewComments },
+          },
           label: capitalize(t("new_comments")),
           icon: IconMessageCircle2,
         },
@@ -62,10 +74,13 @@ export const AppNavbar = () => {
   return (
     <>
       <Box mb="lg">
-        <LinksList items={links} />
+        <LinksList items={links} onLinkClick={handleToggleMenu} />
       </Box>
 
-      <CommunityList activeCommunityName={query.communityName} />
+      <CommunityList
+        activeCommunityName={query.communityName}
+        buttonProps={{ onLinkClick: handleToggleMenu }}
+      />
     </>
   );
 };
