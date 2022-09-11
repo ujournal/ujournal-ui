@@ -54,18 +54,32 @@ export const PostFooter: FC<{
         >
           {commentsAsText ? (
             <Box sx={{ whiteSpace: "nowrap", fontWeight: 600 }} p="sm">
-              {t("number_of_comments", {
-                count: counts.comments,
-                formattedCount: formatShortNum(counts.comments),
-              })}
+              {counts.comments === 0
+                ? t("comments")
+                : counts.comments > 0 && counts.comments < 5
+                ? t("number_of_comments", {
+                    count: counts.comments,
+                    formattedCount: formatShortNum(counts.comments),
+                  })
+                : t("number_of_comments_plural", {
+                    count: counts.comments,
+                    formattedCount: formatShortNum(counts.comments),
+                  })}
             </Box>
           ) : (
             <Link href={`/post?postId=${post.id}#comments`} passHref>
               <Tooltip
-                label={t("number_of_comments", {
-                  count: counts.comments,
-                  formattedCount: counts.comments,
-                })}
+                label={
+                  counts.comments > 0 && counts.comments < 5
+                    ? t("number_of_comments", {
+                        count: counts.comments,
+                        formattedCount: counts.comments,
+                      })
+                    : t("number_of_comments_plural", {
+                        count: counts.comments,
+                        formattedCount: counts.comments,
+                      })
+                }
                 openDelay={1000}
               >
                 <Button
@@ -73,10 +87,17 @@ export const PostFooter: FC<{
                   leftIcon={<IconMessageCircle2 stroke={1.5} />}
                   variant="subtle"
                 >
-                  {t("number_of_comments", {
-                    count: counts.comments,
-                    formattedCount: formatShortNum(counts.comments),
-                  })}
+                  {counts.comments === 0
+                    ? t("comments")
+                    : counts.comments > 0 && counts.comments < 5
+                    ? t("number_of_comments", {
+                        count: counts.comments,
+                        formattedCount: formatShortNum(counts.comments),
+                      })
+                    : t("number_of_comments_plural", {
+                        count: counts.comments,
+                        formattedCount: formatShortNum(counts.comments),
+                      })}
                 </Button>
               </Tooltip>
             </Link>
