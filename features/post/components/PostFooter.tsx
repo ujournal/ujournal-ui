@@ -42,17 +42,13 @@ export const PostFooter: FC<{
   }, [counts, myVote]);
   
   let personViewSafe = null;
-  let score = 0;
   let creator : PersonSafe = new PersonSafe();
   if(commentsAsText) {
     personViewSafe = userPersonViewSafe({
       creatorId: post.creator_id
     })
-    score = (personViewSafe?.data?.counts?.post_score ?? 0) +
-        (personViewSafe?.data?.counts?.comment_score ?? 0);
     creator = personViewSafe.data?.person ?? new PersonSafe();
   }
-     
 
   return (
     <Container size={650} p={0}>
@@ -110,16 +106,16 @@ export const PostFooter: FC<{
             (<Group>
               <UserButton
                   userId={creator.id}
-                  image={creator.avatar.match<string | undefined>({
+                  image={creator.avatar?.match<string | undefined>({
                     some: (name) => name,
                     none: undefined,
                   })}
-                  label={creator.display_name.match<string>({
+                  label={creator.display_name?.match<string>({
                     some: (name) => name,
                     none: () => creator.name,
                   })}
               />
-              rating: {score}
+              <span>рейтинг: {personViewSafe?.data?.totalScore}</span>
             </Group>)
             : null
         }

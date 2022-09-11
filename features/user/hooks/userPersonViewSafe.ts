@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {GetPersonDetails } from "ujournal-lemmy-js-client";
+import {GetPersonDetails, PersonSafe} from "ujournal-lemmy-js-client";
 import { useAuth } from '../../auth/hooks/useAuth';
 import { useLemmyClient } from "../../../baza/hooks/useLemmyClient";
 import {Some} from "@sniptt/monads";
@@ -24,6 +24,13 @@ export const userPersonViewSafe = ({creatorId}: {creatorId: number;}) => {
           auth: auth.token.ok(),
         }
     ));
-    return person_view;
+    return {
+        person: person_view.person,
+        commentCount: person_view.counts.comment_count,
+        postCount: person_view.counts.post_count,
+        commentScore: person_view.counts.comment_score,
+        postScore: person_view.counts.post_score,
+        totalScore: person_view.counts.comment_score + person_view.counts.post_score
+    };
   });
 };
