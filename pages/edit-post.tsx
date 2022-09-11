@@ -29,6 +29,7 @@ const EditPostPage: SitePage = () => {
       try {
         const post = await upsertPost.mutateAsync({
           ...values,
+          name: values.name || "...",
           postId: Number(postId),
         });
 

@@ -53,8 +53,17 @@ export const PostForm: FC<{
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { t } = useTranslation();
 
+  const validate = useMemo(
+    () => ({
+      community_id: (value: number) => (value === -1 ? t("required") : null),
+      url: (value: string) => (value.length === 0 ? t("required") : null),
+    }),
+    []
+  );
+
   const form = useForm({
     initialValues: values,
+    validate,
   });
 
   const urlMetadata = useUrlMetadata(form.values.url);
@@ -145,7 +154,7 @@ export const PostForm: FC<{
               paddingLeft: 8,
               paddingRight: 8,
               marginLeft: -8,
-              marginRight: -8,
+              marginRight: 0,
               "&:hover": {
                 backgroundColor: "rgba(0,0,0,0.015)",
               },

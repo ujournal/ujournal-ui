@@ -22,7 +22,10 @@ const CreatePostPage: SitePage = () => {
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
       try {
-        const post = await upsertPost.mutateAsync(values);
+        const post = await upsertPost.mutateAsync({
+          ...values,
+          name: values.name || "...",
+        });
 
         showNotification({
           color: "teal",
