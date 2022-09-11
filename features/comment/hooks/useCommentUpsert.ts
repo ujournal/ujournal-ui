@@ -20,32 +20,48 @@ export const useCommentUpsert = () => {
       }
     ) => {
       if (values.commentId) {
+        let result = null;
+
+        // done through try/catch because Lemmy back-end returns 400 error at the moment
+        try {
+          result = await lemmyClient.editComment(
+            new EditComment({
+              comment_id: values.commentId,
+              content: Some(values.content),
+              distinguished: None,
+              form_id: None,
+              auth: auth.token.unwrap(),
+            })
+          );
+        } catch (error) {}
+
         await queryClient.invalidateQueries(["post"]);
 
-        return await lemmyClient.editComment(
-          new EditComment({
-            comment_id: values.commentId,
-            content: Some(values.content),
-            distinguished: None,
-            form_id: None,
-            auth: auth.token.unwrap(),
-          })
-        );
+        return result;
       }
 
       if (!values.postId) {
         throw new Error("Value of postId is required.");
       }
 
-      return await lemmyClient.createComment(
-        new CreateComment({
-          content: values.content,
-          parent_id: values.parentId ? Some(values.parentId) : None,
-          post_id: values.postId,
-          form_id: None,
-          auth: auth.token.unwrap(),
-        })
-      );
+      let result = null;
+
+      // done through try/catch because Lemmy back-end returns 400 error at the moment
+      try {
+        result = await lemmyClient.createComment(
+          new CreateComment({
+            content: values.content,
+            parent_id: values.parentId ? Some(values.parentId) : None,
+            post_id: values.postId,
+            form_id: None,
+            auth: auth.token.unwrap(),
+          })
+        );
+      } catch (error) {}
+
+      await queryClient.invalidateQueries(["post"]);
+
+      return result;
     }
   );
 };

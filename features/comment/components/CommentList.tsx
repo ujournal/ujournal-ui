@@ -6,23 +6,22 @@ import {
   transformCommentsToTree,
   transformCommentsFromCommentsView,
 } from "../utils/comments";
-import { Comment } from "./Comment";
+import { Comment, CommentProps } from "./Comment";
 import { CommentListLoader } from "./CommentListLoader";
 
-export const CommentList: FC<{
+export type CommentListProps = {
   isLoading: boolean;
   data: any[];
   counts?: PostAggregates;
   showAsTree?: boolean;
   showPost?: boolean;
-  compact?: boolean;
-  truncateLength?: number;
-}> = ({
+} & Pick<CommentProps, "onCommentSubmit" | "compact" | "truncateLength">;
+
+export const CommentList: FC<CommentListProps> = ({
   data,
   isLoading,
   showAsTree = true,
-  compact = false,
-  truncateLength,
+  ...commentProps
 }) => {
   const commentsList = useMemo(
     () =>
@@ -33,19 +32,19 @@ export const CommentList: FC<{
   );
 
   const list = (
-    <Stack spacing={compact ? "sm" : 0}>
+    <Stack spacing={commentProps.compact ? "sm" : 0}>
       <DataList
         isLoading={isLoading}
         data={commentsList}
         itemComponent={Comment}
         itemKey="comment.id"
         loaderComponent={CommentListLoader}
-        itemProps={{ compact, truncateLength }}
+        itemProps={commentProps}
       />
     </Stack>
   );
 
-  return compact ? (
+  return commentProps.compact ? (
     list
   ) : (
     <Container size={650} p={0}>

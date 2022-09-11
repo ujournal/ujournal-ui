@@ -4,21 +4,23 @@ import { MarkdownText } from "baza/components/MarkdownText";
 import { capitalize } from "baza/utils/string";
 import { UserButton } from "features/user/components/UserButton";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DateFormatted } from "../../../baza/components/DeteFormatted";
 import { VoteButtons } from "../../../baza/components/VoteButtons";
 import { useCommentVote } from "../hooks/useCommentVote";
 import { CommentInternal } from "../utils/comments";
+import { CommentForm, Values as CommentFormValues } from "./CommentForm";
 
-export const Comment: FC<
-  CommentInternal & {
-    children: CommentInternal[];
-    compact?: boolean;
-    decoration?: undefined | "middle" | "end";
-    truncateLength?: number;
-  }
-> = ({
+export type CommentProps = CommentInternal & {
+  children: CommentInternal[];
+  compact?: boolean;
+  decoration?: undefined | "middle" | "end";
+  truncateLength?: number;
+  onCommentSubmit?: (values: CommentFormValues) => void;
+};
+
+export const Comment: FC<CommentProps> = ({
   comment,
   creator,
   post,
@@ -28,8 +30,11 @@ export const Comment: FC<
   counts,
   my_vote: myVote,
   truncateLength,
+  onCommentSubmit,
 }) => {
   const { t } = useTranslation();
+
+  const [commentFormShowed, setCommentFormShowed] = useState<boolean>(false);
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
     counts,
@@ -40,6 +45,23 @@ export const Comment: FC<
     commentId: comment.id,
     onSuccess: setCountsAndMyVote,
   });
+
+  const toggleCommentFormShowed = useCallback(() => {
+    setCommentFormShowed((commentFormShowed) => !commentFormShowed);
+  }, []);
+
+  const handleCommentSubmit = useCallback(
+    async (values: CommentFormValues) => {
+      if (onCommentSubmit) {
+        await onCommentSubmit({
+          parentId: comment.id,
+          ...values,
+        });
+        setCommentFormShowed(false);
+      }
+    },
+    [comment.id, onCommentSubmit]
+  );
 
   useEffect(() => {
     setCountsAndMyVote({
@@ -103,7 +125,7 @@ export const Comment: FC<
             />
 
             {!compact && (
-              <Box>
+              <>
                 <Group position="apart">
                   <Button
                     color="gray"
@@ -116,6 +138,7 @@ export const Comment: FC<
                         backgroundColor: "transparent",
                       },
                     }}
+                    onClick={toggleCommentFormShowed}
                   >
                     {capitalize(t("reply"))}
                   </Button>
@@ -125,7 +148,10 @@ export const Comment: FC<
                     vote={vote}
                   />
                 </Group>
-              </Box>
+                {commentFormShowed && (
+                  <CommentForm onSubmit={handleCommentSubmit} />
+                )}
+              </>
             )}
 
             {compact && post && (

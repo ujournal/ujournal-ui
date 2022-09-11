@@ -25,9 +25,15 @@ const PostPage: SitePage = () => {
   const post = usePost({ postId });
   const commentUpsert = useCommentUpsert();
 
-  const handleCommentSubmit = useCallback((values: CommentFormValues) => {
-    console.log("values", values);
-  }, []);
+  const handleCommentSubmit = useCallback(
+    async (values: CommentFormValues) => {
+      await commentUpsert.mutateAsync({
+        ...values,
+        postId,
+      });
+    },
+    [commentUpsert, postId]
+  );
 
   return (
     <>
@@ -48,16 +54,26 @@ const PostPage: SitePage = () => {
               </Title>
 
               <Box sx={{ width: "100%" }}>
-                <CommentForm onSubmit={handleCommentSubmit} />
+                <CommentForm
+                  onSubmit={handleCommentSubmit}
+                  isLoading={commentUpsert.isLoading}
+                />
               </Box>
 
               <Box sx={{ width: "100%" }}>
-                <CommentList {...post} data={post.data?.comments || []} />
+                <CommentList
+                  {...post}
+                  data={post.data?.comments || []}
+                  onCommentSubmit={handleCommentSubmit}
+                />
               </Box>
 
               {(post.data?.comments || []).length >= 1 && (
                 <Box sx={{ width: "100%" }}>
-                  <CommentForm onSubmit={handleCommentSubmit} />
+                  <CommentForm
+                    onSubmit={handleCommentSubmit}
+                    isLoading={commentUpsert.isLoading}
+                  />
                 </Box>
               )}
             </Stack>

@@ -64,12 +64,12 @@ export const VoteButtons: FC<{
 
   return (
     <Group noWrap align="center" spacing={2}>
-      <Tooltip label={t("downvote")} disabled={myVote === -1}>
+      <Tooltip label={t("downvote")} disabled={myVote === -1 || isLoading}>
         <ActionIcon
           color="blue"
           variant="subtle"
           onClick={myVote === 1 ? voteZero : voteDown}
-          disabled={myVote === -1}
+          disabled={myVote === -1 || isLoading}
         >
           <IconArrowDown stroke={1.5} />
         </ActionIcon>
@@ -159,7 +159,7 @@ export const VoteButtons: FC<{
           })}
         >
           {isLoading ? (
-            <Loader size="xs" />
+            <Loader color="gray" size="xs" />
           ) : (
             <>
               {counts.score}
@@ -181,12 +181,12 @@ export const VoteButtons: FC<{
           )}
         </Box>
       </Tooltip>
-      <Tooltip label={t("upvote")} disabled={myVote === 1}>
+      <Tooltip label={t("upvote")} disabled={myVote === 1 || isLoading}>
         <ActionIcon
           color="blue"
           variant="subtle"
           onClick={myVote === -1 ? voteZero : voteUp}
-          disabled={myVote === 1}
+          disabled={myVote === 1 || isLoading}
         >
           <IconArrowUp stroke={1.5} />
         </ActionIcon>

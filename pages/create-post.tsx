@@ -1,52 +1,41 @@
 import { Container, Card } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import {
   PostForm,
   Values as PostFormValues,
 } from "features/post/components/PostForm";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
-import { capitalize } from "baza/utils/string";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
-import { IconCheck } from "@tabler/icons";
+import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
 
 const CreatePostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const upsertPost = usePostUpsert();
   const router = useRouter();
-  const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
       try {
+        showProgress("post-creating");
+
         const post = await upsertPost.mutateAsync({
           ...values,
           name: values.name || "...",
         });
 
-        showNotification({
-          color: "teal",
-          icon: <IconCheck size={16} />,
-          message: capitalize(t("saved")),
-        });
+        showSuccess("post-creating");
 
         router.push({
           pathname: "/post",
           query: { postId: post.post_view.post.id },
         });
       } catch (error) {
-        showNotification({
-          color: "red",
-          message: `Oops. Something went wrong`,
-          icon: <IconCheck size={16} />,
-          autoClose: 2000,
-        });
+        showFail("post-creating");
       }
     },
-    [router, t, upsertPost]
+    [router, upsertPost]
   );
 
   return (
