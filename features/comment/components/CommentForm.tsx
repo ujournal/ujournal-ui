@@ -33,8 +33,8 @@ export const CommentForm: FC<{
   const form = useForm({ validate, initialValues: values });
 
   const handleSubmit = useCallback(
-    (values: Values) => {
-      onSubmit(values);
+    async (values: Values) => {
+      await onSubmit(values);
 
       form.reset();
     },

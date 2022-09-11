@@ -57,6 +57,7 @@ export const Comment: FC<CommentProps> = ({
           parentId: comment.id,
           ...values,
         });
+
         setCommentFormShowed(false);
       }
     },
@@ -213,6 +214,7 @@ export const Comment: FC<CommentProps> = ({
             itemProps={(_item, index) => ({
               asChild: true,
               decoration: children.length - 1 === index ? "end" : "middle",
+              onCommentSubmit,
             })}
             itemKey="comment.id"
           />

@@ -62,8 +62,8 @@ const PostPage: SitePage = () => {
 
               <Box sx={{ width: "100%" }}>
                 <CommentList
-                  {...post}
                   data={post.data?.comments || []}
+                  isLoading={post.isLoading}
                   onCommentSubmit={handleCommentSubmit}
                 />
               </Box>
