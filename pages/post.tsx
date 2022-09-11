@@ -3,6 +3,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { formatShortNum } from "baza/utils/number";
 import { AppNavbar } from "features/app/components/AppNavbar";
+import { CommentForm } from "features/comment/components/CommentForm";
 import { CommentList } from "features/comment/components/CommentList";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
@@ -44,9 +45,9 @@ const PostPage: SitePage = () => {
                 })}
               </Title>
 
-              {/* <Box sx={{ width: "100%" }}>
+              <Box sx={{ width: "100%" }}>
                 <CommentForm values={{}} onSubmit={console.log} />
-              </Box> */}
+              </Box>
 
               <Box sx={{ width: "100%" }}>
                 <CommentList {...post} data={post.data?.comments || []} />

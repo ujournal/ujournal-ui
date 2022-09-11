@@ -26,22 +26,40 @@ export const VoteButtons: FC<{
   const ref = useRef<HTMLDivElement>(null);
 
   const label = useMemo(() => {
-    const points = t("number_of_points", {
-      count: counts.score,
-      formattedCount: counts.score,
-    });
+    const points =
+      counts.score > 0 && counts.score < 5
+        ? t("number_of_points", {
+            count: counts.score,
+            formattedCount: counts.score,
+          })
+        : t("number_of_points_plural", {
+            count: counts.score,
+            formattedCount: counts.score,
+          });
 
-    const upvotes = t("number_of_upvotes", {
-      count: counts.upvotes,
-      formattedCount: counts.upvotes,
-    });
+    const upvotes =
+      counts.upvotes > 0 && counts.upvotes < 5
+        ? t("number_of_upvotes", {
+            count: counts.upvotes,
+            formattedCount: counts.upvotes,
+          })
+        : t("number_of_upvotes_plural", {
+            count: counts.upvotes,
+            formattedCount: counts.upvotes,
+          });
 
-    const downvotes = t("number_of_downvotes", {
-      count: counts.downvotes,
-      formattedCount: counts.downvotes,
-    });
+    const downvotes =
+      counts.downvotes > 0 && counts.downvotes < 5
+        ? t("number_of_downvotes", {
+            count: counts.downvotes,
+            formattedCount: counts.downvotes,
+          })
+        : t("number_of_downvotes_plural", {
+            count: counts.downvotes,
+            formattedCount: counts.downvotes,
+          });
 
-    return `${points} • ${upvotes} • ${downvotes}`;
+    return `${points}, ${upvotes}, ${downvotes}`;
   }, [counts.downvotes, counts.score, counts.upvotes, t]);
 
   return (

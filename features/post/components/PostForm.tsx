@@ -166,29 +166,32 @@ export const PostForm: FC<{
         />
 
         <Button.Group>
-          <Popover trapFocus position="bottom" withArrow shadow="md">
-            <Popover.Target>
-              <Button
-                size="lg"
-                loading={isLoading}
-                leftIcon={<IconSettings stroke={1.5} />}
-                pr="sm"
-              />
-            </Popover.Target>
-            <Popover.Dropdown
-              sx={(theme) => ({
-                background:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[7]
-                    : theme.white,
-              })}
-            >
-              <Checkbox
-                label={t("nsfw")}
-                {...form.getInputProps("nsfw", { type: "checkbox" })}
-              />
-            </Popover.Dropdown>
-          </Popover>
+          {!isLoading && (
+            <Popover trapFocus position="bottom" withArrow shadow="md">
+              <Popover.Target>
+                <Button
+                  size="lg"
+                  loading={isLoading}
+                  leftIcon={<IconSettings stroke={1.5} />}
+                  pr="sm"
+                />
+              </Popover.Target>
+              <Popover.Dropdown
+                sx={(theme) => ({
+                  background:
+                    theme.colorScheme === "dark"
+                      ? theme.colors.dark[7]
+                      : theme.white,
+                })}
+              >
+                <Checkbox
+                  label={t("nsfw")}
+                  {...form.getInputProps("nsfw", { type: "checkbox" })}
+                />
+              </Popover.Dropdown>
+            </Popover>
+          )}
+
           <Button type="submit" size="lg" loading={isLoading} fullWidth>
             {postId ? capitalize(t("save")) : capitalize(t("create"))}
           </Button>
