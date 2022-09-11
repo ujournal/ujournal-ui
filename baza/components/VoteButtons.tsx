@@ -63,8 +63,8 @@ export const VoteButtons: FC<{
   }, [counts.downvotes, counts.score, counts.upvotes, t]);
 
   return (
-    <Group noWrap align="center">
-      <Tooltip label={t("downvote")}>
+    <Group noWrap align="center" spacing={2}>
+      <Tooltip label={t("downvote")} disabled={myVote === -1}>
         <ActionIcon
           color="blue"
           variant="subtle"
@@ -74,109 +74,114 @@ export const VoteButtons: FC<{
           <IconArrowDown stroke={1.5} />
         </ActionIcon>
       </Tooltip>
-      {isLoading ? (
-        <Loader size="xs" />
-      ) : (
-        <Tooltip label={label}>
-          <Box
-            ref={ref}
-            sx={(theme) => ({
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: 18,
-              "& .firework": {
-                position: "absolute",
-                left: 10,
-                top: 12,
-                transform: "scale(0.2)",
-              },
-              "& .explosion": {
-                position: "absolute",
-                left: -2,
-                bottom: 0,
-                width: 4,
-                height: 80,
-                transformOrigin: "50% 100%",
-                overflow: "hidden",
-              },
-              "& .explosion:nth-of-type(1)": {
-                transform: "rotate(0deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(2)": {
-                transform: "rotate(30deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(3)": {
-                transform: "rotate(60deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(4)": {
-                transform: "rotate(90deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(5)": {
-                transform: "rotate(120deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(6)": {
-                transform: "rotate(150deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(7)": {
-                transform: "rotate(180deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(8)": {
-                transform: "rotate(210deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(9)": {
-                transform: "rotate(240deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(10)": {
-                transform: "rotate(270deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(11)": {
-                transform: "rotate(300deg) translateY(-15px)",
-              },
-              "& .explosion:nth-of-type(12)": {
-                transform: "rotate(330deg) translateY(-15px)",
-              },
-              "& .explosion::before": {
-                content: "''",
-                position: "absolute",
-                left: 0,
-                right: 0,
-                top: "100%",
-                height: 40,
-                backgroundColor: "#f5cf52",
-              },
-              "& .firework .explosion::before": {
-                animation: "explosion 2s ease-in-out 1",
-              },
-              fontWeight: 600,
-              color:
-                counts.score > 0
-                  ? theme.colors.green
-                  : counts.score < 0
-                  ? theme.colors.red
-                  : theme.colors.gray,
-            })}
-          >
-            {counts.score}
-            <div className="firework">
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-              <div className="explosion"></div>
-            </div>
-          </Box>
-        </Tooltip>
-      )}
-      <Tooltip label={t("upvote")}>
+      <Tooltip label={label}>
+        <Box
+          ref={ref}
+          sx={(theme) => ({
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: theme.colors.gray[1],
+            minWidth: 40,
+            height: 28,
+            borderRadius: theme.radius.sm,
+            "& .firework": {
+              position: "absolute",
+              left: 20,
+              top: 14,
+              transform: "scale(0.2)",
+            },
+            "& .explosion": {
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              width: 4,
+              height: 80,
+              transformOrigin: "50% 100%",
+              overflow: "hidden",
+            },
+            "& .explosion:nth-of-type(1)": {
+              transform: "rotate(0deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(2)": {
+              transform: "rotate(30deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(3)": {
+              transform: "rotate(60deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(4)": {
+              transform: "rotate(90deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(5)": {
+              transform: "rotate(120deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(6)": {
+              transform: "rotate(150deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(7)": {
+              transform: "rotate(180deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(8)": {
+              transform: "rotate(210deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(9)": {
+              transform: "rotate(240deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(10)": {
+              transform: "rotate(270deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(11)": {
+              transform: "rotate(300deg) translateY(-15px)",
+            },
+            "& .explosion:nth-of-type(12)": {
+              transform: "rotate(330deg) translateY(-15px)",
+            },
+            "& .explosion::before": {
+              content: "''",
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: "100%",
+              height: 40,
+              backgroundColor: "#f5cf52",
+            },
+            "& .firework .explosion::before": {
+              animation: "explosion 2s ease-in-out 1",
+            },
+            fontWeight: 600,
+            color:
+              counts.score > 0
+                ? theme.colors.green
+                : counts.score < 0
+                ? theme.colors.red
+                : theme.colors.gray,
+          })}
+        >
+          {isLoading ? (
+            <Loader size="xs" />
+          ) : (
+            <>
+              {counts.score}
+              <div className="firework">
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+                <div className="explosion"></div>
+              </div>
+            </>
+          )}
+        </Box>
+      </Tooltip>
+      <Tooltip label={t("upvote")} disabled={myVote === 1}>
         <ActionIcon
           color="blue"
           variant="subtle"

@@ -34,10 +34,10 @@ export const PostLoader: FC = () => {
         </Box>
         <Group noWrap position="apart">
           <Skeleton width={120} height={16} radius="sm" />
-          <Group spacing="xs" noWrap>
-            <Skeleton width={24} height={24} radius="sm" />
-            <Skeleton height={16} circle />
-            <Skeleton width={24} height={24} radius="sm" />
+          <Group spacing={2} noWrap>
+            <Skeleton width={28} height={28} radius="sm" />
+            <Skeleton width={40} height={28} radius="sm" />
+            <Skeleton width={28} height={28} radius="sm" />
           </Group>
         </Group>
       </Stack>
