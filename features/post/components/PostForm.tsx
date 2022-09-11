@@ -80,6 +80,36 @@ export const PostForm: FC<{
     [form.values.name, urlMetadata.data]
   );
 
+  const settingsButton = (
+    <Popover trapFocus position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button
+          size="lg"
+          loading={isLoading}
+          leftIcon={<IconSettings stroke={1.5} />}
+          pr="sm"
+        />
+      </Popover.Target>
+      <Popover.Dropdown
+        sx={(theme) => ({
+          background:
+            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+        })}
+      >
+        <Checkbox
+          label={t("nsfw")}
+          {...form.getInputProps("nsfw", { type: "checkbox" })}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+
+  const submitButton = (
+    <Button type="submit" size="lg" loading={isLoading} fullWidth>
+      {postId ? capitalize(t("save")) : capitalize(t("create"))}
+    </Button>
+  );
+
   return (
     <form onSubmit={form.onSubmit(onSubmit)}>
       <Stack spacing="xs">
@@ -165,37 +195,14 @@ export const PostForm: FC<{
           {...form.getInputProps("body")}
         />
 
-        <Button.Group>
-          {!isLoading && (
-            <Popover trapFocus position="bottom" withArrow shadow="md">
-              <Popover.Target>
-                <Button
-                  size="lg"
-                  loading={isLoading}
-                  leftIcon={<IconSettings stroke={1.5} />}
-                  pr="sm"
-                />
-              </Popover.Target>
-              <Popover.Dropdown
-                sx={(theme) => ({
-                  background:
-                    theme.colorScheme === "dark"
-                      ? theme.colors.dark[7]
-                      : theme.white,
-                })}
-              >
-                <Checkbox
-                  label={t("nsfw")}
-                  {...form.getInputProps("nsfw", { type: "checkbox" })}
-                />
-              </Popover.Dropdown>
-            </Popover>
-          )}
-
-          <Button type="submit" size="lg" loading={isLoading} fullWidth>
-            {postId ? capitalize(t("save")) : capitalize(t("create"))}
-          </Button>
-        </Button.Group>
+        {isLoading ? (
+          submitButton
+        ) : (
+          <Button.Group>
+            {settingsButton}
+            {submitButton}
+          </Button.Group>
+        )}
       </Stack>
     </form>
   );
