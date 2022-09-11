@@ -5,11 +5,11 @@ import { useState } from "react";
 import { VoteButtons } from "baza/components/VoteButtons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
-import { formatShortNum } from "baza/utils/number";
 import Link from "next/link";
 import { usePostVote } from "../hooks/usePostVote";
 import { Post, PostAggregates } from "ujournal-lemmy-js-client";
 import { Option } from "@sniptt/monads";
+import { CommentTitle } from "features/comment/components/CommentTitle";
 
 export const PostFooter: FC<{
   post: Post;
@@ -54,32 +54,12 @@ export const PostFooter: FC<{
         >
           {commentsAsText ? (
             <Box sx={{ whiteSpace: "nowrap", fontWeight: 600 }} p="sm">
-              {counts.comments === 0
-                ? t("comments")
-                : counts.comments > 0 && counts.comments < 5
-                ? t("number_of_comments", {
-                    count: counts.comments,
-                    formattedCount: formatShortNum(counts.comments),
-                  })
-                : t("number_of_comments_plural", {
-                    count: counts.comments,
-                    formattedCount: formatShortNum(counts.comments),
-                  })}
+              <CommentTitle counts={counts} />
             </Box>
           ) : (
             <Link href={`/post?postId=${post.id}#comments`} passHref>
               <Tooltip
-                label={
-                  counts.comments > 0 && counts.comments < 5
-                    ? t("number_of_comments", {
-                        count: counts.comments,
-                        formattedCount: counts.comments,
-                      })
-                    : t("number_of_comments_plural", {
-                        count: counts.comments,
-                        formattedCount: counts.comments,
-                      })
-                }
+                label={<CommentTitle counts={counts} showFull />}
                 openDelay={1000}
               >
                 <Button
@@ -87,17 +67,7 @@ export const PostFooter: FC<{
                   leftIcon={<IconMessageCircle2 stroke={1.5} />}
                   variant="subtle"
                 >
-                  {counts.comments === 0
-                    ? t("comments")
-                    : counts.comments > 0 && counts.comments < 5
-                    ? t("number_of_comments", {
-                        count: counts.comments,
-                        formattedCount: formatShortNum(counts.comments),
-                      })
-                    : t("number_of_comments_plural", {
-                        count: counts.comments,
-                        formattedCount: formatShortNum(counts.comments),
-                      })}
+                  <CommentTitle counts={counts} />
                 </Button>
               </Tooltip>
             </Link>
