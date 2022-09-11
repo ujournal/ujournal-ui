@@ -16,7 +16,7 @@ const UserPage: SitePage = () => {
     <h4>Зареєстрований</h4>
     <DateFormatted date={new Date(personViewSafe.data?.person?.published ?? new Date() + "Z")}/>
     <p>Загальний рейтинг: {personViewSafe.data?.totalScore}</p>
-    <p>Рейтинг постів: {personViewSafe.data?.postCount}</p>
+    <p>Рейтинг постів: {personViewSafe.data?.postScore}</p>
     <p>Рейтинг коментарів: {personViewSafe.data?.commentScore}</p>
     <p>Кількість постів: {personViewSafe.data?.postCount}</p>
     <p>Кількість коментарів: {personViewSafe.data?.commentCount}</p>
