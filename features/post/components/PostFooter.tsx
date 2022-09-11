@@ -8,8 +8,10 @@ import { useTranslation } from "react-i18next";
 import { formatShortNum } from "baza/utils/number";
 import Link from "next/link";
 import { usePostVote } from "../hooks/usePostVote";
-import { Post, PostAggregates } from "ujournal-lemmy-js-client";
+import {PersonSafe, Post, PostAggregates} from "ujournal-lemmy-js-client";
 import { Option } from "@sniptt/monads";
+import {userPersonViewSafe} from "../../user/hooks/userPersonViewSafe";
+import {UserButton} from "../../user/components/UserButton";
 
 export const PostFooter: FC<{
   post: Post;
@@ -27,6 +29,7 @@ export const PostFooter: FC<{
   });
 
   const vote = usePostVote({
+    creatorId: post.creator_id,
     postId: post.id,
     onSuccess: setCountsAndMyVote,
   });
@@ -37,6 +40,19 @@ export const PostFooter: FC<{
       myVote: myVote.unwrapOr(0),
     });
   }, [counts, myVote]);
+  
+  let personViewSafe = null;
+  let score = 0;
+  let creator : PersonSafe = new PersonSafe();
+  if(commentsAsText) {
+    personViewSafe = userPersonViewSafe({
+      creatorId: post.creator_id
+    })
+    score = (personViewSafe?.data?.counts?.post_score ?? 0) +
+        (personViewSafe?.data?.counts?.comment_score ?? 0);
+    creator = personViewSafe.data?.person ?? new PersonSafe();
+  }
+     
 
   return (
     <Container size={650} p={0}>
@@ -87,6 +103,26 @@ export const PostFooter: FC<{
           myVote={countsAndMyVote.myVote}
           vote={vote}
         />
+      </Group>
+      <Group>
+        {commentsAsText 
+            ?
+            (<Group>
+              <UserButton
+                  userId={creator.id}
+                  image={creator.avatar.match<string | undefined>({
+                    some: (name) => name,
+                    none: undefined,
+                  })}
+                  label={creator.display_name.match<string>({
+                    some: (name) => name,
+                    none: () => creator.name,
+                  })}
+              />
+              rating: {score}
+            </Group>)
+            : null
+        }
       </Group>
     </Container>
   );
