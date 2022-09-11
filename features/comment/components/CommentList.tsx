@@ -16,8 +16,14 @@ export const CommentList: FC<{
   showAsTree?: boolean;
   showPost?: boolean;
   compact?: boolean;
-}> = ({ data, isLoading, showAsTree = true, compact = false }) => {
-
+  truncateLength?: number;
+}> = ({
+  data,
+  isLoading,
+  showAsTree = true,
+  compact = false,
+  truncateLength,
+}) => {
   const commentsList = useMemo(
     () =>
       showAsTree
@@ -34,7 +40,7 @@ export const CommentList: FC<{
         itemComponent={Comment}
         itemKey="comment.id"
         loaderComponent={CommentListLoader}
-        itemProps={{ compact }}
+        itemProps={{ compact, truncateLength }}
       />
     </Stack>
   );

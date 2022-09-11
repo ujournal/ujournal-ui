@@ -58,7 +58,7 @@ export const PostForm: FC<{
       community_id: (value: number) => (value === -1 ? t("required") : null),
       url: (value: string) => (value.length === 0 ? t("required") : null),
     }),
-    []
+    [t]
   );
 
   const form = useForm({
@@ -97,6 +97,7 @@ export const PostForm: FC<{
           loading={isLoading}
           leftIcon={<IconSettings stroke={1.5} />}
           pr="sm"
+          radius="md"
         />
       </Popover.Target>
       <Popover.Dropdown
@@ -114,7 +115,7 @@ export const PostForm: FC<{
   );
 
   const submitButton = (
-    <Button type="submit" size="lg" loading={isLoading} fullWidth>
+    <Button type="submit" size="lg" loading={isLoading} fullWidth radius="md">
       {postId ? capitalize(t("save")) : capitalize(t("create"))}
     </Button>
   );

@@ -1,15 +1,23 @@
 import { Box, BoxProps } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useMarkdown } from "baza/hooks/useMarkdown";
-import { FC, useCallback, MouseEvent } from "react";
+import { FC, useCallback, MouseEvent, useMemo } from "react";
+import truncate from "truncate-html";
 
 export const MarkdownText: FC<
   BoxProps & {
     text: string;
     withContentMargins?: boolean;
     fontSize?: number;
+    truncateLength?: number;
   }
-> = ({ text, withContentMargins = true, fontSize, ...props }) => {
+> = ({
+  text,
+  withContentMargins = true,
+  fontSize,
+  truncateLength,
+  ...props
+}) => {
   const markdown = useMarkdown();
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
@@ -22,10 +30,16 @@ export const MarkdownText: FC<
     []
   );
 
+  const html = useMemo(() => {
+    const html = markdown.render(text);
+
+    return truncateLength ? truncate(html, truncateLength) : html;
+  }, [markdown, text, truncateLength]);
+
   return (
     <Box
       {...props}
-      dangerouslySetInnerHTML={{ __html: markdown.render(text) }}
+      dangerouslySetInnerHTML={{ __html: html }}
       onClick={handleContentClick}
       sx={(theme) => ({
         fontSize,

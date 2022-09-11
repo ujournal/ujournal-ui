@@ -2,13 +2,17 @@ import { Box, Card, Container, Stack, Title } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { AppNavbar } from "features/app/components/AppNavbar";
-import { CommentForm } from "features/comment/components/CommentForm";
+import {
+  CommentForm,
+  Values as CommentFormValues,
+} from "features/comment/components/CommentForm";
 import { CommentList } from "features/comment/components/CommentList";
 import { CommentTitle } from "features/comment/components/CommentTitle";
+import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { SitePage } from "types";
 
 const PostPage: SitePage = () => {
@@ -19,6 +23,12 @@ const PostPage: SitePage = () => {
   });
   const postId = Number(_postId);
   const post = usePost({ postId });
+  const commentUpsert = useCommentUpsert();
+
+  const handleCommentSubmit = useCallback((values: CommentFormValues) => {
+    console.log("values", values);
+  }, []);
+
   return (
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
@@ -38,7 +48,7 @@ const PostPage: SitePage = () => {
               </Title>
 
               <Box sx={{ width: "100%" }}>
-                <CommentForm values={{ content: "" }} onSubmit={console.log} />
+                <CommentForm onSubmit={handleCommentSubmit} />
               </Box>
 
               <Box sx={{ width: "100%" }}>
@@ -47,10 +57,7 @@ const PostPage: SitePage = () => {
 
               {(post.data?.comments || []).length >= 1 && (
                 <Box sx={{ width: "100%" }}>
-                  <CommentForm
-                    values={{ content: "" }}
-                    onSubmit={console.log}
-                  />
+                  <CommentForm onSubmit={handleCommentSubmit} />
                 </Box>
               )}
             </Stack>

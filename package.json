@@ -56,6 +56,7 @@
     "reflect-metadata": "^0.1.13",
     "remark": "^14.0.2",
     "superjson": "^1.9.1",
+    "truncate-html": "^1.0.4",
     "turndown": "^7.1.1",
     "ujournal-lemmy-js-client": "^1.2.0",
     "validator": "^13.7.0"

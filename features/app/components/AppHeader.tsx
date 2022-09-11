@@ -106,6 +106,7 @@ export const AppHeader: FC = () => {
                   marginRight: largerThanSm ? undefined : 0,
                 },
               }}
+              radius="md"
             >
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>

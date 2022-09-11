@@ -3,17 +3,17 @@ import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { queryClient } from "baza/reactQuery";
 import { useAuth } from "features/auth/hooks/useAuth";
-import { Values as PostEditValues } from "features/comment/components/CommentForm";
+import { Values as CommentEditValues } from "features/comment/components/CommentForm";
 import { CreateComment, EditComment } from "ujournal-lemmy-js-client";
 
-export const usePostUpsert = () => {
+export const useCommentUpsert = () => {
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
   return useMutation(
     ["commentUpsert"],
     async (
-      values: PostEditValues & {
+      values: CommentEditValues & {
         postId?: number;
         commentId?: number;
         parentId?: number;

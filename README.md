@@ -2,7 +2,7 @@
 
 - `NEXT_PUBLIC_LEMMY_API_URL` - URL to Lemmy API Server
 - `NEXT_PUBLIC_PICTRS_API_URL` - URL to Pictrs API Server
-- `NEXT_PUBLIC_LEMMY_API_PROXY_URL` - URL to API Server using by proxy
+- `NEXT_PUBLIC_LEMMY_API_PROXY_URL` - URL to API Server used by Proxy that located on `/_api`
 
 You can re-define variables by add `.env.local` file.
 

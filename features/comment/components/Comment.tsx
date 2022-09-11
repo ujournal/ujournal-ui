@@ -16,6 +16,7 @@ export const Comment: FC<
     children: CommentInternal[];
     compact?: boolean;
     decoration?: undefined | "middle" | "end";
+    truncateLength?: number;
   }
 > = ({
   comment,
@@ -26,6 +27,7 @@ export const Comment: FC<
   decoration,
   counts,
   my_vote: myVote,
+  truncateLength,
 }) => {
   const { t } = useTranslation();
 
@@ -94,7 +96,11 @@ export const Comment: FC<
           </Group>
 
           <Stack spacing={2}>
-            <MarkdownText text={comment.content} withContentMargins={false} />
+            <MarkdownText
+              text={comment.content}
+              withContentMargins={false}
+              truncateLength={truncateLength}
+            />
 
             {!compact && (
               <Box>

@@ -1,6 +1,6 @@
-import { ActionIcon, Button, Group, Textarea } from "@mantine/core";
+import { ActionIcon, Group, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconPaperclip, IconSend } from "@tabler/icons";
+import { IconPhotoUp, IconSend } from "@tabler/icons";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +12,7 @@ export const CommentForm: FC<{
   values?: Values;
   isLoading?: boolean;
   onSubmit: (values: Values) => void;
-}> = ({ values, onSubmit }) => {
+}> = ({ values = { content: "" }, onSubmit, isLoading = false }) => {
   const { t } = useTranslation();
 
   const form = useForm({
@@ -28,8 +28,15 @@ export const CommentForm: FC<{
           placeholder={t("comment_here")}
           sx={{ flex: "1 1 0" }}
           rightSection={
-            <ActionIcon color="gray" size="lg" variant="subtle" mr="sm" mb={6}>
-              <IconPaperclip stroke={1.5} />
+            <ActionIcon
+              color="gray"
+              size="lg"
+              variant="subtle"
+              mr="sm"
+              mb={6}
+              disabled={isLoading}
+            >
+              <IconPhotoUp size={24} stroke={1.5} />
             </ActionIcon>
           }
           styles={{
@@ -37,8 +44,18 @@ export const CommentForm: FC<{
               alignItems: "flex-end",
             },
           }}
-        ></Textarea>
-        <ActionIcon color="blue" size={47} variant="light">
+          {...form.getInputProps("content")}
+          disabled={isLoading}
+          radius="md"
+        />
+        <ActionIcon
+          type="submit"
+          color="blue"
+          size={47}
+          variant="light"
+          disabled={isLoading}
+          radius="md"
+        >
           <IconSend stroke={1.5} />
         </ActionIcon>
       </Group>

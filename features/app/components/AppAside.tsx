@@ -20,6 +20,7 @@ export const AppAside: FC = () => {
           compact
           showAsTree={false}
           showPost
+          truncateLength={100}
         />
       </Stack>
     </Box>
