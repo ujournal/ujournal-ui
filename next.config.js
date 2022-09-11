@@ -17,7 +17,7 @@ const nextConfig = {
     return [
       {
         source: "/_api/:path*",
-        destination: "https://ujournal.com.ua/:path*",
+        destination: `${process.env.NEXT_PUBLIC_LEMMY_API_PROXY_URL}/:path*`,
       },
     ];
   },

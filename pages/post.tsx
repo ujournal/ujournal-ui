@@ -23,7 +23,7 @@ const PostPage: SitePage = () => {
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess ? (
-          <Post {...post.data.post_view} showBody commentsAsText />
+          <Post {...post.data.post_view} full commentsAsText />
         ) : (
           <PostLoader />
         )}
@@ -38,12 +38,21 @@ const PostPage: SitePage = () => {
               </Title>
 
               <Box sx={{ width: "100%" }}>
-                <CommentForm values={{}} onSubmit={console.log} />
+                <CommentForm values={{ content: "" }} onSubmit={console.log} />
               </Box>
 
               <Box sx={{ width: "100%" }}>
                 <CommentList {...post} data={post.data?.comments || []} />
               </Box>
+
+              {(post.data?.comments || []).length >= 1 && (
+                <Box sx={{ width: "100%" }}>
+                  <CommentForm
+                    values={{ content: "" }}
+                    onSubmit={console.log}
+                  />
+                </Box>
+              )}
             </Stack>
           </Container>
         </Card>
