@@ -6,8 +6,14 @@ import {
   Group,
   Header,
   MediaQuery,
+  Tooltip,
 } from "@mantine/core";
-import { IconBrandGithub, IconCirclePlus, IconLogin } from "@tabler/icons";
+import {
+  IconBrandGithub,
+  IconBrandTelegram,
+  IconCirclePlus,
+  IconLogin,
+} from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/auth/hooks/useAuth";
@@ -100,19 +106,37 @@ export const AppHeader: FC = () => {
             </Box>
           </Link>
 
-          <ActionIcon
-            component="a"
-            href="https://github.com/uJournal/ujournal-ui"
-            target="_blank"
-            pl="sm"
-            pr="sm"
-            variant="transparent"
-            color="gray"
-            size={24}
-            sx={{ display: "block" }}
-          >
-            <IconBrandGithub stroke={1.5} />
-          </ActionIcon>
+          <Tooltip label="Github">
+            <ActionIcon
+              component="a"
+              href="https://github.com/uJournal/ujournal-ui"
+              target="_blank"
+              pl="sm"
+              pr="sm"
+              variant="transparent"
+              color="gray"
+              size={24}
+              sx={{ display: "block" }}
+            >
+              <IconBrandGithub stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
+
+          <Tooltip label="Telegram">
+            <ActionIcon
+              component="a"
+              href="https://t.me/tjournalcomua"
+              target="_blank"
+              pl="sm"
+              pr="sm"
+              variant="transparent"
+              color="gray"
+              size={24}
+              sx={{ display: "block" }}
+            >
+              <IconBrandTelegram stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
 
         <Group spacing="lg">
