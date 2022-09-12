@@ -1,14 +1,7 @@
-import {
-  AppShell,
-  Aside,
-  Drawer,
-  Navbar,
-  ScrollArea,
-  Tabs,
-} from "@mantine/core";
-import { IconLayoutSidebar, IconLayoutSidebarRight } from "@tabler/icons";
+import { AppShell, Aside, Navbar, ScrollArea } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { FC, ReactElement, useCallback, useState } from "react";
+import { FC, ReactElement } from "react";
+import { AppDrawer } from "./AppDrawer";
 import { AppHeader } from "./AppHeader";
 
 export const AppLayout: FC<{
@@ -16,14 +9,7 @@ export const AppLayout: FC<{
   aside?: ReactElement;
   children: ReactElement;
 }> = ({ navbar, aside, children }) => {
-  const [navbarOpened, setNavbarOpened] = useState<boolean>(false);
-  const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
-  const smallerThanMd = useBreakpoint({ smallerThan: "md" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
-
-  const toggleNavbar = useCallback(() => {
-    setNavbarOpened((opened) => !opened);
-  }, []);
 
   return (
     <>
@@ -66,51 +52,17 @@ export const AppLayout: FC<{
             </Aside>
           ) : undefined
         }
-        header={<AppHeader onMenu={toggleNavbar} />}
-        styles={(theme) => ({
+        header={<AppHeader />}
+        styles={{
           main: {
             backgroundColor: "#f2f2f2",
           },
-        })}
+        }}
       >
         {children}
       </AppShell>
 
-      {smallerThanMd && (
-        <Drawer
-          opened={navbarOpened}
-          onClose={toggleNavbar}
-          padding="xl"
-          size={smallerThanSm ? "100%" : "75%"}
-          styles={{
-            drawer: {
-              backgroundColor: "#f2f2f2",
-              overflow: "auto",
-            },
-          }}
-        >
-          <Tabs defaultValue="navbar" sx={{ marginTop: -44 }}>
-            <Tabs.List>
-              <Tabs.Tab
-                value="navbar"
-                icon={<IconLayoutSidebar stroke={1.5} />}
-              />
-              <Tabs.Tab
-                value="aside"
-                icon={<IconLayoutSidebarRight stroke={1.5} />}
-              />
-            </Tabs.List>
-
-            <Tabs.Panel value="navbar" pt="xs">
-              {navbar}
-            </Tabs.Panel>
-
-            <Tabs.Panel value="aside" pt="xs">
-              {aside}
-            </Tabs.Panel>
-          </Tabs>
-        </Drawer>
-      )}
+      <AppDrawer navbar={navbar} aside={aside} />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import uk from "translations/translations/uk.json";
+import uk from "./uk.json";
 import ru from "translations/translations/ru.json";
 import en from "translations/translations/en.json";
 
@@ -29,7 +29,7 @@ i18n.use(initReactI18next).init({
       },
     },
   },
-  lng: "ru",
+  lng: "uk",
   fallbackLng: "en",
 
   interpolation: {

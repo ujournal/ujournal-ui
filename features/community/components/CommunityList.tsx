@@ -1,12 +1,16 @@
-import { CommunityButton } from "features/community/components/CommunityButton";
+import {
+  CommunityButton,
+  CommunityButtonProps,
+} from "features/community/components/CommunityButton";
 import { FC, useCallback } from "react";
 import { useCommunities } from "../hooks/useCommunities";
 import { DataList } from "baza/components/DataList";
 import { CommunityListLoader } from "./CommunityListLoader";
 
-export const CommunityList: FC<{ activeCommunityName?: string }> = ({
-  activeCommunityName = "",
-}) => {
+export const CommunityList: FC<{
+  activeCommunityName?: string;
+  buttonProps?: Omit<CommunityButtonProps, "label">;
+}> = ({ activeCommunityName = "", buttonProps }) => {
   const communities = useCommunities();
 
   const transformCommunities = useCallback(
@@ -33,6 +37,7 @@ export const CommunityList: FC<{ activeCommunityName?: string }> = ({
       transform={transformCommunities}
       loaderComponent={CommunityListLoader}
       itemKey="communityName"
+      itemProps={buttonProps}
     />
   );
 };

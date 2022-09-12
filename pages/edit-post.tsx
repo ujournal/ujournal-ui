@@ -1,5 +1,4 @@
 import { Container, Card, Loader, Center } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
@@ -8,13 +7,11 @@ import {
 } from "features/post/components/PostForm";
 import { usePost } from "features/post/hooks/usePost";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
-import { capitalize } from "baza/utils/string";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
-import { IconCheck } from "@tabler/icons";
 import { queryClient } from "baza/reactQuery";
+import { showProgress, showFail, showSuccess } from "baza/utils/notifications";
 
 const EditPostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -22,21 +19,19 @@ const EditPostPage: SitePage = () => {
   const post = usePost({ postId });
   const upsertPost = usePostUpsert();
   const router = useRouter();
-  const { t } = useTranslation();
 
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
       try {
+        showProgress("post-editing");
+
         const post = await upsertPost.mutateAsync({
           ...values,
+          name: values.name || "...",
           postId: Number(postId),
         });
 
-        showNotification({
-          color: "teal",
-          icon: <IconCheck size={16} />,
-          message: capitalize(t("saved")),
-        });
+        showSuccess("post-editing");
 
         await queryClient.invalidateQueries(["post"]);
 
@@ -45,15 +40,10 @@ const EditPostPage: SitePage = () => {
           query: { postId: post.post_view.post.id },
         });
       } catch (error) {
-        showNotification({
-          color: "red",
-          message: `Oops. Something went wrong`,
-          icon: <IconCheck size={16} />,
-          autoClose: 2000,
-        });
+        showFail("post-editing");
       }
     },
-    [postId, router, t, upsertPost]
+    [postId, router, upsertPost]
   );
 
   if (post.isSuccess) {

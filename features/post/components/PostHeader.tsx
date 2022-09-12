@@ -14,7 +14,7 @@ export const PostHeader: FC<{
   saved: boolean;
 }> = ({ community, creator, post, saved }) => {
   return (
-    <ScrollArea sx={{ overflow: "visible !important" }}>
+    <ScrollArea sx={{ overflow: "visible !important" }} scrollbarSize={0}>
       <Container size={650} p={0}>
         <Group position="apart" mt="-xs" noWrap>
           <Group

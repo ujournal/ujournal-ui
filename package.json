@@ -1,10 +1,11 @@
 {
-  "name": "lemmy-ui-next",
+  "name": "ujournal-ui-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -56,6 +57,7 @@
     "reflect-metadata": "^0.1.13",
     "remark": "^14.0.2",
     "superjson": "^1.9.1",
+    "truncate-html": "^1.0.4",
     "turndown": "^7.1.1",
     "ujournal-lemmy-js-client": "^1.2.0",
     "validator": "^13.7.0"

@@ -53,8 +53,17 @@ export const PostForm: FC<{
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { t } = useTranslation();
 
+  const validate = useMemo(
+    () => ({
+      community_id: (value: number) => (value === -1 ? t("required") : null),
+      url: (value: string) => (value.length === 0 ? t("required") : null),
+    }),
+    [t]
+  );
+
   const form = useForm({
     initialValues: values,
+    validate,
   });
 
   const urlMetadata = useUrlMetadata(form.values.url);
@@ -78,6 +87,37 @@ export const PostForm: FC<{
       urlMetadata.data.metadata.title.unwrapOr("") &&
       form.values.name !== urlMetadata.data.metadata.title.unwrapOr(""),
     [form.values.name, urlMetadata.data]
+  );
+
+  const settingsButton = (
+    <Popover trapFocus position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button
+          size="lg"
+          loading={isLoading}
+          leftIcon={<IconSettings stroke={1.5} />}
+          pr="sm"
+          radius="md"
+        />
+      </Popover.Target>
+      <Popover.Dropdown
+        sx={(theme) => ({
+          background:
+            theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+        })}
+      >
+        <Checkbox
+          label={t("nsfw")}
+          {...form.getInputProps("nsfw", { type: "checkbox" })}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+
+  const submitButton = (
+    <Button type="submit" size="lg" loading={isLoading} fullWidth radius="md">
+      {postId ? capitalize(t("save")) : capitalize(t("create"))}
+    </Button>
   );
 
   return (
@@ -115,7 +155,7 @@ export const PostForm: FC<{
               paddingLeft: 8,
               paddingRight: 8,
               marginLeft: -8,
-              marginRight: -8,
+              marginRight: 0,
               "&:hover": {
                 backgroundColor: "rgba(0,0,0,0.015)",
               },
@@ -165,34 +205,14 @@ export const PostForm: FC<{
           {...form.getInputProps("body")}
         />
 
-        <Button.Group>
-          <Popover trapFocus position="bottom" withArrow shadow="md">
-            <Popover.Target>
-              <Button
-                size="lg"
-                loading={isLoading}
-                leftIcon={<IconSettings stroke={1.5} />}
-                pr="sm"
-              />
-            </Popover.Target>
-            <Popover.Dropdown
-              sx={(theme) => ({
-                background:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[7]
-                    : theme.white,
-              })}
-            >
-              <Checkbox
-                label={t("nsfw")}
-                {...form.getInputProps("nsfw", { type: "checkbox" })}
-              />
-            </Popover.Dropdown>
-          </Popover>
-          <Button type="submit" size="lg" loading={isLoading} fullWidth>
-            {postId ? capitalize(t("save")) : capitalize(t("create"))}
-          </Button>
-        </Button.Group>
+        {isLoading ? (
+          submitButton
+        ) : (
+          <Button.Group>
+            {settingsButton}
+            {submitButton}
+          </Button.Group>
+        )}
       </Stack>
     </form>
   );

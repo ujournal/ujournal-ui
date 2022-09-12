@@ -1,17 +1,21 @@
 import { Box, Card, Container, Stack, Title } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { formatShortNum } from "baza/utils/number";
-import { CommentForm } from "features/comment/components/CommentForm";
+import { AppNavbar } from "features/app/components/AppNavbar";
+import {
+  CommentForm,
+  Values as CommentFormValues,
+} from "features/comment/components/CommentForm";
 import { CommentList } from "features/comment/components/CommentList";
+import { CommentTitle } from "features/comment/components/CommentTitle";
+import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
-import { useTranslation } from "react-i18next";
+import { FC, useCallback } from "react";
 import { SitePage } from "types";
 
 const PostPage: SitePage = () => {
-  const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { postId: _postId } = useRouterQuery<{ postId: number }>({
@@ -19,12 +23,23 @@ const PostPage: SitePage = () => {
   });
   const postId = Number(_postId);
   const post = usePost({ postId });
+  const commentUpsert = useCommentUpsert();
+
+  const handleCommentSubmit = useCallback(
+    async (values: CommentFormValues) => {
+      await commentUpsert.mutateAsync({
+        ...values,
+        postId,
+      });
+    },
+    [commentUpsert, postId]
+  );
 
   return (
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess ? (
-          <Post {...post.data.post_view} showBody commentsAsText />
+          <Post {...post.data.post_view} full commentsAsText />
         ) : (
           <PostLoader />
         )}
@@ -35,21 +50,35 @@ const PostPage: SitePage = () => {
           <Container size={650} px={0}>
             <Stack>
               <Title size="h3" id="comments">
-                {t("number_of_comments", {
-                  count: post.data?.post_view.counts?.comments || 0,
-                  formattedCount: formatShortNum(
-                    post.data?.post_view.counts?.comments || 0
-                  ),
-                })}
+                <CommentTitle counts={post.data?.post_view.counts} />
               </Title>
 
-              {/* <Box sx={{ width: "100%" }}>
-                <CommentForm values={{}} onSubmit={console.log} />
-              </Box> */}
+              <Box sx={{ width: "100%" }}>
+                <CommentForm
+                  onSubmit={handleCommentSubmit}
+                  isLoading={commentUpsert.isLoading || post.isLoading}
+                />
+              </Box>
 
               <Box sx={{ width: "100%" }}>
-                <CommentList {...post} data={post.data?.comments || []} />
+                <CommentList
+                  data={post.data?.comments || []}
+                  isLoading={post.isLoading}
+                  commentFormProps={{
+                    isLoading: commentUpsert.isLoading || post.isLoading,
+                    onSubmit: handleCommentSubmit,
+                  }}
+                />
               </Box>
+
+              {(post.data?.comments || []).length >= 1 && (
+                <Box sx={{ width: "100%" }}>
+                  <CommentForm
+                    onSubmit={handleCommentSubmit}
+                    isLoading={commentUpsert.isLoading || post.isLoading}
+                  />
+                </Box>
+              )}
             </Stack>
           </Container>
         </Card>
@@ -57,5 +86,12 @@ const PostPage: SitePage = () => {
     </>
   );
 };
+
+const Aside: FC = () => {
+  return null;
+};
+
+PostPage.Navbar = AppNavbar;
+PostPage.Aside = Aside;
 
 export default PostPage;

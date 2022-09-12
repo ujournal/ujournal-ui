@@ -19,7 +19,7 @@ import { PostFooter } from "./PostFooter";
 
 export const Post: FC<
   PostView & {
-    showBody?: boolean;
+    full?: boolean;
     showToogleBodyButton?: boolean;
     commentsAsText?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
@@ -31,7 +31,7 @@ export const Post: FC<
   post,
   counts,
   my_vote: myVote,
-  showBody = false,
+  full = false,
   commentsAsText = false,
   saved,
   shadow,
@@ -61,16 +61,22 @@ export const Post: FC<
 
       <Container size={650} p={0}>
         <Group position="apart" mt="xs" mb="md">
-          <Link
-            href={{ pathname: "/post", query: { postId: post.id } }}
-            passHref
-          >
-            <Box component="a">
-              <Title size="h3" weight={600}>
-                {post.name}
-              </Title>
-            </Box>
-          </Link>
+          {full ? (
+            <Title size="h3" weight={600}>
+              {post.name}
+            </Title>
+          ) : (
+            <Link
+              href={{ pathname: "/post", query: { postId: post.id } }}
+              passHref
+            >
+              <Box component="a">
+                <Title size="h3" weight={600}>
+                  {post.name}
+                </Title>
+              </Box>
+            </Link>
+          )}
         </Group>
       </Container>
 
@@ -91,7 +97,7 @@ export const Post: FC<
       <Container size={650} p={0}>
         {post.body.match({
           some: (body) => (
-            <BoxExpandable showBody={showBody}>
+            <BoxExpandable showBody={full}>
               <Text size="md" component="div">
                 <MarkdownText text={body} />
               </Text>
