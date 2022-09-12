@@ -10,17 +10,17 @@ import { Comment, CommentProps } from "./Comment";
 import { CommentListLoader } from "./CommentListLoader";
 
 export type CommentListProps = {
-  isLoading: boolean;
   data: any[];
   counts?: PostAggregates;
   showAsTree?: boolean;
   showPost?: boolean;
-} & Pick<CommentProps, "onCommentSubmit" | "compact" | "truncateLength">;
+  isLoading?: boolean;
+} & Pick<CommentProps, "commentFormProps" | "compact" | "truncateLength">;
 
 export const CommentList: FC<CommentListProps> = ({
   data,
-  isLoading,
   showAsTree = true,
+  isLoading,
   ...commentProps
 }) => {
   const commentsList = useMemo(
@@ -34,12 +34,12 @@ export const CommentList: FC<CommentListProps> = ({
   const list = (
     <Stack spacing={commentProps.compact ? "sm" : 0}>
       <DataList
-        isLoading={isLoading}
         data={commentsList}
         itemComponent={Comment}
         itemKey="comment.id"
         loaderComponent={CommentListLoader}
         itemProps={commentProps}
+        isLoading={isLoading}
       />
     </Stack>
   );

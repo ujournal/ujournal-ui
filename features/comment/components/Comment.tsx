@@ -17,7 +17,10 @@ export type CommentProps = CommentInternal & {
   compact?: boolean;
   decoration?: undefined | "middle" | "end";
   truncateLength?: number;
-  onCommentSubmit?: (values: CommentFormValues) => void;
+  commentFormProps?: {
+    isLoading: boolean;
+    onSubmit: (values: CommentFormValues) => void;
+  };
 };
 
 export const Comment: FC<CommentProps> = ({
@@ -30,7 +33,7 @@ export const Comment: FC<CommentProps> = ({
   counts,
   my_vote: myVote,
   truncateLength,
-  onCommentSubmit,
+  commentFormProps,
 }) => {
   const { t } = useTranslation();
 
@@ -52,8 +55,8 @@ export const Comment: FC<CommentProps> = ({
 
   const handleCommentSubmit = useCallback(
     async (values: CommentFormValues) => {
-      if (onCommentSubmit) {
-        await onCommentSubmit({
+      if (commentFormProps?.onSubmit) {
+        await commentFormProps?.onSubmit({
           parentId: comment.id,
           ...values,
         });
@@ -61,7 +64,7 @@ export const Comment: FC<CommentProps> = ({
         setCommentFormShowed(false);
       }
     },
-    [comment.id, onCommentSubmit]
+    [comment.id, commentFormProps]
   );
 
   useEffect(() => {
@@ -149,8 +152,11 @@ export const Comment: FC<CommentProps> = ({
                     vote={vote}
                   />
                 </Group>
-                {commentFormShowed && (
-                  <CommentForm onSubmit={handleCommentSubmit} />
+                {commentFormShowed && commentFormProps && (
+                  <CommentForm
+                    {...commentFormProps}
+                    onSubmit={handleCommentSubmit}
+                  />
                 )}
               </>
             )}
@@ -214,7 +220,7 @@ export const Comment: FC<CommentProps> = ({
             itemProps={(_item, index) => ({
               asChild: true,
               decoration: children.length - 1 === index ? "end" : "middle",
-              onCommentSubmit,
+              commentFormProps,
             })}
             itemKey="comment.id"
           />

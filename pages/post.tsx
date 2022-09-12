@@ -56,7 +56,7 @@ const PostPage: SitePage = () => {
               <Box sx={{ width: "100%" }}>
                 <CommentForm
                   onSubmit={handleCommentSubmit}
-                  isLoading={commentUpsert.isLoading}
+                  isLoading={commentUpsert.isLoading || post.isLoading}
                 />
               </Box>
 
@@ -64,7 +64,10 @@ const PostPage: SitePage = () => {
                 <CommentList
                   data={post.data?.comments || []}
                   isLoading={post.isLoading}
-                  onCommentSubmit={handleCommentSubmit}
+                  commentFormProps={{
+                    isLoading: commentUpsert.isLoading || post.isLoading,
+                    onSubmit: handleCommentSubmit,
+                  }}
                 />
               </Box>
 
@@ -72,7 +75,7 @@ const PostPage: SitePage = () => {
                 <Box sx={{ width: "100%" }}>
                   <CommentForm
                     onSubmit={handleCommentSubmit}
-                    isLoading={commentUpsert.isLoading}
+                    isLoading={commentUpsert.isLoading || post.isLoading}
                   />
                 </Box>
               )}
