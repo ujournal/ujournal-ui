@@ -26,12 +26,12 @@ export const PostLoader: FC = () => {
             </Group>
             <UserLoader />
           </Group>
-        </Container>
 
-        <Stack spacing="xs">
-          <Skeleton height={16} radius="sm" />
-          <Skeleton height={16} radius="sm" width={`${random(10, 80)}%`} />
-        </Stack>
+          <Stack spacing="xs">
+            <Skeleton height={16} radius="sm" />
+            <Skeleton height={16} radius="sm" width={`${random(10, 80)}%`} />
+          </Stack>
+        </Container>
 
         <Box mx="-lg">
           <Skeleton height={random(100, 400)} radius={0} />
