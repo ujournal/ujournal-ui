@@ -1,5 +1,13 @@
-import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
-import { IconCirclePlus, IconLogin } from "@tabler/icons";
+import {
+  ActionIcon,
+  Box,
+  Burger,
+  Button,
+  Group,
+  Header,
+  MediaQuery,
+} from "@mantine/core";
+import { IconBrandGithub, IconCirclePlus, IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/auth/hooks/useAuth";
@@ -81,7 +89,7 @@ export const AppHeader: FC = () => {
       }}
     >
       <Group position="apart">
-        <Group>
+        <Group noWrap spacing="sm">
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
             <Burger opened={false} onClick={handleToggleMenu} size="sm" />
           </MediaQuery>
@@ -91,6 +99,20 @@ export const AppHeader: FC = () => {
               <AppBrand />
             </Box>
           </Link>
+
+          <ActionIcon
+            component="a"
+            href="https://github.com/uJournal/ujournal-ui"
+            target="_blank"
+            pl="sm"
+            pr="sm"
+            variant="transparent"
+            color="gray"
+            size={24}
+            sx={{ display: "block" }}
+          >
+            <IconBrandGithub stroke={1.5} />
+          </ActionIcon>
         </Group>
 
         <Group spacing="lg">
