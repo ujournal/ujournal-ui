@@ -6,14 +6,17 @@ import {
   IconUser,
 } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+
 import Link from "next/link";
 import { useState } from "react";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 export const UserMenu: FC<{
   user: { name: string; image: string };
   onLogOut: () => void;
 }> = ({ user, onLogOut }) => {
+  const { t } = useTranslation();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
@@ -41,7 +44,7 @@ export const UserMenu: FC<{
       <Menu.Dropdown>
         <Link href="/profile" passHref>
           <Menu.Item component="a" icon={<IconUser size={24} stroke={1.5} />}>
-            Профіль
+            {t("profile")}
           </Menu.Item>
         </Link>
         <Link href="/settings" passHref>
@@ -49,14 +52,14 @@ export const UserMenu: FC<{
             icon={<IconSettings size={24} stroke={1.5} />}
             component="a"
           >
-            Настройки
+            {t("settings")}
           </Menu.Item>
         </Link>
         <Menu.Item
           icon={<IconLogout size={24} stroke={1.5} />}
           onClick={onLogOut}
         >
-          Вихід
+          {t("logout")}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

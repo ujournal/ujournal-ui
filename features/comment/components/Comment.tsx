@@ -124,8 +124,8 @@ export const Comment: FC<CommentProps> = ({
           <Stack spacing={2}>
             <MarkdownText
               text={comment.content}
-              withContentMargins={false}
               truncateLength={truncateLength}
+              compact
             />
 
             {!compact && (

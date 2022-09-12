@@ -50,7 +50,7 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
           itemProps={{ containerRef, shadow: "xs" }}
           loaderComponent={PostListLoader}
         />
-        <Center ref={sentryRef}>
+        <Center ref={sentryRef} sx={{ height: 60 }}>
           {posts.isSuccess && posts.isFetching && <Loader />}
         </Center>
       </Stack>

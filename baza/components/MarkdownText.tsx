@@ -8,14 +8,14 @@ export const MarkdownText: FC<
   BoxProps & {
     text: string;
     withContentMargins?: boolean;
-    fontSize?: number;
     truncateLength?: number;
+    compact?: boolean;
   }
 > = ({
   text,
   withContentMargins = true,
-  fontSize,
   truncateLength,
+  compact = false,
   ...props
 }) => {
   const markdown = useMarkdown();
@@ -42,7 +42,6 @@ export const MarkdownText: FC<
       dangerouslySetInnerHTML={{ __html: html }}
       onClick={handleContentClick}
       sx={(theme) => ({
-        fontSize,
         "& a": {
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],
@@ -66,19 +65,28 @@ export const MarkdownText: FC<
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.05)",
-          marginLeft: withContentMargins ? -20 : undefined,
-          marginRight: withContentMargins ? -20 : undefined,
+          marginLeft: compact ? 0 : -20,
+          marginRight: compact ? 0 : -20,
         },
         "& .image video": {
           display: "block",
         },
         "& blockquote": {
-          backgroundColor: theme.colors.blue[0],
-          padding: theme.spacing.xl,
-          marginLeft: largerThanMd ? -theme.spacing.lg : -theme.spacing.sm,
-          marginRight: largerThanMd ? -theme.spacing.lg : -theme.spacing.sm,
-          fontSize: theme.fontSizes.xl,
+          backgroundColor: theme.fn.lighten(theme.colors.blue[0], 0.5),
+          padding: compact ? theme.spacing.sm : theme.spacing.xl,
+          marginLeft: compact
+            ? 0
+            : largerThanMd
+            ? -theme.spacing.lg
+            : -theme.spacing.sm,
+          marginRight: compact
+            ? 0
+            : largerThanMd
+            ? -theme.spacing.lg
+            : -theme.spacing.sm,
+          fontSize: compact ? theme.fontSizes.md : theme.fontSizes.xl,
           fontWeight: 600,
+          borderRadius: compact ? theme.radius.md : undefined,
           "& p:first-of-type": {
             marginTop: 0,
           },
