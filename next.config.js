@@ -2,6 +2,7 @@
 const nextConfig = {
   basePath: process.env.BASE_PATCH,
   reactStrictMode: true,
+  trailingSlash: true,
   swcMinify: true,
   experimental: {
     swcPlugins: [
