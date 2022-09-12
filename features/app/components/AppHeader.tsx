@@ -42,7 +42,7 @@ export const AppHeader: FC = () => {
       user ? (
         <UserMenu user={user} onLogOut={auth.logout} />
       ) : (
-        <Link href={{ pathname: "/login", query: {} }} passHref>
+        <Link href={{ pathname: "/sign-in", query: {} }} passHref>
           <Button
             variant="subtle"
             component="a"
