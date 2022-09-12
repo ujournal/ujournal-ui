@@ -1,5 +1,5 @@
 import { AspectRatio, Box, Center } from "@mantine/core";
-import { isSocialMediaUrl } from "baza/utils/socialMedia";
+import { isMediaUrl } from "baza/utils/media";
 import { UrlEmbed } from "./embedTypes/UrlEmbed";
 import { ImageEmbed } from "./embedTypes/ImageEmbed";
 import { TwitterEmbed } from "./embedTypes/TwitterEmbed";
@@ -10,6 +10,7 @@ import { InstagramEmbed } from "./embedTypes/InstagramEmbed";
 import { TelegramEmbed } from "./embedTypes/TelegramEmbed";
 import { SoundCloudEmbed } from "./embedTypes/SoundCloudEmbed";
 import { SpotifyEmbed } from "./embedTypes/SpotifyEmbed";
+import { VideoEmbed } from "./embedTypes/VideoEmbed";
 import { EmbedComponentType } from "./types";
 import isUrl from "is-url";
 
@@ -24,19 +25,21 @@ enum EmbedType {
   Telegram = "telegram",
   SoundCloud = "soundcloud",
   Spotify = "spotify",
+  Video = "video",
 }
 
 const typeToCheckFn = {
   [EmbedType.Default]: () => false,
-  [EmbedType.Image]: (url: string) => isSocialMediaUrl("image", url),
-  [EmbedType.YouTube]: (url: string) => isSocialMediaUrl("youtube", url),
-  [EmbedType.Twitter]: (url: string) => isSocialMediaUrl("twitter", url),
-  [EmbedType.Vimeo]: (url: string) => isSocialMediaUrl("vimeo", url),
-  [EmbedType.Facebook]: (url: string) => isSocialMediaUrl("facebook", url),
-  [EmbedType.Instagram]: (url: string) => isSocialMediaUrl("instagram", url),
-  [EmbedType.Telegram]: (url: string) => isSocialMediaUrl("telegram", url),
-  [EmbedType.SoundCloud]: (url: string) => isSocialMediaUrl("soundcloud", url),
-  [EmbedType.Spotify]: (url: string) => isSocialMediaUrl("spotify", url),
+  [EmbedType.Image]: (url: string) => isMediaUrl("image", url),
+  [EmbedType.YouTube]: (url: string) => isMediaUrl("youtube", url),
+  [EmbedType.Twitter]: (url: string) => isMediaUrl("twitter", url),
+  [EmbedType.Vimeo]: (url: string) => isMediaUrl("vimeo", url),
+  [EmbedType.Facebook]: (url: string) => isMediaUrl("facebook", url),
+  [EmbedType.Instagram]: (url: string) => isMediaUrl("instagram", url),
+  [EmbedType.Telegram]: (url: string) => isMediaUrl("telegram", url),
+  [EmbedType.SoundCloud]: (url: string) => isMediaUrl("soundcloud", url),
+  [EmbedType.Spotify]: (url: string) => isMediaUrl("spotify", url),
+  [EmbedType.Video]: (url: string) => isMediaUrl("video", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -50,6 +53,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Telegram]: TelegramEmbed,
   [EmbedType.SoundCloud]: SoundCloudEmbed,
   [EmbedType.Spotify]: SpotifyEmbed,
+  [EmbedType.Video]: VideoEmbed,
 };
 
 const typeToAspectRatio = {
@@ -63,6 +67,7 @@ const typeToAspectRatio = {
   [EmbedType.Telegram]: -1,
   [EmbedType.SoundCloud]: -1,
   [EmbedType.Spotify]: -1,
+  [EmbedType.Video]: 16 / 9,
 };
 
 export const getTypeBySrc = (src: string) => {

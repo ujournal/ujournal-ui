@@ -9,7 +9,7 @@ type Values = {
   password: string;
 };
 
-export const LoginForm: FC<{
+export const SignInForm: FC<{
   values?: Values;
   onSubmit: (values: Values) => void;
 }> = ({

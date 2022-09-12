@@ -1,4 +1,4 @@
-const socialMediaRegExps = {
+const mediaRegExps = {
   image: /^(http)?s?:?(\/\/[^"']*\.(?:jpg|jpeg|gif|png|svg|webp))/,
   video: /^(http)?s?:?(\/\/[^"']*\.(?:mp4|webm))/,
   youtube:
@@ -14,9 +14,6 @@ const socialMediaRegExps = {
   spotify: /^(?:https?:\/\/)?open\.spotify\.com\/(album|track)\/.+?/,
 };
 
-export const isSocialMediaUrl = (
-  media: keyof typeof socialMediaRegExps,
-  url: string
-) => {
-  return socialMediaRegExps[media].test(url);
+export const isMediaUrl = (media: keyof typeof mediaRegExps, url: string) => {
+  return mediaRegExps[media].test(url);
 };

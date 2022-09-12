@@ -1,28 +1,28 @@
 import { useMutation } from "@tanstack/react-query";
-import { LoginForm } from "features/auth/components/LoginForm";
+import { SignInForm } from "features/auth/components/SignInForm";
 import { useAuth } from "features/auth/hooks/useAuth";
 import { SitePage } from "types";
-import { showNotification } from "@mantine/notifications";
 import { useCallback } from "react";
 import { Card, Container } from "@mantine/core";
 import { useRouter } from "next/router";
+import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
 
-const LoginPage: SitePage = () => {
+const SignInPage: SitePage = () => {
   const auth = useAuth();
   const router = useRouter();
 
   const onError = useCallback(() => {
-    showNotification({
-      message: "Ошибка",
-    });
+    showFail("signIn");
   }, []);
 
-  const { mutateAsync: handleLogin } = useMutation(
+  const { mutateAsync: handleSignIn } = useMutation(
     async (crendentials: { usernameOrEmail: string; password: string }) => {
+      showProgress("signIn");
+
       await auth.login(crendentials);
-      showNotification({
-        message: "Успішно увійшли",
-      });
+
+      showSuccess("signIn");
+
       router.push("/");
     },
     { onError }
@@ -31,13 +31,13 @@ const LoginPage: SitePage = () => {
   return (
     <Container size="xs">
       <Card p="lg" radius="md">
-        <LoginForm
+        <SignInForm
           values={{ usernameOrEmail: "", password: "" }}
-          onSubmit={handleLogin}
+          onSubmit={handleSignIn}
         />
       </Card>
     </Container>
   );
 };
 
-export default LoginPage;
+export default SignInPage;
