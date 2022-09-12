@@ -139,6 +139,7 @@ export const PostForm: FC<{
           }}
           {...form.getInputProps("community_id")}
           size="md"
+          disabled={Boolean(postId)}
         />
 
         <Textarea
