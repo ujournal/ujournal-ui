@@ -22,6 +22,7 @@ export const Post: FC<
     full?: boolean;
     showToogleBodyButton?: boolean;
     commentsAsText?: boolean;
+    showPostCreator?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
     shadow?: MantineShadow;
   }
@@ -33,6 +34,7 @@ export const Post: FC<
   my_vote: myVote,
   full = false,
   commentsAsText = false,
+  showPostCreator = false,
   saved,
   shadow,
 }) => {
@@ -112,6 +114,7 @@ export const Post: FC<
         myVote={myVote}
         counts={counts}
         commentsAsText={commentsAsText}
+        showPostCreator={showPostCreator}
       />
     </Card>
   );
