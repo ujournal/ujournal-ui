@@ -23,7 +23,7 @@ export const PostCreator: FC<{
             some: (name) => name,
             none: undefined,
           })}
-          radius="md"
+          radius="xl"
           size="lg"
         >
           <IconUser stroke={1.5} />
