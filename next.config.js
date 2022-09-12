@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: process.env.BASE_PATCH,
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
