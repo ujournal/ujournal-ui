@@ -7,18 +7,18 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { usePostVote } from "../hooks/usePostVote";
-import {PersonSafe, Post, PostAggregates} from "ujournal-lemmy-js-client";
+import { Post, PostAggregates} from "ujournal-lemmy-js-client";
 import { Option } from "@sniptt/monads";
 import { CommentTitle } from "features/comment/components/CommentTitle";
-import {userPersonViewSafe} from "../../user/hooks/userPersonViewSafe";
-import {UserButton} from "../../user/components/UserButton";
+import {PostCreator} from "./PostCreator";
 
 export const PostFooter: FC<{
   post: Post;
   counts: PostAggregates;
   myVote: Option<number>;
   commentsAsText?: boolean;
-}> = ({ counts, myVote, post, commentsAsText = false }) => {
+  showPostCreator?: boolean;
+}> = ({ counts, myVote, post, commentsAsText = false, showPostCreator = false }) => {
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
   const { t } = useTranslation();
@@ -29,7 +29,6 @@ export const PostFooter: FC<{
   });
 
   const vote = usePostVote({
-    creatorId: post.creator_id,
     postId: post.id,
     onSuccess: setCountsAndMyVote,
   });
@@ -41,15 +40,6 @@ export const PostFooter: FC<{
     });
   }, [counts, myVote]);
   
-  let personViewSafe = null;
-  let creator : PersonSafe = new PersonSafe();
-  if(commentsAsText) {
-    personViewSafe = userPersonViewSafe({
-      creatorId: post.creator_id
-    })
-    creator = personViewSafe.data?.person ?? new PersonSafe();
-  }
-
   return (
     <Container size={650} p={0}>
       <Group
@@ -92,24 +82,7 @@ export const PostFooter: FC<{
         />
       </Group>
       <Group>
-        {commentsAsText 
-            ?
-            (<Group>
-              <UserButton
-                  userId={creator.id}
-                  image={creator.avatar?.match<string | undefined>({
-                    some: (name) => name,
-                    none: undefined,
-                  })}
-                  label={creator.display_name?.match<string>({
-                    some: (name) => name,
-                    none: () => creator.name,
-                  })}
-              />
-              <span>рейтинг: {personViewSafe?.data?.totalScore}</span>
-            </Group>)
-            : null
-        }
+        {showPostCreator && <PostCreator post={post}/>}
       </Group>
     </Container>
   );

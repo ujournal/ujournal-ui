@@ -39,7 +39,7 @@ const PostPage: SitePage = () => {
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess ? (
-          <Post {...post.data.post_view} full commentsAsText />
+          <Post {...post.data.post_view} full commentsAsText showPostCreator/>
         ) : (
           <PostLoader />
         )}
