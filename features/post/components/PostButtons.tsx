@@ -4,24 +4,19 @@ import { IconMessageCircle2 } from "@tabler/icons";
 import { useState } from "react";
 import { VoteButtons } from "baza/components/VoteButtons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import { usePostVote } from "../hooks/usePostVote";
-import { Post, PostAggregates} from "ujournal-lemmy-js-client";
+import { Post, PostAggregates } from "ujournal-lemmy-js-client";
 import { Option } from "@sniptt/monads";
 import { CommentTitle } from "features/comment/components/CommentTitle";
-import {PostCreator} from "./PostCreator";
 
-export const PostFooter: FC<{
+export const PostButtons: FC<{
   post: Post;
   counts: PostAggregates;
   myVote: Option<number>;
   commentsAsText?: boolean;
-  showPostCreator?: boolean;
-}> = ({ counts, myVote, post, commentsAsText = false, showPostCreator = false }) => {
+}> = ({ counts, myVote, post, commentsAsText = false }) => {
   const largerThanMd = useBreakpoint({ largerThan: "md" });
-
-  const { t } = useTranslation();
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
     counts,
@@ -39,9 +34,9 @@ export const PostFooter: FC<{
       myVote: myVote.unwrapOr(0),
     });
   }, [counts, myVote]);
-  
+
   return (
-    <Container size={650} p={0}>
+    <Container size={650} p={0} sx={{ width: "100%" }}>
       <Group
         position="apart"
         mt="xs"
@@ -80,9 +75,6 @@ export const PostFooter: FC<{
           myVote={countsAndMyVote.myVote}
           vote={vote}
         />
-      </Group>
-      <Group>
-        {showPostCreator && <PostCreator post={post}/>}
       </Group>
     </Container>
   );

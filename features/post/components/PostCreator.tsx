@@ -1,31 +1,63 @@
-import { Group } from "@mantine/core";
+import { Avatar, Box, Container, Group, Stack, Tooltip } from "@mantine/core";
 import { FC } from "react";
-import {PersonSafe, Post } from "ujournal-lemmy-js-client";
-import {userPersonViewSafe} from "../../user/hooks/userPersonViewSafe";
-import {UserButton} from "../../user/components/UserButton";
+import { PersonSafe, Post } from "ujournal-lemmy-js-client";
+import { userPersonViewSafe } from "../../user/hooks/userPersonViewSafe";
+import { UserButton } from "../../user/components/UserButton";
+import { IconUser } from "@tabler/icons";
+import { Score } from "baza/components/Score";
+import { MarkdownText } from "baza/components/MarkdownText";
 
 export const PostCreator: FC<{
   post: Post;
-}> = ({post}) => {
+}> = ({ post }) => {
   let personViewSafe = userPersonViewSafe({
-    creatorId: post.creator_id
-  })
+    creatorId: post.creator_id,
+  });
   let creator = personViewSafe.data?.person ?? new PersonSafe();
 
   return (
-      <Group>
-        <UserButton
-            userId={creator.id}
-            image={creator.avatar?.match<string | undefined>({
-              some: (name) => name,
-              none: undefined,
-            })}
-            label={creator.display_name?.match<string>({
-              some: (name) => name,
-              none: () => creator.name,
-            })}
-        />
-        <span>рейтинг: {personViewSafe?.data?.totalScore}</span>
+    <Container size={650} p={0} sx={{ width: "100%" }}>
+      <Group noWrap>
+        <Avatar
+          src={creator.avatar?.match<string | undefined>({
+            some: (name) => name,
+            none: undefined,
+          })}
+          radius="md"
+          size="lg"
+        >
+          <IconUser stroke={1.5} />
+        </Avatar>
+        <Stack spacing={4}>
+          <Group spacing="sm">
+            <Box sx={{ fontWeight: 600 }}>
+              {creator.display_name?.match<string>({
+                some: (name) => name,
+                none: () => creator.name,
+              })}
+            </Box>
+            <Score
+              score={personViewSafe?.data?.totalScore || 0}
+              sx={{ fontWeight: 600 }}
+            />
+          </Group>
+          <Tooltip
+            label={
+              <MarkdownText
+                text={personViewSafe?.data?.person.bio.unwrapOr("") || ""}
+              />
+            }
+            sx={{ whiteSpace: "normal", maxWidth: 200 }}
+          >
+            <Box>
+              <MarkdownText
+                text={personViewSafe?.data?.person.bio.unwrapOr("") || ""}
+                truncateLength={50}
+              />
+            </Box>
+          </Tooltip>
+        </Stack>
       </Group>
+    </Container>
   );
 };

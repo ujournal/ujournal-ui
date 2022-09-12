@@ -2,6 +2,7 @@ import { ActionIcon, Box, Group, Loader, Tooltip } from "@mantine/core";
 import { IconArrowDown, IconArrowUp } from "@tabler/icons";
 import { FC, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Score } from "./Score";
 
 export const VoteButtons: FC<{
   counts: {
@@ -150,19 +151,13 @@ export const VoteButtons: FC<{
               animation: "explosion 2s ease-in-out 1",
             },
             fontWeight: 600,
-            color:
-              counts.score > 0
-                ? theme.colors.green
-                : counts.score < 0
-                ? theme.colors.red
-                : theme.colors.gray,
           })}
         >
           {isLoading ? (
             <Loader color="gray" size="xs" />
           ) : (
             <>
-              {counts.score}
+              <Score score={counts.score} />
               <div className="firework">
                 <div className="explosion"></div>
                 <div className="explosion"></div>

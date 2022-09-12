@@ -6,6 +6,7 @@ import {
   Title,
   Container,
   MantineShadow,
+  Stack,
 } from "@mantine/core";
 import { FC, MutableRefObject } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -15,7 +16,8 @@ import Link from "next/link";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { BoxExpandable } from "baza/components/BoxExpandable";
 import { PostHeader } from "./PostHeader";
-import { PostFooter } from "./PostFooter";
+import { PostButtons } from "./PostButtons";
+import { PostCreator } from "./PostCreator";
 
 export const Post: FC<
   PostView & {
@@ -46,7 +48,7 @@ export const Post: FC<
       p={largerThanMd ? "lg" : "sm"}
       radius={smallerThanSm ? 0 : "md"}
       withBorder={false}
-      style={{
+      sx={{
         position: "relative",
         borderColor: "rgba(0, 0, 0, 0.07)",
         borderLeftWidth: smallerThanSm ? 0 : undefined,
@@ -109,13 +111,16 @@ export const Post: FC<
         })}
       </Container>
 
-      <PostFooter
-        post={post}
-        myVote={myVote}
-        counts={counts}
-        commentsAsText={commentsAsText}
-        showPostCreator={showPostCreator}
-      />
+      <Stack spacing="md">
+        <PostButtons
+          post={post}
+          myVote={myVote}
+          counts={counts}
+          commentsAsText={commentsAsText}
+        />
+
+        {showPostCreator && <PostCreator post={post} />}
+      </Stack>
     </Card>
   );
 };
