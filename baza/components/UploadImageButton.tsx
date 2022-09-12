@@ -51,6 +51,7 @@ export const UploadImageButton: FC<
         onDrop={uploadMutation.mutateAsync}
         radius="md"
         openRef={openRef}
+        active={false}
       >
         {capitalize(t("upload_image"))}
       </Dropzone.FullScreen>

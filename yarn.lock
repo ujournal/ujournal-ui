@@ -1502,6 +1502,13 @@
   dependencies:
     "readable-stream" "^2.0.2"
 
+"editorjs-undo@^2.0.8":
+  "integrity" "sha512-uteF0sgOUFE0cQDJ4nevF6HgOf668vfqFXPPnfO0f7DcMzqILETlQCSUlZiMOzUKuyZQwqjeh3bzRugXvinjag=="
+  "resolved" "https://registry.npmjs.org/editorjs-undo/-/editorjs-undo-2.0.8.tgz"
+  "version" "2.0.8"
+  dependencies:
+    "vanilla-caret-js" "^1.0.1"
+
 "electron-to-chromium@^1.4.202":
   "integrity" "sha512-3pwjAK0qHSDN9+YAF4fJknsSruP7mpjdWzUSruIJD/JCH77pEh0SorEyb3xVaKkfwk2tzjOt2D8scJ0KAdfXLA=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.230.tgz"
@@ -3885,6 +3892,11 @@
   "integrity" "sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw=="
   "resolved" "https://registry.npmjs.org/validator/-/validator-13.7.0.tgz"
   "version" "13.7.0"
+
+"vanilla-caret-js@^1.0.1":
+  "integrity" "sha512-vl3R4Xjqb+xnM0gYyg+wcqWGYwKKnkz58Yj29/FQB+w+yP7R8IR1DGoJnDIs05moEZiGlQUTabPMoEtnQNcrpQ=="
+  "resolved" "https://registry.npmjs.org/vanilla-caret-js/-/vanilla-caret-js-1.1.0.tgz"
+  "version" "1.1.0"
 
 "vfile-message@^3.0.0":
   "integrity" "sha512-QjSNP6Yxzyycd4SVOtmKKyTsSvClqBPJcd00Z0zuPj3hOIjg0rUPG6DbFGPvUKRgYyaIWLPKpuEclcuvb3H8qA=="

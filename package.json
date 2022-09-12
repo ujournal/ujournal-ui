@@ -32,6 +32,7 @@
     "browser-cookies": "^1.2.0",
     "class-transformer": "^0.5.1",
     "date-fns": "^2.29.2",
+    "editorjs-undo": "^2.0.8",
     "i18next": "^21.9.1",
     "is-url": "^1.2.4",
     "jwt-decode": "^3.1.2",

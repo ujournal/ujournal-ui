@@ -6,6 +6,7 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import QuoteTool from "@editorjs/quote";
 import ListTool from "@editorjs/list";
+import Undo from "editorjs-undo";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";
 import { useImageUploaderFather } from "baza/hooks/useImageUploaderFather";
@@ -60,6 +61,10 @@ export const TextEditor: FC<TextEditorProps> = ({
   const _editor = useMemo(() => {
     const element = document.createElement("div");
 
+    const handleEditorReady = () => {
+      new Undo({ editor });
+    };
+
     const editor = new EditorJS({
       holder: element,
       placeholder,
@@ -96,6 +101,7 @@ export const TextEditor: FC<TextEditorProps> = ({
       },
       data: convertMarkdownToEditorJs(value),
       onChange: handleEditorChange,
+      onReady: handleEditorReady,
     });
 
     return { element, editor };
