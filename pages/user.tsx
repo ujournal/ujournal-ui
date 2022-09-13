@@ -1,9 +1,10 @@
 import { SitePage } from "types";
-import { useRouterQuery } from "../baza/hooks/useRouterQuery";
-import { usePersonViewSafe } from "../features/user/hooks/userPersonViewSafe";
-import { DateFormatted } from "../baza/components/DeteFormatted";
+import { useRouterQuery } from "baza/hooks/useRouterQuery";
+import { usePersonViewSafe } from "features/user/hooks/userPersonViewSafe";
+import { DateFormatted } from "baza/components/DeteFormatted";
 import { Container, Card } from "@mantine/core";
-import { useBreakpoint } from "../baza/hooks/useBreakpoint";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
+
 const UserPage: SitePage = () => {
   const { userId: _userId } = useRouterQuery<{ userId: number }>({
     userId: -1,
