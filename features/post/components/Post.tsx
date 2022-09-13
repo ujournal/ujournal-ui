@@ -130,7 +130,7 @@ export const Post: FC<
           post={post}
           myVote={myVote}
           counts={counts}
-          commentsAsText={commentsAsText}
+          commentButtonDisabled={commentsAsText}
         />
 
         {showPostCreator && <PostCreator post={post} />}

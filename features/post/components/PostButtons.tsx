@@ -14,8 +14,8 @@ export const PostButtons: FC<{
   post: Post;
   counts: PostAggregates;
   myVote: Option<number>;
-  commentsAsText?: boolean;
-}> = ({ counts, myVote, post, commentsAsText = false }) => {
+  commentButtonDisabled?: boolean;
+}> = ({ counts, myVote, post, commentButtonDisabled = false }) => {
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
@@ -49,26 +49,26 @@ export const PostButtons: FC<{
           spacing="xs"
           align="center"
         >
-          {commentsAsText ? (
-            <Box sx={{ whiteSpace: "nowrap", fontWeight: 600 }} p="sm">
-              <CommentTitle counts={counts} />
-            </Box>
-          ) : (
-            <Link href={`/post?postId=${post.id}#comments`} passHref>
-              <Tooltip
-                label={<CommentTitle counts={counts} showFull />}
-                openDelay={1000}
+          <Link href={`/post?postId=${post.id}#comments`} passHref>
+            <Tooltip
+              label={<CommentTitle counts={counts} showFull />}
+              openDelay={1000}
+            >
+              <Button
+                component="a"
+                leftIcon={<IconMessageCircle2 stroke={1.5} />}
+                variant="subtle"
+                disabled={commentButtonDisabled}
+                sx={{
+                  backgroundColor: commentButtonDisabled
+                    ? "transparent !important"
+                    : undefined,
+                }}
               >
-                <Button
-                  component="a"
-                  leftIcon={<IconMessageCircle2 stroke={1.5} />}
-                  variant="subtle"
-                >
-                  <CommentTitle counts={counts} />
-                </Button>
-              </Tooltip>
-            </Link>
-          )}
+                <CommentTitle counts={counts} />
+              </Button>
+            </Tooltip>
+          </Link>
         </Group>
         <VoteButtons
           counts={countsAndMyVote.counts}
