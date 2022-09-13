@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mantine/core";
 import { IconSpeakerphone } from "@tabler/icons";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export type CommunityButtonProps = {
   communityName?: string;
@@ -27,62 +27,69 @@ export const CommunityButton = ({
   active = false,
   onLinkClick,
 }: CommunityButtonProps) => {
-  const router = useRouter();
-
   const handleButtonClick = useCallback(() => {
-    router.push({
-      pathname: "/community",
-      query: { communityName },
-    });
-
     if (onLinkClick) {
       onLinkClick();
     }
-  }, [communityName, onLinkClick, router]);
+  }, [onLinkClick]);
 
   return (
     <Tooltip label={label} openDelay={1000}>
-      <UnstyledButton
-        component="a"
-        px={6}
-        py={4}
-        sx={(theme) => ({
-          display: "block",
-          color:
-            theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
-          whiteSpace: "nowrap",
-        })}
-        onClick={handleButtonClick}
-      >
-        <Box
-          sx={(theme) => ({
-            backgroundColor: active ? "white" : undefined,
-            borderRadius: theme.radius.sm,
-          })}
-          px={6}
-          py={8}
+      <Box component="span" onClick={handleButtonClick}>
+        <Link
+          href={{
+            pathname: "/community",
+            query: { communityName },
+          }}
+          passHref
         >
-          <Group sx={{ flexWrap: "nowrap", overflow: "hidden" }} spacing={"xs"}>
-            <Avatar src={image} size="sm" radius="sm">
-              <IconSpeakerphone stroke={1.5} />
-            </Avatar>
-
-            <Text
-              size="md"
-              sx={{
-                textOverflow: "ellipsis",
-                minWidth: 0,
-                width: "100%",
-                maxWidth: 160,
-                overflow: "hidden",
-              }}
-              weight={weight}
+          <UnstyledButton
+            component="a"
+            px={6}
+            py={4}
+            sx={(theme) => ({
+              display: "block",
+              color:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[0]
+                  : theme.black,
+              whiteSpace: "nowrap",
+            })}
+          >
+            <Box
+              sx={(theme) => ({
+                backgroundColor: active ? "white" : undefined,
+                borderRadius: theme.radius.sm,
+              })}
+              px={6}
+              py={8}
             >
-              {label}
-            </Text>
-          </Group>
-        </Box>
-      </UnstyledButton>
+              <Group
+                sx={{ flexWrap: "nowrap", overflow: "hidden" }}
+                spacing={"xs"}
+              >
+                <Avatar src={image} size="sm" radius="sm">
+                  <IconSpeakerphone stroke={1.5} />
+                </Avatar>
+
+                <Text
+                  size="md"
+                  sx={{
+                    textOverflow: "ellipsis",
+                    minWidth: 0,
+                    width: "100%",
+                    maxWidth: 160,
+                    overflow: "hidden",
+                  }}
+                  weight={weight}
+                >
+                  {label}
+                </Text>
+              </Group>
+            </Box>
+          </UnstyledButton>
+        </Link>
+      </Box>
     </Tooltip>
   );
 };

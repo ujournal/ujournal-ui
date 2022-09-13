@@ -16,7 +16,7 @@ import Link from "next/link";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { BoxExpandable } from "baza/components/BoxExpandable";
 import { PostHeader } from "./PostHeader";
-import { PostButtons } from "./PostButtons";
+import { PostControls } from "./PostControls";
 import { PostCreator } from "./PostCreator";
 
 export const Post: FC<
@@ -128,7 +128,7 @@ export const Post: FC<
       </Container>
 
       <Stack spacing="md">
-        <PostButtons
+        <PostControls
           post={post}
           myVote={myVote}
           counts={counts}

@@ -1,4 +1,4 @@
-import { Group, Box, Button, Tooltip, Container } from "@mantine/core";
+import { Group, Button, Tooltip, Container, Box } from "@mantine/core";
 import { FC, useEffect } from "react";
 import { IconMessageCircle2 } from "@tabler/icons";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { Post, PostAggregates } from "ujournal-lemmy-js-client";
 import { Option } from "@sniptt/monads";
 import { CommentTitle } from "features/comment/components/CommentTitle";
 
-export const PostButtons: FC<{
+export const PostControls: FC<{
   post: Post;
   counts: PostAggregates;
   myVote: Option<number>;
@@ -49,26 +49,28 @@ export const PostButtons: FC<{
           spacing="xs"
           align="center"
         >
-          <Link href={`/post?postId=${post.id}#comments`} passHref>
-            <Tooltip
-              label={<CommentTitle counts={counts} showFull />}
-              openDelay={1000}
-            >
-              <Button
-                component="a"
-                leftIcon={<IconMessageCircle2 stroke={1.5} />}
-                variant="subtle"
-                disabled={commentButtonDisabled}
-                sx={{
-                  backgroundColor: commentButtonDisabled
-                    ? "transparent !important"
-                    : undefined,
-                }}
-              >
-                <CommentTitle counts={counts} />
-              </Button>
-            </Tooltip>
-          </Link>
+          <Tooltip
+            label={<CommentTitle counts={counts} showFull />}
+            openDelay={1000}
+          >
+            <Box component="span">
+              <Link href={`/post?postId=${post.id}#comments`} passHref>
+                <Button
+                  component="a"
+                  leftIcon={<IconMessageCircle2 stroke={1.5} />}
+                  variant="subtle"
+                  disabled={commentButtonDisabled}
+                  sx={{
+                    backgroundColor: commentButtonDisabled
+                      ? "transparent !important"
+                      : undefined,
+                  }}
+                >
+                  <CommentTitle counts={counts} />
+                </Button>
+              </Link>
+            </Box>
+          </Tooltip>
         </Group>
         <VoteButtons
           counts={countsAndMyVote.counts}
