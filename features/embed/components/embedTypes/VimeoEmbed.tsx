@@ -1,6 +1,6 @@
 import { EmbedComponentType } from "../types";
 import Vimeo from "@u-wave/react-vimeo";
-import { useCallback, useMemo, useState } from "react";
+import { SyntheticEvent, useCallback, useMemo, useState } from "react";
 import { Box, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconPlayerPlay } from "@tabler/icons";
 
@@ -23,6 +23,10 @@ export const VimeoEmbed: EmbedComponentType = ({ src, title }) => {
     setShowed((showed) => !showed);
   }, []);
 
+  const handleDragStart = useCallback((event: SyntheticEvent) => {
+    event.preventDefault();
+  }, []);
+
   if (!showed) {
     return (
       <UnstyledButton
@@ -37,7 +41,9 @@ export const VimeoEmbed: EmbedComponentType = ({ src, title }) => {
             objectFit: "cover",
             width: "100%",
             height: "100%",
+            userSelect: "none",
           }}
+          onDragStart={handleDragStart}
         />
         <ThemeIcon
           sx={{
