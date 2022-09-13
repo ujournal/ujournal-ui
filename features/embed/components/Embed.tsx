@@ -13,6 +13,7 @@ import { SpotifyEmbed } from "./embedTypes/SpotifyEmbed";
 import { VideoEmbed } from "./embedTypes/VideoEmbed";
 import { EmbedComponentType } from "./types";
 import isUrl from "is-url";
+import { GoogleFormEmbed } from "./embedTypes/GoogleFormEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -26,6 +27,7 @@ enum EmbedType {
   SoundCloud = "soundcloud",
   Spotify = "spotify",
   Video = "video",
+  GoogleForm = "googleForm",
 }
 
 const typeToCheckFn = {
@@ -40,6 +42,7 @@ const typeToCheckFn = {
   [EmbedType.SoundCloud]: (url: string) => isMediaUrl("soundcloud", url),
   [EmbedType.Spotify]: (url: string) => isMediaUrl("spotify", url),
   [EmbedType.Video]: (url: string) => isMediaUrl("video", url),
+  [EmbedType.GoogleForm]: (url: string) => isMediaUrl("googleForm", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -54,6 +57,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.SoundCloud]: SoundCloudEmbed,
   [EmbedType.Spotify]: SpotifyEmbed,
   [EmbedType.Video]: VideoEmbed,
+  [EmbedType.GoogleForm]: GoogleFormEmbed,
 };
 
 const typeToAspectRatio = {
@@ -68,6 +72,7 @@ const typeToAspectRatio = {
   [EmbedType.SoundCloud]: -1,
   [EmbedType.Spotify]: -1,
   [EmbedType.Video]: 16 / 9,
+  [EmbedType.GoogleForm]: 1,
 };
 
 export const getTypeBySrc = (src: string) => {

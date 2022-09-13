@@ -12,6 +12,7 @@ const mediaRegExps = {
   telegram: /^(?:https?:\/\/(?:www\.)?)?t\.me\S*?(?:\/s)?\/(.+?\/\d+)\/?/,
   soundcloud: /^(?:https?:\/\/(?:www\.)?)?soundcloud\.com\/.+?\/.+?/,
   spotify: /^(?:https?:\/\/)?open\.spotify\.com\/(album|track)\/.+?/,
+  googleForm: /https:\/\/docs\.google\.com\/forms\/d\/e\/.+?\/viewform.+?/,
 };
 
 export const isMediaUrl = (media: keyof typeof mediaRegExps, url: string) => {
