@@ -56,7 +56,6 @@ export const PostForm: FC<{
   const validate = useMemo(
     () => ({
       community_id: (value: number) => (value === -1 ? t("required") : null),
-      url: (value: string) => (value.length === 0 ? t("required") : null),
     }),
     [t]
   );
