@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconSend } from "@tabler/icons";
-import { FC, useCallback, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { UploadImageButton } from "baza/components/UploadImageButton";
 
@@ -13,9 +13,16 @@ export type Values = {
 export const CommentForm: FC<{
   values?: Values;
   isLoading?: boolean;
+  autofocus?: boolean;
   onSubmit: (values: Values) => void;
-}> = ({ values = { content: "" }, onSubmit, isLoading = false }) => {
+}> = ({
+  values = { content: "" },
+  onSubmit,
+  autofocus = false,
+  isLoading = false,
+}) => {
   const { t } = useTranslation();
+  const contentFieldRef = useRef<HTMLTextAreaElement>(null);
 
   const validate = useMemo(
     () => ({
@@ -51,6 +58,12 @@ export const CommentForm: FC<{
     [form]
   );
 
+  useEffect(() => {
+    if (autofocus) {
+      contentFieldRef?.current?.focus();
+    }
+  }, [autofocus]);
+
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Group noWrap align="flex-end" spacing="xs">
@@ -73,6 +86,7 @@ export const CommentForm: FC<{
             },
           }}
           {...form.getInputProps("content")}
+          ref={contentFieldRef}
           disabled={isLoading}
           radius="md"
         />

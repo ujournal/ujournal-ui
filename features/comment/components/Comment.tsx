@@ -155,6 +155,7 @@ export const Comment: FC<CommentProps> = ({
                 {commentFormShowed && commentFormProps && (
                   <CommentForm
                     {...commentFormProps}
+                    autofocus
                     onSubmit={handleCommentSubmit}
                   />
                 )}
