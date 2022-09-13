@@ -98,26 +98,28 @@ export const Post: FC<
         saved={saved}
       />
 
-      <Container size={650} p={0}>
-        <Group position="apart" mt="xs" mb="md">
-          {full ? (
-            <Title size="h3" weight={600}>
-              {post.name}
-            </Title>
-          ) : (
-            <Link
-              href={{ pathname: "/post", query: { postId: post.id } }}
-              passHref
-            >
-              <Box component="a">
-                <Title size="h3" weight={600}>
-                  {post.name}
-                </Title>
-              </Box>
-            </Link>
-          )}
-        </Group>
-      </Container>
+      {post.name !== "..." && (
+        <Container size={650} p={0}>
+          <Group position="apart" mt="xs" mb="md">
+            {full ? (
+              <Title size="h3" weight={600}>
+                {post.name}
+              </Title>
+            ) : (
+              <Link
+                href={{ pathname: "/post", query: { postId: post.id } }}
+                passHref
+              >
+                <Box component="a">
+                  <Title size="h3" weight={600}>
+                    {post.name}
+                  </Title>
+                </Box>
+              </Link>
+            )}
+          </Group>
+        </Container>
+      )}
 
       <Card.Section>{url}</Card.Section>
 
