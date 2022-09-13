@@ -41,7 +41,7 @@ export const PostForm: FC<{
 }> = ({
   postId,
   values = {
-    community_id: -1,
+    community_id: 0,
     name: "",
     url: "",
     body: "",
@@ -65,7 +65,7 @@ export const PostForm: FC<{
     validate,
   });
 
-  const urlMetadata = useUrlMetadata(form.values.url);
+  const urlMetadata = useUrlMetadata(form.values?.url || "");
 
   const handleNameInput = useCallback(
     (event: SyntheticEvent<HTMLTextAreaElement>) => {

@@ -1,7 +1,7 @@
 import { None, Some } from "@sniptt/monads";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import {
   CommentSortType,
   GetComments,

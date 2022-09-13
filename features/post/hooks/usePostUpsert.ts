@@ -2,7 +2,7 @@ import { None, Some } from "@sniptt/monads";
 import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { queryClient } from "baza/reactQuery";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import { Values as PostEditValues } from "features/post/components/PostForm";
 import { CreatePost, EditPost } from "ujournal-lemmy-js-client";
 

@@ -2263,6 +2263,11 @@
   dependencies:
     "is-extglob" "^2.1.1"
 
+"is-json@^2.0.1":
+  "integrity" "sha512-6BEnpVn1rcf3ngfmViLM6vjUjGErbdrL4rwlv+u1NO1XO8kqT4YGL8+19Q+Z/bas8tY90BTWMk2+fW1g6hQjbA=="
+  "resolved" "https://registry.npmjs.org/is-json/-/is-json-2.0.1.tgz"
+  "version" "2.0.1"
+
 "is-negative-zero@^2.0.2":
   "integrity" "sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA=="
   "resolved" "https://registry.npmjs.org/is-negative-zero/-/is-negative-zero-2.0.2.tgz"

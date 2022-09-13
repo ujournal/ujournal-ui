@@ -16,14 +16,14 @@ import {
 } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import Link from "next/link";
 import { FC, useCallback, useMemo } from "react";
 import { UserLoader } from "features/user/components/UserLoader";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { useSiteUser } from "features/auth/hooks/useSiteUser";
+import { useSiteUser } from "features/app/hooks/useSiteUser";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 
 export const AppHeader: FC = () => {

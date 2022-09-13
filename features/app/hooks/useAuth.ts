@@ -11,9 +11,9 @@ import {
   useState,
 } from "react";
 import { Login } from "ujournal-lemmy-js-client";
-import { useLemmyClient } from "../../../baza/hooks/useLemmyClient";
+import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import cookies from "browser-cookies";
-import { useEnv } from "../../../baza/hooks/useEnv";
+import { useEnv } from "baza/hooks/useEnv";
 import jwtDecode from "jwt-decode";
 
 type Claims = {
@@ -50,49 +50,9 @@ export const useAuth = () => {
   const { session, setSession } = useContext(LemmyAuthContext);
   const lemmyClient = useLemmyClient();
   const { isHttps } = useEnv();
+  const [inited, setInited] = useState<boolean>(false);
 
-  const restoreSession = useCallback(() => {
-    const jwt = cookies.get("jwt");
-
-    if (jwt) {
-      const session = Some({ jwt, claims: jwtDecode(jwt) as Claims });
-      setSession(session);
-    }
-  }, [setSession]);
-
-  const login = useCallback(
-    async ({
-      usernameOrEmail,
-      password,
-    }: {
-      usernameOrEmail: string;
-      password: string;
-    }) => {
-      let expires = new Date();
-      expires.setDate(expires.getDate() + 365);
-
-      const { jwt } = await lemmyClient.login(
-        new Login({
-          username_or_email: usernameOrEmail,
-          password: password,
-        })
-      );
-
-      localStorage.setItem("jwt", jwt.unwrap());
-
-      cookies.set("jwt", jwt.unwrap(), { expires, secure: isHttps });
-
-      restoreSession();
-    },
-    [isHttps, lemmyClient, restoreSession]
-  );
-
-  const logout = useCallback(() => {
-    cookies.erase("jwt");
-    setSession(None);
-  }, [setSession]);
-
-  const jwt = useMemo(() => {
+  const getToken = useCallback(() => {
     const jwt = session.map((session) => session.jwt);
 
     if (jwt.isSome()) {
@@ -102,13 +62,66 @@ export const useAuth = () => {
     return Err<string, string>("No JWT cookie found");
   }, [session]);
 
+  const restoreSession = useCallback(() => {
+    const token = cookies.get("jwt");
+
+    if (token) {
+      const session = Some({ jwt: token, claims: jwtDecode(token) as Claims });
+      setSession(session);
+    }
+  }, [setSession]);
+
+  const loginViaToken = useCallback(
+    (token: Option<string>) => {
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 365);
+
+      localStorage.setItem("jwt", token.unwrap());
+
+      cookies.set("jwt", token.unwrap(), { expires, secure: isHttps });
+
+      restoreSession();
+    },
+    [isHttps, restoreSession]
+  );
+
+  const login = useCallback(
+    async ({
+      usernameOrEmail,
+      password,
+    }: {
+      usernameOrEmail: string;
+      password: string;
+    }) => {
+      const { jwt } = await lemmyClient.login(
+        new Login({
+          username_or_email: usernameOrEmail,
+          password: password,
+        })
+      );
+
+      loginViaToken(jwt);
+    },
+    [lemmyClient, loginViaToken]
+  );
+
+  const logout = useCallback(() => {
+    cookies.erase("jwt");
+    setSession(None);
+  }, [setSession]);
+
+  const token = useMemo(() => getToken(), [getToken]);
+
   useEffect(() => {
     restoreSession();
+    setInited(true);
   }, [restoreSession]);
 
   return {
-    token: jwt,
+    inited,
+    token,
     login,
+    loginViaToken,
     logout,
   };
 };

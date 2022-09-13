@@ -2,7 +2,7 @@ import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import { GetPosts, ListingType, SortType } from "ujournal-lemmy-js-client";
 import { None, Option, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import { merge } from "lodash";
 
 export type FetchPostsParams = {

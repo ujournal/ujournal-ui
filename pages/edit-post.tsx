@@ -8,7 +8,7 @@ import {
 import { usePost } from "features/post/hooks/usePost";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { SitePage } from "types";
 import { queryClient } from "baza/reactQuery";
 import { showProgress, showFail, showSuccess } from "baza/utils/notifications";
@@ -46,6 +46,20 @@ const EditPostPage: SitePage = () => {
     [postId, router, upsertPost]
   );
 
+  const postValues = useMemo(() => {
+    if (post.data) {
+      return {
+        community_id: post.data.post_view.post.community_id,
+        body: post.data.post_view.post.body.unwrapOr(""),
+        name: post.data.post_view.post.name,
+        url: post.data.post_view.post.url.unwrapOr(""),
+        nsfw: post.data.post_view.post.nsfw,
+      };
+    }
+
+    return undefined;
+  }, [post.data]);
+
   if (post.isSuccess) {
     return (
       <Container size={690} p={0}>
@@ -56,13 +70,7 @@ const EditPostPage: SitePage = () => {
         >
           <PostForm
             postId={post.data.post_view.post.id}
-            values={{
-              community_id: post.data?.post_view.post.community_id,
-              body: post.data?.post_view.post.body.unwrapOr(""),
-              name: post.data?.post_view.post.name,
-              url: post.data?.post_view.post.url.unwrapOr(""),
-              nsfw: post.data?.post_view.post.nsfw,
-            }}
+            values={postValues}
             isLoading={upsertPost.isLoading}
             onSubmit={handleSubmit}
           />

@@ -6,7 +6,7 @@ import {
 } from "ujournal-lemmy-js-client";
 import { Option, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 
 export const useCommunities = (config: { limit?: number } = {}) => {
   const { limit: _limit = 20 } = config;

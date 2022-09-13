@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { SignInForm } from "features/auth/components/SignInForm";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { SignInForm } from "features/sign-in/components/SignInForm";
+import { useAuth } from "features/app/hooks/useAuth";
 import { SitePage } from "types";
 import { useCallback } from "react";
 import { Card, Container } from "@mantine/core";
 import { useRouter } from "next/router";
 import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
+import { redirectOnSignedIn } from "features/app/components/AppAuthRedirect";
 
 const SignInPage: SitePage = () => {
   const auth = useAuth();
@@ -39,5 +40,7 @@ const SignInPage: SitePage = () => {
     </Container>
   );
 };
+
+SignInPage.authRedirect = redirectOnSignedIn;
 
 export default SignInPage;

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import { useCallback } from "react";
 import {
   CreatePostLike,
@@ -9,6 +9,7 @@ import {
 } from "ujournal-lemmy-js-client";
 import { None, Some } from "@sniptt/monads";
 import { queryClient } from "baza/reactQuery";
+import { useRouter } from "next/router";
 
 export const usePostVote = ({
   postId,
@@ -20,6 +21,7 @@ export const usePostVote = ({
     myVote: number;
   }) => void;
 }) => {
+  const router = useRouter();
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
@@ -43,14 +45,20 @@ export const usePostVote = ({
 
   const likePost = useMutation(
     ["likePost", postId],
-    async (score: number) =>
-      await lemmyClient.likePost(
+    async (score: number) => {
+      if (!auth.token.unwrapOr("")) {
+        router.push({ pathname: "/sign-in" });
+        return Promise.reject();
+      }
+
+      return await lemmyClient.likePost(
         new CreatePostLike({
           post_id: postId,
           score,
           auth: auth.token.unwrap(),
         })
-      ),
+      );
+    },
     { onSuccess: handlePostVoteSuccess }
   );
 

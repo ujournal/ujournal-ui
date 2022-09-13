@@ -1,9 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
+import { useRouter } from "next/router";
 import { useCallback } from "react";
 import {
-  CommentAggregates, CommentResponse, CreateCommentLike,
+  CommentAggregates,
+  CommentResponse,
+  CreateCommentLike,
 } from "ujournal-lemmy-js-client";
 
 export const useCommentVote = ({
@@ -16,28 +19,39 @@ export const useCommentVote = ({
     myVote: number;
   }) => void;
 }) => {
+  const router = useRouter();
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
 
-  const handleCommentVoteSuccess = useCallback(async (r : CommentResponse) => {
-    if (onSuccess) {
-      onSuccess({counts: r.comment_view.counts,
-        myVote: r.comment_view.my_vote.unwrapOr(0)});
-    }
-  }, [auth.token, lemmyClient, onSuccess, commentId]);
+  const handleCommentVoteSuccess = useCallback(
+    async (r: CommentResponse) => {
+      if (onSuccess) {
+        onSuccess({
+          counts: r.comment_view.counts,
+          myVote: r.comment_view.my_vote.unwrapOr(0),
+        });
+      }
+    },
+    [onSuccess]
+  );
 
   const likeComment = useMutation(
     ["likeComment", commentId],
-    async (score: number) =>
-    {
+    async (score: number) => {
+      if (!auth.token.unwrapOr("")) {
+        router.push({ pathname: "/sign-in" });
+        return Promise.reject();
+      }
+
       return await lemmyClient.likeComment(
-          new CreateCommentLike({
-            comment_id: commentId,
-            score,
-            auth: auth.token.unwrap(),
-          })
-      )
-    },  { onSuccess: handleCommentVoteSuccess }
+        new CreateCommentLike({
+          comment_id: commentId,
+          score,
+          auth: auth.token.unwrap(),
+        })
+      );
+    },
+    { onSuccess: handleCommentVoteSuccess }
   );
 
   const voteUp = useCallback(

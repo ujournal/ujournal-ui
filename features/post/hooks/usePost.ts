@@ -1,7 +1,7 @@
 import { None, Some } from "@sniptt/monads";
 import { useQuery } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { useAuth } from "features/auth/hooks/useAuth";
+import { useAuth } from "features/app/hooks/useAuth";
 import { GetPost, GetPostResponse } from "ujournal-lemmy-js-client";
 
 export const usePost = ({ postId }: { postId: number }) => {

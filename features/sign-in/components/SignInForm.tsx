@@ -3,6 +3,7 @@ import { useForm } from "@mantine/form";
 import { Button, Group, Stack, TextInput } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
+import Link from "next/link";
 
 type Values = {
   usernameOrEmail: string;
@@ -40,9 +41,18 @@ export const SignInForm: FC<{
           {...form.getInputProps("password")}
         />
 
-        <Group position="center" mt="md">
-          <Button type="submit">{t("login")}</Button>
-        </Group>
+        <Stack spacing="xs">
+          <Group position="center">
+            <Button type="submit">{t("login")}</Button>
+          </Group>
+          <Group position="center">
+            <Link href={{ pathname: "/sign-up" }} passHref>
+              <Button component="a" variant="subtle">
+                {t("sign_up")}
+              </Button>
+            </Link>
+          </Group>
+        </Stack>
       </Stack>
     </form>
   );
