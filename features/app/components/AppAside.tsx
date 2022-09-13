@@ -7,7 +7,10 @@ import { CommentSortType } from "ujournal-lemmy-js-client";
 
 export const AppAside: FC = () => {
   const { t } = useTranslation();
-  const { data, isLoading } = useCommentList({ sort: CommentSortType.New });
+  const { data, isLoading } = useCommentList(
+    { sort: CommentSortType.New },
+    { refetchInterval: 30000 }
+  );
 
   return (
     <Box p="sm">
