@@ -23,6 +23,7 @@ const CreatePostPage: SitePage = () => {
         const post = await upsertPost.mutateAsync({
           ...values,
           name: values.name || "...",
+          url: values.url || `https://example.com/?${Math.random()}`,
         });
 
         showSuccess("post-creating");

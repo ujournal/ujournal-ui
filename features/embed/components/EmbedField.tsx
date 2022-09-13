@@ -1,4 +1,4 @@
-import { TextInput, ActionIcon, Box } from "@mantine/core";
+import { TextInput, ActionIcon, Box, TextInputProps } from "@mantine/core";
 import { ChangeEvent, FC, useCallback } from "react";
 import { IconTrash } from "@tabler/icons";
 import { Embed } from "features/embed/components/Embed";
@@ -21,11 +21,13 @@ const socialMediaNames = shuffle([
   "Spotify",
 ]);
 
-export const EmbedField: FC<{
-  value: string;
-  onChange: (value: string) => void;
-  urlMetadata?: UrlMetadata;
-}> = ({ value, onChange, urlMetadata }) => {
+export const EmbedField: FC<
+  {
+    value: string;
+    onChange: (value: string) => void;
+    urlMetadata?: UrlMetadata;
+  } & TextInputProps
+> = ({ value, onChange, urlMetadata, ...inputProps }) => {
   const socialMediaName = useIntervalPhrases(socialMediaNames);
   const { t } = useTranslation();
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
@@ -88,6 +90,7 @@ export const EmbedField: FC<{
           }}
           rightSection={<UploadImageButton onUploaded={onChange} />}
           size="md"
+          {...inputProps}
         />
       )}
     </>

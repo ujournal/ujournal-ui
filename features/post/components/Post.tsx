@@ -8,7 +8,7 @@ import {
   MantineShadow,
   Stack,
 } from "@mantine/core";
-import { FC, MutableRefObject } from "react";
+import { FC, MutableRefObject, useMemo } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
 import { Embed } from "features/embed/components/Embed";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
@@ -42,6 +42,41 @@ export const Post: FC<
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+
+  const url = useMemo(
+    () =>
+      post.url.match({
+        some: (url) => (
+          <>
+            {!url.startsWith("https://example.com/") ? (
+              <Embed
+                src={url}
+                title={post.embed_title.unwrapOr("")}
+                description={post.embed_description.unwrapOr("")}
+                thumbnail={post.thumbnail_url.unwrapOr("")}
+              />
+            ) : undefined}
+          </>
+        ),
+        none: undefined,
+      }),
+    [post.embed_description, post.embed_title, post.thumbnail_url, post.url]
+  );
+
+  const body = useMemo(
+    () =>
+      post.body.match({
+        some: (body) => (
+          <BoxExpandable showBody={full}>
+            <Text size="md" component="div">
+              <MarkdownText text={body} />
+            </Text>
+          </BoxExpandable>
+        ),
+        none: undefined,
+      }),
+    [full, post.body]
+  );
 
   return (
     <Card
@@ -84,31 +119,10 @@ export const Post: FC<
         </Group>
       </Container>
 
-      <Card.Section>
-        {post.url.match({
-          some: (url) => (
-            <Embed
-              src={url}
-              title={post.embed_title.unwrapOr("")}
-              description={post.embed_description.unwrapOr("")}
-              thumbnail={post.thumbnail_url.unwrapOr("")}
-            />
-          ),
-          none: undefined,
-        })}
-      </Card.Section>
+      <Card.Section>{url}</Card.Section>
 
       <Container size={650} p={0}>
-        {post.body.match({
-          some: (body) => (
-            <BoxExpandable showBody={full}>
-              <Text size="md" component="div">
-                <MarkdownText text={body} />
-              </Text>
-            </BoxExpandable>
-          ),
-          none: undefined,
-        })}
+        {body}
       </Container>
 
       <Stack spacing="md">
