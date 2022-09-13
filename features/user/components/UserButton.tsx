@@ -19,10 +19,19 @@ type UserButtonProps = {
   label: string;
   weight?: number;
   active?: boolean;
+  showAvatar?: boolean;
 } & ButtonProps;
 
 export const UserButtonWithoutRef = (
-  { userId, image, label, weight, active = false, ...props }: UserButtonProps,
+  {
+    userId,
+    image,
+    label,
+    weight,
+    active = false,
+    showAvatar = true,
+    ...props
+  }: UserButtonProps,
   ref: ForwardedRef<HTMLAnchorElement>
 ) => {
   return (
@@ -53,9 +62,11 @@ export const UserButtonWithoutRef = (
               py={8}
             >
               <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
-                <Avatar src={image} radius="lg" size="sm">
-                  <IconUser stroke={1.5} />
-                </Avatar>
+                {showAvatar && (
+                  <Avatar src={image} radius="lg" size="sm">
+                    <IconUser stroke={1.5} />
+                  </Avatar>
+                )}
 
                 <Text
                   sx={{

@@ -45,7 +45,7 @@ export const EmbedField: FC<
 
   return (
     <>
-      {isUrl(value) ? (
+      {!value.startsWith("https://example.com") && isUrl(value) ? (
         <Box mx={smallerThanSm ? "-sm" : "-xl"} sx={{ position: "relative" }}>
           <Box sx={{ pointerEvents: "none" }}>
             <Embed
@@ -73,7 +73,7 @@ export const EmbedField: FC<
         <TextInput
           withAsterisk
           placeholder={`${socialMediaName} ${t("url")}`}
-          value={value}
+          value={!value.startsWith("https://example.com") ? value : ""}
           onChange={handleChange}
           sx={{ flex: "1 1 0" }}
           styles={{

@@ -24,7 +24,8 @@ export const PostLoader: FC = () => {
               />
               <Skeleton height={10} radius="sm" />
             </Group>
-            <UserLoader />
+            <UserLoader showAvatar={false} />
+            <Skeleton width={40} height={10} radius="sm" />
           </Group>
 
           <Stack spacing="xs">

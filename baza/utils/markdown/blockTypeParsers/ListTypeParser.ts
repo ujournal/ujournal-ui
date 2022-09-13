@@ -1,16 +1,13 @@
 export function parseListToMarkdown(blocks: any) {
-  let items = {};
   switch (blocks.style) {
     case "unordered":
-      items = blocks.items.map((item: any) => `* ${item}`);
+      return blocks.items.map((item: any) => `* ${item}`).join("\n");
 
-      return items;
     case "ordered":
-      items = blocks.items.map(
-        (item: any, index: any) => `${index + 1} ${item}`
-      );
+      return blocks.items
+        .map((item: any, index: any) => `${index + 1} ${item}`)
+        .join("\n");
 
-      return items;
     default:
       break;
   }

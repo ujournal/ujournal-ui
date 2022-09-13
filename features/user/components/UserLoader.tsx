@@ -8,7 +8,14 @@ export const UserLoader: FC<{
   nameWidth?: number;
   padding?: string | number;
   opacity?: number;
-}> = ({ useRandomWidth = true, nameWidth = 100, padding = "sm", opacity }) => {
+  showAvatar?: boolean;
+}> = ({
+  useRandomWidth = true,
+  nameWidth = 100,
+  padding = "sm",
+  showAvatar = true,
+  opacity,
+}) => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   return (
@@ -24,13 +31,15 @@ export const UserLoader: FC<{
           : undefined,
       }}
     >
-      <Skeleton
-        width={26}
-        height={26}
-        circle
-        radius={26}
-        sx={{ minWidth: 26, opacity }}
-      />
+      {showAvatar && (
+        <Skeleton
+          width={26}
+          height={26}
+          circle
+          radius={26}
+          sx={{ minWidth: 26, opacity }}
+        />
+      )}
       {largerThanSm && <Skeleton height={10} radius="sm" sx={{ opacity }} />}
     </Group>
   );

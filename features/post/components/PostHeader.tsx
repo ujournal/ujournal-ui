@@ -45,6 +45,7 @@ export const PostHeader: FC<{
                 some: (name) => name,
                 none: () => creator.name,
               })}
+              showAvatar={false}
             />
             <DateFormatted date={new Date(post.published + "Z")} />
           </Group>

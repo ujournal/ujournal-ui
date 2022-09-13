@@ -1,4 +1,4 @@
-import { Stack, TextInput, Group, Button } from "@mantine/core";
+import { Stack, TextInput, Group, Button, Alert } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { capitalize } from "baza/utils/string";
 import { FC } from "react";
@@ -41,8 +41,11 @@ export const SignUpForm: FC<{
         <TextInput
           withAsterisk
           label={capitalize(t("email"))}
+          placeholder={capitalize(t("optional"))}
           {...form.getInputProps("email")}
         />
+
+        <Alert color="orange">{t("no_password_reset")}</Alert>
 
         <TextInput
           type="password"
@@ -54,7 +57,7 @@ export const SignUpForm: FC<{
         <TextInput
           type="password"
           withAsterisk
-          label={capitalize(t("password_repeat"))}
+          label={capitalize(t("verify_password"))}
           {...form.getInputProps("password_repeat")}
         />
 
