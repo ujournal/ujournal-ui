@@ -1,7 +1,14 @@
 import { ActionIcon, Group, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconSend } from "@tabler/icons";
-import { FC, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  FC,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { UploadImageButton } from "baza/components/UploadImageButton";
 
@@ -23,6 +30,7 @@ export const CommentForm: FC<{
 }) => {
   const { t } = useTranslation();
   const contentFieldRef = useRef<HTMLTextAreaElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const validate = useMemo(
     () => ({
@@ -58,6 +66,18 @@ export const CommentForm: FC<{
     [form]
   );
 
+  const handleContentKeyDown = useCallback(
+    (event: SyntheticEvent<HTMLTextAreaElement, KeyboardEvent>) => {
+      if (
+        (event.nativeEvent.ctrlKey || event.nativeEvent.metaKey) &&
+        event.nativeEvent.key === "Enter"
+      ) {
+        submitButtonRef.current?.click();
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     if (autofocus) {
       contentFieldRef?.current?.focus();
@@ -89,6 +109,7 @@ export const CommentForm: FC<{
           ref={contentFieldRef}
           disabled={isLoading}
           radius="md"
+          onKeyDown={handleContentKeyDown}
         />
 
         <ActionIcon
@@ -98,6 +119,7 @@ export const CommentForm: FC<{
           variant="light"
           disabled={isLoading}
           radius="md"
+          ref={submitButtonRef}
         >
           {isLoading ? (
             <Loader color="gray" size="sm" />
