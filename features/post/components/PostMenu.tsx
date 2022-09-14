@@ -7,9 +7,9 @@ import {
   IconStar,
   IconStarOff,
   IconCopy,
-  IconPencil,
   IconLock,
   IconPin,
+  IconEdit,
 } from "@tabler/icons";
 import Link from "next/link";
 import { Post } from "ujournal-lemmy-js-client";
@@ -40,7 +40,7 @@ export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
           {capitalize(t("cross_post"))}
         </Menu.Item>
         <Link href={`/edit-post?postId=${post.id}`}>
-          <Menu.Item icon={<IconPencil size={14} />} component="a">
+          <Menu.Item icon={<IconEdit size={14} />} component="a">
             {capitalize(t("edit"))}
           </Menu.Item>
         </Link>
