@@ -9,7 +9,7 @@ import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
 
 export const useCommunities = (config: { limit?: number } = {}) => {
-  const { limit: _limit = 20 } = config;
+  const { limit: _limit = 30 } = config;
   const client = useLemmyClient();
   const auth = useAuth();
 

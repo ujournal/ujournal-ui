@@ -14,6 +14,7 @@ import { queryClient } from "baza/reactQuery";
 import { MenuToggleProvider } from "baza/hooks/useMenuToggle";
 import "../styles/globals.css";
 import { AppAuthRedirect } from "features/app/components/AppAuthRedirect";
+import { LegalNotification } from "features/legal/components/LegalNotification";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
@@ -48,6 +49,7 @@ export default function App(props: SiteAppProps) {
                           <Component {...pageProps} />
                         </AppAuthRedirect>
                       </AppLayout>
+                      <LegalNotification />
                     </MenuToggleProvider>
                   </MantineProvider>
                 </QueryClientProvider>

@@ -2,6 +2,7 @@ import { Box } from "@mantine/core";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
 import {
+  IconChecks,
   IconMessageCircle,
   IconMessageCircle2,
   IconTrendingUp,
@@ -11,7 +12,7 @@ import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
 import { IconBolt } from "@tabler/icons";
-import { SortType } from "ujournal-lemmy-js-client";
+import { ListingType, SortType } from "ujournal-lemmy-js-client";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -33,44 +34,80 @@ export const AppNavbar = () => {
     () =>
       [
         {
+          type: ListingType.All,
           sort: SortType.Hot,
-          url: { pathname: "/", query: { ...query, sort: SortType.Hot } },
+          url: {
+            pathname: "/",
+            query: { ...query, type: ListingType.All, sort: SortType.Hot },
+          },
           label: capitalize(t("hot")),
           icon: IconFlame,
         },
         {
+          type: ListingType.All,
           sort: SortType.Active,
-          url: { pathname: "/", query: { ...query, sort: SortType.Active } },
+          url: {
+            pathname: "/",
+            query: { ...query, type: ListingType.All, sort: SortType.Active },
+          },
           label: capitalize(t("active")),
           icon: IconTrendingUp,
         },
         {
+          type: ListingType.All,
           sort: SortType.New,
-          url: { pathname: "/", query: { ...query, sort: SortType.New } },
+          url: {
+            pathname: "/",
+            query: { ...query, type: ListingType.All, sort: SortType.New },
+          },
           label: capitalize(t("new")),
           icon: IconBolt,
         },
         {
+          type: ListingType.All,
           sort: SortType.MostComments,
           url: {
             pathname: "/",
-            query: { ...query, sort: SortType.MostComments },
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.MostComments,
+            },
           },
           label: capitalize(t("most_comments")),
           icon: IconMessageCircle,
         },
         {
+          type: ListingType.All,
           sort: SortType.NewComments,
           url: {
             pathname: "/",
-            query: { ...query, sort: SortType.NewComments },
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.NewComments,
+            },
           },
           label: capitalize(t("new_comments")),
           icon: IconMessageCircle2,
         },
+        {
+          type: ListingType.Subscribed,
+          sort: SortType.Hot,
+          url: {
+            pathname: "/",
+            query: {
+              ...query,
+              type: ListingType.Subscribed,
+              sort: SortType.Hot,
+            },
+          },
+          label: capitalize(t("subscribed")),
+          icon: IconChecks,
+        },
       ].map((link) => ({
         ...link,
-        active: query.sort === link.sort,
+        active: query.sort === link.sort && query.type === link.type,
       })),
     [query, t]
   );

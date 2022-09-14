@@ -6,6 +6,7 @@ import { useAuth } from "features/app/hooks/useAuth";
 import { merge } from "lodash";
 
 export type FetchPostsParams = {
+  type?: ListingType;
   sort?: SortType;
   page?: number;
   limit?: number;
@@ -14,6 +15,7 @@ export type FetchPostsParams = {
 };
 
 export const fetchPostsParamsDefault = {
+  type: ListingType.All,
   sort: SortType.Hot,
   page: 1,
   limit: 20,
@@ -25,8 +27,9 @@ const usePostsFetcher = (params: FetchPostsParams = {}) => {
   const client = useLemmyClient();
   const auth = useAuth();
 
-  const { sort, limit, communityId, communityName } = merge(
+  const { type, sort, limit, communityId, communityName } = merge(
     {
+      type: ListingType.Subscribed,
       sort: SortType.Hot,
       page: 1,
       limit: 20,
@@ -36,12 +39,10 @@ const usePostsFetcher = (params: FetchPostsParams = {}) => {
     params
   );
 
-  let type_: Option<ListingType> = Some(ListingType.All);
-
   return async ({ pageParam: page = 1 }: QueryFunctionContext) =>
     await client.getPosts(
       new GetPosts({
-        type_,
+        type_: Some(type),
         sort: Some(sort),
         page: Some(page),
         limit: Some(limit),

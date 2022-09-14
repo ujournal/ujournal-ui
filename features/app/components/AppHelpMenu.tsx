@@ -1,9 +1,17 @@
 import { Menu, ActionIcon } from "@mantine/core";
-import { IconBrandTelegram, IconBrandGithub, IconHelp } from "@tabler/icons";
+import {
+  IconBrandTelegram,
+  IconBrandGithub,
+  IconHelp,
+  IconGavel,
+} from "@tabler/icons";
 import Link from "next/link";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 export const AppHelpMenu: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Menu position="bottom-start" transition="pop-top-right">
       <Menu.Target>
@@ -32,6 +40,11 @@ export const AppHelpMenu: FC = () => {
             target="_blank"
           >
             Telegram
+          </Menu.Item>
+        </Link>
+        <Link href="/legal" passHref rel="noreferrer">
+          <Menu.Item icon={<IconGavel size={24} stroke={1.5} />} component="a">
+            {t("legal_information")}
           </Menu.Item>
         </Link>
       </Menu.Dropdown>
