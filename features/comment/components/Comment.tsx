@@ -250,6 +250,7 @@ export const Comment: FC<CommentProps> = ({
             itemProps={(_item, index) => ({
               asChild: true,
               decoration: children.length - 1 === index ? "end" : "middle",
+              postId,
             })}
             itemKey="comment.id"
           />
