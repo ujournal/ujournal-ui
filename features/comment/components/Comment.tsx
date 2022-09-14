@@ -11,16 +11,15 @@ import { VoteButtons } from "baza/components/VoteButtons";
 import { useCommentVote } from "../hooks/useCommentVote";
 import { CommentInternal } from "../utils/comments";
 import { CommentForm, Values as CommentFormValues } from "./CommentForm";
+import { CommentMenu } from "./CommentMenu";
+import { useCommentUpsert } from "../hooks/useCommentUpsert";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
   compact?: boolean;
   decoration?: undefined | "middle" | "end";
   truncateLength?: number;
-  commentFormProps?: {
-    isLoading: boolean;
-    onSubmit: (values: CommentFormValues) => void;
-  };
+  postId?: number;
 };
 
 export const Comment: FC<CommentProps> = ({
@@ -33,16 +32,19 @@ export const Comment: FC<CommentProps> = ({
   counts,
   my_vote: myVote,
   truncateLength,
-  commentFormProps,
+  postId,
 }) => {
   const { t } = useTranslation();
 
-  const [commentFormShowed, setCommentFormShowed] = useState<boolean>(false);
+  const [commentAdding, setCommentAdding] = useState<boolean>(false);
+  const [commentEditing, setCommentEditing] = useState<boolean>(false);
 
   const [countsAndMyVote, setCountsAndMyVote] = useState({
     counts,
     myVote,
   });
+
+  const commentUpsert = useCommentUpsert();
 
   const vote = useCommentVote({
     commentId: comment.id,
@@ -50,22 +52,37 @@ export const Comment: FC<CommentProps> = ({
   });
 
   const toggleCommentFormShowed = useCallback(() => {
-    setCommentFormShowed((commentFormShowed) => !commentFormShowed);
+    setCommentAdding((commentFormShowed) => !commentFormShowed);
   }, []);
 
-  const handleCommentSubmit = useCallback(
+  const handleCommentAddSubmit = useCallback(
     async (values: CommentFormValues) => {
-      if (commentFormProps?.onSubmit) {
-        await commentFormProps?.onSubmit({
-          parentId: comment.id,
-          ...values,
-        });
+      await commentUpsert.mutateAsync({
+        parentId: comment.id,
+        postId,
+        ...values,
+      });
 
-        setCommentFormShowed(false);
-      }
+      setCommentAdding(false);
     },
-    [comment.id, commentFormProps]
+    [comment.id, commentUpsert, postId]
   );
+
+  const handleCommentEditSubmit = useCallback(
+    async (values: CommentFormValues) => {
+      await commentUpsert.mutateAsync({
+        commentId: comment.id,
+        ...values,
+      });
+
+      setCommentEditing(false);
+    },
+    [comment.id, commentUpsert]
+  );
+
+  const handleCommentEdit = useCallback(() => {
+    setCommentEditing((editing) => !editing);
+  }, []);
 
   useEffect(() => {
     setCountsAndMyVote({
@@ -122,41 +139,53 @@ export const Comment: FC<CommentProps> = ({
           </Group>
 
           <Stack spacing={2}>
-            <MarkdownText
-              text={comment.content}
-              truncateLength={truncateLength}
-              compact
-            />
+            {commentEditing ? (
+              <CommentForm
+                autofocus
+                values={comment}
+                isLoading={commentUpsert.isLoading}
+                onSubmit={handleCommentEditSubmit}
+              />
+            ) : (
+              <MarkdownText
+                text={comment.content}
+                truncateLength={truncateLength}
+                compact
+              />
+            )}
 
             {!compact && (
               <>
                 <Group position="apart">
-                  <Button
-                    color="gray"
-                    p={0}
-                    variant="subtle"
-                    sx={{
-                      height: "auto",
-                      fontWeight: 500,
-                      "&:hover": {
-                        backgroundColor: "transparent",
-                      },
-                    }}
-                    onClick={toggleCommentFormShowed}
-                  >
-                    {capitalize(t("reply"))}
-                  </Button>
+                  <Group spacing="xs">
+                    <Button
+                      color="gray"
+                      p={0}
+                      variant="subtle"
+                      sx={{
+                        height: "auto",
+                        fontWeight: 500,
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                        },
+                      }}
+                      onClick={toggleCommentFormShowed}
+                    >
+                      {capitalize(t("reply"))}
+                    </Button>
+                    <CommentMenu onEdit={handleCommentEdit} />
+                  </Group>
                   <VoteButtons
                     counts={countsAndMyVote.counts}
                     myVote={countsAndMyVote.myVote}
                     vote={vote}
                   />
                 </Group>
-                {commentFormShowed && commentFormProps && (
+                {commentAdding && (
                   <CommentForm
-                    {...commentFormProps}
                     autofocus
-                    onSubmit={handleCommentSubmit}
+                    isLoading={commentUpsert.isLoading}
+                    onSubmit={handleCommentAddSubmit}
                   />
                 )}
               </>
@@ -221,7 +250,6 @@ export const Comment: FC<CommentProps> = ({
             itemProps={(_item, index) => ({
               asChild: true,
               decoration: children.length - 1 === index ? "end" : "middle",
-              commentFormProps,
             })}
             itemKey="comment.id"
           />

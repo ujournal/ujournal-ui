@@ -39,7 +39,7 @@ const PostPage: SitePage = () => {
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess ? (
-          <Post {...post.data.post_view} full commentsAsText showPostCreator/>
+          <Post {...post.data.post_view} full commentsAsText showPostCreator />
         ) : (
           <PostLoader />
         )}
@@ -64,10 +64,7 @@ const PostPage: SitePage = () => {
                 <CommentList
                   data={post.data?.comments || []}
                   isLoading={post.isLoading}
-                  commentFormProps={{
-                    isLoading: commentUpsert.isLoading || post.isLoading,
-                    onSubmit: handleCommentSubmit,
-                  }}
+                  postId={post.data?.post_view.post.id}
                 />
               </Box>
 
