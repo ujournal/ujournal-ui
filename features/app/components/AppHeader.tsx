@@ -8,12 +8,7 @@ import {
   MediaQuery,
   Tooltip,
 } from "@mantine/core";
-import {
-  IconBrandGithub,
-  IconBrandTelegram,
-  IconCirclePlus,
-  IconLogin,
-} from "@tabler/icons";
+import { IconCirclePlus, IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/app/hooks/useAuth";
@@ -25,6 +20,7 @@ import { capitalize } from "baza/utils/string";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useSiteUser } from "features/app/hooks/useSiteUser";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
+import { AppHelpMenu } from "./AppHelpMenu";
 
 export const AppHeader: FC = () => {
   const auth = useAuth();
@@ -106,37 +102,7 @@ export const AppHeader: FC = () => {
             </Box>
           </Link>
 
-          <Tooltip label="Github">
-            <ActionIcon
-              component="a"
-              href="https://github.com/uJournal/ujournal-ui"
-              target="_blank"
-              pl="sm"
-              pr="sm"
-              variant="transparent"
-              color="gray"
-              size={24}
-              sx={{ display: "block" }}
-            >
-              <IconBrandGithub stroke={1.5} />
-            </ActionIcon>
-          </Tooltip>
-
-          <Tooltip label="Telegram">
-            <ActionIcon
-              component="a"
-              href="https://t.me/tjournalcomua"
-              target="_blank"
-              pl="sm"
-              pr="sm"
-              variant="transparent"
-              color="gray"
-              size={24}
-              sx={{ display: "block" }}
-            >
-              <IconBrandTelegram stroke={1.5} />
-            </ActionIcon>
-          </Tooltip>
+          <AppHelpMenu />
         </Group>
 
         <Group spacing="lg">
@@ -157,6 +123,10 @@ export const AppHeader: FC = () => {
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>
           </Link>
+
+          {/* <ActionIcon radius="xl" variant="subtle">
+            <IconBell stroke={1.5} />
+          </ActionIcon> */}
 
           {isUserInfoLoading ? (
             <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />

@@ -1,7 +1,11 @@
 import { Box } from "@mantine/core";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
-import { IconMessageCircle2, IconTrendingUp } from "@tabler/icons";
+import {
+  IconMessageCircle,
+  IconMessageCircle2,
+  IconTrendingUp,
+} from "@tabler/icons";
 import { useCallback, useMemo } from "react";
 import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
@@ -53,7 +57,7 @@ export const AppNavbar = () => {
             query: { ...query, sort: SortType.MostComments },
           },
           label: capitalize(t("most_comments")),
-          icon: IconMessageCircle2,
+          icon: IconMessageCircle,
         },
         {
           sort: SortType.NewComments,
