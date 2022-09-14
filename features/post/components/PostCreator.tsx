@@ -36,10 +36,10 @@ export const PostCreator: FC<{
                 none: () => creator.name,
               })}
             </Box>
-            <Score
+            {/* <Score
               score={personViewSafe?.data?.totalScore || 0}
               sx={{ fontWeight: 600 }}
-            />
+            /> */}
           </Group>
           <Tooltip
             label={
