@@ -111,6 +111,7 @@ export const useAuth = () => {
   }, [setSession]);
 
   const token = useMemo(() => getToken(), [getToken]);
+  const loggedIn = useMemo(() => token.isOk(), [token]);
 
   useEffect(() => {
     restoreSession();
@@ -120,6 +121,7 @@ export const useAuth = () => {
   return {
     inited,
     token,
+    loggedIn,
     login,
     loginViaToken,
     logout,

@@ -13,6 +13,7 @@ import { CommentInternal } from "../utils/comments";
 import { CommentForm, Values as CommentFormValues } from "./CommentForm";
 import { CommentMenu } from "./CommentMenu";
 import { useCommentUpsert } from "../hooks/useCommentUpsert";
+import { useRouterQuery } from "baza/hooks/useRouterQuery";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
@@ -34,6 +35,9 @@ export const Comment: FC<CommentProps> = ({
   truncateLength,
   postId,
 }) => {
+  const routerQuery = useRouterQuery<{ commentId: string | undefined }>({
+    commentId: undefined,
+  });
   const { t } = useTranslation();
 
   const [commentAdding, setCommentAdding] = useState<boolean>(false);
@@ -91,6 +95,12 @@ export const Comment: FC<CommentProps> = ({
     });
   }, [counts, myVote]);
 
+  useEffect(() => {
+    if (String(comment.id) === routerQuery.commentId) {
+      document.getElementById(`comment-${comment.id}`)?.scrollIntoView();
+    }
+  }, [comment.id, routerQuery.commentId]);
+
   return (
     <Stack
       spacing={0}
@@ -109,12 +119,16 @@ export const Comment: FC<CommentProps> = ({
               : undefined,
         },
       })}
+      id={`comment-${comment.id}`}
     >
       <Card
         p={4}
         m={-4}
         sx={(theme) => ({
-          backgroundColor: "transparent",
+          backgroundColor:
+            String(comment.id) === routerQuery.commentId
+              ? theme.fn.lighten(theme.colors.yellow[1], 0.25)
+              : "transparent",
           "&:hover": {
             backgroundColor: theme.fn.lighten(theme.colors.gray[1], 0.5),
           },

@@ -1,13 +1,4 @@
-import {
-  ActionIcon,
-  Box,
-  Burger,
-  Button,
-  Group,
-  Header,
-  MediaQuery,
-  Tooltip,
-} from "@mantine/core";
+import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
 import { IconCirclePlus, IconLogin } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
@@ -21,6 +12,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useSiteUser } from "features/app/hooks/useSiteUser";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 import { AppHelpMenu } from "./AppHelpMenu";
+import { NotificationsMenu } from "features/notifications/components/NotificationsMenu";
 
 export const AppHeader: FC = () => {
   const auth = useAuth();
@@ -124,9 +116,7 @@ export const AppHeader: FC = () => {
             </Button>
           </Link>
 
-          {/* <ActionIcon radius="xl" variant="subtle">
-            <IconBell stroke={1.5} />
-          </ActionIcon> */}
+          <NotificationsMenu />
 
           {isUserInfoLoading ? (
             <UserLoader useRandomWidth={false} padding={0} opacity={0.75} />
