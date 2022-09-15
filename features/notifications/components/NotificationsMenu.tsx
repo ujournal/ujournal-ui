@@ -10,10 +10,9 @@ import {
   Popover,
   Stack,
 } from "@mantine/core";
-import { IconBallon, IconBell, IconFileDots } from "@tabler/icons";
+import { IconBallon, IconBell } from "@tabler/icons";
 import { capitalize } from "baza/utils/string";
 import { useAuth } from "features/app/hooks/useAuth";
-import { t } from "i18next";
 import Link from "next/link";
 import { FC, MouseEvent, useCallback } from "react";
 import { useTranslation } from "react-i18next";
