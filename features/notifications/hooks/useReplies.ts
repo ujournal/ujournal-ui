@@ -34,6 +34,7 @@ export const useReplies = (params: RepliesParams = {}) => {
 
   return useQuery(
     ["replies", auth.token.ok().unwrapOr("")],
-    async () => await lemmyClient.getReplies(new GetReplies(_params))
+    async () => await lemmyClient.getReplies(new GetReplies(_params)),
+    { refetchInterval: 30000 }
   );
 };
