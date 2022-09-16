@@ -14,6 +14,7 @@ import { VideoEmbed } from "./embedTypes/VideoEmbed";
 import { EmbedComponentType } from "./types";
 import isUrl from "is-url";
 import { GoogleFormEmbed } from "./embedTypes/GoogleFormEmbed";
+import { TikTokEmbed } from "./embedTypes/TikTokEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -28,6 +29,7 @@ enum EmbedType {
   Spotify = "spotify",
   Video = "video",
   GoogleForm = "googleForm",
+  TikTok = "tiktok",
 }
 
 const typeToCheckFn = {
@@ -43,6 +45,7 @@ const typeToCheckFn = {
   [EmbedType.Spotify]: (url: string) => isMediaUrl("spotify", url),
   [EmbedType.Video]: (url: string) => isMediaUrl("video", url),
   [EmbedType.GoogleForm]: (url: string) => isMediaUrl("googleForm", url),
+  [EmbedType.TikTok]: (url: string) => isMediaUrl("tiktok", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -58,6 +61,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Spotify]: SpotifyEmbed,
   [EmbedType.Video]: VideoEmbed,
   [EmbedType.GoogleForm]: GoogleFormEmbed,
+  [EmbedType.TikTok]: TikTokEmbed,
 };
 
 const typeToAspectRatio = {
@@ -73,6 +77,7 @@ const typeToAspectRatio = {
   [EmbedType.Spotify]: -1,
   [EmbedType.Video]: 16 / 9,
   [EmbedType.GoogleForm]: 1,
+  [EmbedType.TikTok]: -1,
 };
 
 export const getTypeBySrc = (src: string) => {

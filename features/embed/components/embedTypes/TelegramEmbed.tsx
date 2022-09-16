@@ -75,7 +75,7 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
         <Box
           component="iframe"
           id={frameId}
-          src={`${src.replace("/s/", "/")}?embed=1`}
+          src={`https://t.me/${matches[1]}?embed=1`}
           width="100%"
           frameBorder="0"
           scrolling="no"

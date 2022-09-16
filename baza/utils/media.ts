@@ -8,11 +8,12 @@ const mediaRegExps = {
     /^(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/,
   facebook:
     /^https:\/\/www\.facebook\.com\/(photo(\.php|s)|permalink\.php|media|questions|notes|[^\/]+\/(activity|posts))[\/?].*$/,
-  instagram: /(?:https?:\/\/www\.)?instagram\.com\S*?\/p\/(\w{11})\/?/,
+  instagram: /(?:https?:\/\/(?:www\.)?)?instagram\.com\S*?\/p\/(\w{11})\/?.+?/,
   telegram: /^(?:https?:\/\/(?:www\.)?)?t\.me\S*?(?:\/s)?\/(.+?\/\d+)\/?/,
   soundcloud: /^(?:https?:\/\/(?:www\.)?)?soundcloud\.com\/.+?\/.+?/,
   spotify: /^(?:https?:\/\/)?open\.spotify\.com\/(album|track)\/.+?/,
   googleForm: /https:\/\/docs\.google\.com\/forms\/d\/e\/.+?\/viewform.+?/,
+  tiktok: /^(?:https?:\/\/(?:www\.)?)tiktok\.com\/@(.+?)\/video\/(\d+)/,
 };
 
 export const isMediaUrl = (media: keyof typeof mediaRegExps, url: string) => {

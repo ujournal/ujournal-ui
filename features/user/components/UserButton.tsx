@@ -63,7 +63,12 @@ export const UserButtonWithoutRef = (
             >
               <Group sx={{ flexWrap: "nowrap" }} spacing={"xs"}>
                 {showAvatar && (
-                  <Avatar src={image} radius="lg" size="sm">
+                  <Avatar
+                    src={image}
+                    radius="lg"
+                    size="sm"
+                    sx={{ backgroundColor: "#fff" }}
+                  >
                     <IconUser stroke={1.5} />
                   </Avatar>
                 )}
