@@ -5,6 +5,7 @@ import {
   IconChecks,
   IconMessageCircle,
   IconMessageCircle2,
+  IconSpeakerphone,
   IconTrendingUp,
 } from "@tabler/icons";
 import { useCallback, useMemo } from "react";
@@ -19,6 +20,7 @@ import {
   fetchPostsParamsDefault,
 } from "features/post/hooks/usePostList";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
+import { useCommunityListForNavbar } from "features/community/hooks/useCommunityListForNavbar";
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
@@ -29,6 +31,10 @@ export const AppNavbar = () => {
   }, [toggleMenu]);
 
   const query = useRouterQuery<FetchPostsParams>(fetchPostsParamsDefault);
+
+  const commnityList = useCommunityListForNavbar({
+    activeCommunityName: query.communityName as string,
+  });
 
   const links = useMemo(
     () =>
@@ -105,6 +111,15 @@ export const AppNavbar = () => {
           label: capitalize(t("subscribed")),
           icon: IconChecks,
         },
+        {
+          type: null,
+          sort: null,
+          url: {
+            pathname: "/communities",
+          },
+          label: capitalize(t("communities")),
+          icon: IconSpeakerphone,
+        },
       ].map((link) => ({
         ...link,
         active: query.sort === link.sort && query.type === link.type,
@@ -119,8 +134,8 @@ export const AppNavbar = () => {
       </Box>
 
       <CommunityList
-        activeCommunityName={query.communityName}
-        buttonProps={{ onLinkClick: handleToggleMenu }}
+        {...commnityList}
+        itemProps={{ onLinkClick: handleToggleMenu }}
       />
     </>
   );

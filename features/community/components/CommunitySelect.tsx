@@ -15,17 +15,17 @@ import { capitalize } from "baza/utils/string";
 import Link from "next/link";
 import { FC, ForwardedRef, forwardRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useCommunities } from "../hooks/useCommunities";
+import { useCommunityList } from "../hooks/useCommunityList";
 
 export const CommunitySelect: FC<
   Omit<SelectProps, "onChange"> & { onChange: (value: number) => void }
 > = ({ onChange, ...props }) => {
-  const communities = useCommunities({ limit: 1000 });
+  const communities = useCommunityList({ limit: 1000 });
   const { t } = useTranslation();
 
   const communitiesOptions = useMemo(
     () =>
-      communities.data?.communities.map(({ community }) => ({
+      communities.data?.map(({ community }) => ({
         image: community.icon.unwrapOr(""),
         value: community.id.toString(),
         label: community.title,

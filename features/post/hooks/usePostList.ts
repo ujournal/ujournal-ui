@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import { GetPosts, ListingType, SortType } from "ujournal-lemmy-js-client";
-import { None, Option, Some } from "@sniptt/monads";
+import { None, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
 import { merge } from "lodash";
@@ -59,7 +59,11 @@ export const usePostList = ({ params = {} }: { params: FetchPostsParams }) => {
   const fetchPosts = usePostsFetcher(params);
 
   return useInfiniteQuery(
-    ["posts", { token: auth.token.unwrapOr(""), ...params }, fetchPosts],
+    [
+      "posts",
+      JSON.stringify({ token: auth.token.unwrapOr(""), ...params }),
+      fetchPosts,
+    ],
     fetchPosts,
     {
       getNextPageParam: (_lastPage, pages) => {

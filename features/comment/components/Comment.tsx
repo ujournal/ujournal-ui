@@ -122,8 +122,8 @@ export const Comment: FC<CommentProps> = ({
       id={`comment-${comment.id}`}
     >
       <Card
-        p={4}
-        m={-4}
+        p={2}
+        mx={-2}
         sx={(theme) => ({
           backgroundColor:
             String(comment.id) === routerQuery.commentId

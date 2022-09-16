@@ -1,43 +1,72 @@
-import {
-  CommunityButton,
-  CommunityButtonProps,
-} from "features/community/components/CommunityButton";
-import { FC, useCallback } from "react";
-import { useCommunities } from "../hooks/useCommunities";
+import { CommunityButton } from "features/community/components/CommunityButton";
+import React, { ComponentType, FC, ForwardedRef, forwardRef } from "react";
 import { DataList } from "baza/components/DataList";
 import { CommunityListLoader } from "./CommunityListLoader";
+import { Center, Loader } from "@mantine/core";
+import useInfiniteScroll from "react-infinite-scroll-hook";
+
+export type CommunityMoreLoaderProps = {
+  isSuccess?: boolean;
+  isFetching?: boolean;
+};
+
+const CommunityMoreLoader = (
+  { isSuccess, isFetching }: CommunityMoreLoaderProps,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
+  return (
+    <Center ref={ref} sx={{ height: 60 }}>
+      {isSuccess && isFetching && <Loader />}
+    </Center>
+  );
+};
+
+const CommunityMoreLoaderWithRef = forwardRef<
+  HTMLDivElement,
+  CommunityMoreLoaderProps
+>(CommunityMoreLoader);
 
 export const CommunityList: FC<{
+  data: any[];
   activeCommunityName?: string;
-  buttonProps?: Omit<CommunityButtonProps, "label">;
-}> = ({ activeCommunityName = "", buttonProps }) => {
-  const communities = useCommunities();
-
-  const transformCommunities = useCallback(
-    (data: ReturnType<typeof useCommunities>["data"]) => {
-      return data?.communities.map((community) => {
-        return {
-          communityName: community.community.name,
-          image: community.community.icon.match<string | undefined>({
-            some: (icon) => icon,
-            none: undefined,
-          }),
-          label: community.community.title,
-          active: activeCommunityName === community.community.name,
-        };
-      });
-    },
-    [activeCommunityName]
-  );
+  itemProps?: any;
+  itemComponent?: FC<any>;
+  isLoading?: boolean;
+  itemKey?: string;
+  isSuccess?: boolean;
+  isFetching?: boolean;
+  fetchNextPage?: () => void;
+  loaderComponent?: ComponentType;
+}> = ({
+  data,
+  isLoading = false,
+  itemProps,
+  itemKey = "communityName",
+  itemComponent: ItemComponent = CommunityButton,
+  isFetching,
+  isSuccess,
+  fetchNextPage = () => {},
+  loaderComponent: Loader = CommunityMoreLoaderWithRef,
+}) => {
+  const [sentryRef] = useInfiniteScroll({
+    loading: isLoading,
+    hasNextPage: true,
+    onLoadMore: fetchNextPage,
+    rootMargin: "0px 0px 400px 0px",
+    disabled: false,
+  });
 
   return (
-    <DataList
-      {...communities}
-      itemComponent={CommunityButton}
-      transform={transformCommunities}
-      loaderComponent={CommunityListLoader}
-      itemKey="communityName"
-      itemProps={buttonProps}
-    />
+    <>
+      <DataList
+        data={data}
+        isLoading={isLoading}
+        itemComponent={ItemComponent}
+        loaderComponent={CommunityListLoader}
+        itemKey={itemKey}
+        itemProps={itemProps}
+      />
+      <Loader ref={sentryRef} isFetching={isFetching} isSuccess={isSuccess} />
+    </>
   );
 };
