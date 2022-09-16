@@ -14,7 +14,6 @@ import { Embed } from "features/embed/components/Embed";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import Link from "next/link";
 import { MarkdownText } from "baza/components/MarkdownText";
-import { BoxExpandable } from "baza/components/BoxExpandable";
 import { PostHeader } from "./PostHeader";
 import { PostControls } from "./PostControls";
 import { PostCreator } from "./PostCreator";

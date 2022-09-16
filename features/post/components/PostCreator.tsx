@@ -2,9 +2,7 @@ import { Avatar, Box, Container, Group, Stack, Tooltip } from "@mantine/core";
 import { FC } from "react";
 import { PersonSafe, Post } from "ujournal-lemmy-js-client";
 import { usePersonViewSafe } from "../../user/hooks/userPersonViewSafe";
-import { UserButton } from "../../user/components/UserButton";
 import { IconUser } from "@tabler/icons";
-import { Score } from "baza/components/Score";
 import { MarkdownText } from "baza/components/MarkdownText";
 
 export const PostCreator: FC<{
