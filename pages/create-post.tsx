@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { SitePage } from "types";
 import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
+import { generatePostPlaceholderUrl } from "features/post/utils/postUrl";
 
 const CreatePostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -23,7 +24,7 @@ const CreatePostPage: SitePage = () => {
         const post = await upsertPost.mutateAsync({
           ...values,
           name: values.name || "...",
-          url: values.url || `https://example.com/?${Math.random()}`,
+          url: values.url || generatePostPlaceholderUrl(),
         });
 
         showSuccess("post-creating");

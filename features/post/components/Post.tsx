@@ -1,12 +1,12 @@
 import {
   Card,
   Group,
-  Text,
   Box,
   Title,
   Container,
   MantineShadow,
   Stack,
+  Button,
 } from "@mantine/core";
 import { FC, MutableRefObject, useMemo } from "react";
 import { PostView } from "ujournal-lemmy-js-client";
@@ -18,6 +18,10 @@ import { BoxExpandable } from "baza/components/BoxExpandable";
 import { PostHeader } from "./PostHeader";
 import { PostControls } from "./PostControls";
 import { PostCreator } from "./PostCreator";
+import { isPostUrlPlaceholder } from "../utils/postUrl";
+import { IconCaretRight } from "@tabler/icons";
+import { useTranslation } from "react-i18next";
+import { capitalize } from "baza/utils/string";
 
 export const Post: FC<
   PostView & {
@@ -42,13 +46,14 @@ export const Post: FC<
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+  const { t } = useTranslation();
 
   const url = useMemo(
     () =>
       post.url.match({
         some: (url) => (
           <>
-            {!url.startsWith("https://example.com/") ? (
+            {!isPostUrlPlaceholder(url) ? (
               <Embed
                 src={url}
                 title={post.embed_title.unwrapOr("")}
@@ -67,15 +72,48 @@ export const Post: FC<
     () =>
       post.body.match({
         some: (body) => (
-          <BoxExpandable showBody={full}>
-            <Text size="md" component="div">
-              <MarkdownText text={body} />
-            </Text>
-          </BoxExpandable>
+          // <BoxExpandable showBody={full}>
+          //   <Text size="md" component="div">
+          //     <MarkdownText text={body} />
+          //   </Text>
+          // </BoxExpandable>
+          <>
+            <MarkdownText
+              text={body}
+              truncateLength={!full ? 100 : undefined}
+              pt={
+                post.url.isSome() &&
+                !isPostUrlPlaceholder(post.url.unwrapOr(""))
+                  ? "md"
+                  : undefined
+              }
+            />
+            {!full && body.length > 100 ? (
+              <Link
+                href={{ pathname: "/post", query: { postId: post.id } }}
+                passHref
+              >
+                <Button
+                  variant="light"
+                  radius="md"
+                  fullWidth
+                  mt="md"
+                  size="xs"
+                  sx={(theme) => ({
+                    backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+                  })}
+                  component="a"
+                  rightIcon={<IconCaretRight stroke={1.5} />}
+                >
+                  {capitalize(t("more"))}
+                </Button>
+              </Link>
+            ) : undefined}
+          </>
         ),
         none: undefined,
       }),
-    [full, post.body]
+    [full, post.body, post.id, post.url, t]
   );
 
   return (

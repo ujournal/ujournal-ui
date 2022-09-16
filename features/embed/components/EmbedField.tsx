@@ -9,6 +9,7 @@ import { shuffle } from "lodash";
 import { useIntervalPhrases } from "baza/hooks/useIntervalPhrases";
 import { UrlMetadata } from "baza/hooks/useUrlMetadata";
 import { UploadImageButton } from "baza/components/UploadImageButton";
+import { isPostUrlPlaceholder } from "features/post/utils/postUrl";
 
 const socialMediaNames = shuffle([
   "YouTube",
@@ -45,7 +46,7 @@ export const EmbedField: FC<
 
   return (
     <>
-      {!value.startsWith("https://example.com") && isUrl(value) ? (
+      {!isPostUrlPlaceholder(value) && isUrl(value) ? (
         <Box mx={smallerThanSm ? "-sm" : "-xl"} sx={{ position: "relative" }}>
           <Box sx={{ pointerEvents: "none" }}>
             <Embed
@@ -73,7 +74,7 @@ export const EmbedField: FC<
         <TextInput
           withAsterisk
           placeholder={`${socialMediaName} ${t("url")}`}
-          value={!value.startsWith("https://example.com") ? value : ""}
+          value={!isPostUrlPlaceholder(value) ? value : ""}
           onChange={handleChange}
           sx={{ flex: "1 1 0" }}
           styles={{
