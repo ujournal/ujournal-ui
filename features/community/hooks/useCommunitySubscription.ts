@@ -26,6 +26,7 @@ export const useCommunitySubscription = () => {
       );
 
       queryClient.invalidateQueries(["communities"]);
+      queryClient.invalidateQueries(["post"]);
 
       return result;
     }
