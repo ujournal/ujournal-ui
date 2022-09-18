@@ -79,8 +79,6 @@ export const MarkdownText: FC<
           display: "block",
         },
         "& .image-caption": {
-          marginLeft: compact ? 0 : -20,
-          marginRight: compact ? 0 : -20,
           paddingTop: theme.spacing.sm,
           paddingBottom: theme.spacing.sm,
           fontSize: 14,
