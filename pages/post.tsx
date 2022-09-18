@@ -9,6 +9,7 @@ import {
 import { CommentList } from "features/comment/components/CommentList";
 import { CommentTitle } from "features/comment/components/CommentTitle";
 import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
+import { CommunityItem } from "features/community/components/CommunityItem";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
@@ -38,7 +39,7 @@ const PostPage: SitePage = () => {
   return (
     <>
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
-        {post.isSuccess ? (
+        {post.isSuccess && post.data ? (
           <Post {...post.data.post_view} full commentsAsText showPostCreator />
         ) : (
           <PostLoader />
@@ -85,7 +86,21 @@ const PostPage: SitePage = () => {
 };
 
 const Aside: FC = () => {
-  return null;
+  const { postId: _postId } = useRouterQuery<{ postId: number }>({
+    postId: -1,
+  });
+  const postId = Number(_postId);
+  const post = usePost({ postId });
+
+  if (!post.data) {
+    return null;
+  }
+
+  return (
+    <Box p={4}>
+      <CommunityItem {...(post.data?.community_view as any)} compact />
+    </Box>
+  );
 };
 
 PostPage.Navbar = AppNavbar;

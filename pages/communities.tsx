@@ -1,5 +1,5 @@
 import { Container, Grid } from "@mantine/core";
-import { CommunityItem } from "features/community/components/CommunityItem";
+import { CommunityItemWithCol } from "features/community/components/CommunityItem";
 import { CommunityList } from "features/community/components/CommunityList";
 import { CommunityMoreLoaderWithRef } from "features/community/components/CommunityMoreLoader";
 import { useCommunityList } from "features/community/hooks/useCommunityList";
@@ -13,7 +13,7 @@ const CommunitiesPage: SitePage = () => {
       <Grid>
         <CommunityList
           {...communityList}
-          itemComponent={CommunityItem}
+          itemComponent={CommunityItemWithCol}
           itemKey="community.id"
           loaderComponent={CommunityMoreLoaderWithRef}
         />

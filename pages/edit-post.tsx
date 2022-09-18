@@ -60,7 +60,7 @@ const EditPostPage: SitePage = () => {
     return undefined;
   }, [post.data]);
 
-  if (post.isSuccess) {
+  if (post.isSuccess && post.data) {
     return (
       <Container size={690} p={0}>
         <Card
