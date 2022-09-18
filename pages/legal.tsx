@@ -110,8 +110,8 @@ const LegalPage: SitePage = () => {
             1.7 <strong>Архів версій і сповіщень.</strong> З актуальною версією
             й архівом усіх попередніх версій цих Правил, так само як і з архівом
             окремих сповіщень, Ви можете ознайомитися за адресою{" "}
-            <a href="https://ujounral.com.ua/new/legal/">
-              ujounral.com.ua/new/legal
+            <a href="https://ujournal.com.ua/new/legal/">
+              ujournal.com.ua/new/legal
             </a>
             .
           </Box>
