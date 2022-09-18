@@ -1,4 +1,5 @@
 import TurndownService from "turndown";
+import { parseMarkdownToYouTube } from "./YouTubeTypeParser";
 
 const turndown = new TurndownService();
 
@@ -25,6 +26,15 @@ export function parseMarkdownToParagraph(blocks: any) {
       };
     }
 
+    if (
+      blocks.children.length > 1 &&
+      blocks.children[0].type === "text" &&
+      blocks.children[0].value === "@" &&
+      blocks.children[1].type === "link"
+    ) {
+      return parseMarkdownToYouTube(blocks);
+    }
+
     return {
       data: {
         text: blocks.children
@@ -46,6 +56,5 @@ export function parseMarkdownToParagraph(blocks: any) {
       },
       type: "paragraph",
     };
-  } else if (["strong", "emphasis"].includes(blocks.type)) {
   }
 }

@@ -11,7 +11,7 @@ export const convertMarkdownToEditorJs = (content: string) => {
 
   const parsedMarkdown = remark().parse(content);
 
-  parsedMarkdown.children.forEach((item, index) => {
+  parsedMarkdown.children.forEach((item: any) => {
     switch (item.type) {
       case "heading":
         return data.push(parseMarkdownToHeader(item));

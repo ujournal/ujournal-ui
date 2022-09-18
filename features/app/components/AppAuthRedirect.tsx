@@ -4,7 +4,6 @@ import { SiteAuth, SiteExtraProps } from "types";
 import { useAuth } from "../hooks/useAuth";
 
 export const redirectOnSignedIn = (auth: SiteAuth) => {
-  console.log("auth", auth.token.unwrapOr("err"));
   if (auth.token.isOk()) {
     const redirect = new URLSearchParams(location.search).get("redirect");
     return redirect && !redirect.includes("/sign-") ? redirect : "/";

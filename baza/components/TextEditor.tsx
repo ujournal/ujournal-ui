@@ -6,6 +6,7 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import QuoteTool from "@editorjs/quote";
 import ListTool from "@editorjs/list";
+import YouTubeTool from "editorjs-youtube-embed";
 import Undo from "editorjs-undo";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";
@@ -98,6 +99,7 @@ export const TextEditor: FC<TextEditorProps> = ({
             defaultStyle: "unordered",
           },
         },
+        youtubeEmbed: YouTubeTool,
       },
       data: convertMarkdownToEditorJs(value),
       onChange: handleEditorChange,

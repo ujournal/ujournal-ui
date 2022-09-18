@@ -6,6 +6,7 @@ import { parseImageToMarkdown } from "./blockTypeParsers/ImageTypeParser";
 import { parseListToMarkdown } from "./blockTypeParsers/ListTypeParser";
 import { parseParagraphToMarkdown } from "./blockTypeParsers/ParagraphTypeParser";
 import { parseQuoteToMarkdown } from "./blockTypeParsers/QuoteTypeParser";
+import { parseYouTubeToMarkdown } from "./blockTypeParsers/YouTubeTypeParser";
 
 export const convertEditorJsToMarkdown = (data: { blocks: any[] }) => {
   const parsedData = data.blocks.map((item: any) => {
@@ -28,6 +29,8 @@ export const convertEditorJsToMarkdown = (data: { blocks: any[] }) => {
         return parseCodeToMarkdown(item.data);
       case "checklist":
         return parseCheckboxToMarkdown(item.data);
+      case "youtubeEmbed":
+        return parseYouTubeToMarkdown(item.data);
       default:
         break;
     }

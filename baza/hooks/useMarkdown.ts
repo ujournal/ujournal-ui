@@ -5,6 +5,7 @@ import markdown_it_footnote from "markdown-it-footnote";
 import markdown_it_html5_embed from "markdown-it-html5-embed";
 import markdown_it_sub from "markdown-it-sub";
 import markdown_it_sup from "markdown-it-sup";
+import markdown_it_video from "markdown-it-video";
 
 export const markdown = new markdownIt({
   html: false,
@@ -23,6 +24,12 @@ export const markdown = new markdownIt({
           'width="100%" max-height="100%" controls loop preload="metadata"',
       },
     },
+  })
+  .use(markdown_it_video, {
+    youtube: { width: 640, height: 390 },
+    vimeo: { width: 500, height: 281 },
+    vine: { width: 600, height: 600, embed: "simple" },
+    prezi: { width: 550, height: 400 },
   })
   .use(markdownItContainer, "spoiler", {
     validate: (params: any) => {
