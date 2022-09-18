@@ -43,7 +43,11 @@ export const UserMenu: FC<{
       </Menu.Target>
       <Menu.Dropdown>
         <Link href="/profile" passHref>
-          <Menu.Item component="a" icon={<IconUser size={24} stroke={1.5} />}>
+          <Menu.Item
+            component="a"
+            icon={<IconUser size={24} stroke={1.5} />}
+            sx={{ display: "none" }}
+          >
             {t("profile")}
           </Menu.Item>
         </Link>
@@ -51,6 +55,7 @@ export const UserMenu: FC<{
           <Menu.Item
             icon={<IconSettings size={24} stroke={1.5} />}
             component="a"
+            sx={{ display: "none" }}
           >
             {t("settings")}
           </Menu.Item>
