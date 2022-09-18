@@ -94,6 +94,19 @@ export const MarkdownText: FC<
             marginBottom: 0,
           },
         },
+        "& .embed-responsive": {
+          position: "relative",
+          overflow: "hidden",
+          paddingTop: "56.25%",
+        },
+        "& .embed-responsive iframe": {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: "100%",
+          width: "100%",
+          border: 0,
+        },
       })}
     />
   );

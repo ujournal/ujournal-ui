@@ -1,24 +1,31 @@
+import TurndownService from "turndown";
+import { markdown } from "..";
+import { remark } from "remark";
+
+const turndown = new TurndownService();
+
 export function parseQuoteToMarkdown(blocks: any) {
-  return `> ${blocks.text}\n`;
+  return turndown
+    .turndown(blocks.text)
+    .split("\n")
+    .map((line) => `> ${line}`)
+    .join("\n");
 }
 
 export function parseMarkdownToQuote(blocks: any) {
-  let quoteData = {};
+  let results = {};
 
-  blocks.children.forEach((items: any) => {
-    items.children.forEach((listItem: any) => {
-      if (listItem.type === "text") {
-        quoteData = {
-          data: {
-            alignment: "left",
-            caption: "",
-            text: listItem.value,
-          },
-          type: "quote",
-        };
-      }
-    });
-  });
+  results = {
+    data: {
+      alignment: "left",
+      caption: "",
+      text: blocks.children
+        .map((item: any) => markdown.render(remark().stringify(item)))
+        .join("\n"),
+    },
+    children: blocks.children[0].children,
+    type: "quote",
+  };
 
-  return quoteData;
+  return results;
 }
