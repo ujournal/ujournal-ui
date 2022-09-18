@@ -5,11 +5,11 @@ import { remark } from "remark";
 const turndown = new TurndownService();
 
 export function parseQuoteToMarkdown(blocks: any) {
-  return turndown
+  return `${turndown
     .turndown(blocks.text)
     .split("\n")
     .map((line) => `> ${line}`)
-    .join("\n");
+    .join("\n")}\n`;
 }
 
 export function parseMarkdownToQuote(blocks: any) {
@@ -23,7 +23,6 @@ export function parseMarkdownToQuote(blocks: any) {
         .map((item: any) => markdown.render(remark().stringify(item)))
         .join("\n"),
     },
-    children: blocks.children[0].children,
     type: "quote",
   };
 

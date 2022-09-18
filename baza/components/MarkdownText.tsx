@@ -33,7 +33,11 @@ export const MarkdownText: FC<
   const html = useMemo(() => {
     const html = markdown.render(text);
 
-    return truncateLength ? truncate(html, truncateLength) : html;
+    if (truncateLength) {
+      return truncate(html, truncateLength);
+    }
+
+    return html;
   }, [markdown, text, truncateLength]);
 
   return (
@@ -46,6 +50,9 @@ export const MarkdownText: FC<
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],
           color: theme.colors.blue,
+        },
+        "p:empty": {
+          display: "none",
         },
         "& > p:first-of-type": {
           marginTop: 0,

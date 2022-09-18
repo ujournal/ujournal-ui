@@ -17,8 +17,8 @@ export function parseMarkdownToParagraph(blocks: any) {
           stretched: false,
           file: {
             url: item.url,
-            caption: item.title,
           },
+          caption: item.alt || item.title,
           withBackground: false,
           withBorder: false,
         },
