@@ -53,11 +53,16 @@ export const markdown = new markdownIt({
 const renderImageDefault = markdown.renderer.rules.image as any;
 
 markdown.renderer.rules.image = (tokens, idx, options, env, self) => {
-  return `<div class="image">${renderImageDefault(
+  console.log(tokens, idx, options, env, self);
+  return `<div class="image-outer"><div class="image">${renderImageDefault(
     tokens,
     idx,
     options,
     env,
     self
-  )}</div>`;
+  )}</div>${
+    tokens.length > 0 && tokens[0].content
+      ? `<div class="image-caption">${tokens[0].content}</div>`
+      : ""
+  }</div>`;
 };

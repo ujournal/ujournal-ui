@@ -78,6 +78,14 @@ export const MarkdownText: FC<
         "& .image video": {
           display: "block",
         },
+        "& .image-caption": {
+          marginLeft: compact ? 0 : -20,
+          marginRight: compact ? 0 : -20,
+          paddingTop: theme.spacing.sm,
+          paddingBottom: theme.spacing.sm,
+          fontSize: 14,
+          color: theme.colors.gray[6],
+        },
         "& blockquote": {
           backgroundColor: theme.fn.lighten(theme.colors.blue[0], 0.5),
           padding: compact ? theme.spacing.sm : theme.spacing.xl,
