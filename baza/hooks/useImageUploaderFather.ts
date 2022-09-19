@@ -1,14 +1,24 @@
 import { useCallback, useMemo } from "react";
+import { useFreeimageUpload } from "./useFreeimageUpload";
 import { useIbbImageUpload } from "./useIbbImageUpload";
 import { usePictrsImageUpload } from "./usePictrsImageUpload";
 
 export const useImageUploaderFather = () => {
   const uploadImageViaPictrsUploader = usePictrsImageUpload();
   const uploadImageViaIbbUploader = useIbbImageUpload();
+  // const uploadImageViaFreeimageUploader = useFreeimageUpload();
 
   const uploaders = useMemo(
-    () => [uploadImageViaPictrsUploader, uploadImageViaIbbUploader],
-    [uploadImageViaIbbUploader, uploadImageViaPictrsUploader]
+    () => [
+      // uploadImageViaFreeimageUploader,
+      uploadImageViaPictrsUploader,
+      uploadImageViaIbbUploader,
+    ],
+    [
+      // uploadImageViaFreeimageUploader,
+      uploadImageViaIbbUploader,
+      uploadImageViaPictrsUploader,
+    ]
   );
 
   const upload = useCallback(

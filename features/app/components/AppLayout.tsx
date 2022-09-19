@@ -40,7 +40,6 @@ export const AppLayout: FC<{
               <Aside.Section
                 grow
                 component={ScrollArea}
-                mx="-xs"
                 styles={{
                   viewport: {
                     overflowWrap: "anywhere",
