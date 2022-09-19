@@ -20,14 +20,14 @@ import { CommunityView } from "ujournal-lemmy-js-client";
 import { useCommunitySubscription } from "../hooks/useCommunitySubscription";
 
 type CommunityItemProps = Omit<CommunityView, "subscribed"> & {
-  subscribed: boolean;
+  subscribed?: boolean;
   compact?: boolean;
 };
 
 export const CommunityItem: FC<CommunityItemProps> = ({
   community,
   counts,
-  subscribed,
+  subscribed = false,
   compact = false,
 }) => {
   const { t } = useTranslation();
@@ -53,7 +53,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
         </Card.Section>
       )}
       <Stack sx={{ flex: "1 1 0" }}>
-        <Group noWrap>
+        <Group noWrap={!compact}>
           {community.icon.unwrapOr("") && (
             <Avatar src={community.icon.unwrapOr("")} size={60} />
           )}
@@ -69,12 +69,9 @@ export const CommunityItem: FC<CommunityItemProps> = ({
                 <Box component="a">{community.title || community.name}</Box>
               </Link>
             </Title>
-            {!compact && (
-              <MarkdownText text={community.description.unwrapOr("")} />
-            )}
+            <MarkdownText text={community.description.unwrapOr("")} />
           </Stack>
         </Group>
-        {compact && <MarkdownText text={community.description.unwrapOr("")} />}
         <Grid
           align="stretch"
           sx={{

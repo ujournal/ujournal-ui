@@ -1,6 +1,7 @@
 import { Box, Card, Container, Stack, Title } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
+import { AppCommunityAside } from "features/app/components/AppCommunityAside";
 import { AppNavbar } from "features/app/components/AppNavbar";
 import {
   CommentForm,
@@ -9,11 +10,10 @@ import {
 import { CommentList } from "features/comment/components/CommentList";
 import { CommentTitle } from "features/comment/components/CommentTitle";
 import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
-import { CommunityItem } from "features/community/components/CommunityItem";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
-import { FC, useCallback } from "react";
+import { useCallback } from "react";
 import { SitePage } from "types";
 
 const PostPage: SitePage = () => {
@@ -85,25 +85,7 @@ const PostPage: SitePage = () => {
   );
 };
 
-const Aside: FC = () => {
-  const { postId: _postId } = useRouterQuery<{ postId: number }>({
-    postId: -1,
-  });
-  const postId = Number(_postId);
-  const post = usePost({ postId });
-
-  if (!post.data) {
-    return null;
-  }
-
-  return (
-    <Box p={4}>
-      <CommunityItem {...(post.data?.community_view as any)} compact />
-    </Box>
-  );
-};
-
 PostPage.Navbar = AppNavbar;
-PostPage.Aside = Aside;
+PostPage.Aside = AppCommunityAside;
 
 export default PostPage;

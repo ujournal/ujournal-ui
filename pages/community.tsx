@@ -6,8 +6,8 @@ import {
   fetchPostsParamsDefault,
   usePostList,
 } from "features/post/hooks/usePostList";
-import { FC } from "react";
 import { AppNavbar } from "features/app/components/AppNavbar";
+import { AppCommunityAside } from "features/app/components/AppCommunityAside";
 
 const CommunityPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -21,11 +21,8 @@ const CommunityPage: SitePage = () => {
     </>
   );
 };
-const AppAside: FC = () => {
-  return <></>;
-};
 
 CommunityPage.Navbar = AppNavbar;
-CommunityPage.Aside = AppAside;
+CommunityPage.Aside = AppCommunityAside;
 
 export default CommunityPage;

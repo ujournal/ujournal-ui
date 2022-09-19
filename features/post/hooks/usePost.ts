@@ -11,7 +11,7 @@ export const usePost = ({ postId }: { postId: number }) => {
   return useQuery(
     ["post", { token: auth.token.unwrapOr(""), postId }],
     async () => {
-      if (postId === -1) {
+      if (!postId) {
         return null;
       }
 
