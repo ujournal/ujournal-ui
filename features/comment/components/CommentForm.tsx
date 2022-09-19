@@ -1,6 +1,6 @@
 import { ActionIcon, Group, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconSend } from "@tabler/icons";
+import { IconLayoutSidebarRightCollapse, IconSend } from "@tabler/icons";
 import {
   FC,
   SyntheticEvent,
@@ -11,6 +11,8 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { UploadImageButton } from "baza/components/UploadImageButton";
+import { MentionsPopover } from "features/mentions/components/MentionsPopover";
+import { PersonSafe } from "ujournal-lemmy-js-client";
 
 export type Values = {
   parentId?: number;
@@ -84,33 +86,55 @@ export const CommentForm: FC<{
     }
   }, [autofocus]);
 
+  const personMention = useMemo(() => {
+    const mathces = form.values.content.match(/\B@\w+$/g);
+    return mathces ? mathces[0] : undefined;
+  }, [form.values.content]);
+
+  const handlePersonSelect = useCallback(
+    (person: PersonSafe) => {
+      if (personMention) {
+        form.setFieldValue(
+          "content",
+          form.values.content.replace(
+            new RegExp(`${personMention}$`),
+            `@${person.name}`
+          )
+        );
+      }
+    },
+    [form, personMention]
+  );
+
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Group noWrap align="flex-end" spacing="xs">
-        <Textarea
-          size={"md"}
-          autosize
-          placeholder={t("comment_here")}
-          sx={{ flex: "1 1 0" }}
-          rightSection={
-            <UploadImageButton
-              onUploaded={handleFileUpload}
-              sx={{ backgroundColor: "#fff" }}
-              mb={9}
-              mr={9}
-            />
-          }
-          styles={{
-            rightSection: {
-              alignItems: "flex-end",
-            },
-          }}
-          {...form.getInputProps("content")}
-          ref={contentFieldRef}
-          disabled={isLoading}
-          radius="md"
-          onKeyDown={handleContentKeyDown}
-        />
+        <MentionsPopover q={personMention} onSelect={handlePersonSelect}>
+          <Textarea
+            size={"md"}
+            autosize
+            placeholder={t("comment_here")}
+            sx={{ flex: "1 1 0" }}
+            rightSection={
+              <UploadImageButton
+                onUploaded={handleFileUpload}
+                sx={{ backgroundColor: "#fff" }}
+                mb={9}
+                mr={9}
+              />
+            }
+            styles={{
+              rightSection: {
+                alignItems: "flex-end",
+              },
+            }}
+            {...form.getInputProps("content")}
+            ref={contentFieldRef}
+            disabled={isLoading}
+            radius="md"
+            onKeyDown={handleContentKeyDown}
+          />
+        </MentionsPopover>
 
         <ActionIcon
           type="submit"
