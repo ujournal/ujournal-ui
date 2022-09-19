@@ -23,7 +23,7 @@ export const AppDrawer: FC<{
           opened={navbarOpened}
           onClose={handleDrawerClose}
           padding="xl"
-          size={smallerThanSm ? "100%" : "75%"}
+          size={smallerThanSm ? "85%" : "75%"}
           styles={{
             drawer: {
               backgroundColor: "#f2f2f2",

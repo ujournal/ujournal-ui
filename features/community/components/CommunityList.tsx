@@ -37,6 +37,7 @@ export const CommunityList: FC<{
   isFetching?: boolean;
   fetchNextPage?: () => void;
   loaderComponent?: ComponentType;
+  listLoaderComponent?: ComponentType;
 }> = ({
   data,
   isLoading = false,
@@ -45,13 +46,14 @@ export const CommunityList: FC<{
   itemComponent: ItemComponent = CommunityButton,
   isFetching,
   isSuccess,
-  fetchNextPage = () => {},
+  fetchNextPage = undefined,
   loaderComponent: Loader = CommunityMoreLoaderWithRef,
+  listLoaderComponent: ListLoader = CommunityListLoader,
 }) => {
   const [sentryRef] = useInfiniteScroll({
     loading: isLoading,
     hasNextPage: true,
-    onLoadMore: fetchNextPage,
+    onLoadMore: fetchNextPage || (() => undefined),
     rootMargin: "0px 0px 400px 0px",
     disabled: false,
   });
@@ -62,11 +64,13 @@ export const CommunityList: FC<{
         data={data}
         isLoading={isLoading}
         itemComponent={ItemComponent}
-        loaderComponent={CommunityListLoader}
+        loaderComponent={ListLoader}
         itemKey={itemKey}
         itemProps={itemProps}
       />
-      <Loader ref={sentryRef} isFetching={isFetching} isSuccess={isSuccess} />
+      {fetchNextPage && (
+        <Loader ref={sentryRef} isFetching={isFetching} isSuccess={isSuccess} />
+      )}
     </>
   );
 };

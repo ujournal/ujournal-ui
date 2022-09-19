@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { Box, Stack, Text } from "@mantine/core";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
 import {
@@ -23,6 +23,8 @@ import {
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 import { useCommunityListForNavbar } from "features/community/hooks/useCommunityListForNavbar";
 import { useRouter } from "next/router";
+import { differenceWith, map, omit } from "lodash";
+import { NavbarTitle } from "baza/components/NavbarTitle";
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
@@ -34,10 +36,6 @@ export const AppNavbar = () => {
   }, [toggleMenu]);
 
   const query = useRouterQuery<FetchPostsParams>(fetchPostsParamsDefault);
-
-  const commnityList = useCommunityListForNavbar({
-    activeCommunityName: query.communityName as string,
-  });
 
   const links = useMemo(
     () =>
@@ -134,7 +132,6 @@ export const AppNavbar = () => {
           icon: IconSpeakerphone,
         },
       ].map((link) => {
-        console.log(link, router.pathname);
         return {
           ...link,
           active:
@@ -147,16 +144,68 @@ export const AppNavbar = () => {
     [query, router.pathname, t]
   );
 
+  const commnitySubscribedList = useCommunityListForNavbar({
+    type: ListingType.Subscribed,
+    sort: SortType.TopAll,
+    activeCommunityName: query.communityName as string,
+    limit: 10,
+  });
+
+  const commnityTopList = useCommunityListForNavbar({
+    type: ListingType.Community,
+    sort: SortType.TopAll,
+    activeCommunityName: query.communityName as string,
+    limit: 10,
+  });
+
+  const topList = useMemo(() => {
+    if (commnityTopList.isLoading) {
+      return commnityTopList;
+    }
+
+    const communityNamesSubscribed = map(
+      commnitySubscribedList.data,
+      "communityName"
+    );
+
+    return {
+      ...commnityTopList,
+      data: differenceWith(
+        commnityTopList.data,
+        communityNamesSubscribed,
+        ({ communityName }, _communityName) => _communityName === communityName
+      ),
+    };
+  }, [commnitySubscribedList.data, commnityTopList]);
+
   return (
-    <>
-      <Box mb="lg">
+    <Stack>
+      <Box>
         <LinksList items={links} onLinkClick={handleToggleMenu} />
       </Box>
 
-      <CommunityList
-        {...commnityList}
-        itemProps={{ onLinkClick: handleToggleMenu }}
-      />
-    </>
+      {commnitySubscribedList.isSuccess && commnityTopList.data.length > 0 && (
+        <Box>
+          <NavbarTitle>{t("subscribed")}</NavbarTitle>
+
+          <CommunityList
+            {...omit(commnitySubscribedList, ["fetchNextPage"])}
+            itemProps={{ onLinkClick: handleToggleMenu }}
+          />
+        </Box>
+      )}
+
+      {topList.isLoading ||
+        (topList.data.length > 0 && (
+          <Box>
+            <NavbarTitle>{t("top")}</NavbarTitle>
+
+            <CommunityList
+              {...omit(topList, ["fetchNextPage"])}
+              itemProps={{ onLinkClick: handleToggleMenu }}
+            />
+          </Box>
+        ))}
+    </Stack>
   );
 };

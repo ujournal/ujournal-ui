@@ -33,8 +33,6 @@ export const AppCommunityAside: FC = () => {
     return undefined;
   }, [community.data, post.data]);
 
-  console.log("community", community);
-
   if (!communityView) {
     return null;
   }

@@ -53,7 +53,6 @@ export const markdown = new markdownIt({
 const renderImageDefault = markdown.renderer.rules.image as any;
 
 markdown.renderer.rules.image = (tokens, idx, options, env, self) => {
-  console.log(tokens, idx, options, env, self);
   return `<div class="image-outer"><div class="image">${renderImageDefault(
     tokens,
     idx,

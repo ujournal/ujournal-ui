@@ -1,12 +1,13 @@
 import { useCallback, useMemo } from "react";
-import { useCommunityList } from "./useCommunityList";
+import { FetchCommunitiesParams, useCommunityList } from "./useCommunityList";
 
 export const useCommunityListForNavbar = ({
   activeCommunityName,
+  ...params
 }: {
   activeCommunityName: string;
-}) => {
-  const communities = useCommunityList();
+} & FetchCommunitiesParams) => {
+  const communities = useCommunityList(params);
 
   const transformCommunities = useCallback(
     (data: ReturnType<typeof useCommunityList>["data"]) => {
