@@ -69,24 +69,32 @@ export const CommunityItem: FC<CommunityItemProps> = ({
                 <Box component="a">{community.title || community.name}</Box>
               </Link>
             </Title>
-            <MarkdownText text={community.description.unwrapOr("")} />
+            {!compact && (
+              <MarkdownText text={community.description.unwrapOr("")} />
+            )}
           </Stack>
         </Group>
-        <Grid align="stretch">
+        {compact && <MarkdownText text={community.description.unwrapOr("")} />}
+        <Grid
+          align="stretch"
+          sx={{
+            gap: 0,
+          }}
+        >
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap>
+            <Group noWrap position="apart">
               <Text color="gray.5">{t("subscribers")}</Text>
               <Text>{counts.subscribers}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap>
+            <Group noWrap position="apart">
               <Text color="gray.5">{t("posts")}</Text>
               <Text>{counts.posts}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap>
+            <Group noWrap position="apart">
               <Text color="gray.5">
                 {t("users")} / {t("month")}
               </Text>
@@ -94,7 +102,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap>
+            <Group noWrap position="apart">
               <Text color="gray.5">{t("comments")}</Text>
               <Text>{counts.comments}</Text>
             </Group>

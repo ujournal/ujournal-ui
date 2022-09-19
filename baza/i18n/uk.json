@@ -186,7 +186,7 @@
   "new_comments": "Нові коментарі",
   "day": "day",
   "week": "week",
-  "month": "month",
+  "month": "місяць",
   "number_of_months": "{{formattedCount}} month",
   "number_of_months_plural": "{{formattedCount}} months",
   "number_of_days": "Number of days",
