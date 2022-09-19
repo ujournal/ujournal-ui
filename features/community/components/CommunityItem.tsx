@@ -81,13 +81,13 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           <Grid.Col span={compact ? 12 : 6}>
             <Group noWrap position="apart">
               <Text color="gray.5">{t("subscribers")}</Text>
-              <Text>{counts.subscribers}</Text>
+              <Text sx={{ whiteSpace: "nowrap" }}>{counts.subscribers}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
             <Group noWrap position="apart">
               <Text color="gray.5">{t("posts")}</Text>
-              <Text>{counts.posts}</Text>
+              <Text sx={{ whiteSpace: "nowrap" }}>{counts.posts}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
@@ -95,13 +95,15 @@ export const CommunityItem: FC<CommunityItemProps> = ({
               <Text color="gray.5">
                 {t("users")} / {t("month")}
               </Text>
-              <Text>{counts.users_active_month}</Text>
+              <Text sx={{ whiteSpace: "nowrap" }}>
+                {counts.users_active_month}
+              </Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
             <Group noWrap position="apart">
               <Text color="gray.5">{t("comments")}</Text>
-              <Text>{counts.comments}</Text>
+              <Text sx={{ whiteSpace: "nowrap" }}>{counts.comments}</Text>
             </Group>
           </Grid.Col>
         </Grid>
