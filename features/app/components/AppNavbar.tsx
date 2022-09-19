@@ -6,6 +6,7 @@ import {
   IconMessageCircle,
   IconMessageCircle2,
   IconSpeakerphone,
+  IconSunset2,
   IconTrendingUp,
 } from "@tabler/icons";
 import { useCallback, useMemo } from "react";
@@ -68,6 +69,16 @@ export const AppNavbar = () => {
           },
           label: capitalize(t("new")),
           icon: IconBolt,
+        },
+        {
+          type: ListingType.All,
+          sort: SortType.TopDay,
+          url: {
+            pathname: "/",
+            query: { ...query, type: ListingType.All, sort: SortType.TopDay },
+          },
+          label: capitalize(t("top_day")),
+          icon: IconSunset2,
         },
         {
           type: ListingType.All,
