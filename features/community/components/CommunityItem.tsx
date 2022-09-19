@@ -45,7 +45,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
   }, [community.id, subscribed, subscription]);
 
   return (
-    <Card sx={{ display: "flex", flexDirection: "column" }}>
+    <Card sx={{ display: "flex", flexDirection: "column" }} radius="md">
       {community.banner.unwrapOr("") && (
         <Card.Section mb="md">
           <Image
@@ -81,21 +81,22 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           sx={{
             gap: 0,
           }}
+          gutter="sm"
         >
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap position="apart">
+            <Group noWrap position="apart" align="flex-start">
               <Text color="gray.5">{t("subscribers")}</Text>
               <Text sx={{ whiteSpace: "nowrap" }}>{counts.subscribers}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap position="apart">
+            <Group noWrap position="apart" align="flex-start">
               <Text color="gray.5">{t("posts")}</Text>
               <Text sx={{ whiteSpace: "nowrap" }}>{counts.posts}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap position="apart">
+            <Group noWrap position="apart" align="flex-start">
               <Text color="gray.5">
                 {t("users")} / {t("month")}
               </Text>
@@ -105,7 +106,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
             </Group>
           </Grid.Col>
           <Grid.Col span={compact ? 12 : 6}>
-            <Group noWrap position="apart">
+            <Group noWrap position="apart" align="flex-start">
               <Text color="gray.5">{t("comments")}</Text>
               <Text sx={{ whiteSpace: "nowrap" }}>{counts.comments}</Text>
             </Group>
