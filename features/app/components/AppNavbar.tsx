@@ -184,16 +184,17 @@ export const AppNavbar = () => {
         <LinksList items={links} onLinkClick={handleToggleMenu} />
       </Box>
 
-      {commnitySubscribedList.isSuccess && commnityTopList.data.length > 0 && (
-        <Box>
-          <NavbarTitle>{t("subscribed")}</NavbarTitle>
+      {commnitySubscribedList.isSuccess &&
+        commnitySubscribedList.data.length > 0 && (
+          <Box>
+            <NavbarTitle>{t("subscribed")}</NavbarTitle>
 
-          <CommunityList
-            {...omit(commnitySubscribedList, ["fetchNextPage"])}
-            itemProps={{ onLinkClick: handleToggleMenu }}
-          />
-        </Box>
-      )}
+            <CommunityList
+              {...omit(commnitySubscribedList, ["fetchNextPage"])}
+              itemProps={{ onLinkClick: handleToggleMenu }}
+            />
+          </Box>
+        )}
 
       {topList.isLoading ||
         (topList.data.length > 0 && (
