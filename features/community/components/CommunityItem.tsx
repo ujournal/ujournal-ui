@@ -10,7 +10,11 @@ import {
   Button,
   Box,
 } from "@mantine/core";
-import { IconCircleCheck, IconCircleMinus } from "@tabler/icons";
+import {
+  IconCircleCheck,
+  IconCircleMinus,
+  IconSpeakerphone,
+} from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import Link from "next/link";
@@ -54,9 +58,9 @@ export const CommunityItem: FC<CommunityItemProps> = ({
       )}
       <Stack sx={{ flex: "1 1 0" }}>
         <Group noWrap={!compact}>
-          {community.icon.unwrapOr("") && (
-            <Avatar src={community.icon.unwrapOr("")} size={60} />
-          )}
+          <Avatar src={community.icon.unwrapOr("")} size={60}>
+            <IconSpeakerphone stroke={1.5} />
+          </Avatar>
           <Stack spacing={4}>
             <Title size={18}>
               <Link
