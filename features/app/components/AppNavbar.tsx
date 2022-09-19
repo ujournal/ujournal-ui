@@ -22,10 +22,12 @@ import {
 } from "features/post/hooks/usePostList";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 import { useCommunityListForNavbar } from "features/community/hooks/useCommunityListForNavbar";
+import { useRouter } from "next/router";
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
   const { toggle: toggleMenu } = useMenuToggle();
+  const router = useRouter();
 
   const handleToggleMenu = useCallback(() => {
     toggleMenu(false);
@@ -131,11 +133,18 @@ export const AppNavbar = () => {
           label: capitalize(t("communities")),
           icon: IconSpeakerphone,
         },
-      ].map((link) => ({
-        ...link,
-        active: query.sort === link.sort && query.type === link.type,
-      })),
-    [query, t]
+      ].map((link) => {
+        console.log(link, router.pathname);
+        return {
+          ...link,
+          active:
+            (router.pathname === "/" &&
+              query.sort === link.sort &&
+              query.type === link.type) ||
+            (router.pathname !== "/" && router.pathname === link.url.pathname),
+        };
+      }),
+    [query, router.pathname, t]
   );
 
   return (

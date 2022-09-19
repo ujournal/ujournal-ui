@@ -1,4 +1,5 @@
 import { Container, Grid } from "@mantine/core";
+import { AppNavbar } from "features/app/components/AppNavbar";
 import { CommunityItemWithCol } from "features/community/components/CommunityItem";
 import { CommunityList } from "features/community/components/CommunityList";
 import { CommunityMoreLoaderWithRef } from "features/community/components/CommunityMoreLoader";
@@ -21,5 +22,7 @@ const CommunitiesPage: SitePage = () => {
     </Container>
   );
 };
+
+CommunitiesPage.Navbar = AppNavbar;
 
 export default CommunitiesPage;
