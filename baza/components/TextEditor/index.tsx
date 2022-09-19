@@ -6,7 +6,7 @@ import ImageTool from "@editorjs/image";
 import CodeTool from "@editorjs/code";
 import QuoteTool from "@editorjs/quote";
 import ListTool from "@editorjs/list";
-import YouTubeTool from "editorjs-youtube-embed";
+import { YouTubeTool } from "./YouTubeTool";
 import Undo from "editorjs-undo";
 import { convertMarkdownToEditorJs } from "baza/utils/markdown/convertMarkdownToEditorJsBlocks";
 import { convertEditorJsToMarkdown } from "baza/utils/markdown/convertEditorJsBlocksToMarkdown";

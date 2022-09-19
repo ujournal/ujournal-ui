@@ -1509,11 +1509,6 @@
   dependencies:
     "vanilla-caret-js" "^1.0.1"
 
-"editorjs-youtube-embed@^1.0.3":
-  "integrity" "sha512-0jhveTlXpM8BkltqChhk5Co+cTQvyGk0aKgAiCgCRv7VJDDujHHaNyBLSzL3QLAVs7f7kcYdYQscwhLFZWJivA=="
-  "resolved" "https://registry.npmjs.org/editorjs-youtube-embed/-/editorjs-youtube-embed-1.0.3.tgz"
-  "version" "1.0.3"
-
 "electron-to-chromium@^1.4.202":
   "integrity" "sha512-3pwjAK0qHSDN9+YAF4fJknsSruP7mpjdWzUSruIJD/JCH77pEh0SorEyb3xVaKkfwk2tzjOt2D8scJ0KAdfXLA=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.230.tgz"

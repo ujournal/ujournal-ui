@@ -1,12 +1,15 @@
+import { remark } from "remark";
+import { markdown } from "..";
+
 export function parseListToMarkdown(blocks: any) {
   switch (blocks.style) {
     case "unordered":
-      return blocks.items.map((item: any) => `* ${item}`).join("\n");
+      return `${blocks.items.map((item: any) => `* ${item}`).join("\n")}\n`;
 
     case "ordered":
-      return blocks.items
+      return `${blocks.items
         .map((item: any, index: any) => `${index + 1} ${item}`)
-        .join("\n");
+        .join("\n")}\n`;
 
     default:
       break;

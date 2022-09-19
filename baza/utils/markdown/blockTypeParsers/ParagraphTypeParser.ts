@@ -40,13 +40,13 @@ export function parseMarkdownToParagraph(blocks: any) {
         text: blocks.children
           .map((item: any) => {
             if (item.type === "link") {
-              return `<a href="${item.url}">${item.children[0].value}</a>`;
+              return `<a href="${item.url}">${item.children[0]?.value}</a>`;
             } else if (item.type === "text") {
               return item.value;
             } else if (item.type === "strong") {
-              return `<b>${item.children[0].value}</b>`;
+              return `<b>${item.children[0]?.value}</b>`;
             } else if (item.type === "emphasis") {
-              return `<i>${item.children[0].value}</i>`;
+              return `<i>${item.children[0]?.value}</i>`;
             }
 
             return item.value || item.children?.at(0).value;
