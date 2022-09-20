@@ -57,7 +57,7 @@ const UserPage: SitePage = () => {
               </Stack>
             </Group>
             <Stack spacing="xs">
-              <Title size="h2">Інфо</Title>
+              <Title size="h2">Цифри</Title>
               <Group noWrap>
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Зареєстрований
