@@ -115,7 +115,7 @@ const UserPage: SitePage = () => {
             </Stack>
             {personViewSafe.data?.person.bio.unwrapOr("") && (
               <Stack spacing="xs">
-                <Title size="h3">Інфо</Title>
+                <Title size="h2">Інфо</Title>
                 <MarkdownText
                   text={personViewSafe.data?.person.bio.unwrapOr("") || ""}
                 />
