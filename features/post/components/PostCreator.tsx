@@ -1,4 +1,12 @@
-import { Avatar, Box, Container, Group, Stack, Tooltip } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Container,
+  Group,
+  Stack,
+  Tooltip,
+  Text,
+} from "@mantine/core";
 import { FC } from "react";
 import { PersonSafe, Post } from "ujournal-lemmy-js-client";
 import { usePersonViewSafe } from "../../user/hooks/userPersonViewSafe";
@@ -29,22 +37,25 @@ export const PostCreator: FC<{
         </Avatar>
         <Stack spacing={4}>
           <Group spacing="sm">
-            <Box sx={{ fontWeight: 600 }}>
-              <Link
-                href={{
-                  pathname: "/user",
-                  query: { userId: creator.id },
-                }}
-                passHref
-              >
-                <Box component="a">
-                  {creator.display_name?.match<string>({
-                    some: (name) => name,
-                    none: () => creator.name,
-                  })}
-                </Box>
-              </Link>
-            </Box>
+            <Group noWrap>
+              <Box sx={{ fontWeight: 600 }}>
+                <Link
+                  href={{
+                    pathname: "/user",
+                    query: { userId: creator.id },
+                  }}
+                  passHref
+                >
+                  <Box component="a">
+                    {creator.display_name?.match<string>({
+                      some: (name) => name,
+                      none: () => creator.name,
+                    })}
+                  </Box>
+                </Link>
+              </Box>
+              <Text color="gray">@{creator.name}</Text>
+            </Group>
             {/* <Score
               score={personViewSafe?.data?.totalScore || 0}
               sx={{ fontWeight: 600 }}
