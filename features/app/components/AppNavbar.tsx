@@ -196,17 +196,16 @@ export const AppNavbar = () => {
           </Box>
         )}
 
-      {topList.isLoading ||
-        (topList.data.length > 0 && (
-          <Box>
-            <NavbarTitle>{t("top")}</NavbarTitle>
+      {(topList.isLoading || topList.data.length > 0) && (
+        <Box>
+          <NavbarTitle>{t("top")}</NavbarTitle>
 
-            <CommunityList
-              {...omit(topList, ["fetchNextPage"])}
-              itemProps={{ onLinkClick: handleToggleMenu }}
-            />
-          </Box>
-        ))}
+          <CommunityList
+            {...omit(topList, ["fetchNextPage"])}
+            itemProps={{ onLinkClick: handleToggleMenu }}
+          />
+        </Box>
+      )}
     </Stack>
   );
 };
