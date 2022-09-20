@@ -1,11 +1,14 @@
-import { Tooltip, Text } from "@mantine/core";
+import { Tooltip, Text, TextProps } from "@mantine/core";
 import { intervalToDuration } from "date-fns";
 import { useState } from "react";
 import { useCallback } from "react";
 import { FC, useMemo } from "react";
 import i18n from "i18next";
 
-export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
+export const DateFormatted: FC<{ date: Date } & TextProps> = ({
+  date,
+  ...props
+}) => {
   const [displayFull, setDisplayFull] = useState<boolean>(false);
 
   const publishInterval = useMemo(() => {
@@ -39,6 +42,7 @@ export const DateFormatted: FC<{ date: Date }> = ({ date }) => {
         sx={{ whiteSpace: "nowrap" }}
         color="gray"
         size="sm"
+        {...props}
         onClick={toggleDisplayFull}
       >
         {publishInterval}

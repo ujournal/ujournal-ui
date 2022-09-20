@@ -4,6 +4,7 @@ import { PersonSafe, Post } from "ujournal-lemmy-js-client";
 import { usePersonViewSafe } from "../../user/hooks/userPersonViewSafe";
 import { IconUser } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
+import Link from "next/link";
 
 export const PostCreator: FC<{
   post: Post;
@@ -29,10 +30,20 @@ export const PostCreator: FC<{
         <Stack spacing={4}>
           <Group spacing="sm">
             <Box sx={{ fontWeight: 600 }}>
-              {creator.display_name?.match<string>({
-                some: (name) => name,
-                none: () => creator.name,
-              })}
+              <Link
+                href={{
+                  pathname: "/user",
+                  query: { userId: creator.id },
+                }}
+                passHref
+              >
+                <Box component="a">
+                  {creator.display_name?.match<string>({
+                    some: (name) => name,
+                    none: () => creator.name,
+                  })}
+                </Box>
+              </Link>
             </Box>
             {/* <Score
               score={personViewSafe?.data?.totalScore || 0}
