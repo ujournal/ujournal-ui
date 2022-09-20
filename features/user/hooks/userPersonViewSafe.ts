@@ -14,6 +14,10 @@ export const usePersonViewSafe = ({ creatorId }: { creatorId: number }) => {
   return useQuery(
     ["getPersonStats", auth.token.ok().unwrapOr("")],
     async () => {
+      if (creatorId === -1) {
+        return undefined;
+      }
+
       const { person_view } = await client.getPersonDetails(
         new GetPersonDetails({
           person_id: Some(creatorId),
