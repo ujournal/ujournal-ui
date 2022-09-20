@@ -12,7 +12,7 @@ export const usePersonViewSafe = ({ creatorId }: { creatorId: number }) => {
   const auth = useAuth();
 
   return useQuery(
-    ["getPersonStats", auth.token.ok().unwrapOr("")],
+    ["getPersonStats", creatorId, auth.token.ok().unwrapOr("")],
     async () => {
       if (creatorId === -1) {
         return undefined;
