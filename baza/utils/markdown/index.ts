@@ -60,7 +60,10 @@ markdown.renderer.rules.image = (tokens, idx, options, env, self) => {
     env,
     self
   )}</div>${
-    tokens.length > 0 && tokens[0].content
+    tokens.length > 0 &&
+    tokens[0].attrs &&
+    tokens[0].attrs.length > 0 &&
+    tokens[0].attrs[1]
       ? `<div class="image-caption">${tokens[0].content}</div>`
       : ""
   }</div>`;
