@@ -1,6 +1,8 @@
 import { Box, Card, Container, Stack, Title } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
+import { capitalize } from "baza/utils/string";
 import { AppCommunityAside } from "features/app/components/AppCommunityAside";
 import { AppNavbar } from "features/app/components/AppNavbar";
 import {
@@ -13,10 +15,13 @@ import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
-import { useCallback } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 
 const PostPage: SitePage = () => {
+  const { t } = useTranslation();
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { postId: _postId } = useRouterQuery<{ postId: number }>({
@@ -25,6 +30,7 @@ const PostPage: SitePage = () => {
   const postId = Number(_postId);
   const post = usePost({ postId });
   const commentUpsert = useCommentUpsert();
+  const router = useRouter();
 
   const handleCommentSubmit = useCallback(
     async (values: CommentFormValues) => {
@@ -35,6 +41,19 @@ const PostPage: SitePage = () => {
     },
     [commentUpsert, postId]
   );
+
+  useEffect(() => {
+    if (post.data?.post_view.post.deleted) {
+      router.replace("/");
+      showNotification({
+        message: capitalize(t("deleted")),
+      });
+    }
+  }, [post.data?.post_view.post.deleted, router, t]);
+
+  if (post.isSuccess && post.data && post.data.post_view.post.deleted) {
+    return <></>;
+  }
 
   return (
     <>
