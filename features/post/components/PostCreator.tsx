@@ -45,7 +45,16 @@ export const PostCreator: FC<{
                 text={personViewSafe?.data?.person.bio.unwrapOr("") || ""}
               />
             }
-            sx={{ whiteSpace: "normal", maxWidth: 200 }}
+            multiline
+            sx={{
+              whiteSpace: "normal",
+              maxWidth: 300,
+              overflowWrap: "break-word",
+              "& a": {
+                textDecoration: "none",
+                color: "white",
+              },
+            }}
           >
             <Box>
               <MarkdownText

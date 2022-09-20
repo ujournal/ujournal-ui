@@ -209,6 +209,7 @@ export const Comment: FC<CommentProps> = ({
               <Tooltip
                 label={post.name}
                 sx={{ whiteSpace: "normal", maxWidth: 200 }}
+                withinPortal
               >
                 <Box>
                   <Link
