@@ -11,8 +11,8 @@ export const usePost = ({ postId }: { postId: number }) => {
   return useQuery(
     ["post", { token: auth.token.unwrapOr(""), postId }],
     async () => {
-      if (!postId) {
-        return null;
+      if (!postId || postId === -1) {
+        return undefined;
       }
 
       return (await lemmyClient.getPost(

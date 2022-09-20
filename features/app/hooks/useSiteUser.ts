@@ -164,7 +164,7 @@ export const useSiteUser = () => {
   );
 
   const localUserView = useMemo(() => {
-    if (myUserInfo?.unwrap().local_user_view) {
+    if (myUserInfo?.isSome() && myUserInfo?.unwrap().local_user_view) {
       return myUserInfo?.unwrap().local_user_view;
     }
     return undefined;
