@@ -59,7 +59,7 @@ const UserPage: SitePage = () => {
             <Stack spacing="xs">
               <Title size="h2">Інфо</Title>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Зареєстрований
                 </Text>
                 <DateFormatted
@@ -73,7 +73,7 @@ const UserPage: SitePage = () => {
                 />
               </Group>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Загальний рейтинг
                 </Text>
                 <Text size="md" color="black">
@@ -81,7 +81,7 @@ const UserPage: SitePage = () => {
                 </Text>
               </Group>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Рейтинг постів
                 </Text>
                 <Text size="md" color="black">
@@ -89,7 +89,7 @@ const UserPage: SitePage = () => {
                 </Text>
               </Group>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Рейтинг коментарів
                 </Text>
                 <Text size="md" color="black">
@@ -97,7 +97,7 @@ const UserPage: SitePage = () => {
                 </Text>
               </Group>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Кількість постів
                 </Text>
                 <Text size="md" color="black">
@@ -105,7 +105,7 @@ const UserPage: SitePage = () => {
                 </Text>
               </Group>
               <Group noWrap>
-                <Text sx={{ minWidth: 200 }} color="gray">
+                <Text sx={{ minWidth: 170 }} color="gray">
                   Кількість коментарів
                 </Text>
                 <Text size="md" color="black">
