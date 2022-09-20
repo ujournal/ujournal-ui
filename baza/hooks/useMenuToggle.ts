@@ -20,7 +20,7 @@ export const MenuToggleProvider: FC<{ children: ReactNode }> = ({
   const [opened, setOpened] = useState<boolean>(false);
 
   const toggle = useCallback((opened?: boolean) => {
-    if (opened) {
+    if (opened !== undefined) {
       setOpened(opened);
     } else {
       setOpened((opened) => !opened);

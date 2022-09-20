@@ -31,7 +31,7 @@ export const AppNavbar = () => {
   const { toggle: toggleMenu } = useMenuToggle();
   const router = useRouter();
 
-  const handleToggleMenu = useCallback(() => {
+  const handleMenuClose = useCallback(() => {
     toggleMenu(false);
   }, [toggleMenu]);
 
@@ -181,7 +181,7 @@ export const AppNavbar = () => {
   return (
     <Stack>
       <Box>
-        <LinksList items={links} onLinkClick={handleToggleMenu} />
+        <LinksList items={links} onLinkClick={handleMenuClose} />
       </Box>
 
       {commnitySubscribedList.isSuccess &&
@@ -191,7 +191,7 @@ export const AppNavbar = () => {
 
             <CommunityList
               {...omit(commnitySubscribedList, ["fetchNextPage"])}
-              itemProps={{ onLinkClick: handleToggleMenu }}
+              itemProps={{ onLinkClick: handleMenuClose }}
             />
           </Box>
         )}
@@ -202,7 +202,7 @@ export const AppNavbar = () => {
 
           <CommunityList
             {...omit(topList, ["fetchNextPage"])}
-            itemProps={{ onLinkClick: handleToggleMenu }}
+            itemProps={{ onLinkClick: handleMenuClose }}
           />
         </Box>
       )}
