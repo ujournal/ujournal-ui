@@ -35,7 +35,7 @@ export const PostCreator: FC<{
         >
           <IconUser stroke={1.5} />
         </Avatar>
-        <Stack spacing={4}>
+        <Stack spacing={2}>
           <Group spacing="sm">
             <Group noWrap>
               <Box sx={{ fontWeight: 600 }}>
