@@ -3,6 +3,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { FC, ReactElement } from "react";
 import { AppDrawer } from "./AppDrawer";
 import { AppHeader } from "./AppHeader";
+import { AppViewer } from "./AppViewer";
 
 export const AppLayout: FC<{
   navbar?: ReactElement;
@@ -62,6 +63,7 @@ export const AppLayout: FC<{
       </AppShell>
 
       <AppDrawer navbar={navbar} aside={aside} />
+      <AppViewer />
     </>
   );
 };

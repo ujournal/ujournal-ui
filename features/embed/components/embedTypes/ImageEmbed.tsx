@@ -22,6 +22,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
           backdropFilter: "blur(100px)",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
         }}
+        className="image"
       />
     </Box>
   );
