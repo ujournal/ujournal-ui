@@ -77,7 +77,7 @@ const UserPage: SitePage = () => {
                   Загальний рейтинг
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.totalScore || "..."}
+                  {personViewSafe.data?.totalScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -85,7 +85,7 @@ const UserPage: SitePage = () => {
                   Рейтинг постів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.postScore || "..."}
+                  {personViewSafe.data?.postScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -93,7 +93,7 @@ const UserPage: SitePage = () => {
                   Рейтинг коментарів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.commentScore || "..."}
+                  {personViewSafe.data?.commentScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -101,7 +101,7 @@ const UserPage: SitePage = () => {
                   Кількість постів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.postCount || "..."}
+                  {personViewSafe.data?.postCount || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -109,7 +109,7 @@ const UserPage: SitePage = () => {
                   Кількість коментарів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.commentCount || "..."}
+                  {personViewSafe.data?.commentCount || "н/д"}
                 </Text>
               </Group>
             </Stack>
