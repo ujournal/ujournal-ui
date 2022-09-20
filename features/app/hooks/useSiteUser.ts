@@ -4,7 +4,7 @@ import {
 } from "ujournal-lemmy-js-client";
 import { useSite } from "./useSite";
 import { Option, None } from "@sniptt/monads";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 export const useSiteUser = () => {
   const { data, isLoading } = useSite();
@@ -163,9 +163,17 @@ export const useSiteUser = () => {
     [myUserInfo]
   );
 
+  const localUserView = useMemo(() => {
+    if (myUserInfo?.unwrap().local_user_view) {
+      return myUserInfo?.unwrap().local_user_view;
+    }
+    return undefined;
+  }, [myUserInfo]);
+
   return {
     isLoading,
     myUserInfo,
+    localUserView,
     canMod,
     canAdmin,
     isMod,
