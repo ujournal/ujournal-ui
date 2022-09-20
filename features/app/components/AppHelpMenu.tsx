@@ -4,6 +4,7 @@ import {
   IconBrandGithub,
   IconHelp,
   IconGavel,
+  IconHeartHandshake,
 } from "@tabler/icons";
 import Link from "next/link";
 import { FC } from "react";
@@ -20,6 +21,15 @@ export const AppHelpMenu: FC = () => {
         </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
+        <Link href="https://patreon.com/ujournal" passHref rel="noreferrer">
+          <Menu.Item
+            component="a"
+            target="_blank"
+            icon={<IconHeartHandshake size={24} stroke={1.5} />}
+          >
+            {t("support_lemmy")}
+          </Menu.Item>
+        </Link>
         <Link
           href="https://github.com/uJournal/ujournal-ui"
           passHref
