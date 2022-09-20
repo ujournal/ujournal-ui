@@ -74,6 +74,7 @@ export const MarkdownText: FC<
           backgroundColor: "rgba(0,0,0,0.05)",
           marginLeft: compact ? 0 : -20,
           marginRight: compact ? 0 : -20,
+          display: compact ? "inline-block" : "block",
         },
         "& .image video": {
           display: "block",
