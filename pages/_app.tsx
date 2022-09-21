@@ -15,12 +15,14 @@ import { MenuToggleProvider } from "baza/hooks/useMenuToggle";
 import "../styles/globals.css";
 import { AppAuthRedirect } from "features/app/components/AppAuthRedirect";
 import { LegalNotification } from "features/legal/components/LegalNotification";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
 
   return (
     <>
+      <GoogleAnalytics trackPageViews />
       <Head>
         <title>UJournal</title>
         <meta
