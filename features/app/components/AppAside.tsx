@@ -14,7 +14,7 @@ export const AppAside: FC = () => {
 
   return (
     <Box p={4}>
-      <Stack spacing="sm">
+      <Stack spacing="sm" mt="xs">
         <Title size="h4">{t("comments")}</Title>
 
         <CommentList
