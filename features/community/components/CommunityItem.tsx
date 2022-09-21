@@ -58,7 +58,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
       )}
       <Stack sx={{ flex: "1 1 0" }}>
         <Group noWrap={!compact}>
-          <Avatar src={community.icon.unwrapOr("")} size={60}>
+          <Avatar src={community.icon.unwrapOr("")} size={60} radius="md">
             <IconSpeakerphone stroke={1.5} />
           </Avatar>
           <Stack spacing={4}>
@@ -126,6 +126,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
         onClick={handleSubscriptionToggle}
         loading={subscription.isLoading}
         disabled={subscription.isLoading}
+        radius="md"
       >
         {subscribed ? t("unsubscribe") : t("subscribe")}
       </Button>

@@ -14,6 +14,7 @@ import { CommentForm, Values as CommentFormValues } from "./CommentForm";
 import { CommentMenu } from "./CommentMenu";
 import { useCommentUpsert } from "../hooks/useCommentUpsert";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
+import { Nsfw } from "baza/components/Nsfw";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
@@ -161,11 +162,13 @@ export const Comment: FC<CommentProps> = ({
                 onSubmit={handleCommentEditSubmit}
               />
             ) : (
-              <MarkdownText
-                text={comment.content}
-                truncateLength={truncateLength}
-                compact
-              />
+              <Nsfw enabled={post.nsfw}>
+                <MarkdownText
+                  text={comment.content}
+                  truncateLength={truncateLength}
+                  compact
+                />
+              </Nsfw>
             )}
 
             {!compact && (

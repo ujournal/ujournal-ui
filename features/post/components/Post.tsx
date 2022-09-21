@@ -21,6 +21,7 @@ import { isPostUrlPlaceholder } from "../utils/postUrl";
 import { IconCaretRight } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
+import { Nsfw } from "baza/components/Nsfw";
 
 export const Post: FC<
   PostView & {
@@ -158,11 +159,15 @@ export const Post: FC<
         </Container>
       )}
 
-      <Card.Section>{url}</Card.Section>
+      <Nsfw enabled={post.nsfw || community.nsfw}>
+        <>
+          <Card.Section>{url}</Card.Section>
 
-      <Container size={650} p={0}>
-        {body}
-      </Container>
+          <Container size={650} p={0}>
+            {body}
+          </Container>
+        </>
+      </Nsfw>
 
       <Stack spacing="md">
         <PostControls
