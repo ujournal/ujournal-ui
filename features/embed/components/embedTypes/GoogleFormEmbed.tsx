@@ -8,7 +8,7 @@ export const GoogleFormEmbed: EmbedComponentType = ({ src }) => {
       src={src}
       width="100%"
       frameBorder="0"
-      scrolling="no"
+      scrolling="yes"
       sx={{
         display: "block",
         overflow: "hidden",
