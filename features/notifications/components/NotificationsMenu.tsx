@@ -28,7 +28,7 @@ enum View {
 
 export const NotificationsMenu: FC = () => {
   const [view, setView] = useState<View>(View.Unread);
-  const replies = useReplies({ limit: 10, unread_only: view === View.Unread });
+  const replies = useReplies({ limit: 20, unread_only: view === View.Unread });
   const replyMarkAsRead = useReplyMarkAsRead();
   const markAllAsRead = useMarkAllAsRead();
   const { t } = useTranslation();
@@ -142,16 +142,18 @@ export const NotificationsMenu: FC = () => {
                 </Link>
               ))}
             </Stack>
-            <Box p="xs">
-              <Button
-                size="sm"
-                fullWidth
-                variant="light"
-                onClick={hadleMarkAllAsReak}
-              >
-                {capitalize(t("mark_all_as_read"))}
-              </Button>
-            </Box>
+            {view === View.Unread && (
+              <Box p="xs">
+                <Button
+                  size="sm"
+                  fullWidth
+                  variant="light"
+                  onClick={hadleMarkAllAsReak}
+                >
+                  {capitalize(t("mark_all_as_read"))}
+                </Button>
+              </Box>
+            )}
           </Stack>
         ) : (
           <Box sx={{ width: 300 }} p="md">
