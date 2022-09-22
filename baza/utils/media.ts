@@ -14,6 +14,7 @@ const mediaRegExps = {
   spotify: /^(?:https?:\/\/)?open\.spotify\.com\/(album|track)\/.+?/,
   googleForm: /https:\/\/docs\.google\.com\/forms\/d\/e\/.+?\/viewform.+?/,
   tiktok: /^(?:https?:\/\/(?:www\.)?)tiktok\.com\/@(.+?)\/video\/(\d+)/,
+  reddit: /^(?:https?:\/\/(?:www\.)?)reddit\.com\/(.+?)(?:(\?.+)?)$/,
 };
 
 export const isMediaUrl = (media: keyof typeof mediaRegExps, url: string) => {

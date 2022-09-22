@@ -15,6 +15,7 @@ import { EmbedComponentType } from "./types";
 import isUrl from "is-url";
 import { GoogleFormEmbed } from "./embedTypes/GoogleFormEmbed";
 import { TikTokEmbed } from "./embedTypes/TikTokEmbed";
+import { RedditEmbed } from "./embedTypes/RedditEmbed";
 
 enum EmbedType {
   Default = "default",
@@ -30,6 +31,7 @@ enum EmbedType {
   Video = "video",
   GoogleForm = "googleForm",
   TikTok = "tiktok",
+  Reddit = "reddit",
 }
 
 const typeToCheckFn = {
@@ -46,6 +48,7 @@ const typeToCheckFn = {
   [EmbedType.Video]: (url: string) => isMediaUrl("video", url),
   [EmbedType.GoogleForm]: (url: string) => isMediaUrl("googleForm", url),
   [EmbedType.TikTok]: (url: string) => isMediaUrl("tiktok", url),
+  [EmbedType.Reddit]: (url: string) => isMediaUrl("reddit", url),
 };
 
 const typeToSpecificEmbedComponent = {
@@ -62,6 +65,7 @@ const typeToSpecificEmbedComponent = {
   [EmbedType.Video]: VideoEmbed,
   [EmbedType.GoogleForm]: GoogleFormEmbed,
   [EmbedType.TikTok]: TikTokEmbed,
+  [EmbedType.Reddit]: RedditEmbed,
 };
 
 const typeToAspectRatio = {
@@ -78,6 +82,7 @@ const typeToAspectRatio = {
   [EmbedType.Video]: 16 / 9,
   [EmbedType.GoogleForm]: 1,
   [EmbedType.TikTok]: -1,
+  [EmbedType.Reddit]: 640 / 528,
 };
 
 export const getTypeBySrc = (src: string) => {
