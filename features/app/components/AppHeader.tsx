@@ -1,5 +1,5 @@
 import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
-import { IconCirclePlus, IconLogin } from "@tabler/icons";
+import { IconLogin, IconPencil } from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/app/hooks/useAuth";
@@ -100,7 +100,7 @@ export const AppHeader: FC = () => {
         <Group spacing="lg">
           <Link href="/create-post" passHref>
             <Button
-              leftIcon={<IconCirclePlus stroke={1.5} />}
+              leftIcon={<IconPencil stroke={1.5} />}
               component="a"
               styles={{
                 root: {
