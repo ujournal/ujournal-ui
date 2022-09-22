@@ -15,6 +15,7 @@ const CreatePostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const upsertPost = usePostUpsert();
   const router = useRouter();
+  const communityId = parseInt(router.query.communityId as string, 10) || 0;
 
   const handleSubmit = useCallback(
     async (values: PostFormValues) => {
@@ -49,7 +50,7 @@ const CreatePostPage: SitePage = () => {
       >
         <PostForm
           values={{
-            community_id: -1,
+            community_id: communityId,
             body: "",
             name: "",
             url: "",

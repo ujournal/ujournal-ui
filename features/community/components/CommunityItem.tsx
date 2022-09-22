@@ -13,6 +13,7 @@ import {
 import {
   IconCircleCheck,
   IconCircleMinus,
+  IconPencil,
   IconSpeakerphone,
 } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
@@ -113,23 +114,41 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           </Grid.Col>
         </Grid>
       </Stack>
-      <Button
-        variant={subscribed ? "outline" : "light"}
-        mt="md"
-        leftIcon={
-          subscribed ? (
-            <IconCircleMinus stroke={1.5} />
-          ) : (
-            <IconCircleCheck stroke={1.5} />
-          )
-        }
-        onClick={handleSubscriptionToggle}
-        loading={subscription.isLoading}
-        disabled={subscription.isLoading}
-        radius="md"
-      >
-        {subscribed ? t("unsubscribe") : t("subscribe")}
-      </Button>
+      <Stack spacing={0}>
+        <Link
+          href={{
+            pathname: "/create-post",
+            query: { communityId: community.id },
+          }}
+        >
+          <Button
+            component="a"
+            variant="outline"
+            mt="md"
+            leftIcon={<IconPencil stroke={1.5} />}
+            radius="md"
+          >
+            {t("create_post")}
+          </Button>
+        </Link>
+        <Button
+          variant={subscribed ? "outline" : "light"}
+          mt="md"
+          leftIcon={
+            subscribed ? (
+              <IconCircleMinus stroke={1.5} />
+            ) : (
+              <IconCircleCheck stroke={1.5} />
+            )
+          }
+          onClick={handleSubscriptionToggle}
+          loading={subscription.isLoading}
+          disabled={subscription.isLoading}
+          radius="md"
+        >
+          {subscribed ? t("unsubscribe") : t("subscribe")}
+        </Button>
+      </Stack>
     </Card>
   );
 };
