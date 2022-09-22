@@ -82,7 +82,7 @@ const typeToAspectRatio = {
   [EmbedType.Video]: 16 / 9,
   [EmbedType.GoogleForm]: 1,
   [EmbedType.TikTok]: -1,
-  [EmbedType.Reddit]: 640 / 528,
+  [EmbedType.Reddit]: 690 / 517,
 };
 
 export const getTypeBySrc = (src: string) => {

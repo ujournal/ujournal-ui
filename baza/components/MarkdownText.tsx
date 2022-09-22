@@ -31,10 +31,12 @@ export const MarkdownText: FC<
   );
 
   const html = useMemo(() => {
-    const html = markdown.render(text);
+    const html = markdown.render(text).replace(/<p><\/p>/g, "");
 
     if (truncateLength) {
-      return truncate(html, truncateLength);
+      return truncate(html, truncateLength).split(
+        '<div style="display:none;">img</div>'
+      )[0];
     }
 
     return html;
