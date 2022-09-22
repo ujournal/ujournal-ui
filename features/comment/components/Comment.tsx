@@ -162,13 +162,11 @@ export const Comment: FC<CommentProps> = ({
                 onSubmit={handleCommentEditSubmit}
               />
             ) : (
-              <Nsfw enabled={post.nsfw}>
-                <MarkdownText
-                  text={comment.content}
-                  truncateLength={truncateLength}
-                  compact
-                />
-              </Nsfw>
+              <MarkdownText
+                text={comment.content}
+                truncateLength={truncateLength}
+                compact
+              />
             )}
 
             {!compact && (
