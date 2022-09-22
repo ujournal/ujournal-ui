@@ -9,19 +9,26 @@ import {
   Loader,
   Popover,
   Stack,
+  Tabs,
 } from "@mantine/core";
 import { IconBallon, IconBell } from "@tabler/icons";
 import { capitalize } from "baza/utils/string";
 import { useAuth } from "features/app/hooks/useAuth";
 import Link from "next/link";
-import { FC, MouseEvent, useCallback } from "react";
+import { FC, MouseEvent, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMarkAllAsRead } from "../hooks/useMakAllAsReat";
 import { useReplies } from "../hooks/useReplies";
 import { useReplyMarkAsRead } from "../hooks/useReplyMarkAsRead";
 
+enum View {
+  Viewed = "viewed",
+  Unread = "unread",
+}
+
 export const NotificationsMenu: FC = () => {
-  const replies = useReplies({ limit: 10 });
+  const [view, setView] = useState<View>(View.Unread);
+  const replies = useReplies({ limit: 10, unread_only: view === View.Unread });
   const replyMarkAsRead = useReplyMarkAsRead();
   const markAllAsRead = useMarkAllAsRead();
   const { t } = useTranslation();
@@ -40,6 +47,11 @@ export const NotificationsMenu: FC = () => {
     markAllAsRead.mutateAsync();
   }, [markAllAsRead]);
 
+  const handleViewChange = useCallback((view: View) => {
+    console.log("view", view);
+    setView(view);
+  }, []);
+
   if (!auth.loggedIn) {
     return null;
   }
@@ -51,7 +63,11 @@ export const NotificationsMenu: FC = () => {
           offset={4}
           withBorder
           color="red"
-          disabled={!replies.data || replies.data.replies.length === 0}
+          disabled={
+            !replies.data ||
+            replies.data.replies.length === 0 ||
+            view === View.Viewed
+          }
         >
           <ActionIcon radius="xl" variant="subtle">
             <IconBell stroke={1.5} />
@@ -59,6 +75,12 @@ export const NotificationsMenu: FC = () => {
         </Indicator>
       </Popover.Target>
       <Popover.Dropdown p={0} sx={{ maxHeight: "60vh", overflow: "auto" }}>
+        <Tabs defaultValue={View.Unread} onTabChange={handleViewChange}>
+          <Tabs.List>
+            <Tabs.Tab value={View.Unread}>{capitalize(t("unread"))}</Tabs.Tab>
+            <Tabs.Tab value={View.Viewed}>{capitalize(t("viewed"))}</Tabs.Tab>
+          </Tabs.List>
+        </Tabs>
         {replies.isLoading || markAllAsRead.isLoading || !replies.data ? (
           <Box sx={{ width: 300 }} p="md">
             <Center>

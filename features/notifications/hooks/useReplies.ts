@@ -18,28 +18,30 @@ export const useReplies = (params: RepliesParams = {}) => {
 
   const _params = merge(
     {
-      sort: Some(CommentSortType.New),
-      page: Some(1),
-      limit: Some(20),
-      unread_only: Some(true),
-      auth: auth.token.ok().unwrapOr(""),
+      sort: CommentSortType.New,
+      page: 1,
+      limit: 20,
+      unread_only: true,
     },
-    {
-      sort: params.sort ? Some(params.sort) : undefined,
-      page: params.page ? Some(params.page) : undefined,
-      limit: params.limit ? Some(params.limit) : undefined,
-      unread_only: params.unread_only ? Some(params.unread_only) : undefined,
-    }
+    params
   );
 
   return useQuery(
-    ["replies", auth.token.ok().unwrapOr("")],
+    ["replies", JSON.stringify(params), auth.token.ok().unwrapOr("")],
     async () => {
       if (!auth.token.ok().unwrapOr("")) {
         return undefined;
       }
 
-      return await lemmyClient.getReplies(new GetReplies(_params));
+      return await lemmyClient.getReplies(
+        new GetReplies({
+          sort: Some(_params.sort),
+          page: Some(_params.page),
+          limit: Some(_params.limit),
+          unread_only: Some(_params.unread_only),
+          auth: auth.token.ok().unwrapOr(""),
+        })
+      );
     },
     { refetchInterval: 30000 }
   );

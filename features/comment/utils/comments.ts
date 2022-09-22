@@ -1,5 +1,5 @@
 import { CommentAggregates, Post } from "ujournal-lemmy-js-client";
-import { isObject } from "lodash";
+import { isObject, sortBy } from "lodash";
 
 export type CommentInternal = {
   comment: {
@@ -23,36 +23,39 @@ export const transformCommentsToTree = (
   comments: any[],
   parentId: number | null = null
 ): any => {
-  return comments
-    .map<CommentInternal | undefined>(
-      ({ comment, creator, my_vote, post, counts }) =>
-        comment.parent_id === parentId
-          ? {
-              comment: {
-                id: comment.id,
-                content: comment.content,
-                published: comment.published,
-              },
-              creator: {
-                id: creator.id,
-                display_name: isObject(creator.display_name)
-                  ? (creator.display_name as any).unwrapOr("")
-                  : creator.display_name,
-                name: creator.name,
-                avatar: isObject(creator.avatar)
-                  ? (creator.avatar as any).unwrapOr("")
-                  : creator.avatar,
-              },
-              my_vote: isObject(my_vote)
-                ? (my_vote as any).unwrapOr(0)
-                : my_vote,
-              post,
-              counts,
-              children: transformCommentsToTree(comments, comment.id),
-            }
-          : undefined
-    )
-    .filter(Boolean);
+  return sortBy(
+    comments
+      .map<CommentInternal | undefined>(
+        ({ comment, creator, my_vote, post, counts }) =>
+          comment.parent_id === parentId
+            ? {
+                comment: {
+                  id: comment.id,
+                  content: comment.content,
+                  published: comment.published,
+                },
+                creator: {
+                  id: creator.id,
+                  display_name: isObject(creator.display_name)
+                    ? (creator.display_name as any).unwrapOr("")
+                    : creator.display_name,
+                  name: creator.name,
+                  avatar: isObject(creator.avatar)
+                    ? (creator.avatar as any).unwrapOr("")
+                    : creator.avatar,
+                },
+                my_vote: isObject(my_vote)
+                  ? (my_vote as any).unwrapOr(0)
+                  : my_vote,
+                post,
+                counts,
+                children: transformCommentsToTree(comments, comment.id),
+              }
+            : undefined
+      )
+      .filter(Boolean),
+    (comment) => (comment ? new Date(comment.comment.published) : undefined)
+  );
 };
 
 export const transformCommentsFromCommentsView = (comments: any[]) => {
