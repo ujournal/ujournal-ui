@@ -7,17 +7,20 @@ import {
   Tooltip,
   Box,
   Popover,
+  Group,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { capitalize } from "baza/utils/string";
-import { FC, SyntheticEvent, useCallback, useMemo } from "react";
+import { FC, SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { CommunitySelect } from "features/community/components/CommunitySelect";
 import { useTranslation } from "react-i18next";
 import { EmbedField } from "features/embed/components/EmbedField";
 import { useUrlMetadata } from "baza/hooks/useUrlMetadata";
-import { IconCopy, IconSettings } from "@tabler/icons";
+import { IconCopy, IconEraser, IconSettings } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { useState } from "react";
+import { useFocusWithin } from "@mantine/hooks";
 
 const TextEditor = dynamic(
   async () => (await import("baza/components/TextEditor")).TextEditor,
@@ -37,6 +40,8 @@ export const PostForm: FC<{
   values?: Values;
   isLoading?: boolean;
   onSubmit: (values: Values) => void;
+  onChange?: (values: Values) => void;
+  onFocus?: () => void;
 }> = ({
   postId,
   values = {
@@ -48,9 +53,13 @@ export const PostForm: FC<{
   },
   isLoading = false,
   onSubmit,
+  onChange,
+  onFocus,
 }) => {
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
   const { t } = useTranslation();
+  const [bodyKey, setBodyKey] = useState(Math.random());
+  const { ref, focused } = useFocusWithin();
 
   const validate = useMemo(
     () => ({
@@ -79,6 +88,25 @@ export const PostForm: FC<{
     }
   }, [form, urlMetadata.data]);
 
+  const handleClear = useCallback(() => {
+    if (confirm(`${capitalize(t("delete"))}?`)) {
+      form.setValues({
+        community_id: -1,
+        name: "",
+        url: "",
+        body: "",
+        nsfw: false,
+      });
+      setBodyKey(Math.random());
+    }
+  }, [form, t]);
+
+  const handleFocus = useCallback(() => {
+    if (focused && onFocus) {
+      onFocus();
+    }
+  }, [focused, onFocus]);
+
   const isNameSuggested = useMemo(
     () =>
       urlMetadata.data &&
@@ -86,6 +114,12 @@ export const PostForm: FC<{
       form.values.name !== urlMetadata.data.metadata.title.unwrapOr(""),
     [form.values.name, urlMetadata.data]
   );
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(form.values);
+    }
+  }, [form.values, onChange]);
 
   const settingsButton = (
     <Popover trapFocus position="bottom" withArrow shadow="md">
@@ -118,9 +152,26 @@ export const PostForm: FC<{
     </Button>
   );
 
+  const cleanupButton =
+    form.values.community_id !== -1 ||
+    form.values.name.length ||
+    form.values.url.length ||
+    form.values.body.length ? (
+      <ActionIcon
+        size="xl"
+        loading={isLoading}
+        radius="md"
+        onClick={handleClear}
+      >
+        <IconEraser stroke={1.5} />
+      </ActionIcon>
+    ) : (
+      <></>
+    );
+
   return (
-    <form onSubmit={form.onSubmit(onSubmit)}>
-      <Stack spacing="xs">
+    <form onSubmit={form.onSubmit(onSubmit)} onFocus={handleFocus}>
+      <Stack ref={ref} spacing="xs">
         <CommunitySelect
           withAsterisk
           styles={{
@@ -145,7 +196,6 @@ export const PostForm: FC<{
           placeholder={capitalize(t("title"))}
           {...form.getInputProps("name")}
           autosize
-          autoFocus
           styles={{
             input: {
               borderWidth: 0,
@@ -199,6 +249,7 @@ export const PostForm: FC<{
         </Box>
 
         <TextEditor
+          key={bodyKey}
           placeholder={capitalize(t("body"))}
           mb="md"
           {...form.getInputProps("body")}
@@ -207,10 +258,13 @@ export const PostForm: FC<{
         {isLoading ? (
           submitButton
         ) : (
-          <Button.Group>
-            {settingsButton}
-            {submitButton}
-          </Button.Group>
+          <Group noWrap>
+            <Button.Group sx={{ flex: "1 1 0" }}>
+              {settingsButton}
+              {submitButton}
+            </Button.Group>
+            {cleanupButton}
+          </Group>
         )}
       </Stack>
     </form>

@@ -5,22 +5,14 @@ import { Embed } from "features/embed/components/Embed";
 import isUrl from "is-url";
 import { useTranslation } from "react-i18next";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { shuffle } from "lodash";
 import { useIntervalPhrases } from "baza/hooks/useIntervalPhrases";
 import { UrlMetadata } from "baza/hooks/useUrlMetadata";
 import { UploadImageButton } from "baza/components/UploadImageButton";
 import { isPostUrlPlaceholder } from "features/post/utils/postUrl";
+import { mediaKeys } from "baza/utils/media";
+import { capitalize } from "baza/utils/string";
 
-const socialMediaNames = shuffle([
-  "YouTube",
-  "Vimeo",
-  "Twitter",
-  "Telegram",
-  "Facebook",
-  "Instagram",
-  "SoundCloud",
-  "Spotify",
-]);
+const socialMediaNames = mediaKeys.map((key) => capitalize(key));
 
 export const EmbedField: FC<
   {
