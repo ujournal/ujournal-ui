@@ -58,7 +58,7 @@ export const NotificationsMenu: FC = () => {
           </ActionIcon>
         </Indicator>
       </Popover.Target>
-      <Popover.Dropdown p={0} sx={{ maxHeight: "60vh", overflow: "scroll" }}>
+      <Popover.Dropdown p={0} sx={{ maxHeight: "60vh", overflow: "auto" }}>
         {replies.isLoading || markAllAsRead.isLoading || !replies.data ? (
           <Box sx={{ width: 300 }} p="md">
             <Center>
