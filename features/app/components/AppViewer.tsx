@@ -1,4 +1,4 @@
-import { Modal, ScrollArea } from "@mantine/core";
+import { Box, Modal, ScrollArea } from "@mantine/core";
 import { FC, useCallback, useEffect, useState } from "react";
 
 export const AppViewer: FC = () => {
@@ -38,7 +38,7 @@ export const AppViewer: FC = () => {
       }}
     >
       <ScrollArea sx={{ maxWidth: "100vw" }}>
-        <img src={image} alt="" />
+        <Box component="img" src={image} alt="" onClick={handleClose} />
       </ScrollArea>
     </Modal>
   );
