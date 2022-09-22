@@ -72,6 +72,12 @@ export const MarkdownText: FC<
           maxWidth: "100%",
           maxHeight: "60vh",
         },
+        "& hr": {
+          height: 1,
+          border: "none",
+          color: "#dadce0",
+          backgroundColor: "#dadce0",
+        },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.05)",
           marginLeft: compact ? 0 : -20,
