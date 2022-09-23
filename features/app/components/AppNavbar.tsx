@@ -73,6 +73,7 @@ export const AppNavbar = () => {
         {
           type: ListingType.All,
           sort: SortType.TopDay,
+          parent: capitalize(t("new")),
           url: {
             pathname: "/",
             query: { ...query, type: ListingType.All, sort: SortType.TopDay },
@@ -83,6 +84,7 @@ export const AppNavbar = () => {
         {
           type: ListingType.All,
           sort: SortType.MostComments,
+          parent: capitalize(t("new")),
           url: {
             pathname: "/",
             query: {
@@ -97,6 +99,7 @@ export const AppNavbar = () => {
         {
           type: ListingType.All,
           sort: SortType.NewComments,
+          parent: capitalize(t("new")),
           url: {
             pathname: "/",
             query: {
