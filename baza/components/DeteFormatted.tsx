@@ -1,5 +1,5 @@
 import { Tooltip, Text, TextProps } from "@mantine/core";
-import { intervalToDuration } from "date-fns";
+import { intervalToDuration, isValid } from "date-fns";
 import { useState } from "react";
 import { useCallback } from "react";
 import { FC, useMemo } from "react";
@@ -12,6 +12,10 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
   const [displayFull, setDisplayFull] = useState<boolean>(false);
 
   const publishInterval = useMemo(() => {
+    if (!isValid(date)) {
+      return undefined;
+    }
+
     const {
       days = 0,
       hours = 0,
