@@ -1,8 +1,4 @@
-import {
-  QueryFunctionContext,
-  useInfiniteQuery,
-  useQuery,
-} from "@tanstack/react-query";
+import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
 import {
   CommunityResponse,
   ListCommunities,
@@ -28,7 +24,7 @@ export const fetchCommunitiesParamsDefault = {
   type: ListingType.All,
   sort: SortType.TopAll,
   page: 1,
-  limit: 20,
+  limit: 1000,
 };
 
 const useCommunitiesFetcher = (params: FetchCommunitiesParams = {}) => {
