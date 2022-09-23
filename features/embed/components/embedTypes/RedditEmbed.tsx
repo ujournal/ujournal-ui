@@ -13,7 +13,7 @@ export const RedditEmbed: EmbedComponentType = ({ src }) => {
         style={{ border: "none" }}
         height="528"
         width="640"
-        scrolling="no"
+        scrolling="yes"
       />
     );
   }
