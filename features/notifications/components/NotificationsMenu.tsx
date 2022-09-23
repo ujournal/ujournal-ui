@@ -48,8 +48,11 @@ export const NotificationsMenu: FC = () => {
   }, [markAllAsRead]);
 
   const handleViewChange = useCallback((view: View) => {
-    console.log("view", view);
     setView(view);
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    setView(View.Unread);
   }, []);
 
   if (!auth.loggedIn) {
@@ -57,7 +60,7 @@ export const NotificationsMenu: FC = () => {
   }
 
   return (
-    <Popover position="bottom" transition="pop">
+    <Popover position="bottom" transition="pop" onOpen={handleOpen}>
       <Popover.Target>
         <Indicator
           offset={4}
@@ -76,7 +79,7 @@ export const NotificationsMenu: FC = () => {
       </Popover.Target>
       <Popover.Dropdown p={0} sx={{ maxHeight: "60vh", overflow: "auto" }}>
         <Tabs defaultValue={View.Unread} onTabChange={handleViewChange}>
-          <Tabs.List>
+          <Tabs.List position="center">
             <Tabs.Tab value={View.Unread}>{capitalize(t("unread"))}</Tabs.Tab>
             <Tabs.Tab value={View.Viewed}>{capitalize(t("viewed"))}</Tabs.Tab>
           </Tabs.List>
