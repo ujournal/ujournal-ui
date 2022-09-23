@@ -11,6 +11,7 @@ import {
 import { IconChevronDown, TablerIcon } from "@tabler/icons";
 import { partition } from "lodash";
 import Link from "next/link";
+import { useMemo } from "react";
 import { FC, useCallback } from "react";
 import { UrlObject } from "url";
 
@@ -30,28 +31,36 @@ export const LinksList: FC<{
     }
   }, [onLinkClick]);
 
-  const itemsPartitioned = partition(items, (item) => item.parent);
-  const itemsRoot = itemsPartitioned.find((group) => !group[0].parent) || [];
+  const itemsForRender = useMemo(() => {
+    const itemsPartitioned = partition(items, (item) => item.parent);
+    const itemsRoot = itemsPartitioned.find((group) => !group[0].parent) || [];
+
+    return itemsRoot.map((item) => {
+      let itemsGrouped =
+        itemsPartitioned.find((group) => group[0].parent === item.label) || [];
+
+      const itemGroupedActive = itemsGrouped.find((item) => item.active);
+
+      if (itemGroupedActive) {
+        itemsGrouped = [
+          ...itemsGrouped.filter(
+            (item) => item.label !== itemGroupedActive.label
+          ),
+          item,
+        ];
+      }
+
+      return {
+        item: itemGroupedActive || item,
+        itemsGrouped,
+      };
+    });
+  }, [items]);
 
   return (
     <Stack spacing={0}>
-      {itemsRoot.map((item) => {
-        let itemsGrouped =
-          itemsPartitioned.find((group) => group[0].parent === item.label) ||
-          [];
-
-        const itemGroupedActive = itemsGrouped.find((item) => item.active);
-
-        if (itemGroupedActive) {
-          itemsGrouped = [
-            ...itemsGrouped.filter(
-              (item) => item.label !== itemGroupedActive.label
-            ),
-            item,
-          ];
-        }
-
-        const { url, label, icon: Icon, active } = itemGroupedActive || item;
+      {itemsForRender.map(({ item, itemsGrouped }) => {
+        const { url, label, icon: Icon, active } = item;
 
         return (
           <Group noWrap spacing={4} key={label}>
