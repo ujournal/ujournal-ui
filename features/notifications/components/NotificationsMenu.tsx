@@ -51,7 +51,7 @@ export const NotificationsMenu: FC = () => {
     setView(view);
   }, []);
 
-  const handleOpen = useCallback(() => {
+  const handleClose = useCallback(() => {
     setView(View.Unread);
   }, []);
 
@@ -60,7 +60,7 @@ export const NotificationsMenu: FC = () => {
   }
 
   return (
-    <Popover position="bottom" transition="pop" onOpen={handleOpen}>
+    <Popover position="bottom" transition="pop" onClose={handleClose}>
       <Popover.Target>
         <Indicator
           offset={4}
