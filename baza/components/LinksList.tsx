@@ -63,14 +63,14 @@ export const LinksList: FC<{
         const { url, label, icon: Icon, active } = item;
 
         return (
-          <Group noWrap spacing={4} key={label}>
+          <Group noWrap spacing={2} key={label}>
             <Tooltip label={label} openDelay={1000}>
               <Box sx={{ flex: "1 1 0" }}>
                 <Link href={url} passHref>
                   <UnstyledButton
                     px={6}
                     py={4}
-                    pr={0}
+                    pr={itemsGrouped.length > 0 ? 0 : undefined}
                     sx={{
                       display: "block",
                       whiteSpace: "nowrap",
@@ -82,6 +82,10 @@ export const LinksList: FC<{
                       sx={(theme) => ({
                         backgroundColor: active ? "white" : undefined,
                         borderRadius: theme.radius.md,
+                        borderTopRightRadius:
+                          itemsGrouped.length > 0 ? theme.radius.xs : undefined,
+                        borderBottomRightRadius:
+                          itemsGrouped.length > 0 ? theme.radius.xs : undefined,
                       })}
                       px={6}
                       py={8}
@@ -127,7 +131,7 @@ export const LinksList: FC<{
                   <UnstyledButton
                     px={6}
                     py={4}
-                    pl={0}
+                    pl={itemsGrouped.length > 0 ? 0 : undefined}
                     sx={{
                       display: "block",
                       whiteSpace: "nowrap",
@@ -138,6 +142,10 @@ export const LinksList: FC<{
                       sx={(theme) => ({
                         backgroundColor: active ? "white" : undefined,
                         borderRadius: theme.radius.md,
+                        borderTopLeftRadius:
+                          itemsGrouped.length > 0 ? theme.radius.xs : undefined,
+                        borderBottomLeftRadius:
+                          itemsGrouped.length > 0 ? theme.radius.xs : undefined,
                         height: 42,
                         display: "flex",
                         alignItems: "center",
