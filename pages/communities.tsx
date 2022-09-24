@@ -15,6 +15,7 @@ import Head from "next/head";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
+import { SortType } from "ujournal-lemmy-js-client";
 
 const CommunitiesPage: SitePage = () => {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ const CommunitiesPage: SitePage = () => {
     800,
     { leading: false }
   );
-  const communityList = useCommunityList({ limit: 18 });
+  const communityList = useCommunityList({ sort: SortType.TopAll, limit: 18 });
   const searchList = useSearch({
     q: values.query,
   });

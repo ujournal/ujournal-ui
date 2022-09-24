@@ -59,7 +59,7 @@ export default function App(props: SiteAppProps) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18n} >
         <NotificationsProvider position="bottom-right">
           <MarkdownContext.Provider value={markdown}>
             <LemmyAuthProvider>

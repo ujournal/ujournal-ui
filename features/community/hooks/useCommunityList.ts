@@ -10,6 +10,7 @@ import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
 import { flattenDepth, get, map, merge } from "lodash";
 import { useMemo } from "react";
+import { buildKey } from "baza/utils/key";
 
 export type FetchCommunitiesParams = {
   type?: ListingType;
@@ -52,7 +53,8 @@ export const useCommunityList = (params: FetchCommunitiesParams = {}) => {
   const { data, ...query } = useInfiniteQuery(
     [
       "communities",
-      JSON.stringify({ token: auth.token.unwrapOr(""), ...params }),
+      auth.token.unwrapOr(""),
+      buildKey(params),
       fetchCommunities,
     ],
     fetchCommunities,
