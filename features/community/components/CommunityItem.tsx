@@ -59,9 +59,22 @@ export const CommunityItem: FC<CommunityItemProps> = ({
       )}
       <Stack sx={{ flex: "1 1 0" }}>
         <Group noWrap={!compact}>
-          <Avatar src={community.icon.unwrapOr("")} size={60} radius="md">
-            <IconSpeakerphone stroke={1.5} />
-          </Avatar>
+          <Link
+            href={{
+              pathname: "/community",
+              query: { communityName: community.name },
+            }}
+            passHref
+          >
+            <Avatar
+              component="a"
+              src={community.icon.unwrapOr("")}
+              size={60}
+              radius="md"
+            >
+              <IconSpeakerphone stroke={1.5} />
+            </Avatar>
+          </Link>
           <Stack spacing={4}>
             <Title size={18}>
               <Link
