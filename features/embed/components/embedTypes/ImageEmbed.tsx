@@ -18,6 +18,9 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
           height: "100%",
           objectFit: "contain",
           backgroundColor: "rgba(0, 0, 0, 0.05)",
+          border: "8px solid transparent",
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
         }}
         className="image"
       />

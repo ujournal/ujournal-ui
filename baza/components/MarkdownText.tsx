@@ -80,6 +80,9 @@ export const MarkdownText: FC<
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.05)",
+          border: "8px solid transparent",
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
           marginLeft: compact ? 0 : -20,
           marginRight: compact ? 0 : -20,
           display: compact ? "inline-block" : "block",
