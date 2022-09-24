@@ -170,7 +170,11 @@ export const PostForm: FC<{
     );
 
   return (
-    <form onSubmit={form.onSubmit(onSubmit)} onFocus={handleFocus}>
+    <Box
+      component="form"
+      onSubmit={form.onSubmit(onSubmit)}
+      onFocus={handleFocus}
+    >
       <Stack ref={ref} spacing="xs">
         <CommunitySelect
           withAsterisk
@@ -267,6 +271,6 @@ export const PostForm: FC<{
           </Group>
         )}
       </Stack>
-    </form>
+    </Box>
   );
 };

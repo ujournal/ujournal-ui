@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Loader, Textarea } from "@mantine/core";
+import { ActionIcon, Box, Group, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconLayoutSidebarRightCollapse, IconSend } from "@tabler/icons";
 import {
@@ -107,7 +107,7 @@ export const CommentForm: FC<{
   );
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <Box component="form" onSubmit={form.onSubmit(handleSubmit)}>
       <Group noWrap align="flex-end" spacing="xs">
         <MentionsPopover q={personMention} onSelect={handlePersonSelect}>
           <Textarea
@@ -152,6 +152,6 @@ export const CommentForm: FC<{
           )}
         </ActionIcon>
       </Group>
-    </form>
+    </Box>
   );
 };

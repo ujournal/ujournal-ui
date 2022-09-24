@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useForm } from "@mantine/form";
-import { Button, Group, Stack, TextInput } from "@mantine/core";
+import { Box, Button, Group, Stack, TextInput } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 import { capitalize } from "baza/utils/string";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export const SignInForm: FC<{
   });
 
   return (
-    <form onSubmit={form.onSubmit(onSubmit)}>
+    <Box component="form" onSubmit={form.onSubmit(onSubmit)}>
       <Stack spacing="sm">
         <TextInput
           withAsterisk
@@ -54,6 +54,6 @@ export const SignInForm: FC<{
           </Group>
         </Stack>
       </Stack>
-    </form>
+    </Box>
   );
 };

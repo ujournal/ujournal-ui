@@ -6,6 +6,7 @@ import {
   Alert,
   Checkbox,
   PasswordInput,
+  Box,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { PasswordInputWithRequirements } from "baza/components/PasswordInputWithRequirements";
@@ -54,7 +55,7 @@ export const SignUpForm: FC<{
   });
 
   return (
-    <form onSubmit={form.onSubmit(onSubmit)}>
+    <Box component="form" onSubmit={form.onSubmit(onSubmit)}>
       <Stack spacing="sm">
         <TextInput
           withAsterisk
@@ -107,6 +108,6 @@ export const SignUpForm: FC<{
           </Group>
         </Stack>
       </Stack>
-    </form>
+    </Box>
   );
 };
