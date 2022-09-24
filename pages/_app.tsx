@@ -48,7 +48,7 @@ export default function App(props: SiteAppProps) {
         />
         <link
           rel="manifest"
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/meta/site.webmanifest`}
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/manifest.json`}
         />
         <link
           rel="mask-icon"

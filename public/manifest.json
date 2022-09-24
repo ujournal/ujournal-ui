@@ -1,6 +1,9 @@
 {
+  "lang": "uk",
+  "dir": "ltr",
   "name": "UJournal",
   "short_name": "UJournal",
+  "description": "Український журнал про інтернет",
   "icons": [
     {
       "src": "/meta/android-chrome-192x192.png",

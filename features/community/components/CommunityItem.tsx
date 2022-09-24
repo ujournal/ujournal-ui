@@ -114,7 +114,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           </Grid.Col>
         </Grid>
       </Stack>
-      <Stack spacing="xs">
+      <Stack spacing={2}>
         <Link
           href={{
             pathname: "/create-post",
@@ -127,6 +127,10 @@ export const CommunityItem: FC<CommunityItemProps> = ({
             mt="md"
             leftIcon={<IconPencil stroke={1.5} />}
             radius="md"
+            sx={{
+              borderBottomLeftRadius: 4,
+              borderBottomRightRadius: 4,
+            }}
           >
             {t("create_post")}
           </Button>
@@ -144,6 +148,10 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           loading={subscription.isLoading}
           disabled={subscription.isLoading}
           radius="md"
+          sx={{
+            borderTopLeftRadius: 4,
+            borderTopRightRadius: 4,
+          }}
         >
           {subscribed ? t("unsubscribe") : t("subscribe")}
         </Button>
