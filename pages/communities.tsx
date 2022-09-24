@@ -17,7 +17,7 @@ import { SitePage } from "types";
 const CommunitiesPage: SitePage = () => {
   const [values, setValues] = useDebouncedState<CommunitySearchValues>(
     { query: "" },
-    400,
+    800,
     { leading: false }
   );
   const communityList = useCommunityList({ limit: 18 });
