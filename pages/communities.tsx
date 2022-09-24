@@ -11,10 +11,13 @@ import {
 } from "features/community/forms/CommunitySearchForm";
 import { useCommunityList } from "features/community/hooks/useCommunityList";
 import { useSearch } from "features/search/hooks/useSearch";
+import Head from "next/head";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 
 const CommunitiesPage: SitePage = () => {
+  const { t } = useTranslation();
   const [values, setValues] = useDebouncedState<CommunitySearchValues>(
     { query: "" },
     800,
@@ -37,20 +40,26 @@ const CommunitiesPage: SitePage = () => {
   }, [communityList, values, searchList]);
 
   return (
-    <Container size={1400} p={0}>
-      <Stack>
-        <CommunitySearchForm onSubmit={setValues} />
-        <Grid>
-          <CommunityList
-            {...datList}
-            itemComponent={CommunityItemWithCol}
-            itemKey="community.id"
-            loaderComponent={CommunityMoreLoaderWithRef}
-            listLoaderComponent={CommunityListGridLoader}
-          />
-        </Grid>
-      </Stack>
-    </Container>
+    <>
+      <Head>
+        <title>{t("communities")} - UJournal</title>
+      </Head>
+
+      <Container size={1400} p={0}>
+        <Stack>
+          <CommunitySearchForm onSubmit={setValues} />
+          <Grid>
+            <CommunityList
+              {...datList}
+              itemComponent={CommunityItemWithCol}
+              itemKey="community.id"
+              loaderComponent={CommunityMoreLoaderWithRef}
+              listLoaderComponent={CommunityListGridLoader}
+            />
+          </Grid>
+        </Stack>
+      </Container>
+    </>
   );
 };
 

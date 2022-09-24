@@ -15,6 +15,8 @@ import {
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { IconUser } from "@tabler/icons";
+import Head from "next/head";
+import { useMemo } from "react";
 
 const UserPage: SitePage = () => {
   const { userId: _userId } = useRouterQuery<{ userId: number }>({
@@ -28,8 +30,17 @@ const UserPage: SitePage = () => {
     creatorId: _userId,
   });
 
+  const userName = useMemo(
+    () =>
+      personViewSafe.data?.person.display_name.unwrapOr("") ||
+      personViewSafe.data?.person.name,
+    [personViewSafe.data?.person.display_name, personViewSafe.data?.person.name]
+  );
+
   return (
     <>
+      <Head>{userName && <title>{userName} - UJournal</title>}</Head>
+
       <Container px={0} mx={largerThanSm ? undefined : "-md"}>
         <Card radius={smallerThanSm ? 0 : "md"} p="xl">
           <Stack spacing="xl">

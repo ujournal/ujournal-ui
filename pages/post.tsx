@@ -15,6 +15,7 @@ import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
 import { Post } from "features/post/components/Post";
 import { PostLoader } from "features/post/components/PostLoader";
 import { usePost } from "features/post/hooks/usePost";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -57,6 +58,12 @@ const PostPage: SitePage = () => {
 
   return (
     <>
+      <Head>
+        {post.data?.post_view.post.name && (
+          <title>{post.data?.post_view.post.name} - UJournal</title>
+        )}
+      </Head>
+
       <Container px={0} mx={largerThanSm ? undefined : "-md"} mb="md">
         {post.isSuccess && post.data ? (
           <Post {...post.data.post_view} full commentsAsText showPostCreator />

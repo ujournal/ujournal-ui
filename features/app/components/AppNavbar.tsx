@@ -1,19 +1,8 @@
-import { Box, Stack, Text } from "@mantine/core";
+import { Box, Stack } from "@mantine/core";
 import { CommunityList } from "features/community/components/CommunityList";
 import { LinksList } from "baza/components/LinksList";
-import {
-  IconChecks,
-  IconMessageCircle,
-  IconMessageCircle2,
-  IconSpeakerphone,
-  IconSunset2,
-  IconTrendingUp,
-} from "@tabler/icons";
 import { useCallback, useMemo } from "react";
-import { IconFlame } from "@tabler/icons";
 import { useTranslation } from "react-i18next";
-import { capitalize } from "baza/utils/string";
-import { IconBolt } from "@tabler/icons";
 import { ListingType, SortType } from "ujournal-lemmy-js-client";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
@@ -22,14 +11,13 @@ import {
 } from "features/post/hooks/usePostList";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 import { useCommunityListForNavbar } from "features/community/hooks/useCommunityListForNavbar";
-import { useRouter } from "next/router";
 import { differenceWith, map, omit } from "lodash";
 import { NavbarTitle } from "baza/components/NavbarTitle";
+import { useNavLinks } from "../hooks/useNavLinks";
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
   const { toggle: toggleMenu } = useMenuToggle();
-  const router = useRouter();
 
   const handleMenuClose = useCallback(() => {
     toggleMenu(false);
@@ -37,115 +25,7 @@ export const AppNavbar = () => {
 
   const query = useRouterQuery<FetchPostsParams>(fetchPostsParamsDefault);
 
-  const links = useMemo(
-    () =>
-      [
-        {
-          type: ListingType.All,
-          sort: SortType.Hot,
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Hot },
-          },
-          label: capitalize(t("hot")),
-          icon: IconFlame,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.Active,
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Active },
-          },
-          label: capitalize(t("active")),
-          icon: IconTrendingUp,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.New,
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.New },
-          },
-          label: capitalize(t("new")),
-          icon: IconBolt,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.TopDay,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.TopDay },
-          },
-          label: capitalize(t("top_day")),
-          icon: IconSunset2,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.MostComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.All,
-              sort: SortType.MostComments,
-            },
-          },
-          label: capitalize(t("most_comments")),
-          icon: IconMessageCircle,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.NewComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.All,
-              sort: SortType.NewComments,
-            },
-          },
-          label: capitalize(t("new_comments")),
-          icon: IconMessageCircle2,
-        },
-        {
-          type: ListingType.Subscribed,
-          sort: SortType.Hot,
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.Subscribed,
-              sort: SortType.Hot,
-            },
-          },
-          label: capitalize(t("subscribed")),
-          icon: IconChecks,
-        },
-        {
-          type: null,
-          sort: null,
-          url: {
-            pathname: "/communities",
-          },
-          label: capitalize(t("communities")),
-          icon: IconSpeakerphone,
-        },
-      ].map((link) => {
-        return {
-          ...link,
-          active:
-            (router.pathname === "/" &&
-              query.sort === link.sort &&
-              query.type === link.type) ||
-            (router.pathname !== "/" && router.pathname === link.url.pathname),
-        };
-      }),
-    [query, router.pathname, t]
-  );
+  const links = useNavLinks();
 
   const commnitySubscribedList = useCommunityListForNavbar({
     type: ListingType.Subscribed,
