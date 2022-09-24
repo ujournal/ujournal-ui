@@ -17,6 +17,7 @@ import { MarkdownText } from "baza/components/MarkdownText";
 import { IconUser } from "@tabler/icons";
 import Head from "next/head";
 import { useMemo } from "react";
+import { AppNavbar } from "features/app/components/AppNavbar";
 
 const UserPage: SitePage = () => {
   const { userId: _userId } = useRouterQuery<{ userId: number }>({
@@ -138,5 +139,7 @@ const UserPage: SitePage = () => {
     </>
   );
 };
+
+UserPage.Navbar = AppNavbar;
 
 export default UserPage;
