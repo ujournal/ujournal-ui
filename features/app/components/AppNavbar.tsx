@@ -41,6 +41,13 @@ export const AppNavbar = () => {
     limit: 10,
   });
 
+  const communityActiveList = useCommunityListForNavbar({
+    type: ListingType.Community,
+    sort: SortType.Active,
+    activeCommunityName: query.communityName as string,
+    limit: 10,
+  });
+
   const topList = useMemo(() => {
     if (commnityTopList.isLoading) {
       return commnityTopList;
@@ -85,6 +92,17 @@ export const AppNavbar = () => {
 
           <CommunityList
             {...omit(topList, ["fetchNextPage"])}
+            itemProps={{ onLinkClick: handleMenuClose }}
+          />
+        </Box>
+      )}
+
+      {communityActiveList.data.length > 0 && (
+        <Box>
+          <NavbarTitle>{t("active")}</NavbarTitle>
+
+          <CommunityList
+            {...omit(communityActiveList, ["fetchNextPage"])}
             itemProps={{ onLinkClick: handleMenuClose }}
           />
         </Box>
