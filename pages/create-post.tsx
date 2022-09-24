@@ -6,12 +6,14 @@ import {
 } from "features/post/components/PostForm";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { SitePage } from "types";
 import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
 import { generatePostPlaceholderUrl } from "features/post/utils/postUrl";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
+
+const localStorageKey = "create-post";
 
 const CreatePostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -19,7 +21,7 @@ const CreatePostPage: SitePage = () => {
   const router = useRouter();
   const communityId = parseInt(router.query.communityId as string, 10) || -1;
   const [values, setValues] = useLocalStorage<PostFormValues>({
-    key: "create-post",
+    key: localStorageKey,
     defaultValue: {
       community_id: communityId,
       body: "",
@@ -44,13 +46,7 @@ const CreatePostPage: SitePage = () => {
 
         showSuccess("post-creating");
 
-        setValues({
-          community_id: -1,
-          body: "",
-          name: "",
-          url: "",
-          nsfw: false,
-        });
+        localStorage.removeItem(localStorageKey);
 
         router.push({
           pathname: "/post",
@@ -60,8 +56,19 @@ const CreatePostPage: SitePage = () => {
         showFail("post-creating");
       }
     },
-    [router, setValues, upsertPost]
+    [router, upsertPost]
   );
+
+  const valuesWithCommunityId = useMemo(() => {
+    if (communityId) {
+      return {
+        ...values,
+        community_id: communityId,
+      };
+    }
+
+    return values;
+  }, [communityId, values]);
 
   const handleChange = useCallback(
     (values: PostFormValues) => {
@@ -69,11 +76,11 @@ const CreatePostPage: SitePage = () => {
         setValues(values);
       } else {
         setFormKey(
-          `${values.community_id}_${values.name.length}_${values.body.length}`
+          `${valuesWithCommunityId.community_id}_${valuesWithCommunityId.name.length}_${valuesWithCommunityId.body.length}`
         );
       }
     },
-    [focused, setValues]
+    [focused, setValues, valuesWithCommunityId]
   );
 
   const handleFocus = useCallback(() => {
@@ -89,7 +96,7 @@ const CreatePostPage: SitePage = () => {
       >
         <PostForm
           key={formKey}
-          values={values}
+          values={valuesWithCommunityId}
           isLoading={upsertPost.isLoading}
           onSubmit={handleSubmit}
           onChange={handleChange}
