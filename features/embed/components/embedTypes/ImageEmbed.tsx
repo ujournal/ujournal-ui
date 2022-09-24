@@ -6,9 +6,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
   return (
     <Box
       sx={{
-        backgroundImage: `url("${src}")`,
-        backgroundSize: "cover",
-        backgroundColor: "#000",
+        backgroundColor: "#fff",
       }}
     >
       <Box
@@ -19,8 +17,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
           width: "100%",
           height: "100%",
           objectFit: "contain",
-          backdropFilter: "blur(100px)",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.05)",
         }}
         className="image"
       />
