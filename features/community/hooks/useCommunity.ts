@@ -14,10 +14,10 @@ export const useCommunity = ({
   const auth = useAuth();
 
   return useQuery(
-    ["community", { token: auth.token.unwrapOr(""), communityName }],
+    ["community", auth.token.unwrapOr(""), communityName],
     async () => {
       if (!communityName) {
-        return null;
+        return undefined;
       }
 
       return await lemmyClient.getCommunity(

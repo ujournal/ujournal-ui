@@ -45,14 +45,14 @@ export class YouTubeTool {
    * @public
    */
   render() {
-    this.wrapper = document.createElement("div");
-    const input = document.createElement("input");
+    this.wrapper = window.document.createElement("div");
+    const input = window.document.createElement("input");
     input.value = this.data && this.data.url ? this.data.url : "";
     this.url = input.value;
     input.placeholder = "Paste YouTube url here...";
 
-    this.wrapper.classList.add(styles.blockWrapper);
-    this.wrapper.appendChild(input);
+    this.wrapper?.classList.add(styles.blockWrapper);
+    this.wrapper?.appendChild(input);
     this._createIframe(input.value);
 
     input.addEventListener("change", () => {
@@ -90,10 +90,10 @@ export class YouTubeTool {
 
     this.wrapper.innerHTML = "";
 
-    const plyrContainer = document.createElement("div");
+    const plyrContainer = window.document.createElement("div");
     plyrContainer.classList.add(styles.videoWrapper);
 
-    const iframe = document.createElement("iframe");
+    const iframe = window.document.createElement("iframe");
     iframe.setAttribute("src", `https://www.youtube.com/embed/${matches[7]}`);
     iframe.setAttribute("allowfullscreen", "true");
 

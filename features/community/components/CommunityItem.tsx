@@ -10,6 +10,7 @@ import {
   Button,
   Box,
 } from "@mantine/core";
+import { Some } from "@sniptt/monads";
 import {
   IconCircleCheck,
   IconCircleMinus,
@@ -18,15 +19,21 @@ import {
 } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { capitalize } from "baza/utils/string";
+import { useSiteUser } from "features/app/hooks/useSiteUser";
 import Link from "next/link";
 import { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { CommunityView } from "ujournal-lemmy-js-client";
+import {
+  CommunityModeratorView,
+  CommunityView,
+} from "ujournal-lemmy-js-client";
 import { useCommunitySubscription } from "../hooks/useCommunitySubscription";
 
 type CommunityItemProps = Omit<CommunityView, "subscribed"> & {
   subscribed?: boolean;
   compact?: boolean;
+  moderators?: CommunityModeratorView[];
 };
 
 export const CommunityItem: FC<CommunityItemProps> = ({
@@ -34,9 +41,11 @@ export const CommunityItem: FC<CommunityItemProps> = ({
   counts,
   subscribed = false,
   compact = false,
+  moderators,
 }) => {
   const { t } = useTranslation();
   const subscription = useCommunitySubscription();
+  const user = useSiteUser();
 
   const handleSubscriptionToggle = useCallback(async () => {
     await subscription.mutateAsync({
@@ -145,9 +154,29 @@ export const CommunityItem: FC<CommunityItemProps> = ({
               borderBottomRightRadius: 4,
             }}
           >
-            {t("create_post")}
+            {capitalize(t("create_post"))}
           </Button>
         </Link>
+        {user.amMod(Some(moderators)) && (
+          <Link
+            href={{
+              pathname: "/edit-community",
+              query: { communityName: community.name },
+            }}
+          >
+            <Button
+              component="a"
+              variant="outline"
+              leftIcon={<IconPencil stroke={1.5} />}
+              radius="md"
+              sx={{
+                borderRadius: 4,
+              }}
+            >
+              {capitalize(t("edit"))}
+            </Button>
+          </Link>
+        )}
         <Button
           variant={subscribed ? "outline" : "light"}
           leftIcon={
@@ -166,7 +195,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
             borderTopRightRadius: 4,
           }}
         >
-          {subscribed ? t("unsubscribe") : t("subscribe")}
+          {capitalize(subscribed ? t("unsubscribe") : t("subscribe"))}
         </Button>
       </Stack>
     </Card>

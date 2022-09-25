@@ -21,9 +21,9 @@ export const usePictrsImageUpload = ({
       const hash = data.files[0].file;
       const fileUrl = `${process.env.NEXT_PUBLIC_PICTRS_API_URL}/${hash}`;
       const deleteToken = data.files[0].delete_token;
-      const deleteFileUrl = `${process.env.NEXT_PUBLIC_PICTRS_API_URL}/delete/${deleteToken}/${hash}`;
+      const fileDeleteUrl = `${process.env.NEXT_PUBLIC_PICTRS_API_URL}/delete/${deleteToken}/${hash}`;
 
-      return { fileUrl, deleteFileUrl };
+      return { fileUrl, fileDeleteUrl };
     }
   });
 };

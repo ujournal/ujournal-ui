@@ -56,18 +56,18 @@ const CommunitiesPage: SitePage = () => {
             <Box sx={{ flex: "1 1 0" }}>
               <CommunitySearchForm onSubmit={setValues} />
             </Box>
-            {/* <Link href={{ pathname: "/create-community" }}>
+            <Link href={{ pathname: "/create-community" }}>
               <Button
                 component="a"
                 size="lg"
                 radius="md"
-                variant="outline"
+                variant="white"
                 leftIcon={<IconCirclePlus stroke={1.5} />}
                 pr={largerThanSm ? undefined : "xs"}
               >
                 {largerThanSm ? t("create_community") : undefined}
               </Button>
-            </Link> */}
+            </Link>
           </Group>
           <Grid>
             <CommunityList

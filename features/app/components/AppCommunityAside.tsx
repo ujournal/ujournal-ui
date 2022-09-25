@@ -4,10 +4,12 @@ import { CommunityItem } from "features/community/components/CommunityItem";
 import { useCommunity } from "features/community/hooks/useCommunity";
 import { usePost } from "features/post/hooks/usePost";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
 import { CommunityView } from "ujournal-lemmy-js-client";
 
 export const AppCommunityAside: FC = () => {
+  const router = useRouter();
   const { postId: _postId, communityName } = useRouterQuery<{
     postId: number;
     communityName: string | undefined;
@@ -41,7 +43,9 @@ export const AppCommunityAside: FC = () => {
   return (
     <Box p={4}>
       <Stack spacing="md">
-        <CommunityItem {...communityView} compact />
+        {!router.pathname.startsWith("/community") && (
+          <CommunityItem {...communityView} compact />
+        )}
         <Card radius="md">
           <Stack spacing="xs">
             <Box

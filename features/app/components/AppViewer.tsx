@@ -5,7 +5,7 @@ export const AppViewer: FC = () => {
   const [image, setImage] = useState<string | undefined>();
 
   useEffect(() => {
-    document.body.addEventListener("click", (event: Event) => {
+    window.document.body.addEventListener("click", (event: Event) => {
       if (
         event.target instanceof HTMLElement &&
         event.target?.closest(".image")

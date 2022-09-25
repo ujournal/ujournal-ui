@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useFreeimageUpload } from "./useFreeimageUpload";
+// import { useFreeimageUpload } from "./useFreeimageUpload";
 import { useIbbImageUpload } from "./useIbbImageUpload";
 import { usePictrsImageUpload } from "./usePictrsImageUpload";
 

@@ -60,7 +60,7 @@ export const TextEditor: FC<TextEditorProps> = ({
   }, []);
 
   const _editor = useMemo(() => {
-    const element = document.createElement("div");
+    const element = window.document.createElement("div");
 
     const handleEditorReady = () => {
       new Undo({ editor });

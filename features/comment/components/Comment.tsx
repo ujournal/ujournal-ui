@@ -98,7 +98,7 @@ export const Comment: FC<CommentProps> = ({
 
   useEffect(() => {
     if (String(comment.id) === routerQuery.commentId) {
-      document.getElementById(`comment-${comment.id}`)?.scrollIntoView();
+      window.document.getElementById(`comment-${comment.id}`)?.scrollIntoView();
     }
   }, [comment.id, routerQuery.commentId]);
 
