@@ -10,11 +10,8 @@ import {
 import { AppNavbar } from "features/app/components/AppNavbar";
 import { AppAside } from "features/app/components/AppAside";
 import { useNavLinks } from "features/app/hooks/useNavLinks";
-import { PullToRefresh } from "react-js-pull-to-refresh";
+import PullToRefresh from "react-simple-pull-to-refresh";
 import Head from "next/head";
-import { PullDownContent } from "baza/components/PullToRefresh/PullDownContent";
-import { ReleaseContent } from "baza/components/PullToRefresh/ReleaseContent";
-import { RefreshContent } from "baza/components/PullToRefresh/RefreshContent";
 import { Box } from "@mantine/core";
 
 const FeedPage: SitePage = () => {
@@ -42,16 +39,7 @@ const FeedPage: SitePage = () => {
       </Head>
 
       <Box sx={(theme) => ({ margin: -theme.spacing.md })}>
-        <Box
-          component={PullToRefresh}
-          pullDownContent={<PullDownContent />}
-          releaseContent={<ReleaseContent />}
-          refreshContent={<RefreshContent />}
-          pullDownThreshold={100}
-          onRefresh={posts.refetch}
-          triggerHeight={60}
-          backgroundColor="transparent"
-        >
+        <Box component={PullToRefresh} onRefresh={posts.refetch}>
           <Box sx={(theme) => ({ margin: theme.spacing.md })}>
             <PostList posts={posts} key="home-feed" />
           </Box>
