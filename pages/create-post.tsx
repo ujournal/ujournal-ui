@@ -3,7 +3,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import {
   PostForm,
   Values as PostFormValues,
-} from "features/post/components/PostForm";
+} from "features/post/forms/PostForm";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
@@ -12,6 +12,7 @@ import { showFail, showProgress, showSuccess } from "baza/utils/notifications";
 import { generatePostPlaceholderUrl } from "features/post/utils/postUrl";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
+import { redirectOnSignedOut } from "features/app/components/AppAuthRedirect";
 
 const localStorageKey = "create-post";
 
@@ -106,5 +107,7 @@ const CreatePostPage: SitePage = () => {
     </Container>
   );
 };
+
+CreatePostPage.authRedirect = redirectOnSignedOut;
 
 export default CreatePostPage;

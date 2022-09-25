@@ -10,7 +10,7 @@ import { DateFormatted } from "baza/components/DeteFormatted";
 import { VoteButtons } from "baza/components/VoteButtons";
 import { useCommentVote } from "../hooks/useCommentVote";
 import { CommentInternal } from "../utils/comments";
-import { CommentForm, Values as CommentFormValues } from "./CommentForm";
+import { CommentForm, Values as CommentFormValues } from "../forms/CommentForm";
 import { CommentMenu } from "./CommentMenu";
 import { useCommentUpsert } from "../hooks/useCommentUpsert";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";

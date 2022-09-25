@@ -1,5 +1,7 @@
-import { Container, Grid, Stack } from "@mantine/core";
+import { Box, Button, Container, Grid, Group, Stack } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
+import { IconCirclePlus } from "@tabler/icons";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { AppNavbar } from "features/app/components/AppNavbar";
 import { CommunityItemWithCol } from "features/community/components/CommunityItem";
 import { CommunityList } from "features/community/components/CommunityList";
@@ -12,12 +14,14 @@ import {
 import { useCommunityList } from "features/community/hooks/useCommunityList";
 import { useSearch } from "features/search/hooks/useSearch";
 import Head from "next/head";
+import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 import { SortType } from "ujournal-lemmy-js-client";
 
 const CommunitiesPage: SitePage = () => {
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const { t } = useTranslation();
   const [values, setValues] = useDebouncedState<CommunitySearchValues>(
     { query: "" },
@@ -48,7 +52,23 @@ const CommunitiesPage: SitePage = () => {
 
       <Container size={1400} p={0}>
         <Stack>
-          <CommunitySearchForm onSubmit={setValues} />
+          <Group noWrap>
+            <Box sx={{ flex: "1 1 0" }}>
+              <CommunitySearchForm onSubmit={setValues} />
+            </Box>
+            {/* <Link href={{ pathname: "/create-community" }}>
+              <Button
+                component="a"
+                size="lg"
+                radius="md"
+                variant="outline"
+                leftIcon={<IconCirclePlus stroke={1.5} />}
+                pr={largerThanSm ? undefined : "xs"}
+              >
+                {largerThanSm ? t("create_community") : undefined}
+              </Button>
+            </Link> */}
+          </Group>
           <Grid>
             <CommunityList
               {...datList}

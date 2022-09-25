@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { SignInForm } from "features/sign-in/components/SignInForm";
+import { SignInForm } from "features/sign-in/forms/SignInForm";
 import { useAuth } from "features/app/hooks/useAuth";
 import { SitePage } from "types";
 import { useCallback } from "react";
@@ -30,7 +30,7 @@ const SignInPage: SitePage = () => {
   );
 
   return (
-    <Container size="xs">
+    <Container size="xs" p={0}>
       <Card p="lg" radius="md">
         <SignInForm
           values={{ usernameOrEmail: "", password: "" }}

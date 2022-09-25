@@ -4,7 +4,7 @@ import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   PostForm,
   Values as PostFormValues,
-} from "features/post/components/PostForm";
+} from "features/post/forms/PostForm";
 import { usePost } from "features/post/hooks/usePost";
 import { usePostUpsert } from "features/post/hooks/usePostUpsert";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ import { useCallback, useMemo } from "react";
 import { SitePage } from "types";
 import { queryClient } from "baza/reactQuery";
 import { showProgress, showFail, showSuccess } from "baza/utils/notifications";
+import { redirectOnSignedOut } from "features/app/components/AppAuthRedirect";
 
 const EditPostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -85,5 +86,7 @@ const EditPostPage: SitePage = () => {
     </Center>
   );
 };
+
+EditPostPage.authRedirect = redirectOnSignedOut;
 
 export default EditPostPage;

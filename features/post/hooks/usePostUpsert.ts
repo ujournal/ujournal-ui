@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { queryClient } from "baza/reactQuery";
 import { useAuth } from "features/app/hooks/useAuth";
-import { Values as PostEditValues } from "features/post/components/PostForm";
+import { Values as PostEditValues } from "features/post/forms/PostForm";
 import { CreatePost, EditPost } from "ujournal-lemmy-js-client";
 
 export const usePostUpsert = () => {

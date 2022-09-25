@@ -5,7 +5,7 @@ import {
   Errors as SignUpFormErrors,
   SignUpForm,
   Values as SignUpFormValues,
-} from "features/sign-up/components/SignUpForm";
+} from "features/sign-up/forms/SignUpForm";
 import { useSignUp } from "features/sign-up/hooks/useSignUp";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -80,7 +80,7 @@ const SignUpPage: SitePage = () => {
   );
 
   return (
-    <Container size="xs">
+    <Container size="xs" p={0}>
       <Card p="lg" radius="md">
         {signUp.isSuccess ? (
           <Stack sx={{ alignItems: "center" }}>

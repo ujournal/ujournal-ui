@@ -8,7 +8,7 @@ import { AppNavbar } from "features/app/components/AppNavbar";
 import {
   CommentForm,
   Values as CommentFormValues,
-} from "features/comment/components/CommentForm";
+} from "features/comment/forms/CommentForm";
 import { CommentList } from "features/comment/components/CommentList";
 import { CommentTitle } from "features/comment/components/CommentTitle";
 import { useCommentUpsert } from "features/comment/hooks/useCommentUpsert";
