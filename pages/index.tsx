@@ -47,11 +47,10 @@ const FeedPage: SitePage = () => {
           pullDownContent={<PullDownContent />}
           releaseContent={<ReleaseContent />}
           refreshContent={<RefreshContent />}
-          pullDownThreshold={200}
+          pullDownThreshold={100}
           onRefresh={posts.refetch}
           triggerHeight={60}
           backgroundColor="transparent"
-          startInvisible
         >
           <Box sx={(theme) => ({ margin: theme.spacing.md })}>
             <PostList posts={posts} key="home-feed" />
