@@ -13,6 +13,8 @@ import { useNavLinks } from "features/app/hooks/useNavLinks";
 import PullToRefresh from "react-simple-pull-to-refresh";
 import Head from "next/head";
 import { Box } from "@mantine/core";
+import { RefreshContent } from "baza/components/PullToRefresh/RefreshContent";
+import { PullDownContent } from "baza/components/PullToRefresh/PullDownContent";
 
 const FeedPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -39,7 +41,12 @@ const FeedPage: SitePage = () => {
       </Head>
 
       <Box sx={(theme) => ({ margin: -theme.spacing.md })}>
-        <Box component={PullToRefresh} onRefresh={posts.refetch}>
+        <Box
+          component={PullToRefresh}
+          onRefresh={posts.refetch}
+          refreshingContent={<RefreshContent />}
+          pullingContent={<PullDownContent />}
+        >
           <Box sx={(theme) => ({ margin: theme.spacing.md })}>
             <PostList posts={posts} key="home-feed" />
           </Box>
