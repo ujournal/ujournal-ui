@@ -136,7 +136,7 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           </Grid.Col>
         </Grid>
       </Stack>
-      <Stack spacing={2}>
+      <Stack spacing={2} mt="md">
         <Link
           href={{
             pathname: "/create-post",
@@ -146,7 +146,6 @@ export const CommunityItem: FC<CommunityItemProps> = ({
           <Button
             component="a"
             variant="outline"
-            mt="md"
             leftIcon={<IconPencil stroke={1.5} />}
             radius="md"
             sx={{
