@@ -11,7 +11,7 @@ export const AppCreatePostAside: FC = () => {
       p="sm"
       center
       icon={
-        <ThemeIcon color="yellow" size={24} radius="xl">
+        <ThemeIcon color="gray" size={24} radius="xl">
           <IconAlertCircle size={16} />
         </ThemeIcon>
       }
