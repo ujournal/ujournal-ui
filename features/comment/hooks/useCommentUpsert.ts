@@ -6,6 +6,10 @@ import { useAuth } from "features/app/hooks/useAuth";
 import { Values as CommentEditValues } from "features/comment/forms/CommentForm";
 import { CreateComment, EditComment } from "ujournal-lemmy-js-client";
 
+const fixCommentContent = (content: string) => {
+  return content.replace(/^\+(\n|$)/gm, "&plus;\n");
+};
+
 export const useCommentUpsert = () => {
   const lemmyClient = useLemmyClient();
   const auth = useAuth();
@@ -27,7 +31,7 @@ export const useCommentUpsert = () => {
           result = await lemmyClient.editComment(
             new EditComment({
               comment_id: values.commentId,
-              content: Some(values.content),
+              content: Some(fixCommentContent(values.content)),
               distinguished: None,
               form_id: None,
               auth: auth.token.unwrap(),
@@ -50,7 +54,7 @@ export const useCommentUpsert = () => {
       try {
         result = await lemmyClient.createComment(
           new CreateComment({
-            content: values.content,
+            content: fixCommentContent(values.content),
             parent_id: values.parentId ? Some(values.parentId) : None,
             post_id: values.postId,
             form_id: None,
