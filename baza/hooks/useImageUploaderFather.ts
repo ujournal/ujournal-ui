@@ -1,3 +1,4 @@
+import { loadImageAndGetSize } from "baza/utils/image";
 import { useCallback, useMemo } from "react";
 // import { useFreeimageUpload } from "./useFreeimageUpload";
 import { useIbbImageUpload } from "./useIbbImageUpload";
@@ -27,7 +28,14 @@ export const useImageUploaderFather = () => {
 
       for (let uploader of uploaders) {
         try {
-          return await uploader.mutateAsync({ file });
+          const result = await uploader.mutateAsync({ file });
+          const { width, height } = await loadImageAndGetSize(result.fileUrl);
+          return {
+            ...result,
+            fileUrl: `${result.fileUrl}#r=${width / height}`,
+            width,
+            height,
+          };
         } catch (_error) {
           error = _error;
         }

@@ -53,13 +53,17 @@ export const markdown = new markdownIt({
 const renderImageDefault = markdown.renderer.rules.image as any;
 
 markdown.renderer.rules.image = (tokens, idx, options, env, self) => {
-  return `<div class="image-outer"><div class="image">${renderImageDefault(
-    tokens,
-    idx,
-    options,
-    env,
-    self
-  )}</div>${
+  const [[attr, src]] = tokens[0].attrs || [];
+  const matches = src.match(/\#r=([\d\.]+)$/);
+  const [, ratio] = matches || [-1, 1];
+
+  if (tokens[0].attrs && tokens[0].attrs.length > 0) {
+    tokens[0].attrs[0][1] = tokens[0].attrs[0][1].replace(/\#r=([\d\.]+)$/, "");
+  }
+
+  return `<div class="image-outer"><div class="image" style="--image-height: ${
+    100 * Number(ratio)
+  }%">${renderImageDefault(tokens, idx, options, env, self)}</div>${
     tokens.length > 0 &&
     tokens[0].attrs &&
     tokens[0].attrs.length > 0 &&

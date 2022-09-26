@@ -25,5 +25,7 @@ export const usePictrsImageUpload = ({
 
       return { fileUrl, fileDeleteUrl };
     }
+
+    throw new Error("Failed.");
   });
 };

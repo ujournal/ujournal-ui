@@ -27,5 +27,7 @@ export const useIbbImageUpload = ({
 
       return { fileUrl, fileDeleteUrl };
     }
+
+    throw new Error("Failed.");
   });
 };

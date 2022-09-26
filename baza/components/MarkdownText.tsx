@@ -69,8 +69,8 @@ export const MarkdownText: FC<
           display: "block",
           marginLeft: "auto",
           marginRight: "auto",
-          maxWidth: "100%",
-          maxHeight: "60vh",
+          width: "100%",
+          height: "var(--image-height, 100%)",
         },
         "& hr": {
           height: 1,
@@ -80,12 +80,12 @@ export const MarkdownText: FC<
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.025)",
-          border: "8px solid transparent",
+          // border: "8px solid transparent",
           borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
           borderRight: "1px solid rgba(255, 255, 255, 0.5)",
           marginLeft: compact ? 0 : -20,
           marginRight: compact ? 0 : -20,
-          display: compact ? "inline-block" : "block",
+          display: "block",
         },
         "& .image video": {
           display: "block",
