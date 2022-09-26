@@ -69,6 +69,8 @@ export const MarkdownText: FC<
           display: "block",
           marginLeft: "auto",
           marginRight: "auto",
+          maxWidth: "100%",
+          maxHeight: compact ? "50vh" : undefined,
           width: "100%",
           height: "var(--image-height, 100%)",
         },
@@ -85,6 +87,7 @@ export const MarkdownText: FC<
           borderRight: "1px solid rgba(255, 255, 255, 0.5)",
           marginLeft: compact ? 0 : -20,
           marginRight: compact ? 0 : -20,
+          maxWidth: compact ? "100px" : undefined,
           display: "block",
         },
         "& .image video": {
