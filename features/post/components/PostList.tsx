@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import { flattenDepth, get, map } from "lodash";
 import { Center } from "@mantine/core";
 import { PostListLoader } from "./PostListLoader";
+import { removePostDuplicates } from "../utils/postDuplicates";
 
 export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
   posts,
@@ -31,7 +32,7 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
         1
       ) || [];
 
-    return { ...posts, data };
+    return { ...posts, data: removePostDuplicates(data) };
   }, [posts]);
 
   const containerRef = useRef<HTMLDivElement>(null);

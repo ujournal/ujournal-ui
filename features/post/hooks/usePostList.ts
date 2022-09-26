@@ -1,9 +1,15 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
-import { GetPosts, ListingType, SortType } from "ujournal-lemmy-js-client";
+import {
+  GetPosts,
+  ListingType,
+  PostView,
+  SortType,
+} from "ujournal-lemmy-js-client";
 import { None, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
 import { merge } from "lodash";
+import { useMemo } from "react";
 
 export type FetchPostsParams = {
   type?: ListingType;
@@ -12,6 +18,10 @@ export type FetchPostsParams = {
   limit?: number;
   communityId?: number;
   communityName?: string;
+};
+
+export type PostListOptions = {
+  removeDuplicates: boolean;
 };
 
 export const fetchPostsParamsDefault = {
@@ -54,7 +64,10 @@ const usePostsFetcher = (params: FetchPostsParams = {}) => {
     );
 };
 
-export const usePostList = ({ params = {} }: { params: FetchPostsParams }) => {
+export const usePostList = (
+  { params = {} }: { params: FetchPostsParams },
+  { removeDuplicates }: PostListOptions = { removeDuplicates: true }
+) => {
   const auth = useAuth();
   const fetchPosts = usePostsFetcher(params);
 
