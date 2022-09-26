@@ -46,14 +46,16 @@ const CommunityPage: SitePage = () => {
   }, [community.data]);
 
   return (
-    <Stack>
+    <Stack justify="stretch">
       {communityView && (
         <Container size={690} p={0} sx={{ width: "100%" }}>
           <CommunityItem {...communityView} moderators={communityModerators} />
         </Container>
       )}
 
-      <PostList posts={posts} key="communiy-feed" />
+      <Container size={690} p={0} sx={{ width: "100%" }}>
+        <PostList posts={posts} key="communiy-feed" />
+      </Container>
     </Stack>
   );
 };
