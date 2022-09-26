@@ -13,6 +13,8 @@ import { generatePostPlaceholderUrl } from "features/post/utils/postUrl";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
 import { redirectOnSignedOut } from "features/app/components/AppAuthRedirect";
+import { AppCreatePostAside } from "features/app/components/AppCreatePostAside";
+import { AppNavbar } from "features/app/components/AppNavbar";
 
 const localStorageKey = "create-post";
 
@@ -108,6 +110,8 @@ const CreatePostPage: SitePage = () => {
   );
 };
 
+CreatePostPage.Navbar = AppNavbar;
+CreatePostPage.Aside = AppCreatePostAside;
 CreatePostPage.authRedirect = redirectOnSignedOut;
 
 export default CreatePostPage;
