@@ -15,12 +15,13 @@ import { capitalize } from "baza/utils/string";
 import Link from "next/link";
 import { FC, ForwardedRef, forwardRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { SortType } from "ujournal-lemmy-js-client";
 import { useCommunityList } from "../hooks/useCommunityList";
 
 export const CommunitySelect: FC<
   Omit<SelectProps, "onChange"> & { onChange: (value: number) => void }
 > = ({ onChange, ...props }) => {
-  const communities = useCommunityList({ limit: 1000 });
+  const communities = useCommunityList({ sort: SortType.TopAll, limit: 1000 });
   const { t } = useTranslation();
 
   const communitiesOptions = useMemo(
