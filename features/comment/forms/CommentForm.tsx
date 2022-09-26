@@ -1,6 +1,6 @@
 import { ActionIcon, Box, Group, Loader, Textarea } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconLayoutSidebarRightCollapse, IconSend } from "@tabler/icons";
+import { IconSend } from "@tabler/icons";
 import {
   FC,
   SyntheticEvent,
@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { UploadImageButton } from "baza/components/UploadImageButton";
 import { MentionsPopover } from "features/mentions/components/MentionsPopover";
 import { PersonSafe } from "ujournal-lemmy-js-client";
+import { applyCommentContentFixUnwrap } from "../utils/comments";
 
 export type Values = {
   parentId?: number;
@@ -47,7 +48,13 @@ export const CommentForm: FC<{
     [t]
   );
 
-  const form = useForm({ validate, initialValues: values });
+  const form = useForm({
+    validate,
+    initialValues: {
+      ...values,
+      content: applyCommentContentFixUnwrap(values.content),
+    },
+  });
 
   const handleSubmit = useCallback(
     async (values: Values) => {

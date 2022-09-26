@@ -83,3 +83,11 @@ export const transformCommentsFromCommentsView = (comments: any[]) => {
     })
   );
 };
+
+export const applyCommentContentFixWrap = (content: string) => {
+  return content.replace(/^\+(\n|$)/gm, "&plus;\n");
+};
+
+export const applyCommentContentFixUnwrap = (content: string) => {
+  return content.replace(/^&plus;/gm, "+");
+};
