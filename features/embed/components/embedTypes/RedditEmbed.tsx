@@ -27,12 +27,6 @@ export const RedditEmbed: EmbedComponentType = ({ src }) => {
 
     window.addEventListener("message", handleResizeEvent);
 
-    // if (iframeRef.current && iframeRef.current.contentWindow) {
-    //   iframeRef.current.contentWindow.addEventListener(
-    //     "resize.embed",
-    //     handleResizeEvent
-    //   );
-
     return () => {
       window.addEventListener("message", handleResizeEvent);
     };
