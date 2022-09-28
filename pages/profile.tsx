@@ -93,6 +93,7 @@ const ProfilePage: SitePage = () => {
           key={buildKeyFromParams(values)}
           values={values}
           onSubmit={handleProfileSubmit}
+          isLoading={profileUpdate.isLoading}
         />
       </Card>
     </Container>
