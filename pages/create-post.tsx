@@ -15,6 +15,7 @@ import { useState } from "react";
 import { redirectOnSignedOut } from "features/app/components/AppAuthRedirect";
 import { AppCreatePostAside } from "features/app/components/AppCreatePostAside";
 import { AppNavbar } from "features/app/components/AppNavbar";
+import Script from "next/script";
 
 const localStorageKey = "create-post";
 
@@ -91,22 +92,29 @@ const CreatePostPage: SitePage = () => {
   }, []);
 
   return (
-    <Container size={690} p={0}>
-      <Card
-        p={largerThanSm ? "xl" : "sm"}
-        sx={{ overflow: "visible" }}
-        radius="md"
-      >
-        <PostForm
-          key={formKey}
-          values={valuesWithCommunityId}
-          isLoading={upsertPost.isLoading}
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          onFocus={handleFocus}
-        />
-      </Card>
-    </Container>
+    <>
+      <Script id="google-analytics-send-event" strategy="afterInteractive">
+        {`
+          gtag('event', 'conversion', {'send_to': 'AW-964930766/-M0WCMfqnOIDEM7ZjswD'});
+        `}
+      </Script>
+      <Container size={690} p={0}>
+        <Card
+          p={largerThanSm ? "xl" : "sm"}
+          sx={{ overflow: "visible" }}
+          radius="md"
+        >
+          <PostForm
+            key={formKey}
+            values={valuesWithCommunityId}
+            isLoading={upsertPost.isLoading}
+            onSubmit={handleSubmit}
+            onChange={handleChange}
+            onFocus={handleFocus}
+          />
+        </Card>
+      </Container>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import { SitePage } from "types";
 import isJson from "is-json";
 import { useAuth } from "features/app/hooks/useAuth";
 import { redirectOnSignedIn } from "features/app/components/AppAuthRedirect";
+import Script from "next/script";
 
 const SignUpPage: SitePage = () => {
   const signUp = useSignUp();
@@ -80,46 +81,53 @@ const SignUpPage: SitePage = () => {
   );
 
   return (
-    <Container size="xs" p={0}>
-      <Card p="lg" radius="md">
-        {signUp.isSuccess ? (
-          <Stack sx={{ alignItems: "center" }}>
-            <ThemeIcon size="xl" color="green" variant="filled" radius="xl">
-              <IconCheck />
-            </ThemeIcon>
-            {signUp.data?.verify_email_sent && (
-              <Text>{t("verify_email_sent")}</Text>
-            )}
-            {signUp.data?.registration_created && (
-              <Text>{t("registration_application_sent")}</Text>
-            )}
-            <Link
-              href={
-                signUp.data?.jwt?.isSome()
-                  ? { pathname: "/communities" }
-                  : { pathname: "/" }
-              }
-            >
-              <Button
-                component="a"
-                leftIcon={<IconArrowRight />}
-                variant="subtle"
+    <>
+      <Script id="google-analytics-send-event" strategy="afterInteractive">
+        {`
+          gtag('event', 'conversion', {'send_to': 'AW-964930766/-M0WCMfqnOIDEM7ZjswD'});
+        `}
+      </Script>
+      <Container size="xs" p={0}>
+        <Card p="lg" radius="md">
+          {signUp.isSuccess ? (
+            <Stack sx={{ alignItems: "center" }}>
+              <ThemeIcon size="xl" color="green" variant="filled" radius="xl">
+                <IconCheck />
+              </ThemeIcon>
+              {signUp.data?.verify_email_sent && (
+                <Text>{t("verify_email_sent")}</Text>
+              )}
+              {signUp.data?.registration_created && (
+                <Text>{t("registration_application_sent")}</Text>
+              )}
+              <Link
+                href={
+                  signUp.data?.jwt?.isSome()
+                    ? { pathname: "/communities" }
+                    : { pathname: "/" }
+                }
               >
-                {signUp.data?.jwt?.isSome() ? t("communities") : t("posts")}
-              </Button>
-            </Link>
-          </Stack>
-        ) : (
-          <SignUpForm
-            onSubmit={handleSubmit}
-            isLoading={signUp.isLoading}
-            errors={errors}
-            values={values}
-            key={JSON.stringify(errors)}
-          />
-        )}
-      </Card>
-    </Container>
+                <Button
+                  component="a"
+                  leftIcon={<IconArrowRight />}
+                  variant="subtle"
+                >
+                  {signUp.data?.jwt?.isSome() ? t("communities") : t("posts")}
+                </Button>
+              </Link>
+            </Stack>
+          ) : (
+            <SignUpForm
+              onSubmit={handleSubmit}
+              isLoading={signUp.isLoading}
+              errors={errors}
+              values={values}
+              key={JSON.stringify(errors)}
+            />
+          )}
+        </Card>
+      </Container>
+    </>
   );
 };
 
