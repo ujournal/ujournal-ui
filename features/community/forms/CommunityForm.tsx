@@ -46,7 +46,6 @@ export const CommunityForm: FC<{
     async (file: File) => {
       const fileUploaded = await uploadImage({ file });
       if (fileUploaded) {
-        console.log(fileUploaded.fileUrl);
         form.setFieldValue("icon", fileUploaded.fileUrl);
       }
     },
@@ -57,7 +56,6 @@ export const CommunityForm: FC<{
     async (file: File) => {
       const fileUploaded = await uploadImage({ file });
       if (fileUploaded) {
-        console.log(fileUploaded.fileUrl);
         form.setFieldValue("banner", fileUploaded.fileUrl);
       }
     },
@@ -153,6 +151,7 @@ export const CommunityForm: FC<{
           </Group>
         </Input.Wrapper>
         <Textarea
+          minRows={2}
           autosize
           label={capitalize(t("description"))}
           {...form.getInputProps("description")}

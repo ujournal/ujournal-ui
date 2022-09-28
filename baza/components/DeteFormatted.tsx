@@ -17,6 +17,7 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
     }
 
     const {
+      months = 0,
       days = 0,
       hours = 0,
       minutes = 0,
@@ -29,6 +30,8 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
 
     return displayFull
       ? date.toLocaleString()
+      : months > 0
+      ? rtf.format(months * -1, "month")
       : days > 0
       ? rtf.format(days * -1, "day")
       : hours > 0

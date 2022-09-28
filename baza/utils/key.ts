@@ -1,4 +1,8 @@
-export const buildKeyFromParams = (params: { [key: string]: any }) => {
+export const buildKeyFromParams = (params?: { [key: string]: any }) => {
+  if (!params) {
+    return "";
+  }
+
   return Object.keys(params)
     .sort()
     .filter((key) =>

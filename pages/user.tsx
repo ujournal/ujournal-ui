@@ -7,10 +7,10 @@ import {
   Card,
   Title,
   Stack,
-  Box,
   Text,
   Group,
   Avatar,
+  Image,
 } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { MarkdownText } from "baza/components/MarkdownText";
@@ -49,6 +49,16 @@ const UserPage: SitePage = () => {
 
       <Container px={0} mx={largerThanSm ? undefined : "-md"}>
         <Card radius={smallerThanSm ? 0 : "md"} p="xl">
+          {personViewSafe.data?.person.banner.unwrapOr("") && (
+            <Card.Section mb="md">
+              <Image
+                src={personViewSafe.data?.person.banner.unwrapOr("")}
+                height={160}
+                alt={personViewSafe.data.person.name}
+                sx={(theme) => ({ backgroundColor: theme.colors.gray[2] })}
+              />
+            </Card.Section>
+          )}
           <Stack spacing="xl">
             <Group>
               <Avatar
