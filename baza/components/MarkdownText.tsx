@@ -94,6 +94,7 @@ export const MarkdownText: FC<
           paddingBottom: theme.spacing.sm,
           fontSize: 14,
           color: theme.colors.gray[6],
+          "&:empty": { display: "none" },
         },
         "& blockquote": {
           backgroundColor: theme.fn.lighten(theme.colors.blue[0], 0.5),

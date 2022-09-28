@@ -55,7 +55,6 @@ export const UserMenu: FC<{
           <Menu.Item
             icon={<IconSettings size={24} stroke={1.5} />}
             component="a"
-            sx={{ display: "none" }}
           >
             {t("settings")}
           </Menu.Item>
