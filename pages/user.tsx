@@ -20,15 +20,20 @@ import { useMemo } from "react";
 import { AppNavbar } from "features/app/components/AppNavbar";
 
 const UserPage: SitePage = () => {
-  const { userId: _userId } = useRouterQuery<{ userId: number }>({
-    userId: -1,
+  const { userId: _userId, username: _username } = useRouterQuery<{
+    userId: number | undefined;
+    username: string | undefined;
+  }>({
+    userId: undefined,
+    username: undefined,
   });
 
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
   const personViewSafe = usePersonViewSafe({
-    creatorId: _userId,
+    personId: _userId,
+    username: _username,
   });
 
   const userName = useMemo(
@@ -63,9 +68,11 @@ const UserPage: SitePage = () => {
                   {personViewSafe.data?.person.display_name.unwrapOr("") ||
                     personViewSafe.data?.person.name}
                 </Title>
-                <Text sx={(theme) => ({ color: theme.colors.gray[6] })}>
-                  @{personViewSafe.data?.person.name}
-                </Text>
+                {personViewSafe.data && (
+                  <Text sx={(theme) => ({ color: theme.colors.gray[6] })}>
+                    @{personViewSafe.data?.person.name}
+                  </Text>
+                )}
               </Stack>
             </Group>
             <Stack spacing="xs">

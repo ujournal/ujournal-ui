@@ -18,7 +18,7 @@ export const PostCreator: FC<{
   post: Post;
 }> = ({ post }) => {
   let personViewSafe = usePersonViewSafe({
-    creatorId: post.creator_id,
+    personId: post.creator_id,
   });
   let creator = personViewSafe.data?.person ?? new PersonSafe();
 

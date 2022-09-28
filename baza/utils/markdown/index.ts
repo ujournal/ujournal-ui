@@ -5,6 +5,11 @@ import markdown_it_html5_embed from "markdown-it-html5-embed";
 import markdown_it_sub from "markdown-it-sub";
 import markdown_it_sup from "markdown-it-sup";
 import markdown_it_video from "markdown-it-video";
+import mentions from "markdown-it-mentions";
+
+const parseUrlForMentions = (username: string) => {
+  return `${process.env.NEXT_PUBLIC_BASE_URL}/user/?username=${username}`;
+};
 
 export const markdown = new markdownIt({
   html: false,
@@ -30,6 +35,7 @@ export const markdown = new markdownIt({
     vine: { width: 600, height: 600, embed: "simple" },
     prezi: { width: 550, height: 400 },
   })
+  .use(mentions, { parseURL: parseUrlForMentions, external: true })
   .use(markdownItContainer, "spoiler", {
     validate: (params: any) => {
       return params.trim().match(/^spoiler\s+(.*)$/);
