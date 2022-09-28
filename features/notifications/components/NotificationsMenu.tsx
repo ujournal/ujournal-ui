@@ -10,15 +10,23 @@ import {
   Popover,
   Stack,
   Tabs,
+  ThemeIcon,
 } from "@mantine/core";
-import { IconBallon, IconBell } from "@tabler/icons";
+import {
+  IconAt,
+  IconBallon,
+  IconBell,
+  IconMessageCircle2,
+} from "@tabler/icons";
+import { DateFormatted } from "baza/components/DeteFormatted";
 import { capitalize } from "baza/utils/string";
 import { useAuth } from "features/app/hooks/useAuth";
 import Link from "next/link";
 import { FC, MouseEvent, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMarkAllAsRead } from "../hooks/useMakAllAsReat";
-import { useReplies } from "../hooks/useReplies";
+import { useMentionMarkAsRead } from "../hooks/useMentionMarkAsRead";
+import { NotificationType, useNotifications } from "../hooks/useNotifications";
 import { useReplyMarkAsRead } from "../hooks/useReplyMarkAsRead";
 
 enum View {
@@ -28,19 +36,30 @@ enum View {
 
 export const NotificationsMenu: FC = () => {
   const [view, setView] = useState<View>(View.Unread);
-  const replies = useReplies({ limit: 20, unread_only: view === View.Unread });
+  const params = {
+    limit: 20,
+    unread_only: view === View.Unread,
+  };
+  const notifications = useNotifications(params);
   const replyMarkAsRead = useReplyMarkAsRead();
+  const mentionMarkAsRead = useMentionMarkAsRead();
   const markAllAsRead = useMarkAllAsRead();
   const { t } = useTranslation();
   const auth = useAuth();
 
   const handleReplyClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
-      replyMarkAsRead.mutateAsync(
-        parseInt(event.currentTarget.dataset.commentReplyId as string, 10)
-      );
+      if (event.currentTarget.dataset.type === NotificationType.Reply) {
+        replyMarkAsRead.mutateAsync(
+          parseInt(event.currentTarget.dataset.commentReplyId as string, 10)
+        );
+      } else {
+        mentionMarkAsRead.mutateAsync(
+          parseInt(event.currentTarget.dataset.personMentionId as string, 10)
+        );
+      }
     },
-    [replyMarkAsRead]
+    [mentionMarkAsRead, replyMarkAsRead]
   );
 
   const hadleMarkAllAsReak = useCallback(() => {
@@ -66,11 +85,7 @@ export const NotificationsMenu: FC = () => {
           offset={4}
           withBorder
           color="red"
-          disabled={
-            !replies.data ||
-            replies.data.replies.length === 0 ||
-            view === View.Viewed
-          }
+          disabled={notifications.data.length === 0 || view === View.Viewed}
         >
           <ActionIcon radius="xl" variant="subtle">
             <IconBell stroke={1.5} />
@@ -84,28 +99,37 @@ export const NotificationsMenu: FC = () => {
             <Tabs.Tab value={View.Viewed}>{capitalize(t("viewed"))}</Tabs.Tab>
           </Tabs.List>
         </Tabs>
-        {replies.isLoading || markAllAsRead.isLoading || !replies.data ? (
-          <Box sx={{ width: 300 }} p="md">
+        {notifications.isLoading ||
+        markAllAsRead.isLoading ||
+        !notifications.data ? (
+          <Box sx={{ width: 400 }} p="md">
             <Center>
               <Loader />
             </Center>
           </Box>
-        ) : replies.data.replies.length > 0 ? (
+        ) : notifications.data.length > 0 ? (
           <Stack spacing={0}>
-            <Stack sx={{ width: 300 }} spacing={0}>
-              {replies.data?.replies.map(({ creator, post, comment }) => (
+            <Stack sx={{ width: 400 }} spacing={0}>
+              {notifications.data.map(({ type, reply, mention, published }) => (
                 <Link
                   href={{
                     pathname: "/post",
-                    query: { postId: post.id, commentId: comment.id },
+                    query: {
+                      postId: (reply || mention)?.post.id,
+                      commentId: (reply || mention)?.comment.id,
+                    },
                   }}
                   passHref
-                  key={`${post.id}_${comment.id}`}
+                  key={`${(reply || mention)?.post.id}_${
+                    (reply || mention)?.comment.id
+                  }`}
                 >
                   <Box
                     component="a"
                     onClick={handleReplyClick}
-                    data-comment-reply-id={comment.id}
+                    data-comment-reply-id={reply?.comment.id}
+                    data-person-mention-id={mention?.person_mention.id}
+                    data-type={type}
                   >
                     <Group
                       noWrap
@@ -120,24 +144,41 @@ export const NotificationsMenu: FC = () => {
                           <Avatar
                             size={24}
                             radius="xl"
-                            src={creator.avatar.unwrapOr("")}
+                            src={(reply || mention)?.creator.avatar.unwrapOr(
+                              ""
+                            )}
                           />
-                          <Link
-                            href={{
-                              pathname: "/user",
-                              query: { userId: creator.id },
-                            }}
-                            passHref
-                          >
-                            <Box component="a" sx={{ fontWeight: 500 }}>
-                              {creator.display_name.unwrapOr("") ||
-                                creator.name}
-                            </Box>
-                          </Link>
+                          <Box component="a" sx={{ fontWeight: 500 }}>
+                            {(reply || mention)?.creator.display_name.unwrapOr(
+                              ""
+                            ) || (reply || mention)?.creator.name}
+                          </Box>
+                          {published && (
+                            <DateFormatted date={new Date(published + "Z")} />
+                          )}
                         </Group>
                         <Group noWrap spacing="xs">
-                          <Box sx={{ minWidth: 24 }} />
-                          <Box>{post.name}</Box>
+                          <Box
+                            sx={{
+                              minWidth: 24,
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <ThemeIcon
+                              variant="outline"
+                              sx={{ border: "none" }}
+                              color="gray"
+                              size={16}
+                            >
+                              {type === NotificationType.Mention ? (
+                                <IconAt stroke={1.5} />
+                              ) : (
+                                <IconMessageCircle2 stroke={1.5} />
+                              )}
+                            </ThemeIcon>
+                          </Box>
+                          <Box>{(reply || mention)?.post.name}</Box>
                         </Group>
                       </Stack>
                     </Group>
@@ -159,7 +200,7 @@ export const NotificationsMenu: FC = () => {
             )}
           </Stack>
         ) : (
-          <Box sx={{ width: 300 }} p="md">
+          <Box sx={{ width: 400 }} p="md">
             <Center>
               <IconBallon size={24} stroke={1.5} />
             </Center>

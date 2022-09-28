@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { UploadImageButton } from "baza/components/UploadImageButton";
 import { MentionsPopover } from "features/mentions/components/MentionsPopover";
 import { PersonSafe } from "ujournal-lemmy-js-client";
-import { applyCommentContentFixUnwrap } from "../utils/comments";
+import { decodeCommentContentForEdit } from "../utils/comments";
 
 export type Values = {
   parentId?: number;
@@ -52,7 +52,7 @@ export const CommentForm: FC<{
     validate,
     initialValues: {
       ...values,
-      content: applyCommentContentFixUnwrap(values.content),
+      content: decodeCommentContentForEdit(values.content),
     },
   });
 

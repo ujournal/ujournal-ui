@@ -9,12 +9,14 @@ import { useTranslation } from "react-i18next";
 import { DateFormatted } from "baza/components/DeteFormatted";
 import { VoteButtons } from "baza/components/VoteButtons";
 import { useCommentVote } from "../hooks/useCommentVote";
-import { CommentInternal } from "../utils/comments";
+import {
+  CommentInternal,
+  decodeCommentContentForRender,
+} from "../utils/comments";
 import { CommentForm, Values as CommentFormValues } from "../forms/CommentForm";
 import { CommentMenu } from "./CommentMenu";
 import { useCommentUpsert } from "../hooks/useCommentUpsert";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { Nsfw } from "baza/components/Nsfw";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
@@ -126,6 +128,7 @@ export const Comment: FC<CommentProps> = ({
         p={2}
         mx={-2}
         sx={(theme) => ({
+          overflow: commentEditing || commentAdding ? "visible" : "hidden",
           backgroundColor:
             String(comment.id) === routerQuery.commentId
               ? theme.fn.lighten(theme.colors.yellow[1], 0.25)
@@ -163,7 +166,7 @@ export const Comment: FC<CommentProps> = ({
               />
             ) : (
               <MarkdownText
-                text={comment.content}
+                text={decodeCommentContentForRender(comment.content)}
                 truncateLength={truncateLength}
                 compact
               />

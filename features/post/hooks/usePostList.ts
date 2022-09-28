@@ -9,7 +9,7 @@ import { None, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
 import { merge } from "lodash";
-import { useMemo } from "react";
+import { buildKeyFromParams } from "baza/utils/key";
 
 export type FetchPostsParams = {
   type?: ListingType;
@@ -74,7 +74,7 @@ export const usePostList = (
   return useInfiniteQuery(
     [
       "posts",
-      JSON.stringify({ token: auth.token.unwrapOr(""), ...params }),
+      buildKeyFromParams({ token: auth.token.unwrapOr(""), ...params }),
       fetchPosts,
     ],
     fetchPosts,

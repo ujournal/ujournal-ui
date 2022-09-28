@@ -84,10 +84,45 @@ export const transformCommentsFromCommentsView = (comments: any[]) => {
   );
 };
 
-export const applyCommentContentFixWrap = (content: string) => {
-  return content.replace(/^\+(\n|$)/gm, "&plus;\n");
+export const encodeCommentContent = (content: string) => {
+  return content
+    .replace(/^\+(\n|$)/gm, "&plus;\n")
+    .replace(
+      /@([A-Za-z0-9_]+)/g,
+      `[@$1@${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN}](https:\/\/${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN}\/u\/$1)`
+    );
 };
 
-export const applyCommentContentFixUnwrap = (content: string) => {
-  return content.replace(/^&plus;/gm, "+");
+export const decodeCommentContentForEdit = (content: string) => {
+  return content
+    .replace(/^&plus;/gm, "+")
+    .replace(
+      new RegExp(
+        `\\[@([A-Za-z0-9_]+)@${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+          /\./g,
+          "\\."
+        )}\\]\\(https:\\/\\/${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+          /\./g,
+          "\\."
+        )}\\/u\\/[A-Za-z0-9_]+\\)`,
+        "g"
+      ),
+      `@$1`
+    );
+};
+
+export const decodeCommentContentForRender = (content: string) => {
+  return content.replace(
+    new RegExp(
+      `\\[@([A-Za-z0-9_]+)@${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+        /\./g,
+        "\\."
+      )}\\]\\(https:\\/\\/${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+        /\./g,
+        "\\."
+      )}\\/u\\/[A-Za-z0-9_]+\\)`,
+      "g"
+    ),
+    `@$1`
+  );
 };

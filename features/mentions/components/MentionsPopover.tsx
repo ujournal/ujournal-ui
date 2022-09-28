@@ -33,9 +33,14 @@ export const MentionsPopover: FC<{
   return (
     <Popover
       opened={popoverOpened && search.data?.users.length ? true : false}
-      position="bottom"
+      position="top"
       width="target"
       transition="pop"
+      styles={{
+        dropdown: {
+          zIndex: 1000000,
+        },
+      }}
     >
       <Popover.Target>
         <Box
@@ -55,7 +60,12 @@ export const MentionsPopover: FC<{
             onClick={handleSelect}
             data-id={person.id}
           >
-            <>{person.display_name.unwrapOr("") || person.name}</>
+            <>
+              @{person.name}{" "}
+              {person.display_name.unwrapOr("")
+                ? `(${person.display_name.unwrapOr("")})`
+                : ""}
+            </>
           </Button>
         ))}
       </Popover.Dropdown>

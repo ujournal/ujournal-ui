@@ -13,7 +13,7 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
 
   const publishInterval = useMemo(() => {
     if (!isValid(date)) {
-      return undefined;
+      return "";
     }
 
     const {

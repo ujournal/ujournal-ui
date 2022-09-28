@@ -5,7 +5,7 @@ import { queryClient } from "baza/reactQuery";
 import { useAuth } from "features/app/hooks/useAuth";
 import { Values as CommentEditValues } from "features/comment/forms/CommentForm";
 import { CreateComment, EditComment } from "ujournal-lemmy-js-client";
-import { applyCommentContentFixWrap } from "../utils/comments";
+import { encodeCommentContent } from "../utils/comments";
 
 export const useCommentUpsert = () => {
   const lemmyClient = useLemmyClient();
@@ -28,7 +28,7 @@ export const useCommentUpsert = () => {
           result = await lemmyClient.editComment(
             new EditComment({
               comment_id: values.commentId,
-              content: Some(applyCommentContentFixWrap(values.content)),
+              content: Some(encodeCommentContent(values.content)),
               distinguished: None,
               form_id: None,
               auth: auth.token.unwrap(),
@@ -51,7 +51,7 @@ export const useCommentUpsert = () => {
       try {
         result = await lemmyClient.createComment(
           new CreateComment({
-            content: applyCommentContentFixWrap(values.content),
+            content: encodeCommentContent(values.content),
             parent_id: values.parentId ? Some(values.parentId) : None,
             post_id: values.postId,
             form_id: None,
