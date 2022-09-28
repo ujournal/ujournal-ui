@@ -70,7 +70,7 @@ export const MarkdownText: FC<
           marginLeft: "auto",
           marginRight: "auto",
           maxWidth: "100%",
-          maxHeight: compact ? "50vh" : undefined,
+          maxHeight: compact ? "100vh" : undefined,
           width: "100%",
           height: "var(--image-height, 100%)",
         },
