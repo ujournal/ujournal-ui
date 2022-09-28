@@ -142,6 +142,7 @@ export const Comment: FC<CommentProps> = ({
           <Group spacing={0}>
             <UserButton
               userId={creator.id}
+              username={creator.name}
               image={creator.avatar as unknown as string}
               label={
                 (creator.display_name as unknown as string) ||

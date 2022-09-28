@@ -37,6 +37,7 @@ export const PostHeader: FC<{
             />
             <UserButton
               userId={creator.id}
+              username={creator.name}
               image={creator.avatar.match<string | undefined>({
                 some: (name) => name,
                 none: undefined,

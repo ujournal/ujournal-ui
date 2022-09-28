@@ -15,6 +15,7 @@ import Link from "next/link";
 
 type UserButtonProps = {
   userId?: number;
+  username?: string | undefined;
   image?: string;
   label: string;
   weight?: number;
@@ -25,6 +26,7 @@ type UserButtonProps = {
 export const UserButtonWithoutRef = (
   {
     userId,
+    username,
     image,
     label,
     weight,
@@ -35,7 +37,10 @@ export const UserButtonWithoutRef = (
   ref: ForwardedRef<HTMLAnchorElement>
 ) => {
   return (
-    <Tooltip label={label} openDelay={1000}>
+    <Tooltip
+      label={username ? `@${username} (${label})` : `${label}`}
+      openDelay={1000}
+    >
       <Box component="span">
         <Link href={`/user?userId=${userId}`} passHref>
           <UnstyledButton
