@@ -82,8 +82,6 @@ export const MarkdownText: FC<
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.025)",
-          borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
-          borderRight: "1px solid rgba(255, 255, 255, 0.5)",
           marginLeft: compact ? 0 : -20,
           marginRight: compact ? 0 : -20,
           display: "block",

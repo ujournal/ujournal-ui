@@ -28,6 +28,7 @@ import { useMarkAllAsRead } from "../hooks/useMakAllAsReat";
 import { useMentionMarkAsRead } from "../hooks/useMentionMarkAsRead";
 import { NotificationType, useNotifications } from "../hooks/useNotifications";
 import { useReplyMarkAsRead } from "../hooks/useReplyMarkAsRead";
+import { useDisclosure } from "@mantine/hooks";
 
 enum View {
   Viewed = "viewed",
@@ -46,9 +47,11 @@ export const NotificationsMenu: FC = () => {
   const markAllAsRead = useMarkAllAsRead();
   const { t } = useTranslation();
   const auth = useAuth();
+  const [opened, { close, open }] = useDisclosure(false);
 
-  const handleReplyClick = useCallback(
+  const handleNotificationClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
+      close();
       if (event.currentTarget.dataset.type === NotificationType.Reply) {
         replyMarkAsRead.mutateAsync(
           parseInt(event.currentTarget.dataset.commentReplyId as string, 10)
@@ -59,7 +62,7 @@ export const NotificationsMenu: FC = () => {
         );
       }
     },
-    [mentionMarkAsRead, replyMarkAsRead]
+    [close, mentionMarkAsRead, replyMarkAsRead]
   );
 
   const hadleMarkAllAsReak = useCallback(() => {
@@ -71,15 +74,21 @@ export const NotificationsMenu: FC = () => {
   }, []);
 
   const handleClose = useCallback(() => {
+    close();
     setView(View.Unread);
-  }, []);
+  }, [close]);
 
   if (!auth.loggedIn) {
     return null;
   }
 
   return (
-    <Popover position="bottom" transition="pop" onClose={handleClose}>
+    <Popover
+      opened={opened}
+      position="bottom"
+      transition="pop"
+      onClose={handleClose}
+    >
       <Popover.Target>
         <Indicator
           offset={4}
@@ -87,7 +96,7 @@ export const NotificationsMenu: FC = () => {
           color="red"
           disabled={notifications.data.length === 0 || view === View.Viewed}
         >
-          <ActionIcon radius="xl" variant="subtle">
+          <ActionIcon radius="xl" variant="subtle" onClick={open}>
             <IconBell stroke={1.5} />
           </ActionIcon>
         </Indicator>
@@ -126,7 +135,7 @@ export const NotificationsMenu: FC = () => {
                 >
                   <Box
                     component="a"
-                    onClick={handleReplyClick}
+                    onClick={handleNotificationClick}
                     data-comment-reply-id={reply?.comment.id}
                     data-person-mention-id={mention?.person_mention.id}
                     data-type={type}
