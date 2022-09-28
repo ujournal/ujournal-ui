@@ -47,10 +47,10 @@ export const UrlEmbed: EmbedComponentType = ({
     >
       <Container size={650} p={0}>
         <Stack spacing={"xs"}>
-          <Group spacing="lg" noWrap>
+          <Group spacing="lg" noWrap={!Boolean(_thumbnail)}>
             <Box
               sx={{
-                minWidth: "20%",
+                minWidth: !Boolean(_thumbnail) ? "20%" : "100%",
               }}
             >
               <AspectRatio ratio={16 / 9}>
@@ -62,7 +62,7 @@ export const UrlEmbed: EmbedComponentType = ({
                     sx={(theme) => ({
                       objectFit: "cover",
                       backgroundColor: theme.colors.blue[1],
-                      borderRadius: theme.radius.sm,
+                      borderRadius: theme.radius.md,
                     })}
                     onError={handleImageError}
                   />
