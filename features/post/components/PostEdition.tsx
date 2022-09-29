@@ -64,7 +64,7 @@ export const PostEdition: FC = () => {
   });
 
   const postListDataFiltered = useMemo(
-    () => postList.data.filter((item) => item.post.name !== "..."),
+    () => postList.data.filter((item) => item.post.name.split(" ").length > 2),
     [postList.data]
   );
 
