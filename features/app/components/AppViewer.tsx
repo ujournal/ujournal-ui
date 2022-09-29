@@ -8,7 +8,7 @@ export const AppViewer: FC = () => {
     window.document.body.addEventListener("click", (event: Event) => {
       if (
         event.target instanceof HTMLElement &&
-        event.target?.closest(".image")
+        event.target?.closest(".ContentText")
       ) {
         const target =
           event.target instanceof HTMLImageElement

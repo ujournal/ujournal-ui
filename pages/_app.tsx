@@ -17,6 +17,7 @@ import { AppAuthRedirect } from "features/app/components/AppAuthRedirect";
 import { LegalNotification } from "features/legal/components/LegalNotification";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import Script from "next/script";
+import { CustomFonts } from "baza/components/CustomFonts";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
@@ -37,6 +38,7 @@ export default function App(props: SiteAppProps) {
         `}
       </Script>
       <GoogleAnalytics trackPageViews />
+      <CustomFonts />
       <Head>
         <title>UJournal</title>
         <meta

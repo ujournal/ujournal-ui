@@ -3,7 +3,7 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { FC, HTMLAttributes } from "react";
 
 export const ContentText: FC<
-  BoxProps & {
+  Omit<BoxProps, "sx"> & {
     html?: string;
     compact?: boolean;
   } & HTMLAttributes<HTMLDivElement>
@@ -14,11 +14,16 @@ export const ContentText: FC<
     <Box
       {...props}
       dangerouslySetInnerHTML={html ? { __html: html } : undefined}
+      className="ContentText"
       sx={(theme) => ({
+        fontSize: 16,
         "& a": {
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],
           color: theme.colors.blue,
+        },
+        "& p": {
+          lineHeight: 1.8,
         },
         "& > p:first-of-type": {
           marginTop: 0,
@@ -31,11 +36,9 @@ export const ContentText: FC<
         },
         "& img": {
           display: "block",
-          marginLeft: "auto",
-          marginRight: "auto",
           maxWidth: "100%",
           width: "100%",
-          height: "var(--image-height, 100%)",
+          height: "var(--image-height)",
         },
         "& img[src^='data:']": {
           opacity: 0.5,

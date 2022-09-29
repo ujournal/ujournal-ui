@@ -5,7 +5,7 @@ import markdown2html from "baza/utils/markdown2html/markdown2html";
 import { ContentText } from "./ContentText";
 
 export const MarkdownText: FC<
-  BoxProps & {
+  Omit<BoxProps, "sx"> & {
     text: string;
     withContentMargins?: boolean;
     truncateLength?: number;

@@ -72,11 +72,6 @@ export const Post: FC<
     () =>
       post.body.match({
         some: (body) => (
-          // <BoxExpandable showBody={full}>
-          //   <Text size="md" component="div">
-          //     <MarkdownText text={body} />
-          //   </Text>
-          // </BoxExpandable>
           <>
             <MarkdownText
               text={body}
