@@ -5,11 +5,8 @@ import { usePostList } from "../hooks/usePostList";
 import { DataList } from "baza/components/DataList";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import useInfiniteScroll from "react-infinite-scroll-hook";
-import { useMemo } from "react";
-import { flattenDepth, get, map } from "lodash";
 import { Center } from "@mantine/core";
 import { PostListLoader } from "./PostListLoader";
-import { removePostDuplicates } from "../utils/postDuplicates";
 
 export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
   posts,
@@ -25,16 +22,6 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
     disabled: false,
   });
 
-  const postsMerged = useMemo(() => {
-    const data =
-      flattenDepth(
-        map(posts.data?.pages, (item) => get(item, "posts")),
-        1
-      ) || [];
-
-    return { ...posts, data: removePostDuplicates(data) };
-  }, [posts]);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -45,7 +32,7 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
     >
       <Stack spacing="md" ref={containerRef}>
         <DataList
-          {...postsMerged}
+          {...posts}
           itemComponent={Post}
           itemKey="post.id"
           itemProps={{ containerRef, shadow: "xs" }}

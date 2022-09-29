@@ -1,15 +1,12 @@
 import { QueryFunctionContext, useInfiniteQuery } from "@tanstack/react-query";
-import {
-  GetPosts,
-  ListingType,
-  PostView,
-  SortType,
-} from "ujournal-lemmy-js-client";
+import { GetPosts, ListingType, SortType } from "ujournal-lemmy-js-client";
 import { None, Some } from "@sniptt/monads";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
 import { useAuth } from "features/app/hooks/useAuth";
-import { merge } from "lodash";
+import { flattenDepth, get, map, merge } from "lodash";
 import { buildKeyFromParams } from "baza/utils/key";
+import { useMemo } from "react";
+import { removePostDuplicates } from "../utils/postDuplicates";
 
 export type FetchPostsParams = {
   type?: ListingType;
@@ -71,7 +68,7 @@ export const usePostList = (
   const auth = useAuth();
   const fetchPosts = usePostsFetcher(params);
 
-  return useInfiniteQuery(
+  const postList = useInfiniteQuery(
     [
       "posts",
       buildKeyFromParams({ token: auth.token.unwrapOr(""), ...params }),
@@ -86,4 +83,17 @@ export const usePostList = (
       refetchOnMount: true,
     }
   );
+
+  return useMemo(() => {
+    const data =
+      flattenDepth(
+        map(postList.data?.pages, (item) => get(item, "posts")),
+        1
+      ) || [];
+
+    return {
+      ...postList,
+      data: removeDuplicates ? removePostDuplicates(data) : data,
+    };
+  }, [postList, removeDuplicates]);
 };

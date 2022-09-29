@@ -134,7 +134,6 @@ export const ProfileForm: FC<{
           {...form.getInputProps("bio")}
         />
         <TextInput
-          withAsterisk
           label={capitalize(t("email"))}
           {...form.getInputProps("email")}
         />

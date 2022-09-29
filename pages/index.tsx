@@ -15,6 +15,8 @@ import Head from "next/head";
 import { Box } from "@mantine/core";
 import { RefreshContent } from "baza/components/PullToRefresh/RefreshContent";
 import { PullDownContent } from "baza/components/PullToRefresh/PullDownContent";
+import { PostEdition } from "features/post/components/PostEdition";
+import { ListingType, SortType } from "ujournal-lemmy-js-client";
 
 const FeedPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -39,6 +41,10 @@ const FeedPage: SitePage = () => {
           <title>{activeNavLink?.label} - UJournal</title>
         )}
       </Head>
+
+      {params.type === ListingType.All && params.sort === SortType.Hot && (
+        <PostEdition />
+      )}
 
       <Box sx={(theme) => ({ margin: -theme.spacing.md })}>
         <Box
