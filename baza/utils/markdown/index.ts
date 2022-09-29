@@ -85,5 +85,5 @@ markdown.renderer.rules.image = (tokens, idx, options, env, self) => {
     tokens[0].content
       ? `<div class="image-caption">${tokens[0].content}</div>`
       : ""
-  }</div><div style="display:none;">img</div>`;
+  }</div>`;
 };

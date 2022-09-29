@@ -11,3 +11,5 @@ declare module "markdown-it-mentions";
 declare module "editorjs-undo";
 declare module "editorjs-youtube-embed";
 declare module "is-json";
+declare module "@ckeditor/ckeditor5-react";
+declare module "@ckeditor/ckeditor5-build-balloon-block";

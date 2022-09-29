@@ -36,3 +36,20 @@ a {
     top: -50%;
   }
 }
+
+@keyframes flickerAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* CKEditor */
+.ck.ck-block-toolbar-button {
+  transform: translateX(6px) !important;
+}
