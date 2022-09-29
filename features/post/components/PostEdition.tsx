@@ -13,9 +13,9 @@ import { IconMessageCircle2 } from "@tabler/icons";
 import { DataList } from "baza/components/DataList";
 import { capitalize } from "baza/utils/string";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { PostView } from "ujournal-lemmy-js-client";
+import { ListingType, PostView, SortType } from "ujournal-lemmy-js-client";
 import { usePostList } from "../hooks/usePostList";
 
 const PostEditionItem: FC<PostView> = ({ post, counts }) => {
@@ -55,14 +55,20 @@ const PostEditionItem: FC<PostView> = ({ post, counts }) => {
 export const PostEdition: FC = () => {
   const { t } = useTranslation();
 
-  const posts = usePostList({
+  const postList = usePostList({
     params: {
-      communityName: "edition",
-      limit: 4,
+      type: ListingType.All,
+      sort: SortType.TopDay,
+      limit: 10,
     },
   });
 
-  if (posts.data.length === 0) {
+  const postListDataFiltered = useMemo(
+    () => postList.data.filter((item) => item.post.name !== "..."),
+    [postList.data]
+  );
+
+  if (postListDataFiltered.length === 0) {
     return null;
   }
 
@@ -71,7 +77,7 @@ export const PostEdition: FC = () => {
       <Card radius="md" withBorder={false}>
         <Stack spacing="xs">
           <DataList
-            data={posts.data}
+            data={postListDataFiltered}
             itemComponent={PostEditionItem}
             itemKey="post.id"
           />
@@ -86,8 +92,8 @@ export const PostEdition: FC = () => {
               },
               inner: { justifyContent: "flex-start" },
             }}
-            onClick={() => posts.fetchNextPage()}
-            loading={posts.isLoading || posts.isFetching}
+            onClick={() => postList.fetchNextPage()}
+            loading={postList.isLoading || postList.isFetching}
             color="gray"
           >
             {capitalize(t("more"))}
