@@ -67,7 +67,7 @@ export const TextEditor: FC<TextEditorProps> = ({
   }, [uploadImage]);
 
   return (
-    <ContentText>
+    <ContentText zoomable={false}>
       <Box
         sx={{
           "--ck-focus-ring": "1px solid transparent",

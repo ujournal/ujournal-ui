@@ -135,7 +135,7 @@ export const Post: FC<
         <Container size={650} p={0}>
           <Group position="apart" mt="xs" mb="md">
             {full ? (
-              <Title size="h3" weight={600}>
+              <Title size="h1" weight={600}>
                 {post.name}
               </Title>
             ) : (

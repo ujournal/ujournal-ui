@@ -6,15 +6,16 @@ export const ContentText: FC<
   Omit<BoxProps, "sx"> & {
     html?: string;
     compact?: boolean;
+    zoomable?: boolean;
   } & HTMLAttributes<HTMLDivElement>
-> = ({ html, compact = false, ...props }) => {
+> = ({ html, compact = false, zoomable = true, ...props }) => {
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
   return (
     <Box
       {...props}
       dangerouslySetInnerHTML={html ? { __html: html } : undefined}
-      className="ContentText"
+      className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({
         fontSize: 16,
         "& a": {
