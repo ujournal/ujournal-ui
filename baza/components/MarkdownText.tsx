@@ -28,16 +28,13 @@ export const MarkdownText: FC<
   );
 
   const html = useMemo(() => {
-    const html = markdown2html(text);
-
-    if (truncateLength) {
-      return truncate(html, truncateLength).split(
-        '<div style="display:none;">img</div>'
-      )[0];
-    }
+    const html = markdown2html(text).replace(
+      /\@([a-z0-9_]+)/g,
+      `<a href="${process.env.NEXT_PUBLIC_BASE_URL}/user?username=$1">@$1</a>`
+    );
 
     return html;
-  }, [, text, truncateLength]);
+  }, [text]);
 
   return (
     <ContentText
