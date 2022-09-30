@@ -80,6 +80,9 @@ export const TextEditor: FC<TextEditorProps> = ({
           config={{
             placeholder,
             extraPlugins: [MyCustomUploadAdapterPlugin],
+            image: {
+              toolbar: ["imageTextAlternative"],
+            },
           }}
           onChange={handleChange}
         />
