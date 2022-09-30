@@ -17,7 +17,6 @@ export const ContentText: FC<
       dangerouslySetInnerHTML={html ? { __html: html } : undefined}
       className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({
-        fontSize: 16,
         "& a": {
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],
