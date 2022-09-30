@@ -4,6 +4,7 @@ import truncate from "truncate-html";
 import markdown2html from "baza/utils/markdown2html/markdown2html";
 import { ContentText } from "./ContentText";
 import { makeMentionAsLink } from "features/mentions/utils/mentions";
+import linkifyHtml from "linkify-html";
 
 export const MarkdownText: FC<
   Omit<BoxProps, "sx"> & {
@@ -30,7 +31,7 @@ export const MarkdownText: FC<
 
   const html = useMemo(() => {
     const html = makeMentionAsLink(
-      markdown2html(text, { useImageCaption: true })
+      linkifyHtml(markdown2html(text, { useImageCaption: true }))
     );
 
     if (truncateLength) {

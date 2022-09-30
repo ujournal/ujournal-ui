@@ -21,9 +21,11 @@ export const ContentText: FC<
           textDecoration: "underline",
           textDecorationColor: theme.colors.blue[1],
           color: theme.colors.blue,
+          wordBreak: "break-word",
         },
         "& p": {
           lineHeight: 1.8,
+          wordBreak: "break-word",
         },
         "& > p:first-of-type": {
           marginTop: 0,
