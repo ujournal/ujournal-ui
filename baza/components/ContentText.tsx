@@ -60,8 +60,8 @@ export const ContentText: FC<
           display: "block",
         },
         "& .image-caption": {
-          paddingTop: theme.spacing.sm,
-          paddingBottom: theme.spacing.sm,
+          padding: theme.spacing.sm,
+          textAlign: "center",
           fontSize: 14,
           color: theme.colors.gray[6],
           "&:empty": { display: "none" },

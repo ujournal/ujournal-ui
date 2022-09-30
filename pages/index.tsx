@@ -38,7 +38,9 @@ const FeedPage: SitePage = () => {
     <>
       <Head>
         {activeNavLink?.label && (
-          <title>{activeNavLink?.label} - UJournal</title>
+          <title>
+            {activeNavLink?.label} - {process.env.NEXT_PUBLIC_TITLE}
+          </title>
         )}
       </Head>
 

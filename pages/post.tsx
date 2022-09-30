@@ -60,7 +60,9 @@ const PostPage: SitePage = () => {
     <>
       <Head>
         {post.data?.post_view.post.name && (
-          <title>{post.data?.post_view.post.name} - UJournal</title>
+          <title>
+            {post.data?.post_view.post.name} - {process.env.NEXT_PUBLIC_TITLE}
+          </title>
         )}
       </Head>
 

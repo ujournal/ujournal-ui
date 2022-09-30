@@ -6,5 +6,7 @@ declare namespace NodeJS {
     NEXT_PUBLIC_LEMMY_API_PROXY_URL: string;
     NEXT_PUBLIC_BASE_URL: string;
     NEXT_PUBLIC_MENTIONS_DOMAIN: string;
+    NEXT_PUBLIC_GTAG: string;
+    NEXT_PUBLIC_TITLE: string;
   }
 }

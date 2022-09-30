@@ -47,7 +47,9 @@ const CommunitiesPage: SitePage = () => {
   return (
     <>
       <Head>
-        <title>{t("communities")} - UJournal</title>
+        <title>
+          {t("communities")} - {process.env.NEXT_PUBLIC_TITLE}
+        </title>
       </Head>
 
       <Container size={1400} p={0}>
