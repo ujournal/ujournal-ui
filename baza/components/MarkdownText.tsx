@@ -3,6 +3,7 @@ import { FC, useCallback, MouseEvent, useMemo } from "react";
 import truncate from "truncate-html";
 import markdown2html from "baza/utils/markdown2html/markdown2html";
 import { ContentText } from "./ContentText";
+import { makeMentionAsLink } from "features/mentions/utils/mentions";
 
 export const MarkdownText: FC<
   Omit<BoxProps, "sx"> & {
@@ -28,13 +29,16 @@ export const MarkdownText: FC<
   );
 
   const html = useMemo(() => {
-    const html = markdown2html(text).replace(
-      /\@([a-z0-9_]+)/g,
-      `<a href="${process.env.NEXT_PUBLIC_BASE_URL}/user?username=$1">@$1</a>`
+    const html = makeMentionAsLink(
+      markdown2html(text, { useImageCaption: true })
     );
 
+    if (truncateLength) {
+      return truncate(html, truncateLength);
+    }
+
     return html;
-  }, [text]);
+  }, [text, truncateLength]);
 
   return (
     <ContentText
