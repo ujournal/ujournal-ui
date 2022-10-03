@@ -76,8 +76,6 @@ export const EmbedField: FC<
               paddingBottom: 24,
               paddingLeft: 8,
               paddingRight: 8,
-              marginLeft: -8,
-              marginRight: -8,
               backgroundColor: "transparent",
             },
           }}

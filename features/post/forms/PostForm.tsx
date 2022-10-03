@@ -183,8 +183,6 @@ export const PostForm: FC<{
               borderWidth: 0,
               paddingLeft: 8,
               paddingRight: 8,
-              marginLeft: -8,
-              marginRight: -8,
               "&:hover": {
                 backgroundColor: "rgba(0,0,0,0.015)",
               },
@@ -207,8 +205,6 @@ export const PostForm: FC<{
               minHeight: 0,
               paddingLeft: 8,
               paddingRight: 8,
-              marginLeft: -8,
-              marginRight: 0,
               "&:hover": {
                 backgroundColor: "rgba(0,0,0,0.015)",
               },
