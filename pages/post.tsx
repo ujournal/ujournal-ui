@@ -52,6 +52,12 @@ const PostPage: SitePage = () => {
     }
   }, [post.data?.post_view.post.deleted, router, t]);
 
+  useEffect(() => {
+    if (post.data?.post_view.post && location.hash === "#comments") {
+      window.document.getElementById(`comments`)?.scrollIntoView();
+    }
+  }, [post.data?.post_view.post]);
+
   if (post.isSuccess && post.data && post.data.post_view.post.deleted) {
     return <></>;
   }
