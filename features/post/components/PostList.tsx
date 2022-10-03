@@ -35,7 +35,7 @@ export const PostList: FC<{ posts: ReturnType<typeof usePostList> }> = ({
           {...posts}
           itemComponent={Post}
           itemKey="post.id"
-          itemProps={{ containerRef, shadow: "xs" }}
+          itemProps={{ containerRef }}
           loaderComponent={PostListLoader}
         />
         <Center ref={sentryRef} sx={{ height: 60 }}>
