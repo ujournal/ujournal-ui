@@ -24,6 +24,7 @@ export const AppAside: FC = () => {
           showAsTree={false}
           showPost
           truncateLength={100}
+          asLink
         />
       </Stack>
     </Box>

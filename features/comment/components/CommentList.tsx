@@ -16,7 +16,7 @@ export type CommentListProps = {
   showPost?: boolean;
   isLoading?: boolean;
   postId?: number;
-} & Pick<CommentProps, "compact" | "truncateLength">;
+} & Pick<CommentProps, "asLink" | "compact" | "truncateLength">;
 
 export const CommentList: FC<CommentListProps> = ({
   data,

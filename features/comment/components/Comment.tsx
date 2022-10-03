@@ -24,6 +24,7 @@ export type CommentProps = CommentInternal & {
   decoration?: undefined | "middle" | "end";
   truncateLength?: number;
   postId?: number;
+  asLink?: boolean;
 };
 
 export const Comment: FC<CommentProps> = ({
@@ -37,6 +38,7 @@ export const Comment: FC<CommentProps> = ({
   my_vote: myVote,
   truncateLength,
   postId,
+  asLink = false,
 }) => {
   const routerQuery = useRouterQuery<{ commentId: string | undefined }>({
     commentId: undefined,
@@ -104,6 +106,28 @@ export const Comment: FC<CommentProps> = ({
     }
   }, [comment.id, routerQuery.commentId]);
 
+  const commentContent = (
+    <MarkdownText
+      text={decodeCommentContentForRender(comment.content)}
+      truncateLength={truncateLength}
+      compact
+    />
+  );
+
+  const commentContentWithOrWithoutLink = asLink ? (
+    <Link
+      href={{
+        pathname: "/post",
+        query: { postId: post.id, commentId: comment.id },
+      }}
+      passHref
+    >
+      <Box component="a">{commentContent}</Box>
+    </Link>
+  ) : (
+    commentContent
+  );
+
   return (
     <Stack
       spacing={0}
@@ -166,11 +190,7 @@ export const Comment: FC<CommentProps> = ({
                 onSubmit={handleCommentEditSubmit}
               />
             ) : (
-              <MarkdownText
-                text={decodeCommentContentForRender(comment.content)}
-                truncateLength={truncateLength}
-                compact
-              />
+              commentContentWithOrWithoutLink
             )}
 
             {!compact && (
