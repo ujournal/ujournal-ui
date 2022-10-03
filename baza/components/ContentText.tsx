@@ -1,6 +1,6 @@
 import { Box, BoxProps } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, useEffect, useRef } from "react";
 
 export const ContentText: FC<
   Omit<BoxProps, "sx"> & {
@@ -9,11 +9,27 @@ export const ContentText: FC<
     zoomable?: boolean;
   } & HTMLAttributes<HTMLDivElement>
 > = ({ html, compact = false, zoomable = true, ...props }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+
+  useEffect(() => {
+    const handleImageError = (event: Event) => {
+      if (event.currentTarget instanceof HTMLImageElement) {
+        event.currentTarget.src = "/no-image.svg";
+        event.currentTarget.removeEventListener("error", handleImageError);
+      }
+    };
+    if (ref.current) {
+      Array.from(ref.current.querySelectorAll("img")).map((image) =>
+        image.addEventListener("error", handleImageError)
+      );
+    }
+  }, []);
 
   return (
     <Box
       {...props}
+      ref={ref}
       dangerouslySetInnerHTML={html ? { __html: html } : undefined}
       className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({
