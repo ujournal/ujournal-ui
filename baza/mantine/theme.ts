@@ -23,27 +23,27 @@ export const mantineTheme: Partial<MantineTheme> = {
         lineHeight: "156%",
       },
       h2: {
-        fontSize: 24,
+        fontSize: `clamp(16px,1.42vw,20px)`,
         fontWeight: 300,
         lineHeight: "156%",
       },
       h3: {
-        fontSize: 16,
+        fontSize: `clamp(14px,1.26vw,18px)`,
         fontWeight: 300,
         lineHeight: "156%",
       },
       h4: {
-        fontSize: 16,
+        fontSize: `clamp(14px,1.26vw,18px)`,
         fontWeight: 300,
         lineHeight: "156%",
       },
       h5: {
-        fontSize: 16,
+        fontSize: `clamp(14px,1.26vw,18px)`,
         fontWeight: 300,
         lineHeight: "156%",
       },
       h6: {
-        fontSize: 16,
+        fontSize: `clamp(14px,1.26vw,18px)`,
         fontWeight: 300,
         lineHeight: "156%",
       },
