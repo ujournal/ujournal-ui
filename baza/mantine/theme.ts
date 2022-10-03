@@ -2,7 +2,7 @@ import { MantineTheme } from "@mantine/core";
 
 export const mantineTheme: Partial<MantineTheme> = {
   fontFamily:
-    "eUkraineLight, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
+    "eUkraineLight, Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
   primaryShade: 6,
   colorScheme: "light",
   loader: "dots",
@@ -17,7 +17,7 @@ export const mantineTheme: Partial<MantineTheme> = {
   lineHeight: "156%",
   headings: {
     fontFamily:
-      "eUkraineRegular, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
+      "eUkraineRegular, Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
     fontWeight: 300,
     sizes: {
       h1: {
