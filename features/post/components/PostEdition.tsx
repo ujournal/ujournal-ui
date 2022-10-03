@@ -12,6 +12,7 @@ import { IconChevronDown, IconMessageCircle2 } from "@tabler/icons";
 import { DataList } from "baza/components/DataList";
 import { capitalize } from "baza/utils/string";
 import { format } from "date-fns";
+import { uniq } from "lodash";
 import Link from "next/link";
 import { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -77,8 +78,8 @@ export const PostEdition: FC = () => {
       .filter(({ post }) => post.name.split(" ").length > 2)
       .filter(({ community }) => community.name !== "edition");
 
-    const postsDates = postList.data.map(({ post }) =>
-      format(new Date(post.published), "P")
+    const postsDates = uniq(
+      postList.data.map(({ post }) => format(new Date(post.published), "P"))
     );
 
     const editionPosts =
