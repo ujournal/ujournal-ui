@@ -82,8 +82,8 @@ export const AppHeader: FC = () => {
         zIndex: 200,
       }}
     >
-      <Group position="apart">
-        <Group noWrap spacing="sm">
+      <Group position="apart" noWrap>
+        <Group noWrap spacing="xs">
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
             <Burger opened={false} onClick={handleToggleMenu} size="sm" />
           </MediaQuery>
@@ -97,7 +97,7 @@ export const AppHeader: FC = () => {
           <AppHelpMenu />
         </Group>
 
-        <Group spacing="lg">
+        <Group spacing="xs" noWrap>
           <Link href="/create-post" passHref>
             <Button
               leftIcon={<IconPencil stroke={1.5} />}
