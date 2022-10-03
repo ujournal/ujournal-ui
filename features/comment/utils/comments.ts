@@ -1,6 +1,5 @@
 import { CommentAggregates, Post } from "ujournal-lemmy-js-client";
 import { isObject, sortBy } from "lodash";
-import { makeMentionAsLink } from "features/mentions/utils/mentions";
 
 export type CommentInternal = {
   comment: {
@@ -113,19 +112,17 @@ export const decodeCommentContentForEdit = (content: string) => {
 };
 
 export const decodeCommentContentForRender = (content: string) => {
-  return makeMentionAsLink(
-    content.replace(
-      new RegExp(
-        `\\[@([A-Za-z0-9_]+)@${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
-          /\./g,
-          "\\."
-        )}\\]\\(https:\\/\\/${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
-          /\./g,
-          "\\."
-        )}\\/u\\/[A-Za-z0-9_]+\\)`,
-        "g"
-      ),
-      `@$1`
-    )
+  return content.replace(
+    new RegExp(
+      `\\[@([A-Za-z0-9_]+)@${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+        /\./g,
+        "\\."
+      )}\\]\\(https:\\/\\/${process.env.NEXT_PUBLIC_MENTIONS_DOMAIN.replace(
+        /\./g,
+        "\\."
+      )}\\/u\\/[A-Za-z0-9_]+\\)`,
+      "g"
+    ),
+    `@$1`
   );
 };
