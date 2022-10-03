@@ -31,6 +31,7 @@ export const Post: FC<
     showPostCreator?: boolean;
     containerRef?: MutableRefObject<HTMLDivElement>;
     shadow?: MantineShadow;
+    truncateLength?: number;
   }
 > = ({
   creator,
@@ -41,6 +42,7 @@ export const Post: FC<
   full = false,
   commentsAsText = false,
   showPostCreator = false,
+  truncateLength = 840,
   saved,
   shadow,
 }) => {
@@ -75,7 +77,7 @@ export const Post: FC<
           <>
             <MarkdownText
               text={body}
-              truncateLength={!full ? 100 : undefined}
+              truncateLength={!full ? truncateLength : undefined}
               pt={
                 post.url.isSome() &&
                 !isPostUrlPlaceholder(post.url.unwrapOr(""))
@@ -83,7 +85,7 @@ export const Post: FC<
                   : undefined
               }
             />
-            {!full && body.length > 100 ? (
+            {!full && body.length > truncateLength ? (
               <Link
                 href={{ pathname: "/post", query: { postId: post.id } }}
                 passHref
@@ -108,7 +110,7 @@ export const Post: FC<
         ),
         none: undefined,
       }),
-    [full, post.body, post.id, post.url, t]
+    [full, post.body, post.id, post.url, t, truncateLength]
   );
 
   return (
