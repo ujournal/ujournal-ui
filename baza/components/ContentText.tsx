@@ -15,7 +15,7 @@ export const ContentText: FC<
   useEffect(() => {
     const handleImageError = (event: Event) => {
       if (event.currentTarget instanceof HTMLImageElement) {
-        event.currentTarget.src = "/no-image.svg";
+        event.currentTarget.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no-image.svg`;
         event.currentTarget.removeEventListener("error", handleImageError);
       }
     };
