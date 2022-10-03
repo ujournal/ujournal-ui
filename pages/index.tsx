@@ -17,6 +17,7 @@ import { RefreshContent } from "baza/components/PullToRefresh/RefreshContent";
 import { PullDownContent } from "baza/components/PullToRefresh/PullDownContent";
 import { PostEdition } from "features/post/components/PostEdition";
 import { ListingType, SortType } from "ujournal-lemmy-js-client";
+import { buildKeyFromParams } from "baza/utils/key";
 
 const FeedPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -32,7 +33,7 @@ const FeedPage: SitePage = () => {
   useEffect(() => {
     posts.refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [buildKeyFromParams(params)]);
 
   return (
     <>
