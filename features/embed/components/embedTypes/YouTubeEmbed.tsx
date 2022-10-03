@@ -7,7 +7,7 @@ import YouTube from "react-youtube";
 import { EmbedComponentType } from "../types";
 
 const youtubeUrlRegExp =
-  /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  /^.*(youtu\.be\/|youtube\.com\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
 
 export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
   const [showed, setShowed] = useState(false);
