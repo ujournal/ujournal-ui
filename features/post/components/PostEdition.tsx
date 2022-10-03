@@ -7,13 +7,13 @@ import {
   ThemeIcon,
   Text,
   Button,
-  Loader,
 } from "@mantine/core";
-import { IconMessageCircle2 } from "@tabler/icons";
+import { IconChevronDown, IconMessageCircle2 } from "@tabler/icons";
 import { DataList } from "baza/components/DataList";
 import { capitalize } from "baza/utils/string";
+import { format } from "date-fns";
 import Link from "next/link";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ListingType, PostView, SortType } from "ujournal-lemmy-js-client";
 import { usePostList } from "../hooks/usePostList";
@@ -63,10 +63,39 @@ export const PostEdition: FC = () => {
     },
   });
 
-  const postListDataFiltered = useMemo(
-    () => postList.data.filter((item) => item.post.name.split(" ").length > 2),
-    [postList.data]
-  );
+  const postEditonList = usePostList({
+    params: {
+      type: ListingType.All,
+      sort: SortType.TopDay,
+      communityName: "edition",
+      limit: 20,
+    },
+  });
+
+  const postListDataFiltered = useMemo(() => {
+    const posts = postList.data
+      .filter(({ post }) => post.name.split(" ").length > 2)
+      .filter(({ community }) => community.name !== "edition");
+
+    const postsDates = postList.data.map(({ post }) =>
+      format(new Date(post.published), "P")
+    );
+
+    const editionPosts =
+      postEditonList.data.length > 0
+        ? postEditonList.data.filter(
+            ({ post }) =>
+              postsDates.includes(format(new Date(post.published), "P")),
+            []
+          )
+        : [];
+
+    return [...editionPosts, ...posts];
+  }, [postEditonList.data, postList.data]);
+
+  const handleNextPage = useCallback(async () => {
+    postList.fetchNextPage();
+  }, [postList]);
 
   if (postListDataFiltered.length === 0) {
     return null;
@@ -81,23 +110,33 @@ export const PostEdition: FC = () => {
             itemComponent={PostEditionItem}
             itemKey="post.id"
           />
-          <Button
-            variant="subtle"
-            styles={{
-              root: {
-                padding: 0,
-                height: "auto",
-                color: "black",
-                ":hover": { backgroundColor: "transparent" },
-              },
-              inner: { justifyContent: "flex-start" },
-            }}
-            onClick={() => postList.fetchNextPage()}
-            loading={postList.isLoading || postList.isFetching}
-            color="gray"
-          >
-            {capitalize(t("more"))}
-          </Button>
+          <Box>
+            <Button
+              variant="subtle"
+              styles={{
+                root: {
+                  padding: 0,
+                  height: "auto",
+                  color: "black",
+                  ":hover": { backgroundColor: "transparent" },
+                  display: "inline-block",
+                },
+                inner: { justifyContent: "flex-start" },
+                rightIcon: { marginLeft: 4 },
+              }}
+              onClick={handleNextPage}
+              loading={
+                postList.isLoading ||
+                postList.isFetching ||
+                postEditonList.isLoading ||
+                postEditonList.isFetching
+              }
+              color="gray"
+              rightIcon={<IconChevronDown stroke={1.5} size={12} />}
+            >
+              {capitalize(t("more"))}
+            </Button>
+          </Box>
         </Stack>
       </Card>
     </Container>

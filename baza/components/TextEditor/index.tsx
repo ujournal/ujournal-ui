@@ -6,6 +6,7 @@ import CKEditorBalloonBlock from "@ckeditor/ckeditor5-build-balloon-block";
 import markdown2html from "baza/utils/markdown2html/markdown2html";
 import html2markdown from "baza/utils/html2markdown/html2markdown";
 import { ContentText } from "../ContentText";
+import "@ckeditor/ckeditor5-build-balloon-block/build/translations/uk.js";
 
 type TextEditorProps = {
   placeholder?: string;
@@ -31,7 +32,7 @@ export const TextEditor: FC<TextEditorProps> = ({
     [onChange]
   );
 
-  const MyCustomUploadAdapterPlugin = useMemo(() => {
+  const CustomUploadAdapterPlugin = useMemo(() => {
     class MyUploadAdapter {
       protected loader: any;
 
@@ -54,16 +55,14 @@ export const TextEditor: FC<TextEditorProps> = ({
       }
     }
 
-    function MyCustomUploadAdapterPlugin(editor: any) {
+    return (editor: any) => {
       editor.plugins.get("FileRepository").createUploadAdapter = (
         loader: any
       ) => {
         // Configure the URL to the upload script in your back-end here!
         return new MyUploadAdapter(loader);
       };
-    }
-
-    return MyCustomUploadAdapterPlugin;
+    };
   }, [uploadImage]);
 
   return (
@@ -79,10 +78,53 @@ export const TextEditor: FC<TextEditorProps> = ({
           data={_value}
           config={{
             placeholder,
-            extraPlugins: [MyCustomUploadAdapterPlugin],
+            extraPlugins: [CustomUploadAdapterPlugin],
+            blockToolbar: {
+              items: [
+                "heading",
+                "paragraph",
+                "heading2",
+                "heading3",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "|",
+                "uploadImage",
+                "insertImage",
+                "insertImage",
+                "blockQuote",
+                "insertTable",
+                // "mediaEmbed",
+                "|",
+                "undo",
+                "redo",
+              ],
+            },
             image: {
               toolbar: ["imageTextAlternative"],
             },
+            heading: {
+              options: [
+                {
+                  model: "paragraph",
+                  title: "Paragraph",
+                  class: "ck-heading_paragraph",
+                },
+                {
+                  model: "heading2",
+                  view: "h2",
+                  title: "Heading 2",
+                  class: "ck-heading_heading2",
+                },
+                {
+                  model: "heading3",
+                  view: "h3",
+                  title: "Heading 3",
+                  class: "ck-heading_heading3",
+                },
+              ],
+            },
+            language: "uk",
           }}
           onChange={handleChange}
         />
