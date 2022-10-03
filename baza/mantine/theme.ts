@@ -3,8 +3,10 @@ import { MantineTheme } from "@mantine/core";
 export const mantineTheme: Partial<MantineTheme> = {
   fontFamily:
     "eUkraineLight, -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
+  primaryShade: 6,
   colorScheme: "light",
   loader: "dots",
+  black: "#333",
   fontSizes: {
     xs: 10,
     sm: 12,

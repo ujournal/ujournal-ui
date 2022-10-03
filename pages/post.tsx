@@ -81,7 +81,7 @@ const PostPage: SitePage = () => {
       </Container>
 
       <Container px={0} mx={largerThanSm ? undefined : "-md"}>
-        <Card radius={smallerThanSm ? 0 : "md"}>
+        <Card radius={smallerThanSm ? 0 : "md"} sx={{ overflow: "visible" }}>
           <Container size={650} px={0}>
             <Stack>
               <Title size="h3" id="comments">

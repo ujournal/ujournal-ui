@@ -18,8 +18,6 @@ export const ContentText: FC<
       className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({
         "& a": {
-          textDecoration: "underline",
-          textDecorationColor: theme.colors.blue[1],
           color: theme.colors.blue,
           wordBreak: "break-word",
         },

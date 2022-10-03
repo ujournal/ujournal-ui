@@ -60,11 +60,13 @@ export const PostControls: FC<{
                   leftIcon={<IconMessageCircle2 stroke={1.5} />}
                   variant="subtle"
                   disabled={commentButtonDisabled}
-                  sx={{
+                  color="dark"
+                  sx={(theme) => ({
+                    color: theme.black[6],
                     backgroundColor: commentButtonDisabled
                       ? "transparent !important"
                       : undefined,
-                  }}
+                  })}
                 >
                   <CommentTitle counts={counts} />
                 </Button>

@@ -67,7 +67,7 @@ export const VoteButtons: FC<{
     <Group noWrap align="center" spacing={2}>
       <Tooltip label={t("downvote")} disabled={myVote === -1 || isLoading}>
         <ActionIcon
-          color="blue"
+          color="dark"
           variant="subtle"
           onClick={myVote === 1 ? voteZero : voteDown}
           disabled={myVote === -1 || isLoading}
@@ -178,7 +178,7 @@ export const VoteButtons: FC<{
       </Tooltip>
       <Tooltip label={t("upvote")} disabled={myVote === 1 || isLoading}>
         <ActionIcon
-          color="blue"
+          color="dark"
           variant="subtle"
           onClick={myVote === -1 ? voteZero : voteUp}
           disabled={myVote === 1 || isLoading}

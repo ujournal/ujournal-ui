@@ -121,8 +121,6 @@ export const Post: FC<
       sx={{
         position: "relative",
         borderColor: "rgba(0, 0, 0, 0.07)",
-        borderLeftWidth: smallerThanSm ? 0 : undefined,
-        borderRightWidth: smallerThanSm ? 0 : undefined,
       }}
       shadow={shadow}
     >
