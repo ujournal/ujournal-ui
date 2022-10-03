@@ -146,7 +146,7 @@ export const Post: FC<
                 passHref
               >
                 <Box component="a">
-                  <Title size="h3" weight={600}>
+                  <Title size="h2" weight={600}>
                     {post.name}
                   </Title>
                 </Box>
