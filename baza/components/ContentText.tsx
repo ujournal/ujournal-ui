@@ -117,6 +117,14 @@ export const ContentText: FC<
         "& table th": {
           backgroundColor: `${theme.colors.gray[1]}`,
         },
+        "& code": {
+          display: "block",
+          backgroundColor: theme.colors.gray[1],
+          padding: theme.spacing.sm,
+          overflow: "auto",
+          borderRadius: theme.radius.sm,
+          fontFamily: theme.fontFamilyMonospace,
+        },
       })}
     >
       {props.children}
