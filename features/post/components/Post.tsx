@@ -84,6 +84,7 @@ export const Post: FC<
                   ? "md"
                   : undefined
               }
+              large={full}
             />
             {!full && body.length > truncateLength ? (
               <Link
