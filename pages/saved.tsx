@@ -4,14 +4,15 @@ import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { AppAside } from "features/app/components/AppAside";
 import { AppNavbar } from "features/app/components/AppNavbar";
+import { useSiteUser } from "features/app/hooks/useSiteUser";
 import { Post } from "features/post/components/Post";
 import { PostListLoader } from "features/post/components/PostListLoader";
-import { useSearch } from "features/search/hooks/useSearch";
+import { usePersonDetails } from "features/user/hooks/usePersonDetails";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
 
-const FavoritesPage: SitePage = () => {
+const SavedPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const smallerThanMd = useBreakpoint({ smallerThan: "md" });
   const { q } = useRouterQuery<{
@@ -19,15 +20,21 @@ const FavoritesPage: SitePage = () => {
   }>({
     q: undefined,
   });
-  const search = useSearch({ q, limit: 100 });
+  const user = useSiteUser();
+  const personDetails = usePersonDetails({
+    personId: user.myUserInfo
+      ?.map((myUserInfo) => myUserInfo.local_user_view.person.id)
+      .unwrapOr(-1),
+    savedOnly: true,
+  });
   const { t } = useTranslation();
 
   const posts = useMemo(() => {
     return {
-      ...search,
-      data: search.data?.posts || [],
+      ...personDetails,
+      data: personDetails.data?.posts || [],
     };
-  }, [search]);
+  }, [personDetails]);
 
   return (
     <Container
@@ -36,7 +43,7 @@ const FavoritesPage: SitePage = () => {
       mx={largerThanSm ? undefined : "-md"}
     >
       <Stack spacing="md">
-        <Title>{`${t("search")} ${q}`}</Title>
+        <Title>{t("saved")}</Title>
         <DataList
           {...posts}
           itemComponent={Post}
@@ -48,7 +55,7 @@ const FavoritesPage: SitePage = () => {
   );
 };
 
-FavoritesPage.Navbar = AppNavbar;
-FavoritesPage.Aside = AppAside;
+SavedPage.Navbar = AppNavbar;
+SavedPage.Aside = AppAside;
 
-export default FavoritesPage;
+export default SavedPage;

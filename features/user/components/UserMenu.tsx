@@ -4,6 +4,7 @@ import {
   IconSettings,
   IconLogout,
   IconUser,
+  IconBookmark,
 } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
 
@@ -45,6 +46,14 @@ export const UserMenu: FC<{
         <Link href="/profile" passHref>
           <Menu.Item component="a" icon={<IconUser size={24} stroke={1.5} />}>
             {t("profile")}
+          </Menu.Item>
+        </Link>
+        <Link href="/saved" passHref>
+          <Menu.Item
+            icon={<IconBookmark size={24} stroke={1.5} />}
+            component="a"
+          >
+            {t("saved")}
           </Menu.Item>
         </Link>
         <Link href="/settings" passHref>

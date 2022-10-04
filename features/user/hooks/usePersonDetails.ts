@@ -22,7 +22,7 @@ export const usePersonDetails = ({
   return useQuery(
     ["personViewSafe", personId, username, auth.token.ok().unwrapOr("")],
     async () => {
-      if ((personId === -1 || !personId) && !username) {
+      if ((personId === -1 || !personId) && !username && !savedOnly) {
         return undefined;
       }
 
@@ -32,7 +32,7 @@ export const usePersonDetails = ({
           username: Some(username),
           sort: Some(SortType.New),
           page: Some(1),
-          limit: Some(0),
+          limit: Some(savedOnly ? 1000 : 0),
           community_id: Some(0),
           saved_only: Some(savedOnly),
           auth: auth.token.ok(),
