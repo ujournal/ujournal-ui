@@ -1,6 +1,6 @@
 import { SitePage } from "types";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
-import { usePersonViewSafe } from "features/user/hooks/userPersonViewSafe";
+import { usePersonDetails } from "features/user/hooks/usePersonDetails";
 import { DateFormatted } from "baza/components/DeteFormatted";
 import {
   Container,
@@ -31,16 +31,32 @@ const UserPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
   const smallerThanSm = useBreakpoint({ smallerThan: "sm" });
 
-  const personViewSafe = usePersonViewSafe({
+  const person = usePersonDetails({
     personId: _userId,
     username: _username,
   });
 
+  const personView = useMemo(() => {
+    if (!person.data) {
+      return undefined;
+    }
+
+    return {
+      person: person.data.person_view.person,
+      commentCount: person.data.person_view.counts.comment_count,
+      postCount: person.data.person_view.counts.post_count,
+      commentScore: person.data.person_view.counts.comment_score,
+      postScore: person.data.person_view.counts.post_score,
+      totalScore:
+        person.data.person_view.counts.comment_score +
+        person.data.person_view.counts.post_score,
+    };
+  }, [person.data]);
+
   const userName = useMemo(
     () =>
-      personViewSafe.data?.person.display_name.unwrapOr("") ||
-      personViewSafe.data?.person.name,
-    [personViewSafe.data?.person.display_name, personViewSafe.data?.person.name]
+      personView?.person.display_name.unwrapOr("") || personView?.person.name,
+    [personView?.person.display_name, personView?.person.name]
   );
 
   return (
@@ -49,12 +65,12 @@ const UserPage: SitePage = () => {
 
       <Container px={0} mx={largerThanSm ? undefined : "-md"}>
         <Card radius={smallerThanSm ? 0 : "md"} p="xl">
-          {personViewSafe.data?.person.banner.unwrapOr("") && (
+          {personView?.person.banner.unwrapOr("") && (
             <Card.Section mb="md">
               <Image
-                src={personViewSafe.data?.person.banner.unwrapOr("")}
+                src={personView?.person.banner.unwrapOr("")}
                 height={160}
-                alt={personViewSafe.data.person.name}
+                alt={person.data?.person_view.person.name}
                 sx={(theme) => ({ backgroundColor: theme.colors.gray[2] })}
               />
             </Card.Section>
@@ -62,9 +78,7 @@ const UserPage: SitePage = () => {
           <Stack spacing="xl">
             <Group>
               <Avatar
-                src={personViewSafe.data?.person.avatar?.match<
-                  string | undefined
-                >({
+                src={personView?.person.avatar?.match<string | undefined>({
                   some: (name) => name,
                   none: undefined,
                 })}
@@ -75,12 +89,12 @@ const UserPage: SitePage = () => {
               </Avatar>
               <Stack spacing={2}>
                 <Title>
-                  {personViewSafe.data?.person.display_name.unwrapOr("") ||
-                    personViewSafe.data?.person.name}
+                  {personView?.person.display_name.unwrapOr("") ||
+                    personView?.person.name}
                 </Title>
-                {personViewSafe.data && (
+                {person.data && (
                   <Text sx={(theme) => ({ color: theme.colors.gray[6] })}>
-                    @{personViewSafe.data?.person.name}
+                    @{personView?.person.name}
                   </Text>
                 )}
               </Stack>
@@ -93,9 +107,7 @@ const UserPage: SitePage = () => {
                 </Text>
                 <DateFormatted
                   date={
-                    new Date(
-                      personViewSafe.data?.person?.published ?? new Date() + "Z"
-                    )
+                    new Date(personView?.person?.published ?? new Date() + "Z")
                   }
                   size="md"
                   color="black"
@@ -106,7 +118,7 @@ const UserPage: SitePage = () => {
                   Загальний рейтинг
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.totalScore || "н/д"}
+                  {personView?.totalScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -114,7 +126,7 @@ const UserPage: SitePage = () => {
                   Рейтинг постів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.postScore || "н/д"}
+                  {personView?.postScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -122,7 +134,7 @@ const UserPage: SitePage = () => {
                   Рейтинг коментарів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.commentScore || "н/д"}
+                  {personView?.commentScore || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -130,7 +142,7 @@ const UserPage: SitePage = () => {
                   Кількість постів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.postCount || "н/д"}
+                  {personView?.postCount || "н/д"}
                 </Text>
               </Group>
               <Group noWrap>
@@ -138,15 +150,15 @@ const UserPage: SitePage = () => {
                   Кількість коментарів
                 </Text>
                 <Text size="md" color="black">
-                  {personViewSafe.data?.commentCount || "н/д"}
+                  {personView?.commentCount || "н/д"}
                 </Text>
               </Group>
             </Stack>
-            {personViewSafe.data?.person.bio.unwrapOr("") && (
+            {personView?.person.bio.unwrapOr("") && (
               <Stack spacing="xs">
                 <Title size="h2">Інфо</Title>
                 <MarkdownText
-                  text={personViewSafe.data?.person.bio.unwrapOr("") || ""}
+                  text={personView?.person.bio.unwrapOr("") || ""}
                 />
               </Stack>
             )}

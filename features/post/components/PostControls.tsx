@@ -60,7 +60,7 @@ export const PostControls: FC<{
                   leftIcon={<IconMessageCircle2 stroke={1.5} />}
                   variant="subtle"
                   disabled={commentButtonDisabled}
-                  color="dark"
+                  color="gray"
                   sx={(theme) => ({
                     color: theme.black[6],
                     backgroundColor: commentButtonDisabled

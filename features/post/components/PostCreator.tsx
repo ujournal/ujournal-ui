@@ -7,20 +7,39 @@ import {
   Tooltip,
   Text,
 } from "@mantine/core";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { PersonSafe, Post } from "ujournal-lemmy-js-client";
-import { usePersonViewSafe } from "../../user/hooks/userPersonViewSafe";
+import { usePersonDetails } from "../../user/hooks/usePersonDetails";
 import { IconUser } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
 import Link from "next/link";
+import { Score } from "baza/components/Score";
 
 export const PostCreator: FC<{
   post: Post;
 }> = ({ post }) => {
-  let personViewSafe = usePersonViewSafe({
+  const person = usePersonDetails({
     personId: post.creator_id,
   });
-  let creator = personViewSafe.data?.person ?? new PersonSafe();
+
+  const personView = useMemo(() => {
+    if (!person.data) {
+      return undefined;
+    }
+
+    return {
+      person: person.data.person_view.person,
+      commentCount: person.data.person_view.counts.comment_count,
+      postCount: person.data.person_view.counts.post_count,
+      commentScore: person.data.person_view.counts.comment_score,
+      postScore: person.data.person_view.counts.post_score,
+      totalScore:
+        person.data.person_view.counts.comment_score +
+        person.data.person_view.counts.post_score,
+    };
+  }, [person.data]);
+
+  const creator = personView?.person ?? new PersonSafe();
 
   return (
     <Container size={650} p={0} sx={{ width: "100%" }}>
@@ -56,16 +75,14 @@ export const PostCreator: FC<{
               </Box>
               <Text color="gray">@{creator.name}</Text>
             </Group>
-            {/* <Score
-              score={personViewSafe?.data?.totalScore || 0}
-              sx={{ fontWeight: 600 }}
-            /> */}
+            <Score
+              score={personView?.totalScore || 0}
+              sx={{ fontWeight: 600, display: "none" }}
+            />
           </Group>
           <Tooltip
             label={
-              <MarkdownText
-                text={personViewSafe?.data?.person.bio.unwrapOr("") || ""}
-              />
+              <MarkdownText text={personView?.person.bio.unwrapOr("") || ""} />
             }
             multiline
             sx={{
@@ -80,7 +97,7 @@ export const PostCreator: FC<{
           >
             <Box>
               <MarkdownText
-                text={personViewSafe?.data?.person.bio.unwrapOr("") || ""}
+                text={personView?.person.bio.unwrapOr("") || ""}
                 truncateLength={50}
               />
             </Box>
