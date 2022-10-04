@@ -23,7 +23,10 @@ export const MarkdownText: FC<
 }) => {
   const handleContentClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
-      if (event.target instanceof HTMLAnchorElement) {
+      if (
+        event.target instanceof HTMLAnchorElement &&
+        !event.target.href.includes("/search/?q=")
+      ) {
         event.target.setAttribute("target", "_blank");
       }
     },

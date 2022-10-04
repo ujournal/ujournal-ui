@@ -12,6 +12,7 @@ import {
 import { IconSpeakerphone, IconSquarePlus } from "@tabler/icons";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { capitalize } from "baza/utils/string";
+import { useSiteUser } from "features/app/hooks/useSiteUser";
 import Link from "next/link";
 import { FC, ForwardedRef, forwardRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,6 +23,7 @@ export const CommunitySelect: FC<
   Omit<SelectProps, "onChange"> & { onChange: (value: number) => void }
 > = ({ onChange, ...props }) => {
   const communities = useCommunityList({ sort: SortType.TopAll, limit: 1000 });
+  const user = useSiteUser();
   const { t } = useTranslation();
 
   const communitiesOptions = useMemo(
@@ -34,6 +36,8 @@ export const CommunitySelect: FC<
       })) || [],
     [communities.data]
   );
+
+  console.log("communitiesOptions", communities.data);
 
   const icon = useMemo(() => {
     if (props.value) {
