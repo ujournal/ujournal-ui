@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { ActionIcon, Menu } from "@mantine/core";
 import { capitalize } from "baza/utils/string";
 import {
@@ -10,11 +10,14 @@ import {
   IconLock,
   IconPin,
   IconEdit,
+  IconLink,
 } from "@tabler/icons";
 import Link from "next/link";
 import { Post } from "ujournal-lemmy-js-client";
 import { useTranslation } from "react-i18next";
 import { useSiteUser } from "features/app/hooks/useSiteUser";
+import { showNotification } from "@mantine/notifications";
+import { useClipboard } from "@mantine/hooks";
 
 export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
   post,
@@ -22,6 +25,16 @@ export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
 }) => {
   const { t } = useTranslation();
   const { localUserView } = useSiteUser();
+  const clipboard = useClipboard({ timeout: 500 });
+
+  const handleCopyLink = useCallback(() => {
+    clipboard.copy(
+      `${location.protocol}//${location.host}/post/?postId=${post.id}`
+    );
+    showNotification({
+      message: "Copied!",
+    });
+  }, [clipboard, post.id]);
 
   return (
     <Menu withinPortal position="bottom-end" shadow="sm">
@@ -70,6 +83,9 @@ export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
         >
           {post.removed ? capitalize(t("restore")) : capitalize(t("remove"))} (
           {t("mod")})
+        </Menu.Item>
+        <Menu.Item icon={<IconLink size={14} />} onClick={handleCopyLink}>
+          {capitalize(t("link"))}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

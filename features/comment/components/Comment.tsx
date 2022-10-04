@@ -17,6 +17,8 @@ import { CommentForm, Values as CommentFormValues } from "../forms/CommentForm";
 import { CommentMenu } from "./CommentMenu";
 import { useCommentUpsert } from "../hooks/useCommentUpsert";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
+import { useClipboard } from "@mantine/hooks";
+import { showNotification } from "@mantine/notifications";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
@@ -44,6 +46,7 @@ export const Comment: FC<CommentProps> = ({
     commentId: undefined,
   });
   const { t } = useTranslation();
+  const clipboard = useClipboard({ timeout: 500 });
 
   const [commentAdding, setCommentAdding] = useState<boolean>(false);
   const [commentEditing, setCommentEditing] = useState<boolean>(false);
@@ -92,6 +95,15 @@ export const Comment: FC<CommentProps> = ({
   const handleCommentEdit = useCallback(() => {
     setCommentEditing((editing) => !editing);
   }, []);
+
+  const handleCopyLink = useCallback(() => {
+    clipboard.copy(
+      `${location.protocol}//${location.host}/post/?postId=3114&commentId=${comment.id}`
+    );
+    showNotification({
+      message: "Copied!",
+    });
+  }, [clipboard, comment.id]);
 
   useEffect(() => {
     setCountsAndMyVote({
@@ -212,7 +224,10 @@ export const Comment: FC<CommentProps> = ({
                     >
                       {capitalize(t("reply"))}
                     </Button>
-                    <CommentMenu onEdit={handleCommentEdit} />
+                    <CommentMenu
+                      onEdit={handleCommentEdit}
+                      onCopyLink={handleCopyLink}
+                    />
                   </Group>
                   <VoteButtons
                     counts={countsAndMyVote.counts}

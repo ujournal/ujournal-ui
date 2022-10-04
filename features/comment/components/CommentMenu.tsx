@@ -1,5 +1,5 @@
 import { Menu, ActionIcon } from "@mantine/core";
-import { IconDots, IconEdit, IconTrash } from "@tabler/icons";
+import { IconDots, IconEdit, IconLink, IconTrash } from "@tabler/icons";
 import { t } from "i18next";
 import { capitalize } from "lodash";
 import { FC } from "react";
@@ -7,7 +7,8 @@ import { FC } from "react";
 export const CommentMenu: FC<{
   onEdit?: () => void;
   onDelete?: () => void;
-}> = ({ onEdit, onDelete }) => {
+  onCopyLink?: () => void;
+}> = ({ onEdit, onDelete, onCopyLink }) => {
   return (
     <Menu withinPortal position="right-end" shadow="sm">
       <Menu.Target>
@@ -29,6 +30,11 @@ export const CommentMenu: FC<{
             onClick={onDelete}
           >
             {capitalize(t("delete"))}
+          </Menu.Item>
+        )}
+        {onCopyLink && (
+          <Menu.Item icon={<IconLink size={14} />} onClick={onCopyLink}>
+            {capitalize(t("link"))}
           </Menu.Item>
         )}
       </Menu.Dropdown>
