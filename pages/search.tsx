@@ -36,7 +36,7 @@ const SearchPage: SitePage = () => {
       mx={largerThanSm ? undefined : "-md"}
     >
       <Stack spacing="md">
-        <Title>{`${t("search")} ${q}`}</Title>
+        <Title>{`${t("search")} ${q || ""}`}</Title>
         <DataList
           {...posts}
           itemComponent={Post}
