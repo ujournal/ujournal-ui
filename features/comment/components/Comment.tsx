@@ -98,12 +98,12 @@ export const Comment: FC<CommentProps> = ({
 
   const handleCopyLink = useCallback(() => {
     clipboard.copy(
-      `${location.protocol}//${location.host}${process.env.NEXT_PUBLIC_BASE_URL}/post/?postId=3114&commentId=${comment.id}`
+      `${location.protocol}//${location.host}${process.env.NEXT_PUBLIC_BASE_URL}/post/?postId=${post.id}&commentId=${comment.id}`
     );
     showNotification({
       message: "Copied!",
     });
-  }, [clipboard, comment.id]);
+  }, [clipboard, comment.id, post.id]);
 
   useEffect(() => {
     setCountsAndMyVote({
