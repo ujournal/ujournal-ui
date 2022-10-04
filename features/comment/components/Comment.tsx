@@ -98,7 +98,7 @@ export const Comment: FC<CommentProps> = ({
 
   const handleCopyLink = useCallback(() => {
     clipboard.copy(
-      `${location.protocol}//${location.host}/${process.env.NEXT_PUBLIC_BASE_URL}post/?postId=3114&commentId=${comment.id}`
+      `${location.protocol}//${location.host}${process.env.NEXT_PUBLIC_BASE_URL}/post/?postId=3114&commentId=${comment.id}`
     );
     showNotification({
       message: "Copied!",
