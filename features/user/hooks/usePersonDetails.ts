@@ -20,7 +20,7 @@ export const usePersonDetails = ({
   const auth = useAuth();
 
   return useQuery(
-    ["personViewSafe", personId, username, auth.token.ok().unwrapOr("")],
+    ["personDetails", personId, username, auth.token.ok().unwrapOr("")],
     async () => {
       if ((personId === -1 || !personId) && !username && !savedOnly) {
         return undefined;

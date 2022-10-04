@@ -64,6 +64,7 @@ export const PostControls: FC<{
     await postSaveUpdate.mutateAsync(!saved);
     queryClient.invalidateQueries(["post"]);
     queryClient.invalidateQueries(["posts"]);
+    queryClient.invalidateQueries(["personDetails"]);
     showNotification({ message: "OK!" });
   }, [postSaveUpdate, saved]);
 
