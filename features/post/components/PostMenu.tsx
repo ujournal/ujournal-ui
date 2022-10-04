@@ -29,7 +29,7 @@ export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
 
   const handleCopyLink = useCallback(() => {
     clipboard.copy(
-      `${location.protocol}//${location.host}/post/?postId=${post.id}`
+      `${location.protocol}//${location.host}/${process.env.NEXT_PUBLIC_BASE_URL}post/?postId=${post.id}`
     );
     showNotification({
       message: "Copied!",
