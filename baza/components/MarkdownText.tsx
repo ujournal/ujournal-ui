@@ -34,17 +34,17 @@ export const MarkdownText: FC<
   );
 
   const html = useMemo(() => {
-    const html = makeHashtagsAsLinks(
+    const value = makeHashtagsAsLinks(
       makeMentionAsLink(
         linkifyHtml(markdown2html(text, { useImageCaption: true }))
       )
     );
 
     if (truncateLength) {
-      return truncate(html, truncateLength);
+      return truncate(value, truncateLength);
     }
 
-    return html;
+    return value;
   }, [text, truncateLength]);
 
   return (

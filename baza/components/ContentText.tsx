@@ -19,6 +19,7 @@ export const ContentText: FC<
         event.currentTarget.removeEventListener("error", handleImageError);
       }
     };
+
     if (ref.current) {
       Array.from(ref.current.querySelectorAll("img")).map((image) =>
         image.addEventListener("error", handleImageError)
@@ -76,6 +77,7 @@ export const ContentText: FC<
           display: "block",
         },
         "& .image-caption": {
+          display: "block",
           padding: theme.spacing.sm,
           textAlign: "center",
           fontSize: 14,

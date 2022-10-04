@@ -25,22 +25,32 @@ export const Nsfw: FC<{
         {children}
       </Box>
       {_enabled && (
-        <Button
+        <Box
           sx={{
             position: "absolute",
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
-            width: 210,
-            margin: "auto",
+            width: "100%",
+            height: "80vh",
           }}
-          onClick={handleToggleShowed}
-          variant="gradient"
-          radius="md"
         >
-          {t("show_nsfw")}
-        </Button>
+          <Button
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              width: 210,
+              margin: "auto",
+            }}
+            onClick={handleToggleShowed}
+            variant="gradient"
+            radius="md"
+          >
+            {t("show_nsfw")}
+          </Button>
+        </Box>
       )}
     </Box>
   );
