@@ -17,6 +17,8 @@ export const Nsfw: FC<{
     <Box
       sx={{
         position: "relative",
+        overflow: _enabled ? "hidden" : undefined,
+        maxHeight: _enabled ? "50vh" : undefined,
       }}
     >
       <Box
@@ -31,7 +33,7 @@ export const Nsfw: FC<{
             top: 0,
             left: 0,
             width: "100%",
-            height: "80vh",
+            height: "100%",
           }}
         >
           <Button
