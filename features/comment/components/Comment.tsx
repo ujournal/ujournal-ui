@@ -152,10 +152,12 @@ export const Comment: FC<CommentProps> = ({
           left: -16,
           height: "100%",
           content: "''",
-          borderLeft:
-            decoration === "middle"
-              ? `1px solid ${theme.colors.gray[3]}`
-              : undefined,
+          borderLeftWidth: decoration === "middle" ? 1 : undefined,
+          borderLeftStyle: decoration === "middle" ? "solid" : undefined,
+          borderLeftColor:
+            theme.colorScheme === "light"
+              ? theme.colors.gray[3]
+              : theme.colors.gray[7],
         },
       })}
       id={`comment-${comment.id}`}
@@ -175,7 +177,7 @@ export const Comment: FC<CommentProps> = ({
             backgroundColor:
               theme.colorScheme === "light"
                 ? theme.fn.lighten(theme.colors.gray[1], 0.5)
-                : theme.colors.gray[9],
+                : theme.colors.gray[8],
           },
         })}
       >
