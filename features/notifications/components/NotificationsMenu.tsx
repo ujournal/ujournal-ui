@@ -143,7 +143,11 @@ export const NotificationsMenu: FC = () => {
                     <Group
                       noWrap
                       sx={(theme) => ({
-                        borderBottom: `1px solid ${theme.colors.gray[1]}`,
+                        borderBottom: `1px solid ${
+                          theme.colorScheme === "light"
+                            ? theme.colors.gray[1]
+                            : theme.colors.gray[8]
+                        }`,
                       })}
                       p="sm"
                       align="flex-start"
