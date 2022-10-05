@@ -47,18 +47,18 @@ export const CommunityButton = ({
             component="a"
             px={6}
             py={4}
-            sx={(theme) => ({
+            sx={{
               display: "block",
-              color:
-                theme.colorScheme === "dark"
-                  ? theme.colors.dark[0]
-                  : theme.black,
               whiteSpace: "nowrap",
-            })}
+            }}
           >
             <Box
               sx={(theme) => ({
-                backgroundColor: active ? "white" : undefined,
+                backgroundColor: active
+                  ? theme.colorScheme === "light"
+                    ? theme.white
+                    : theme.colors.gray[9]
+                  : undefined,
                 borderRadius: theme.radius.sm,
               })}
               px={6}
