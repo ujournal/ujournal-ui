@@ -180,6 +180,7 @@ export const Comment: FC<CommentProps> = ({
                 : theme.colors.gray[8],
           },
         })}
+        radius="md"
       >
         <Stack spacing={0}>
           <Group spacing={0}>

@@ -201,6 +201,8 @@ export const PostForm: FC<{
           styles={{
             input: {
               borderWidth: 0,
+              fontFamily: "eUkraineRegular, sans-serif",
+              fontSize: 26,
               fontWeight: 600,
               minHeight: 0,
               paddingLeft: 8,

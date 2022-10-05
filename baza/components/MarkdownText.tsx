@@ -50,9 +50,9 @@ export const MarkdownText: FC<
   return (
     <ContentText
       {...props}
-      html={html}
       compact={compact}
       onClick={handleContentClick}
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 };

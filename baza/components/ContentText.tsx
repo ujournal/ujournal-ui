@@ -4,11 +4,10 @@ import { FC, HTMLAttributes, useEffect, useRef } from "react";
 
 export const ContentText: FC<
   Omit<BoxProps, "sx"> & {
-    html?: string;
     compact?: boolean;
     zoomable?: boolean;
   } & HTMLAttributes<HTMLDivElement>
-> = ({ html, compact = false, zoomable = true, ...props }) => {
+> = ({ compact = false, zoomable = true, ...props }) => {
   const ref = useRef<HTMLDivElement>(null);
   const largerThanMd = useBreakpoint({ largerThan: "md" });
 
@@ -31,7 +30,6 @@ export const ContentText: FC<
     <Box
       {...props}
       ref={ref}
-      dangerouslySetInnerHTML={html ? { __html: html } : undefined}
       className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({
         "& a": {
