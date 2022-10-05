@@ -92,7 +92,15 @@ export const PostControls: FC<{
                   disabled={commentButtonDisabled}
                   color="gray"
                   sx={(theme) => ({
-                    color: theme.black[6],
+                    "&[data-disabled]": {
+                      color: theme.fn.rgba(
+                        theme.colorScheme === "light"
+                          ? theme.black
+                          : theme.white,
+                        0.25
+                      ),
+                    },
+
                     backgroundColor: commentButtonDisabled
                       ? "transparent !important"
                       : undefined,
