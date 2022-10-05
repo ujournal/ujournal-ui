@@ -42,7 +42,7 @@ export const Post: FC<
   full = false,
   commentsAsText = false,
   showPostCreator = false,
-  truncateLength = 840,
+  truncateLength = 500,
   saved,
   shadow,
 }) => {
@@ -97,7 +97,10 @@ export const Post: FC<
                   mt="md"
                   size="xs"
                   sx={(theme) => ({
-                    backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+                    backgroundColor:
+                      theme.colorScheme === "light"
+                        ? theme.fn.rgba(theme.colors.blue[0], 0.5)
+                        : theme.colors.gray[8],
                   })}
                   component="a"
                   rightIcon={<IconCaretRight stroke={1.5} />}
