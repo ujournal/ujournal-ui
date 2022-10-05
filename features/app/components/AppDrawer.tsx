@@ -24,12 +24,15 @@ export const AppDrawer: FC<{
           onClose={handleDrawerClose}
           padding="xl"
           size={smallerThanSm ? "85%" : 400}
-          styles={{
+          styles={(theme) => ({
             drawer: {
-              backgroundColor: "#f2f2f2",
+              backgroundColor:
+                theme.colorScheme === "light"
+                  ? theme.colors.gray[1]
+                  : theme.colors.gray[8],
               overflow: "auto",
             },
-          }}
+          })}
         >
           <Tabs defaultValue="navbar" sx={{ marginTop: -44 }}>
             <Tabs.List>
