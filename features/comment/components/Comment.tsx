@@ -290,7 +290,10 @@ export const Comment: FC<CommentProps> = ({
             width: 14,
             height: 24,
             borderStyle: "solid",
-            borderColor: theme.colors.gray[3],
+            borderColor:
+              theme.colorScheme === "light"
+                ? theme.colors.gray[3]
+                : theme.colors.gray[7],
             borderLeftWidth: 1,
             borderBottomWidth: 1,
             borderTopWidth: 0,
