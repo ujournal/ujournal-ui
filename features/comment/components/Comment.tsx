@@ -167,7 +167,9 @@ export const Comment: FC<CommentProps> = ({
           overflow: commentEditing || commentAdding ? "visible" : "hidden",
           backgroundColor:
             String(comment.id) === routerQuery.commentId
-              ? theme.fn.lighten(theme.colors.yellow[1], 0.25)
+              ? theme.colorScheme === "light"
+                ? theme.fn.rgba(theme.colors.yellow[1], 0.5)
+                : theme.fn.rgba(theme.colors.yellow[1], 0.2)
               : "transparent",
           "&:hover": {
             backgroundColor:
