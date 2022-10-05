@@ -1,4 +1,4 @@
-import { Box } from "@mantine/core";
+import { Box, useMantineColorScheme } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EmbedComponentType } from "../types";
 
@@ -8,6 +8,7 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
   );
   const [height, setHeight] = useState<number | string>(80);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const { colorScheme } = useMantineColorScheme();
 
   const frameId = useMemo(
     () => `telegram-post${new URL(src).pathname.replace(/[^a-z0-9_]/gi, "-")}`,
@@ -75,7 +76,9 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
         <Box
           component="iframe"
           id={frameId}
-          src={`https://t.me/${matches[1]}?embed=1`}
+          src={`https://t.me/${matches[1]}?embed=1${
+            colorScheme === "dark" ? `&dark=1` : ""
+          }`}
           width="100%"
           frameBorder="0"
           scrolling="no"
