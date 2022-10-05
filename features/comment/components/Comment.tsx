@@ -170,7 +170,10 @@ export const Comment: FC<CommentProps> = ({
               ? theme.fn.lighten(theme.colors.yellow[1], 0.25)
               : "transparent",
           "&:hover": {
-            backgroundColor: theme.fn.lighten(theme.colors.gray[1], 0.5),
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.fn.lighten(theme.colors.gray[1], 0.5)
+                : theme.colors.gray[9],
           },
         })}
       >

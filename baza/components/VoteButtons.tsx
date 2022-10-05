@@ -83,7 +83,10 @@ export const VoteButtons: FC<{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: theme.colors.gray[1],
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.colors.gray[1]
+                : theme.colors.gray[8],
             minWidth: 40,
             height: 28,
             borderRadius: theme.radius.sm,

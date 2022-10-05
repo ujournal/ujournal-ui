@@ -65,7 +65,10 @@ export const ContentText: FC<
           height: 1,
           border: "none",
           color: "#dadce0",
-          backgroundColor: "#dadce0",
+          backgroundColor:
+            theme.colorScheme === "light"
+              ? theme.colors.gray[4]
+              : theme.colors.gray[7],
         },
         "& .image": {
           backgroundColor: "rgba(0,0,0,0.025)",
@@ -85,7 +88,10 @@ export const ContentText: FC<
           "&:empty": { display: "none" },
         },
         "& blockquote": {
-          backgroundColor: theme.fn.lighten(theme.colors.blue[0], 0.5),
+          backgroundColor:
+            theme.colorScheme === "light"
+              ? theme.fn.lighten(theme.colors.blue[0], 0.5)
+              : theme.colors.gray[8],
           padding: compact ? theme.spacing.sm : theme.spacing.xl,
           marginLeft: compact
             ? 0

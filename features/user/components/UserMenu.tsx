@@ -1,15 +1,24 @@
-import { Menu, UnstyledButton, Group, Avatar, Text } from "@mantine/core";
+import {
+  Menu,
+  UnstyledButton,
+  Group,
+  Avatar,
+  Text,
+  useMantineColorScheme,
+} from "@mantine/core";
 import {
   IconChevronDown,
   IconSettings,
   IconLogout,
   IconUser,
   IconBookmark,
+  IconSun,
+  IconMoon,
 } from "@tabler/icons";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-
+import { capitalize } from "baza/utils/string";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -20,6 +29,11 @@ export const UserMenu: FC<{
   const { t } = useTranslation();
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
+  const { toggleColorScheme, colorScheme } = useMantineColorScheme();
+
+  const handleColorSchemeToggle = useCallback(() => {
+    toggleColorScheme();
+  }, [toggleColorScheme]);
 
   return (
     <Menu
@@ -65,6 +79,18 @@ export const UserMenu: FC<{
             {t("settings")}
           </Menu.Item>
         </Link>
+        <Menu.Item
+          icon={
+            colorScheme === "light" ? (
+              <IconSun size={24} stroke={1.5} />
+            ) : (
+              <IconMoon size={24} stroke={1.5} />
+            )
+          }
+          onClick={handleColorSchemeToggle}
+        >
+          Now is {capitalize(colorScheme)}
+        </Menu.Item>
         <Menu.Item
           icon={<IconLogout size={24} stroke={1.5} />}
           onClick={onLogOut}

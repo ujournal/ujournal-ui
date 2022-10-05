@@ -20,15 +20,18 @@ export const SoundCloudEmbed: EmbedComponentType = ({ src: url }) => {
     return (
       <Box
         p="sm"
-        sx={{
+        sx={(theme) => ({
           "& iframe": {
-            backgroundColor: "#fff",
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.white
+                : theme.colors.gray[8],
             marginTop: "0 !important",
             marginBottom: "0 !important",
             marginLeft: "auto !important",
             marginRight: "auto !important",
           },
-        }}
+        })}
       >
         <Center>
           <Box

@@ -53,11 +53,14 @@ export const AppLayout: FC<{
           ) : undefined
         }
         header={<AppHeader />}
-        styles={{
+        styles={(theme) => ({
           main: {
-            backgroundColor: "#f2f2f2",
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.colors.gray[1]
+                : theme.colors.black,
           },
-        }}
+        })}
       >
         {children}
       </AppShell>

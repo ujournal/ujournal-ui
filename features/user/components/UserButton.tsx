@@ -72,7 +72,12 @@ export const UserButtonWithoutRef = (
                     src={image}
                     radius="lg"
                     size="sm"
-                    sx={{ backgroundColor: "#fff" }}
+                    sx={(theme) => ({
+                      backgroundColor:
+                        theme.colorScheme === "light"
+                          ? theme.white
+                          : theme.colors.gray[8],
+                    })}
                   >
                     <IconUser stroke={1.5} />
                   </Avatar>

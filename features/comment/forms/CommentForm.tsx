@@ -125,7 +125,12 @@ export const CommentForm: FC<{
             rightSection={
               <UploadImageButton
                 onUploaded={handleFileUpload}
-                sx={{ backgroundColor: "#fff" }}
+                sx={(theme) => ({
+                  backgroundColor:
+                    theme.colorScheme === "light"
+                      ? theme.white
+                      : theme.colors.gray[8],
+                })}
                 mb={9}
                 mr={9}
               />

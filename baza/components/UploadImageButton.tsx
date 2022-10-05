@@ -57,7 +57,12 @@ export const UploadImageButton: FC<
       </Dropzone.FullScreen>
       <Tooltip label={capitalize(t("upload_image"))}>
         <ActionIcon
-          sx={{ backgroundColor: "#fff" }}
+          sx={(theme) => ({
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.white
+                : theme.colors.gray[8],
+          })}
           {...props}
           onClick={handleUploadClick}
           disabled={uploadMutation.isLoading}

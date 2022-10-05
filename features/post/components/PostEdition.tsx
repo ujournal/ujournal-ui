@@ -22,14 +22,15 @@ const PostEditionItem: FC<PostView> = ({ post, counts }) => {
   return (
     <Link href={{ pathname: "/post", query: { postId: post.id } }} passHref>
       <Box component="a">
-        <Box component="span">{post.name}</Box>
+        <Box component="span" sx={{ marginRight: 8 }}>
+          {post.name}
+        </Box>
         <Group
           spacing={2}
           sx={{
             display: "inline-flex",
             lineHeight: 1,
             verticalAlign: "middle",
-            marginLeft: 8,
             whiteSpace: "nowrap",
             fontSize: 12,
             fontWeight: "bold",
@@ -126,8 +127,14 @@ export const PostEdition: FC = () => {
                 postEditonList.isLoading ||
                 postEditonList.isFetching
               }
-              color="gray"
+              // color="gray"
               rightIcon={<IconChevronDown stroke={1.5} size={12} />}
+              sx={(theme) => ({
+                color:
+                  theme.colorScheme === "light"
+                    ? theme.colors.gray[9]
+                    : theme.colors.gray[3],
+              })}
             >
               {capitalize(t("more"))}
             </Button>

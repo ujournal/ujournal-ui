@@ -7,9 +7,10 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
 
   return (
     <Box
-      sx={{
-        backgroundColor: "#fff",
-      }}
+      sx={(theme) => ({
+        backgroundColor:
+          theme.colorScheme === "light" ? theme.white : theme.colors.gray[8],
+      })}
     >
       <Box
         component="img"

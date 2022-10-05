@@ -80,7 +80,11 @@ export const LinksList: FC<{
                   >
                     <Box
                       sx={(theme) => ({
-                        backgroundColor: active ? "white" : undefined,
+                        backgroundColor: active
+                          ? theme.colorScheme === "light"
+                            ? theme.white
+                            : theme.colors.gray[9]
+                          : undefined,
                         borderRadius: theme.radius.md,
                         borderTopRightRadius:
                           itemsGrouped.length > 0 ? theme.radius.xs : undefined,
@@ -140,7 +144,11 @@ export const LinksList: FC<{
                   >
                     <Box
                       sx={(theme) => ({
-                        backgroundColor: active ? "white" : undefined,
+                        backgroundColor: active
+                          ? theme.colorScheme === "light"
+                            ? theme.white
+                            : theme.colors.gray[9]
+                          : undefined,
                         borderRadius: theme.radius.md,
                         borderTopLeftRadius:
                           itemsGrouped.length > 0 ? theme.radius.xs : undefined,

@@ -235,7 +235,10 @@ export const PostForm: FC<{
 
         <Box
           sx={(theme) => ({
-            backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+            backgroundColor:
+              theme.colorScheme === "light"
+                ? theme.fn.rgba(theme.colors.blue[0], 0.5)
+                : theme.colors.gray[8],
             marginLeft: -theme.spacing[smallerThanSm ? "sm" : "xl"],
             marginRight: -theme.spacing[smallerThanSm ? "sm" : "xl"],
             paddingLeft: theme.spacing[smallerThanSm ? "sm" : "xl"],

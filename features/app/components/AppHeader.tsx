@@ -49,9 +49,9 @@ export const AppHeader: FC = () => {
             variant="subtle"
             component="a"
             leftIcon={<IconLogin stroke={1.5} />}
-            color="transparent"
+            color="dark"
             sx={{
-              color: "#000",
+              // color: "#000",
               "&:hover": { backgroundColor: "transparent" },
             }}
             styles={(theme) => ({
@@ -74,13 +74,14 @@ export const AppHeader: FC = () => {
     <Header
       height={60}
       p="xs"
-      sx={{
-        backgroundColor: "#fff",
+      sx={(theme) => ({
+        backgroundColor:
+          theme.colorScheme === "light" ? theme.white : theme.colors.gray[9],
         borderWidth: 0,
         borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
         boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.05)",
         zIndex: 200,
-      }}
+      })}
     >
       <Group position="apart" noWrap>
         <Group noWrap spacing="xs">

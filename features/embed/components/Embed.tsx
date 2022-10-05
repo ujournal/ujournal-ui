@@ -100,7 +100,10 @@ export const Embed: EmbedComponentType = ({
     return (
       <Box
         sx={(theme) => ({
-          backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+          backgroundColor:
+            theme.colorScheme === "light"
+              ? theme.fn.rgba(theme.colors.blue[0], 0.5)
+              : theme.colors.gray[8],
           padding: theme.spacing.md,
         })}
       >
@@ -120,7 +123,10 @@ export const Embed: EmbedComponentType = ({
   return (
     <Box
       sx={(theme) => ({
-        backgroundColor: theme.fn.rgba(theme.colors.blue[0], 0.5),
+        backgroundColor:
+          theme.colorScheme === "light"
+            ? theme.fn.rgba(theme.colors.blue[0], 0.5)
+            : theme.colors.gray[8],
       })}
     >
       {aspectRatio === -1 ? (
