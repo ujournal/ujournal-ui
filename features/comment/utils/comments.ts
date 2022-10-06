@@ -5,6 +5,7 @@ export type CommentInternal = {
   comment: {
     id: number;
     content: string;
+    deleted: boolean;
     published: string;
   };
   creator: {
@@ -27,12 +28,13 @@ export const transformCommentsToTree = (
     comments
       .map<CommentInternal | undefined>(
         ({ comment, creator, my_vote, post, counts }) =>
-          comment.parent_id === parentId
+          comment.parent_id === parentId && !comment.deleted
             ? {
                 comment: {
                   id: comment.id,
                   content: comment.content,
                   published: comment.published,
+                  deleted: comment.deleted,
                 },
                 creator: {
                   id: creator.id,
@@ -59,12 +61,14 @@ export const transformCommentsToTree = (
 };
 
 export const transformCommentsFromCommentsView = (comments: any[]) => {
-  return comments.map<CommentInternal>(
-    ({ comment, creator, post, my_vote, counts }) => ({
+  return comments
+    .filter(({ comment }) => !comment.deleted)
+    .map<CommentInternal>(({ comment, creator, post, my_vote, counts }) => ({
       comment: {
         id: comment.id,
         content: comment.content,
         published: comment.published,
+        deleted: comment.deleted,
       },
       creator: {
         id: creator.id,
@@ -80,8 +84,7 @@ export const transformCommentsFromCommentsView = (comments: any[]) => {
       counts,
       post,
       children: [],
-    })
-  );
+    }));
 };
 
 export const encodeCommentContent = (content: string) => {

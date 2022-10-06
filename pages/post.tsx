@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { SitePage } from "types";
+import { queryClient } from "baza/reactQuery";
 
 const PostPage: SitePage = () => {
   const { t } = useTranslation();
@@ -39,6 +40,8 @@ const PostPage: SitePage = () => {
         ...values,
         postId,
       });
+
+      await queryClient.invalidateQueries(["post"]);
     },
     [commentUpsert, postId]
   );
@@ -46,6 +49,7 @@ const PostPage: SitePage = () => {
   useEffect(() => {
     if (post.data?.post_view.post.deleted) {
       router.replace("/");
+
       showNotification({
         message: capitalize(t("deleted")),
       });
@@ -103,7 +107,9 @@ const PostPage: SitePage = () => {
                 />
               </Box>
 
-              {(post.data?.comments || []).length >= 1 && (
+              {(post.data?.comments || []).filter(
+                ({ comment }) => !comment.deleted
+              ).length >= 1 && (
                 <Box sx={{ width: "100%" }}>
                   <CommentForm
                     onSubmit={handleCommentSubmit}

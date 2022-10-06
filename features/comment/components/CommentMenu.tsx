@@ -23,6 +23,11 @@ export const CommentMenu: FC<{
             {capitalize(t("edit"))}
           </Menu.Item>
         )}
+        {onCopyLink && (
+          <Menu.Item icon={<IconLink size={14} />} onClick={onCopyLink}>
+            {capitalize(t("link"))}
+          </Menu.Item>
+        )}
         {onDelete && (
           <Menu.Item
             icon={<IconTrash size={14} />}
@@ -30,11 +35,6 @@ export const CommentMenu: FC<{
             onClick={onDelete}
           >
             {capitalize(t("delete"))}
-          </Menu.Item>
-        )}
-        {onCopyLink && (
-          <Menu.Item icon={<IconLink size={14} />} onClick={onCopyLink}>
-            {capitalize(t("link"))}
           </Menu.Item>
         )}
       </Menu.Dropdown>

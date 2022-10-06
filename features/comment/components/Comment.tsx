@@ -19,6 +19,9 @@ import { useCommentUpsert } from "../hooks/useCommentUpsert";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import { useClipboard } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
+import { useCommentDelete } from "../hooks/useCommentDelete";
+import { queryClient } from "baza/reactQuery";
+import { useSiteUser } from "features/app/hooks/useSiteUser";
 
 export type CommentProps = CommentInternal & {
   children: CommentInternal[];
@@ -58,10 +61,14 @@ export const Comment: FC<CommentProps> = ({
 
   const commentUpsert = useCommentUpsert();
 
+  const commentDelete = useCommentDelete();
+
   const vote = useCommentVote({
     commentId: comment.id,
     onSuccess: setCountsAndMyVote,
   });
+
+  const siteUser = useSiteUser();
 
   const toggleCommentFormShowed = useCallback(() => {
     setCommentAdding((commentFormShowed) => !commentFormShowed);
@@ -76,6 +83,8 @@ export const Comment: FC<CommentProps> = ({
       });
 
       setCommentAdding(false);
+
+      await queryClient.invalidateQueries(["post"]);
     },
     [comment.id, commentUpsert, postId]
   );
@@ -95,6 +104,16 @@ export const Comment: FC<CommentProps> = ({
   const handleCommentEdit = useCallback(() => {
     setCommentEditing((editing) => !editing);
   }, []);
+
+  const handleCommentDelete = useCallback(async () => {
+    await commentDelete.mutateAsync({ commentId: comment.id });
+
+    queryClient.invalidateQueries(["post"]);
+
+    showNotification({
+      message: capitalize(t("deleted")),
+    });
+  }, [comment.id, commentDelete, t]);
 
   const handleCopyLink = useCallback(() => {
     clipboard.copy(
@@ -235,6 +254,11 @@ export const Comment: FC<CommentProps> = ({
                     <CommentMenu
                       onEdit={handleCommentEdit}
                       onCopyLink={handleCopyLink}
+                      onDelete={
+                        siteUser.localUserView?.person.id === creator.id
+                          ? handleCommentDelete
+                          : undefined
+                      }
                     />
                   </Group>
                   <VoteButtons

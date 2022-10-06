@@ -1,7 +1,6 @@
 import { None, Some } from "@sniptt/monads";
 import { useMutation } from "@tanstack/react-query";
 import { useLemmyClient } from "baza/hooks/useLemmyClient";
-import { queryClient } from "baza/reactQuery";
 import { useAuth } from "features/app/hooks/useAuth";
 import { Values as CommentEditValues } from "features/comment/forms/CommentForm";
 import { CreateComment, EditComment } from "ujournal-lemmy-js-client";
@@ -34,9 +33,7 @@ export const useCommentUpsert = () => {
               auth: auth.token.unwrap(),
             })
           );
-        } catch (error) {}
-
-        await queryClient.invalidateQueries(["post"]);
+        } catch {}
 
         return result;
       }
@@ -59,8 +56,6 @@ export const useCommentUpsert = () => {
           })
         );
       } catch (error) {}
-
-      await queryClient.invalidateQueries(["post"]);
 
       return result;
     }
