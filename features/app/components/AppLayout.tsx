@@ -1,6 +1,12 @@
-import { AppShell, Aside, Navbar, ScrollArea } from "@mantine/core";
+import {
+  AppShell,
+  Aside,
+  Navbar,
+  ScrollArea,
+  useMantineTheme,
+} from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { AppDrawer } from "./AppDrawer";
 import { AppHeader } from "./AppHeader";
 import { AppViewer } from "./AppViewer";
@@ -11,6 +17,19 @@ export const AppLayout: FC<{
   children: ReactElement;
 }> = ({ navbar, aside, children }) => {
   const largerThanMd = useBreakpoint({ largerThan: "md" });
+  const theme = useMantineTheme();
+
+  useEffect(() => {
+    const themeColor = window.document.querySelector(
+      'meta[name="theme-color"]'
+    );
+    if (themeColor) {
+      themeColor.setAttribute(
+        "content",
+        theme.colorScheme === "light" ? "#fff" : "#000"
+      );
+    }
+  }, [theme.colorScheme]);
 
   return (
     <>
