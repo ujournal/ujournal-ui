@@ -1,4 +1,4 @@
-import { Box, Button, Card, Group, Stack, Tooltip } from "@mantine/core";
+import { Box, Button, Card, Group, Stack, Tooltip, Text } from "@mantine/core";
 import { DataList } from "baza/components/DataList";
 import { MarkdownText } from "baza/components/MarkdownText";
 import { capitalize } from "baza/utils/string";
@@ -139,7 +139,9 @@ export const Comment: FC<CommentProps> = ({
     }
   }, [comment.id, routerQuery.commentId]);
 
-  const commentContent = (
+  const commentContent = comment.deleted ? (
+    <Text color="gray">{capitalize(t("deleted"))}</Text>
+  ) : (
     <MarkdownText
       text={decodeCommentContentForRender(comment.content)}
       truncateLength={truncateLength}
@@ -234,7 +236,7 @@ export const Comment: FC<CommentProps> = ({
               commentContentWithOrWithoutLink
             )}
 
-            {!compact && (
+            {!compact && !comment.deleted && (
               <>
                 <Group position="apart">
                   <Group spacing="xs">

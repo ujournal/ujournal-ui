@@ -107,9 +107,7 @@ const PostPage: SitePage = () => {
                 />
               </Box>
 
-              {(post.data?.comments || []).filter(
-                ({ comment }) => !comment.deleted
-              ).length >= 1 && (
+              {(post.data?.comments || []).length >= 1 && (
                 <Box sx={{ width: "100%" }}>
                   <CommentForm
                     onSubmit={handleCommentSubmit}
