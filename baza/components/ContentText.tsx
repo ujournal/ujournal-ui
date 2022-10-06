@@ -1,6 +1,13 @@
 import { Box, BoxProps } from "@mantine/core";
 import { useBreakpoint } from "baza/hooks/useBreakpoint";
-import { FC, HTMLAttributes, useEffect, useRef } from "react";
+import {
+  FC,
+  HTMLAttributes,
+  useEffect,
+  useRef,
+  useCallback,
+  MouseEvent,
+} from "react";
 
 export const ContentText: FC<
   Omit<BoxProps, "sx"> & {
@@ -26,9 +33,22 @@ export const ContentText: FC<
     }
   }, []);
 
+  const handleContentClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      if (
+        event.target instanceof HTMLAnchorElement &&
+        !event.target.href.includes("/search/?q=")
+      ) {
+        event.target.setAttribute("target", "_blank");
+      }
+    },
+    []
+  );
+
   return (
     <Box
       {...props}
+      onClick={handleContentClick}
       ref={ref}
       className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
       sx={(theme) => ({

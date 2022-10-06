@@ -85,7 +85,9 @@ export const Post: FC<
                   : undefined
               }
             />
-            {!full && body.length > truncateLength ? (
+            {!full &&
+            (body.length > truncateLength ||
+              (body.match(/(\!\[[^]*?\]\([^\)]*?\))/gims) || []).length > 1) ? (
               <Link
                 href={{ pathname: "/post", query: { postId: post.id } }}
                 passHref

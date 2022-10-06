@@ -92,7 +92,7 @@ export const Sponsor: FC<{ communityName: string }> = ({ communityName }) => {
         <Box
           sx={(theme) => ({
             border: `2px dotted ${theme.colors.blue[3]}`,
-            backgroundColor: theme.colors.blue[0],
+            backgroundColor: theme.fn.rgba(theme.colors.blue[5], 0.05),
             color: theme.colors.gray[6],
             borderRadius: theme.radius.md,
             textAlign: "center",

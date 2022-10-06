@@ -21,18 +21,6 @@ export const MarkdownText: FC<
   compact = false,
   ...props
 }) => {
-  const handleContentClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      if (
-        event.target instanceof HTMLAnchorElement &&
-        !event.target.href.includes("/search/?q=")
-      ) {
-        event.target.setAttribute("target", "_blank");
-      }
-    },
-    []
-  );
-
   const html = useMemo(() => {
     const value = makeHashtagsAsLinks(
       makeMentionAsLink(
@@ -41,7 +29,10 @@ export const MarkdownText: FC<
     );
 
     if (truncateLength) {
-      return truncate(value, truncateLength);
+      return truncate(value, truncateLength).replace(
+        /^(.?<p><span class="image"><img[^>]+><span class="image-caption">[^<]*<\/span><\/span><\/p>).*$/ims,
+        "$1"
+      );
     }
 
     return value;
@@ -51,7 +42,6 @@ export const MarkdownText: FC<
     <ContentText
       {...props}
       compact={compact}
-      onClick={handleContentClick}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
