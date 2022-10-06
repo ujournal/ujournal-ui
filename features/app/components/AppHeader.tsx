@@ -29,6 +29,7 @@ export const AppHeader: FC = () => {
     () =>
       myUserInfo?.match({
         some: (myUser) => ({
+          username: myUser.local_user_view.person.name,
           name: myUser.local_user_view.person.display_name.unwrapOr(
             myUser.local_user_view.person.name
           ),

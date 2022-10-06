@@ -23,7 +23,7 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 export const UserMenu: FC<{
-  user: { name: string; image: string };
+  user: { username: string; name: string; image: string };
   onLogOut: () => void;
 }> = ({ user, onLogOut }) => {
   const { t } = useTranslation();
@@ -57,9 +57,20 @@ export const UserMenu: FC<{
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
-        <Link href="/profile" passHref>
+        <Link
+          href={{ pathname: "/user", query: { username: user.username } }}
+          passHref
+        >
           <Menu.Item component="a" icon={<IconUser size={24} stroke={1.5} />}>
             {t("profile")}
+          </Menu.Item>
+        </Link>
+        <Link href="/settings" passHref>
+          <Menu.Item
+            component="a"
+            icon={<IconSettings size={24} stroke={1.5} />}
+          >
+            {t("settings")}
           </Menu.Item>
         </Link>
         <Link href="/saved" passHref>
