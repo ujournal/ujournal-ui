@@ -97,6 +97,8 @@ export const Comment: FC<CommentProps> = ({
       });
 
       setCommentEditing(false);
+
+      await queryClient.invalidateQueries(["post"]);
     },
     [comment.id, commentUpsert]
   );
