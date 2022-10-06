@@ -30,7 +30,14 @@ export type CommentProps = CommentInternal & {
   truncateLength?: number;
   postId?: number;
   asLink?: boolean;
+  depth?: number;
 };
+
+const calcCommentsCount = (children: CommentInternal[]) =>
+  children.reduce<number>(
+    (count, item) => count + calcCommentsCount(item.children),
+    children.length
+  );
 
 export const Comment: FC<CommentProps> = ({
   comment,
@@ -44,6 +51,7 @@ export const Comment: FC<CommentProps> = ({
   truncateLength,
   postId,
   asLink = false,
+  depth = 0,
 }) => {
   const routerQuery = useRouterQuery<{ commentId: string | undefined }>({
     commentId: undefined,
@@ -206,111 +214,127 @@ export const Comment: FC<CommentProps> = ({
         radius="md"
       >
         <Stack spacing={0}>
-          <Group spacing={0}>
-            <UserButton
-              userId={creator.id}
-              username={creator.name}
-              image={creator.avatar as unknown as string}
-              label={
-                (creator.display_name as unknown as string) ||
-                (creator.name as unknown as string)
-              }
-              weight={600}
-              ml="-sm"
-              py={0}
-            />
-            {comment?.published != null ? (
-              <DateFormatted date={new Date(comment.published + "Z")} />
-            ) : null}
-          </Group>
+          {depth > 2 ? (
+            <>
+              <Button
+                variant="subtle"
+                styles={{
+                  root: { padding: 0 },
+                  inner: { justifyContent: "flex-start" },
+                }}
+              >
+                {capitalize(t("unwrap"))} ({calcCommentsCount(children)})
+              </Button>
+            </>
+          ) : (
+            <>
+              <Group spacing={0}>
+                <UserButton
+                  userId={creator.id}
+                  username={creator.name}
+                  image={creator.avatar as unknown as string}
+                  label={
+                    (creator.display_name as unknown as string) ||
+                    (creator.name as unknown as string)
+                  }
+                  weight={600}
+                  ml="-sm"
+                  py={0}
+                />
+                {comment?.published != null ? (
+                  <DateFormatted date={new Date(comment.published + "Z")} />
+                ) : null}
+              </Group>
 
-          <Stack spacing={2}>
-            {commentEditing ? (
-              <CommentForm
-                autofocus
-                values={comment}
-                isLoading={commentUpsert.isLoading}
-                onSubmit={handleCommentEditSubmit}
-              />
-            ) : (
-              commentContentWithOrWithoutLink
-            )}
-
-            {!compact && !comment.deleted && (
-              <>
-                <Group position="apart">
-                  <Group spacing="xs">
-                    <Button
-                      color="gray"
-                      p={0}
-                      variant="subtle"
-                      sx={{
-                        height: "auto",
-                        fontWeight: 500,
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                        },
-                      }}
-                      onClick={toggleCommentFormShowed}
-                    >
-                      {capitalize(t("reply"))}
-                    </Button>
-                    <CommentMenu
-                      onEdit={handleCommentEdit}
-                      onCopyLink={handleCopyLink}
-                      onDelete={
-                        siteUser.localUserView?.person.id === creator.id
-                          ? handleCommentDelete
-                          : undefined
-                      }
-                    />
-                  </Group>
-                  <VoteButtons
-                    counts={countsAndMyVote.counts}
-                    myVote={countsAndMyVote.myVote}
-                    vote={vote}
-                  />
-                </Group>
-                {commentAdding && (
+              <Stack spacing={2}>
+                {commentEditing ? (
                   <CommentForm
                     autofocus
+                    values={comment}
                     isLoading={commentUpsert.isLoading}
-                    onSubmit={handleCommentAddSubmit}
+                    onSubmit={handleCommentEditSubmit}
                   />
+                ) : (
+                  commentContentWithOrWithoutLink
                 )}
-              </>
-            )}
 
-            {compact && post && (
-              <Tooltip
-                label={post.name}
-                sx={{ whiteSpace: "normal", maxWidth: 200 }}
-                withinPortal
-              >
-                <Box>
-                  <Link
-                    href={{ pathname: "/post", query: { postId: post.id } }}
-                    passHref
+                {!compact && !comment.deleted && (
+                  <>
+                    <Group position="apart">
+                      <Group spacing="xs">
+                        <Button
+                          color="gray"
+                          p={0}
+                          variant="subtle"
+                          sx={{
+                            height: "auto",
+                            fontWeight: 500,
+                            "&:hover": {
+                              backgroundColor: "transparent",
+                            },
+                          }}
+                          onClick={toggleCommentFormShowed}
+                        >
+                          {capitalize(t("reply"))}
+                        </Button>
+                        <CommentMenu
+                          onEdit={handleCommentEdit}
+                          onCopyLink={handleCopyLink}
+                          onDelete={
+                            siteUser.localUserView?.person.id === creator.id
+                              ? handleCommentDelete
+                              : undefined
+                          }
+                        />
+                      </Group>
+                      <VoteButtons
+                        counts={countsAndMyVote.counts}
+                        myVote={countsAndMyVote.myVote}
+                        vote={vote}
+                      />
+                    </Group>
+                    {commentAdding && (
+                      <CommentForm
+                        autofocus
+                        isLoading={commentUpsert.isLoading}
+                        onSubmit={handleCommentAddSubmit}
+                      />
+                    )}
+                  </>
+                )}
+
+                {compact && post && (
+                  <Tooltip
+                    label={post.name}
+                    sx={{ whiteSpace: "normal", maxWidth: 200 }}
+                    withinPortal
                   >
-                    <Box
-                      component="a"
-                      sx={{
-                        display: "block",
-                        fontWeight: 600,
-                        fontSize: 14,
-                        maxWidth: 200,
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {post.name}
+                    <Box>
+                      <Link
+                        href={{ pathname: "/post", query: { postId: post.id } }}
+                        passHref
+                      >
+                        <Box
+                          component="a"
+                          sx={{
+                            display: "block",
+                            fontWeight: 600,
+                            fontSize: 14,
+                            maxWidth: 200,
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {post.name}
+                        </Box>
+                      </Link>
                     </Box>
-                  </Link>
-                </Box>
-              </Tooltip>
-            )}
-          </Stack>
+                  </Tooltip>
+                )}
+              </Stack>
+            </>
+          )}
         </Stack>
       </Card>
 
@@ -343,6 +367,7 @@ export const Comment: FC<CommentProps> = ({
             itemComponent={Comment}
             itemProps={(_item, index) => ({
               asChild: true,
+              depth: depth + 1,
               decoration: children.length - 1 === index ? "end" : "middle",
               postId,
             })}
