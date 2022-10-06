@@ -50,7 +50,7 @@ export const ContentText: FC<
       {...props}
       onClick={handleContentClick}
       ref={ref}
-      className={`ContentText-root ${zoomable ? "ContentText-zoomable" : ""}`}
+      className={`ContentText-root ${zoomable ? "zoomable" : ""}`}
       sx={(theme) => ({
         "& a": {
           color: theme.colors.blue,

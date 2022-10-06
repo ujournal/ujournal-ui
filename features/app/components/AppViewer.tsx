@@ -8,7 +8,7 @@ export const AppViewer: FC = () => {
     window.document.body.addEventListener("click", (event: Event) => {
       if (
         event.target instanceof HTMLElement &&
-        event.target?.closest(".ContentText-root.ContentText-zoomable")
+        event.target?.closest(".zoomable")
       ) {
         const target =
           event.target instanceof HTMLImageElement

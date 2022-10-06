@@ -11,6 +11,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
         backgroundColor:
           theme.colorScheme === "light" ? theme.white : theme.colors.gray[8],
       })}
+      className="zoomable image"
     >
       <Box
         component="img"
@@ -22,7 +23,6 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
           objectFit: "contain",
           backgroundColor: "rgba(0, 0, 0, 0.025)",
         }}
-        className="image"
       />
     </Box>
   );
