@@ -82,14 +82,15 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
           width="100%"
           frameBorder="0"
           scrolling="no"
-          sx={{
+          sx={(theme) => ({
             display: "block",
             overflow: "hidden",
             border: "none",
             minWidth: 320,
-            backgroundColor: "transparent",
+            backgroundColor:
+              theme.colorScheme === "light" ? "transparent" : "#353A3F",
             height,
-          }}
+          })}
           ref={iframeRef}
         />
       </Box>
