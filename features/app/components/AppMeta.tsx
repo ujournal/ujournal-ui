@@ -24,6 +24,7 @@ export const AppMeta: FC = () => {
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width"
       />
+
       <link
         rel="apple-touch-icon"
         sizes="180x180"
