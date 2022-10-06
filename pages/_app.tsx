@@ -34,7 +34,7 @@ export default function App(props: SiteAppProps) {
       <GoogleAnalytics trackPageViews />
 
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG}`}
+        src={`//www.googletagmanager.com/gtag/js?id=https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG}`}
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -51,7 +51,7 @@ export default function App(props: SiteAppProps) {
         <title>{process.env.NEXT_PUBLIC_TITLE}</title>
 
         <link
-          href="http://fonts.googleapis.com/css?family=Roboto"
+          href="//fonts.googleapis.com/css?family=Roboto"
           rel="stylesheet"
           type="text/css"
         />
