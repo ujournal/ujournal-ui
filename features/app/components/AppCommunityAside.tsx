@@ -9,14 +9,14 @@ import { FC, useMemo } from "react";
 import { CommunityView } from "ujournal-lemmy-js-client";
 
 const sponsors: {
-  communityName: string;
+  communityName: string[];
   imageUrl: string;
   name: string;
   description: string;
   externalUrl: string;
 }[] = [
   {
-    communityName: "movies_and_series",
+    communityName: ["movies_and_series", "kinoart"],
     imageUrl: "https://i.postimg.cc/65V3XRt7/2022-09-29-14-47-2-1.png",
     name: "КіноАрт",
     description: "Телеграм-канал про кіно українською",
@@ -47,21 +47,27 @@ export const Sponsor: FC<{ communityName: string }> = ({ communityName }) => {
     </Stack>
   );
 
-  if (communityName === "movies_and_series") {
+  if (
+    sponsors.some(({ communityName: _communityName }) =>
+      _communityName.includes(communityName)
+    )
+  ) {
     return (
       <Card radius="md">
         <Stack spacing="sm">
           {sponsors
-            .filter(
-              ({ communityName: _communityName }) =>
-                _communityName === communityName
+            .filter(({ communityName: _communityName }) =>
+              _communityName.includes(communityName)
             )
             .map(({ name, imageUrl, description, externalUrl }) => (
               <Link href={externalUrl} passHref key={name}>
                 <Box
                   component="a"
                   sx={(theme) => ({
-                    backgroundColor: theme.colors.gray[1],
+                    backgroundColor:
+                      theme.colorScheme === "light"
+                        ? theme.colors.gray[1]
+                        : theme.black,
                     borderRadius: theme.radius.md,
                   })}
                   p={4}

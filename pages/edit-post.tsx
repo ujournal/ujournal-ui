@@ -13,6 +13,8 @@ import { SitePage } from "types";
 import { queryClient } from "baza/reactQuery";
 import { showProgress, showFail, showSuccess } from "baza/utils/notifications";
 import { redirectOnSignedOut } from "features/app/components/AppAuthRedirect";
+import { AppNavbar } from "features/app/components/AppNavbar";
+import { AppCreatePostAside } from "features/app/components/AppCreatePostAside";
 
 const EditPostPage: SitePage = () => {
   const largerThanSm = useBreakpoint({ largerThan: "sm" });
@@ -87,6 +89,8 @@ const EditPostPage: SitePage = () => {
   );
 };
 
+EditPostPage.Navbar = AppNavbar;
+EditPostPage.Aside = AppCreatePostAside;
 EditPostPage.authRedirect = redirectOnSignedOut;
 
 export default EditPostPage;
