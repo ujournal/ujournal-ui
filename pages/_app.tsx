@@ -32,7 +32,7 @@ export default function App(props: SiteAppProps) {
   useEffect(() => {
     (window as any).__translateInit = () => {
       try {
-        const _google: any = window.google;
+        const _google: any = (window as any).google;
         new _google.translate.TranslateElement(
           {
             pageLanguage: "uk",
