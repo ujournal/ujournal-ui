@@ -30,7 +30,7 @@ export default function App(props: SiteAppProps) {
   );
 
   useEffect(() => {
-    window.__translateInit = () => {
+    (window as any).__translateInit = () => {
       try {
         const _google: any = window.google;
         new _google.translate.TranslateElement(
