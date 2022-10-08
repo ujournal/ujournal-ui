@@ -29,10 +29,10 @@ export const MarkdownText: FC<
     );
 
     if (truncateLength) {
-      return truncate(value, truncateLength).replace(
-        /^(.?<p><span class="image"><img[^>]+><span class="image-caption">[^<]*<\/span><\/span><\/p>).*$/ims,
-        "$1"
-      );
+      const valueSplitted = value.split("<!--IMAGE:END-->");
+      const valueImageCutted =
+        valueSplitted.length > 1 ? `${valueSplitted[0]}</p>` : value;
+      return truncate(valueImageCutted, truncateLength);
     }
 
     return value;

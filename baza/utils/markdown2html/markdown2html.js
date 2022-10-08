@@ -56,7 +56,10 @@ export default function markdown2html(
             title,
             text
           );
-          return `<span class="image">${image}<span class="image-caption">${text}</span></span>`;
+          
+          return `<!--IMAGE:BEGIN--><span class="image">${image}${
+            text ? `<span class="image-caption">${text}</span>` : ""
+          }</span><!--IMAGE:END-->`;
         }
 
         return Object.getPrototypeOf(this).image.call(this, ...args);
