@@ -17,7 +17,8 @@ import { LegalNotification } from "features/legal/components/LegalNotification";
 import { AppMeta } from "features/app/components/AppMeta";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import { useColorSchemeLocalStorage } from "baza/hooks/useColorSchemeLocalStorage";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import Script from "next/script";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
@@ -28,11 +29,46 @@ export default function App(props: SiteAppProps) {
     [colorScheme]
   );
 
+  useEffect(() => {
+    window.__translateInit = () => {
+      try {
+        const _google: any = window.google;
+        new _google.translate.TranslateElement(
+          {
+            pageLanguage: "uk",
+          },
+          "google_translate_element"
+        );
+      } catch {}
+    };
+  }, []);
+
   return (
     <>
       <GoogleAnalytics trackPageViews />
+
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', '${process.env.NEXT_PUBLIC_GTAG}');
+        `}
+      </Script>
+
+      <Script
+        src="//translate.google.com/translate_a/element.js?cb=__translateInit"
+        strategy="afterInteractive"
+      />
+
       <Head>
         <title>{process.env.NEXT_PUBLIC_TITLE}</title>
+
         <AppMeta />
       </Head>
       <I18nextProvider i18n={i18n}>
