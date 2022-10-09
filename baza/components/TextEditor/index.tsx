@@ -103,7 +103,7 @@ export const TextEditor: FC<TextEditorProps> = ({
                 "bulletedList",
                 "numberedList",
                 "|",
-                // "uploadImage",
+                "uploadImage",
                 "insertImage",
                 "insertImage",
                 "blockQuote",
