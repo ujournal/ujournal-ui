@@ -10,7 +10,7 @@ import { render } from "react-dom";
 import { Embed } from "features/embed/components/Embed";
 
 export const MarkdownText: FC<
-  Omit<BoxProps, "sx"> & {
+  BoxProps & {
     text: string;
     withContentMargins?: boolean;
     truncateLength?: number;
