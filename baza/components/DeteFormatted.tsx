@@ -47,7 +47,10 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
   const theme = useMantineTheme();
   const sx = merge(
     ((theme) => ({
-      color: theme.colors.gray[4],
+      color:
+        theme.colorScheme === "light"
+          ? theme.colors.gray[5]
+          : theme.colors.gray[7],
       whiteSpace: "nowrap",
     }))(theme),
     props.sx instanceof Function ? props.sx(theme) : props.sx

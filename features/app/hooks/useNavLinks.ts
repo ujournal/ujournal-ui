@@ -1,13 +1,4 @@
-import {
-  IconFlame,
-  IconTrendingUp,
-  IconBolt,
-  IconSunset2,
-  IconMessageCircle,
-  IconMessageCircle2,
-  IconChecks,
-  IconSpeakerphone,
-} from "@tabler/icons";
+import { IconSpeakerphone, IconCircleCheck, IconNews } from "@tabler/icons";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -28,88 +19,31 @@ export const useNavLinks = () => {
       [
         {
           type: ListingType.All,
-          sort: SortType.Hot,
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Hot },
-          },
-          label: capitalize(t("hot")),
-          icon: IconFlame,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.Active,
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Active },
-          },
-          label: capitalize(t("active")),
-          icon: IconTrendingUp,
-        },
-        {
-          type: ListingType.All,
           sort: SortType.New,
           url: {
             pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.New },
-          },
-          label: capitalize(t("new")),
-          icon: IconBolt,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.TopDay,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.TopDay },
-          },
-          label: capitalize(t("top_day")),
-          icon: IconSunset2,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.MostComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
             query: {
               ...query,
               type: ListingType.All,
-              sort: SortType.MostComments,
+              sort: SortType.New,
             },
           },
-          label: capitalize(t("most_comments")),
-          icon: IconMessageCircle,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.NewComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.All,
-              sort: SortType.NewComments,
-            },
-          },
-          label: capitalize(t("new_comments")),
-          icon: IconMessageCircle2,
+          label: capitalize(t("all")),
+          icon: IconNews,
         },
         {
           type: ListingType.Subscribed,
-          sort: SortType.Hot,
+          sort: SortType.New,
           url: {
             pathname: "/",
             query: {
               ...query,
               type: ListingType.Subscribed,
-              sort: SortType.Hot,
+              sort: SortType.New,
             },
           },
           label: capitalize(t("subscribed")),
-          icon: IconChecks,
+          icon: IconCircleCheck,
         },
         {
           type: null,

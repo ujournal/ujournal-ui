@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { IconChevronDown, IconMessageCircle2 } from "@tabler/icons";
 import { DataList } from "baza/components/DataList";
+import { useBreakpoint } from "baza/hooks/useBreakpoint";
 import { capitalize } from "baza/utils/string";
 import { sub } from "date-fns";
 import Link from "next/link";
@@ -55,6 +56,7 @@ const PostEditionItem: FC<PostView> = ({ post, counts }) => {
 
 export const PostEdition: FC = () => {
   const { t } = useTranslation();
+  const largerThanSm = useBreakpoint({ largerThan: "sm" });
 
   const postList = usePostList({
     params: {
@@ -98,8 +100,12 @@ export const PostEdition: FC = () => {
   }
 
   return (
-    <Container size={690} p={0} mb="md">
-      <Card radius="md" withBorder={false}>
+    <Container size={690} p={0} sx={{ width: "100%" }}>
+      <Card
+        radius={largerThanSm ? "md" : 0}
+        withBorder={false}
+        mx={largerThanSm ? undefined : "-md"}
+      >
         <Stack spacing="xs">
           <DataList
             data={postListDataFiltered}
