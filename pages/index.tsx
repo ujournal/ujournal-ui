@@ -61,8 +61,8 @@ const FeedPage: SitePage = () => {
           <Select
             placeholder={t("sort")}
             data={[
-              { value: SortType.Active, label: t("active") },
               { value: SortType.Hot, label: t("hot") },
+              { value: SortType.Active, label: t("active") },
               { value: SortType.New, label: t("new") },
               // { value: SortType.Old, label: t("old") },
               { value: SortType.TopDay, label: t("top_day") },

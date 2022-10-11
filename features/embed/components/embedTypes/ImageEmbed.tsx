@@ -23,6 +23,8 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
           objectFit: "contain",
           backgroundColor: "rgba(0, 0, 0, 0.025)",
         }}
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
       />
     </Box>
   );

@@ -1,3 +1,4 @@
+import { Box } from "@mantine/core";
 import { useEffect, useRef } from "react";
 import { EmbedComponentType } from "../types";
 
@@ -34,7 +35,8 @@ export const RedditEmbed: EmbedComponentType = ({ src }) => {
 
   if (matches && matches.length > 0) {
     return (
-      <iframe
+      <Box
+        component="iframe"
         ref={iframeRef}
         src={`https://www.redditmedia.com/${matches[1]}?embed=true`}
         sandbox="allow-scripts allow-same-origin allow-popups"

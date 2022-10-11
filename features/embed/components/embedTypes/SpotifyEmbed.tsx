@@ -31,6 +31,7 @@ export const SpotifyEmbed: EmbedComponentType = ({ src }) => {
             component="iframe"
             title="Spotify Web Player"
             src={`https://open.spotify.com/embed${new URL(src).pathname}`}
+            sandbox="allow-scripts allow-same-origin allow-popups"
             width={width}
             height={height}
             frameBorder={frameBorder}
