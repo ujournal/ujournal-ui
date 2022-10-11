@@ -1,6 +1,6 @@
 import { SitePage } from "types";
 import { PostList } from "features/post/components/PostList";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -19,25 +19,27 @@ import { PostEdition } from "features/post/components/PostEdition";
 import { ListingType, SortType } from "ujournal-lemmy-js-client";
 import { buildKeyFromParams } from "baza/utils/key";
 import { useTranslation } from "react-i18next";
-import { useBreakpoint } from "baza/hooks/useBreakpoint";
+import { useRouter } from "next/router";
 
 const FeedPage: SitePage = () => {
   const { t } = useTranslation();
   const params = useRouterQuery<FetchPostsParams>({
     ...fetchPostsParamsDefault,
   });
-  const [sort, setSort] = useState(params.sort);
-  const _params = { ...params, sort };
-  const posts = usePostList({ params: _params });
+  const posts = usePostList({ params });
   const navLinks = useNavLinks();
   const activeNavLink = useMemo(
     () => navLinks.find((item) => item.active),
     [navLinks]
   );
+  const router = useRouter();
 
-  const handleSortChange = useCallback((value: SortType) => {
-    setSort(value);
-  }, []);
+  const handleSortChange = useCallback(
+    (value: SortType) => {
+      router.push({ pathname: "/", query: { ...params, sort: value } });
+    },
+    [params, router]
+  );
 
   useEffect(() => {
     posts.refetch();
@@ -71,14 +73,14 @@ const FeedPage: SitePage = () => {
               { value: SortType.MostComments, label: t("most_comments") },
               { value: SortType.NewComments, label: t("new_comments") },
             ]}
-            value={_params.sort}
+            value={params.sort}
             sx={{ display: "flex" }}
             variant="unstyled"
             onChange={handleSortChange}
           />
         </Container>
 
-        {params.type === ListingType.All && params.sort === SortType.New && (
+        {params.type === ListingType.All && params.sort === SortType.Hot && (
           <PostEdition />
         )}
 
