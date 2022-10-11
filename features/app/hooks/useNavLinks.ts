@@ -19,13 +19,13 @@ export const useNavLinks = () => {
       [
         {
           type: ListingType.All,
-          sort: SortType.New,
+          sort: SortType.Hot,
           url: {
             pathname: "/",
             query: {
               ...query,
               type: ListingType.All,
-              sort: SortType.New,
+              sort: SortType.Hot,
             },
           },
           label: capitalize(t("all")),
@@ -33,13 +33,13 @@ export const useNavLinks = () => {
         },
         {
           type: ListingType.Subscribed,
-          sort: SortType.New,
+          sort: SortType.Hot,
           url: {
             pathname: "/",
             query: {
               ...query,
               type: ListingType.Subscribed,
-              sort: SortType.New,
+              sort: SortType.Hot,
             },
           },
           label: capitalize(t("subscribed")),
