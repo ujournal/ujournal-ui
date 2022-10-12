@@ -21,6 +21,15 @@ const nextConfig = {
     ],
     scrollRestoration: true,
   },
+  pwa: {
+    runtimeCaching: (defaultCache) => {
+      defaultCache.push({
+        urlPattern: /\/pictrs\/.*/i,
+        handler: "NetworkOnly",
+      });
+      return defaultCache;
+    },
+  },
   async rewrites() {
     return [
       {
