@@ -16,24 +16,12 @@ export const AppCreatePostAside: FC = () => {
         </ThemeIcon>
       }
     >
-      <List.Item>Жодної порнографії</List.Item>
+      <List.Item>Без порнографії</List.Item>
       <List.Item>Без насильства чи кривавого вмісту</List.Item>
-      <List.Item>Жодної мови ворожнечі та залякування</List.Item>
+      <List.Item>Без мови ворожнечі та залякування</List.Item>
       <List.Item>Без спаму та маніпуляцій</List.Item>
-      <List.Item>
-        Жодного оманливого вмісту (виключення{" "}
-        <Link
-          href={{
-            pathname: "/community",
-            query: { communityName: "panorama" },
-          }}
-          passHref
-        >
-          <Box component="a">Панорама</Box>
-        </Link>
-        )
-      </List.Item>
-      <List.Item>Жодної незаконної діяльності згідно законів України</List.Item>
+      <List.Item>Без оманливого вмісту</List.Item>
+      <List.Item>Без незаконної діяльності</List.Item>
       <List.Item>Без привласнювання «особистості» іншого користувача</List.Item>
       <List.Item>Без порушення авторських прав</List.Item>
     </List>
