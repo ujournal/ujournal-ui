@@ -15,7 +15,7 @@ export const usePostUpsert = () => {
     async (values: PostEditValues & { postId?: number }) => {
       const data = {
         url: Some(values.url),
-        body: Some(values.body),
+        body: Some(values.body || " "),
         nsfw: Some(values.nsfw),
         community_id: values.community_id,
         auth: auth.token.unwrap(),

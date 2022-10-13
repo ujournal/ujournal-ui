@@ -25,10 +25,7 @@ export const ContentText: FC<
       if (event.currentTarget instanceof HTMLImageElement) {
         const element = event.currentTarget;
         const imageUrl = event.currentTarget.src;
-        event.currentTarget.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no-image.svg`;
-        setTimeout(() => {
-          element.src = `${imageUrl}?${Math.random()}`;
-        }, 5000);
+        event.currentTarget.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no_image.svg`;
         event.currentTarget.removeEventListener("error", handleImageError);
       }
     };

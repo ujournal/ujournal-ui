@@ -9,10 +9,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
     if (event.currentTarget instanceof HTMLImageElement) {
       const element = event.currentTarget;
       const imageUrl = event.currentTarget.src;
-      element.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no-image.svg`;
-      setTimeout(() => {
-        element.src = `${imageUrl}?${Math.random()}`;
-      }, 5000);
+      element.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no_image.svg`;
     }
   }, []);
 
