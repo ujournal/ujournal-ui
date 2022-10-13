@@ -1,6 +1,6 @@
 import { SitePage } from "types";
 import { PostList } from "features/post/components/PostList";
-import { useCallback, useEffect, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -22,6 +22,18 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { IconChevronDown } from "@tabler/icons";
 import { SyntheticEvent } from "react";
+import { useEditionPostList } from "features/post/hooks/useEditionPostList";
+
+const FeedPageEdition: FC = () => {
+  const editionPostList = useEditionPostList({ communityName: "edition" });
+
+  return (
+    <PostEdition
+      {...editionPostList}
+      onNextPage={editionPostList.fetchNextPage}
+    />
+  );
+};
 
 const FeedPage: SitePage = () => {
   const { t } = useTranslation();
@@ -138,7 +150,7 @@ const FeedPage: SitePage = () => {
         </Container>
 
         {params.type === ListingType.All && params.sort === SortType.Hot && (
-          <PostEdition />
+          <FeedPageEdition />
         )}
 
         <Box sx={(theme) => ({ margin: -theme.spacing.md })}>
