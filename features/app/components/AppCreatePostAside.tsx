@@ -34,7 +34,7 @@ export const AppCreatePostAside: FC = () => {
         )
       </List.Item>
       <List.Item>Жодної незаконної діяльності згідно законів України</List.Item>
-      <List.Item>Без видавання себе за іншу особу</List.Item>
+      <List.Item>Без привласнювання «особистості» іншого користувача</List.Item>
       <List.Item>Без порушення авторських прав</List.Item>
     </List>
   );
