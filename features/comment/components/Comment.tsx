@@ -139,15 +139,18 @@ export const Comment: FC<CommentProps> = ({
     }
   }, [comment.id, routerQuery.commentId]);
 
-  const commentContent = comment.deleted ? (
-    <Text color="gray">{capitalize(t("deleted"))}</Text>
-  ) : (
-    <MarkdownText
-      text={decodeCommentContentForRender(comment.content)}
-      truncateLength={truncateLength}
-      compact
-    />
-  );
+  const commentContent =
+    comment.deleted || comment.removed ? (
+      <Text color="gray">
+        {capitalize(comment.deleted ? t("deleted") : t("removed"))}
+      </Text>
+    ) : (
+      <MarkdownText
+        text={decodeCommentContentForRender(comment.content)}
+        truncateLength={truncateLength}
+        compact
+      />
+    );
 
   const commentContentWithOrWithoutLink = asLink ? (
     <Link
