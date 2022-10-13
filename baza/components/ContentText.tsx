@@ -50,7 +50,10 @@ export const ContentText: FC<
   const sx = merge(
     ((theme) => ({
       "& a": {
-        color: theme.colors.blue,
+        color:
+          theme.colorScheme === "light"
+            ? theme.colors.blue[7]
+            : theme.colors.blue[5],
         wordBreak: "break-word",
       },
       "& p": {
