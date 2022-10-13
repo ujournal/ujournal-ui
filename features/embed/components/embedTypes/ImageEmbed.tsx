@@ -1,9 +1,21 @@
 import { Box } from "@mantine/core";
 import { cleanupRateFromImageSrc, getRateFromImageSrc } from "baza/utils/image";
+import { SyntheticEvent, useCallback } from "react";
 import { EmbedComponentType } from "../types";
 
 export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
   // eslint-disable-next-line @next/next/no-img-element
+  const handleImageError = useCallback((event: SyntheticEvent) => {
+    if (event.currentTarget instanceof HTMLImageElement) {
+      const element = event.currentTarget;
+      const imageUrl = event.currentTarget.src;
+      element.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no-image.svg`;
+      const interval = setInterval(() => {
+        element.src = `${imageUrl}?${Math.random()}`;
+        clearInterval(interval);
+      }, 5000);
+    }
+  }, []);
 
   return (
     <Box
@@ -25,6 +37,7 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
         }}
         crossOrigin="anonymous"
         referrerPolicy="no-referrer"
+        onError={handleImageError}
       />
     </Box>
   );
