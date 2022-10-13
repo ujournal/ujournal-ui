@@ -163,11 +163,19 @@ export const ContentText: FC<
         backgroundColor: `${theme.colors.gray[1]}`,
       },
       "& code": {
+        display: "inline-block",
+        paddingLeft: theme.spacing.sm,
+        paddingRight: theme.spacing.sm,
+        borderRadius: theme.radius.sm,
+        backgroundColor:
+          theme.colorScheme === "light"
+            ? theme.colors.gray[1]
+            : theme.colors.gray[8],
+      },
+      "& pre code": {
         display: "block",
-        backgroundColor: theme.colors.gray[1],
         padding: theme.spacing.sm,
         overflow: "auto",
-        borderRadius: theme.radius.sm,
         fontFamily: theme.fontFamilyMonospace,
       },
     }))(theme),

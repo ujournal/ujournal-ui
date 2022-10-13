@@ -10,9 +10,8 @@ export const ImageEmbed: EmbedComponentType = ({ src, title }) => {
       const element = event.currentTarget;
       const imageUrl = event.currentTarget.src;
       element.src = `${process.env.NEXT_PUBLIC_BASE_URL}/no-image.svg`;
-      const interval = setInterval(() => {
+      setTimeout(() => {
         element.src = `${imageUrl}?${Math.random()}`;
-        clearInterval(interval);
       }, 5000);
     }
   }, []);
