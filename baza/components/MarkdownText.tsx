@@ -53,7 +53,7 @@ export const MarkdownText: FC<
         }
       });
     }
-  }, [rootRef]);
+  }, [rootRef, text]);
 
   return (
     <Box ref={rootRef}>
