@@ -14,7 +14,7 @@ export const mantineTheme: Partial<MantineTheme> = {
   },
   lineHeight: 1.5,
   headings: {
-    fontFamily: "eUkraineRegular, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 500,
     sizes: {
       h1: {
