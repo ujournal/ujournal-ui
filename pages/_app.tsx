@@ -19,6 +19,7 @@ import { GoogleAnalytics } from "nextjs-google-analytics";
 import { useColorSchemeLocalStorage } from "baza/hooks/useColorSchemeLocalStorage";
 import { useEffect, useMemo } from "react";
 import Script from "next/script";
+import { SpotlightProvider } from "@mantine/spotlight";
 
 export default function App(props: SiteAppProps) {
   const { Component, pageProps } = props;
@@ -85,17 +86,21 @@ export default function App(props: SiteAppProps) {
                     withNormalizeCSS
                     theme={theme}
                   >
-                    <MenuToggleProvider>
-                      <AppLayout
-                        navbar={Component.Navbar && <Component.Navbar />}
-                        aside={Component.Aside && <Component.Aside />}
-                      >
-                        <AppAuthRedirect authRedirect={Component.authRedirect}>
-                          <Component {...pageProps} />
-                        </AppAuthRedirect>
-                      </AppLayout>
-                      <LegalNotification />
-                    </MenuToggleProvider>
+                    <SpotlightProvider actions={[]}>
+                      <MenuToggleProvider>
+                        <AppLayout
+                          navbar={Component.Navbar && <Component.Navbar />}
+                          aside={Component.Aside && <Component.Aside />}
+                        >
+                          <AppAuthRedirect
+                            authRedirect={Component.authRedirect}
+                          >
+                            <Component {...pageProps} />
+                          </AppAuthRedirect>
+                        </AppLayout>
+                        <LegalNotification />
+                      </MenuToggleProvider>
+                    </SpotlightProvider>
                   </MantineProvider>
                 </ColorSchemeProvider>
               </QueryClientProvider>

@@ -154,6 +154,7 @@ export const AppHeader: FC = () => {
             radius="xl"
             variant="subtle"
             onClick={handleOpenSpotlight}
+            sx={{ display: "none" }}
           >
             <IconSearch stroke={1.5} />
           </ActionIcon>
