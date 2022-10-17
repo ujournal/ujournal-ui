@@ -8,7 +8,7 @@ import { t } from "i18next";
 import { capitalize } from "lodash";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { ListingType } from "ujournal-lemmy-js-client";
+import { ListingType, SortType } from "ujournal-lemmy-js-client";
 
 export const useNavLinks = () => {
   const router = useRouter();
@@ -19,23 +19,57 @@ export const useNavLinks = () => {
       [
         {
           type: ListingType.All,
+          sort: SortType.Hot,
           url: {
             pathname: "/",
             query: {
               ...query,
               type: ListingType.All,
+              sort: SortType.Hot,
             },
           },
-          label: capitalize(t("all")),
+          label: capitalize(t("hot")),
+          icon: IconNews,
+        },
+        {
+          type: ListingType.All,
+          sort: SortType.Active,
+          parent: capitalize(t("hot")),
+          url: {
+            pathname: "/",
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.Active,
+            },
+          },
+          label: capitalize(t("active")),
+          icon: IconNews,
+        },
+        {
+          type: ListingType.All,
+          sort: SortType.New,
+          parent: capitalize(t("hot")),
+          url: {
+            pathname: "/",
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.New,
+            },
+          },
+          label: capitalize(t("new")),
           icon: IconNews,
         },
         {
           type: ListingType.Subscribed,
+          sort: SortType.Hot,
           url: {
             pathname: "/",
             query: {
               ...query,
               type: ListingType.Subscribed,
+              sort: SortType.Hot,
             },
           },
           label: capitalize(t("subscribed")),
@@ -54,7 +88,9 @@ export const useNavLinks = () => {
         return {
           ...link,
           active:
-            (router.pathname === "/" && query.type === link.type) ||
+            (router.pathname === "/" &&
+              query.type === link.type &&
+              query.sort === link.sort) ||
             (router.pathname !== "/" && router.pathname === link.url.pathname),
         };
       }),
