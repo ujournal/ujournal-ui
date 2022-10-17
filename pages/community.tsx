@@ -15,6 +15,10 @@ import { FC, useMemo } from "react";
 import { Container, Stack } from "@mantine/core";
 import { PostEdition } from "features/post/components/PostEdition";
 
+const NEXT_PUBLIC_COMMUNITY_WITH_HEADER = [
+  ...(process.env.NEXT_PUBLIC_COMMUNITY_WITH_HEADER || "").split(","),
+];
+
 const CommunityPageEdition: FC = () => {
   const { communityName } = useRouterQuery<{
     communityName: string;
@@ -25,9 +29,9 @@ const CommunityPageEdition: FC = () => {
   const postList = usePostList({
     params: {
       type: ListingType.All,
-      sort: SortType.TopDay,
+      sort: SortType.Hot,
       communityName,
-      limit: 10,
+      limit: 7,
     },
   });
 
@@ -73,9 +77,9 @@ const CommunityPage: SitePage = () => {
         </Container>
       )}
 
-      {communityView?.community.name === "gamesnewsua" && (
-        <CommunityPageEdition />
-      )}
+      {NEXT_PUBLIC_COMMUNITY_WITH_HEADER.includes(
+        communityView?.community.name || ""
+      ) && <CommunityPageEdition />}
 
       <Container size={690} p={0} sx={{ width: "100%" }}>
         <PostList posts={posts} key="communiy-feed" />
