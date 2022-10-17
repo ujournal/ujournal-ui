@@ -1,5 +1,19 @@
-import { Box, Burger, Button, Group, Header, MediaQuery } from "@mantine/core";
-import { IconLogin, IconPencil } from "@tabler/icons";
+import {
+  ActionIcon,
+  Box,
+  Burger,
+  Button,
+  Group,
+  Header,
+  MediaQuery,
+  Tooltip,
+} from "@mantine/core";
+import {
+  IconBrandTelegram,
+  IconLogin,
+  IconPencil,
+  IconSearch,
+} from "@tabler/icons";
 import { AppBrand } from "features/app/components/AppBrand";
 import { UserMenu } from "features/user/components/UserMenu";
 import { useAuth } from "features/app/hooks/useAuth";
@@ -13,6 +27,7 @@ import { useSiteUser } from "features/app/hooks/useSiteUser";
 import { useMenuToggle } from "baza/hooks/useMenuToggle";
 import { AppHelpMenu } from "./AppHelpMenu";
 import { NotificationsMenu } from "features/notifications/components/NotificationsMenu";
+import { openSpotlight } from "@mantine/spotlight";
 
 export const AppHeader: FC = () => {
   const auth = useAuth();
@@ -24,6 +39,10 @@ export const AppHeader: FC = () => {
   const handleToggleMenu = useCallback(() => {
     toggleMenu();
   }, [toggleMenu]);
+
+  const handleOpenSpotlight = useCallback(() => {
+    openSpotlight();
+  }, []);
 
   const user = useMemo(
     () =>
@@ -97,6 +116,19 @@ export const AppHeader: FC = () => {
           </Link>
 
           <AppHelpMenu />
+
+          <Tooltip label={capitalize(t("telegram_channel"))}>
+            <ActionIcon
+              radius="xl"
+              variant="subtle"
+              component="a"
+              href="https://t.me/ujournal_posts"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <IconBrandTelegram stroke={1.5} />
+            </ActionIcon>
+          </Tooltip>
         </Group>
 
         <Group spacing="xs" noWrap>
@@ -117,6 +149,14 @@ export const AppHeader: FC = () => {
               {largerThanSm ? capitalize(t("create_post")) : undefined}
             </Button>
           </Link>
+
+          <ActionIcon
+            radius="xl"
+            variant="subtle"
+            onClick={handleOpenSpotlight}
+          >
+            <IconSearch stroke={1.5} />
+          </ActionIcon>
 
           <NotificationsMenu />
 
