@@ -36,7 +36,10 @@ export const MarkdownText: FC<
       const valueSplitted = value.split("<!--IMAGE:END-->");
       const valueImageCutted =
         valueSplitted.length > 1 ? `${valueSplitted[0]}</p>` : value;
-      return truncate(valueImageCutted, truncateLength);
+      const valueSplitted2 = valueImageCutted.split("embed</a>");
+      const valueImageCutted2 =
+        valueSplitted2.length > 1 ? `${valueSplitted2[0]}embed</a></p>` : value;
+      return truncate(valueImageCutted2, truncateLength);
     }
 
     return value;
