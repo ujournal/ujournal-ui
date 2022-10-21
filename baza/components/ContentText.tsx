@@ -149,15 +149,29 @@ export const ContentText: FC<
       "& table": {
         width: "100%",
         borderCollapse: "collapse",
-        border: `1px solid ${theme.colors.gray[5]}`,
+        border: `1px solid ${
+          theme.colorScheme === "light"
+            ? theme.colors.gray[5]
+            : theme.colors.gray[8]
+        }`,
       },
       "& table td, & table th": {
-        border: `1px solid ${theme.colors.gray[5]}`,
+        border: `1px solid ${
+          theme.colorScheme === "light"
+            ? theme.colors.gray[5]
+            : theme.colors.gray[8]
+        }`,
         padding: "0.5rem",
-        textAlign: "center",
+        textAlign: "left",
+        verticalAlign: "top",
       },
       "& table th": {
-        backgroundColor: `${theme.colors.gray[1]}`,
+        textAlign: "left",
+        backgroundColor: `${
+          theme.colorScheme === "light"
+            ? theme.colors.gray[1]
+            : theme.colors.gray[8]
+        }`,
       },
       "& code": {
         display: "inline-block",
