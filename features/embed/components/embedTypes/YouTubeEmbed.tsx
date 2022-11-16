@@ -37,7 +37,7 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
       >
         <Box
           component="img"
-          src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
           alt={title}
           sx={{
             objectFit: "cover",
