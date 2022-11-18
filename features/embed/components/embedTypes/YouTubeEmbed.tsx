@@ -29,13 +29,6 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
     event.preventDefault();
   }, []);
 
-  const handleError = useCallback(
-    (event: SyntheticEvent<HTMLImageElement>) => {
-      event.currentTarget.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-    },
-    [videoId]
-  );
-
   if (!showed) {
     return (
       <UnstyledButton
@@ -44,7 +37,7 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
       >
         <Box
           component="img"
-          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+          src={`https://img.youtube.com/vi/${videoId}/sddefault.jpg`}
           alt={title}
           sx={{
             objectFit: "cover",
@@ -53,7 +46,6 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
             userSelect: "none",
           }}
           onDragStart={handleDragStart}
-          onError={handleError}
         />
         <ThemeIcon
           sx={{
