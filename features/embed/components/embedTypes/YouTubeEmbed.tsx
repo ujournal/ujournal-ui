@@ -29,6 +29,13 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
     event.preventDefault();
   }, []);
 
+  const handleError = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
+      event.currentTarget.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    },
+    [videoId]
+  );
+
   if (!showed) {
     return (
       <UnstyledButton
@@ -46,6 +53,7 @@ export const YouTubeEmbed: EmbedComponentType = ({ src, title }) => {
             userSelect: "none",
           }}
           onDragStart={handleDragStart}
+          onError={handleError}
         />
         <ThemeIcon
           sx={{
