@@ -10,9 +10,33 @@ import { AppNavbar } from "features/app/components/AppNavbar";
 import { AppCommunityAside } from "features/app/components/AppCommunityAside";
 import { CommunityItem } from "features/community/components/CommunityItem";
 import { useCommunity } from "features/community/hooks/useCommunity";
-import { CommunityView } from "ujournal-lemmy-js-client";
-import { useMemo } from "react";
+import { CommunityView, ListingType, SortType } from "ujournal-lemmy-js-client";
+import { FC, useMemo } from "react";
 import { Container, Stack } from "@mantine/core";
+import { PostEdition } from "features/post/components/PostEdition";
+
+const NEXT_PUBLIC_COMMUNITY_WITH_HEADER = [
+  ...(process.env.NEXT_PUBLIC_COMMUNITY_WITH_HEADER || "").split(","),
+];
+
+const CommunityPageEdition: FC = () => {
+  const { communityName } = useRouterQuery<{
+    communityName: string;
+  }>({
+    communityName: "",
+  });
+
+  const postList = usePostList({
+    params: {
+      type: ListingType.All,
+      sort: SortType.Hot,
+      communityName,
+      limit: 7,
+    },
+  });
+
+  return <PostEdition {...postList} />;
+};
 
 const CommunityPage: SitePage = () => {
   const params = useRouterQuery<FetchPostsParams>({
@@ -52,6 +76,10 @@ const CommunityPage: SitePage = () => {
           <CommunityItem {...communityView} moderators={communityModerators} />
         </Container>
       )}
+
+      {NEXT_PUBLIC_COMMUNITY_WITH_HEADER.includes(
+        communityView?.community.name || ""
+      ) && <CommunityPageEdition />}
 
       <Container size={690} p={0} sx={{ width: "100%" }}>
         <PostList posts={posts} key="communiy-feed" />

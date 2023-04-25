@@ -75,6 +75,7 @@ export const TelegramEmbed: EmbedComponentType = ({ src }) => {
       >
         <Box
           component="iframe"
+          sandbox="allow-scripts allow-same-origin allow-popups"
           id={frameId}
           src={`https://t.me/${matches[1]}?embed=1${
             colorScheme === "dark" ? `&dark=1` : ""

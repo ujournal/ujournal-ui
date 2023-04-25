@@ -107,6 +107,10 @@ export const AppNavbar = () => {
           />
         </Box>
       )}
+
+      <Box p="md">
+        <Box id="google_translate_element" />
+      </Box>
     </Stack>
   );
 };

@@ -33,11 +33,17 @@ export const LinksList: FC<{
 
   const itemsForRender = useMemo(() => {
     const itemsPartitioned = partition(items, (item) => item.parent);
-    const itemsRoot = itemsPartitioned.find((group) => !group[0].parent) || [];
+
+    const itemsRoot =
+      itemsPartitioned.find((group) =>
+        group.length > 0 ? !group[0].parent : undefined
+      ) || [];
 
     return itemsRoot.map((item) => {
       let itemsGrouped =
-        itemsPartitioned.find((group) => group[0].parent === item.label) || [];
+        itemsPartitioned.find((group) =>
+          group.length > 0 ? group[0].parent === item.label : undefined
+        ) || [];
 
       const itemGroupedActive = itemsGrouped.find((item) => item.active);
 

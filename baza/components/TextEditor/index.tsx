@@ -22,12 +22,26 @@ export const TextEditor: FC<TextEditorProps> = ({
   const uploadImage = useImageUploaderFather();
 
   const _value = useMemo(() => {
-    return markdown2html(value);
+    return markdown2html(
+      value.replace(
+        /\[embed\]\((.+?)\)/gm,
+        '<figure class="media"><oembed url="$1"></oembed></figure>'
+      )
+    );
   }, []);
 
   const handleChange = useCallback(
     (event: any, editor: any) => {
-      onChange(html2markdown(editor.getData()));
+      onChange(
+        html2markdown(
+          editor
+            .getData()
+            .replace(
+              /<figure class="media"><oembed url="(.+?)"><\/oembed><\/figure>/gm,
+              "!!!EMBED$1EMBED!!!"
+            )
+        ).replace(/!!!EMBED(.+?)EMBED!!!/gm, "[embed]($1)")
+      );
     },
     [onChange]
   );
@@ -94,7 +108,7 @@ export const TextEditor: FC<TextEditorProps> = ({
                 "insertImage",
                 "blockQuote",
                 "insertTable",
-                // "mediaEmbed",
+                "mediaEmbed",
                 "|",
                 "undo",
                 "redo",

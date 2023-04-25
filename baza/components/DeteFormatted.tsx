@@ -1,9 +1,10 @@
-import { Tooltip, Text, TextProps } from "@mantine/core";
+import { Tooltip, Text, TextProps, useMantineTheme } from "@mantine/core";
 import { intervalToDuration, isValid } from "date-fns";
 import { useState } from "react";
 import { useCallback } from "react";
 import { FC, useMemo } from "react";
 import i18n from "i18next";
+import { merge } from "lodash";
 
 export const DateFormatted: FC<{ date: Date } & TextProps> = ({
   date,
@@ -43,15 +44,21 @@ export const DateFormatted: FC<{ date: Date } & TextProps> = ({
     setDisplayFull((displayFull) => !displayFull);
   }, []);
 
+  const theme = useMantineTheme();
+  const sx = merge(
+    ((theme) => ({
+      color:
+        theme.colorScheme === "light"
+          ? theme.colors.gray[5]
+          : theme.colors.gray[7],
+      whiteSpace: "nowrap",
+    }))(theme),
+    props.sx instanceof Function ? props.sx(theme) : props.sx
+  );
+
   return (
     <Tooltip label={date.toLocaleString()} openDelay={1000}>
-      <Text
-        sx={{ whiteSpace: "nowrap" }}
-        color="gray"
-        size="sm"
-        {...props}
-        onClick={toggleDisplayFull}
-      >
+      <Text size="sm" {...props} sx={sx} onClick={toggleDisplayFull}>
         {publishInterval}
       </Text>
     </Tooltip>

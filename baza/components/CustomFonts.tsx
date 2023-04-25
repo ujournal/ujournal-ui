@@ -1,9 +1,9 @@
-import { Global } from "@mantine/core";
+// import { Global } from "@mantine/core";
 
 export function CustomFonts() {
   return (
     <>
-      <Global
+      {/* <Global
         styles={[
           {
             "@font-face": {
@@ -14,7 +14,7 @@ export function CustomFonts() {
             },
           },
         ]}
-      />
+      /> */}
     </>
   );
 }

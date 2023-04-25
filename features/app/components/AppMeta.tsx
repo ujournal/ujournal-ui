@@ -1,25 +1,11 @@
 import { FC } from "react";
 import { CustomFonts } from "baza/components/CustomFonts";
-import Script from "next/script";
 
 export const AppMeta: FC = () => {
   return (
     <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTAG}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', '${process.env.NEXT_PUBLIC_GTAG}');
-        `}
-      </Script>
-
       <CustomFonts />
+
       <meta
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width"

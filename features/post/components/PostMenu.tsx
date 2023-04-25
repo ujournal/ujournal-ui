@@ -40,7 +40,7 @@ export const PostMenu: FC<{ post: Post; saved: boolean }> = ({
     <Menu withinPortal position="bottom-end" shadow="sm">
       <Menu.Target>
         <ActionIcon>
-          <IconDots size={16} />
+          <IconDots size={20} />
         </ActionIcon>
       </Menu.Target>
 

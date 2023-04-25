@@ -43,15 +43,6 @@ export const AppHelpMenu: FC = () => {
             GitHub
           </Menu.Item>
         </Link>
-        <Link href="https://t.me/tjournalcomua" passHref rel="noreferrer">
-          <Menu.Item
-            icon={<IconBrandTelegram size={24} stroke={1.5} />}
-            component="a"
-            target="_blank"
-          >
-            Telegram
-          </Menu.Item>
-        </Link>
         <Link href="/legal" passHref rel="noreferrer">
           <Menu.Item icon={<IconGavel size={24} stroke={1.5} />} component="a">
             {t("legal_information")}

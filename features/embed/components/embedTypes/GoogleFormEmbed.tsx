@@ -9,6 +9,7 @@ export const GoogleFormEmbed: EmbedComponentType = ({ src }) => {
       width="100%"
       frameBorder="0"
       scrolling="yes"
+      sandbox="allow-scripts allow-same-origin allow-popups"
       sx={{
         display: "block",
         overflow: "hidden",

@@ -50,13 +50,16 @@ export default function markdown2html(
         if (useImageCaption) {
           const [href, title, text] = args;
           const _href = cleanupRateFromImageSrc(href);
-          const image = Object.getPrototypeOf(this).image.call(
-            this,
-            _href,
-            title,
-            text
-          );
-          return `<span class="image">${image}<span class="image-caption">${text}</span></span>`;
+          const image = Object.getPrototypeOf(this)
+            .image.call(this, _href, title, text)
+            .replace(
+              /<img/,
+              '<img crossorigin="anonymous" referrerpolicy="no-referrer"'
+            );
+
+          return `<!--IMAGE:BEGIN--><span class="image">${image}${
+            text ? `<span class="image-caption">${text}</span>` : ""
+          }</span><!--IMAGE:END-->`;
         }
 
         return Object.getPrototypeOf(this).image.call(this, ...args);

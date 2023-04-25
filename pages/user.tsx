@@ -110,14 +110,27 @@ const UserPage: SitePage = () => {
                     new Date(personView?.person?.published ?? new Date() + "Z")
                   }
                   size="md"
-                  color="black"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
                 />
               </Group>
               <Group noWrap>
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Загальний рейтинг
                 </Text>
-                <Text size="md" color="black">
+                <Text
+                  size="md"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
+                >
                   {personView?.totalScore || "н/д"}
                 </Text>
               </Group>
@@ -125,7 +138,15 @@ const UserPage: SitePage = () => {
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Рейтинг постів
                 </Text>
-                <Text size="md" color="black">
+                <Text
+                  size="md"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
+                >
                   {personView?.postScore || "н/д"}
                 </Text>
               </Group>
@@ -133,7 +154,15 @@ const UserPage: SitePage = () => {
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Рейтинг коментарів
                 </Text>
-                <Text size="md" color="black">
+                <Text
+                  size="md"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
+                >
                   {personView?.commentScore || "н/д"}
                 </Text>
               </Group>
@@ -141,7 +170,15 @@ const UserPage: SitePage = () => {
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Кількість постів
                 </Text>
-                <Text size="md" color="black">
+                <Text
+                  size="md"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
+                >
                   {personView?.postCount || "н/д"}
                 </Text>
               </Group>
@@ -149,7 +186,15 @@ const UserPage: SitePage = () => {
                 <Text sx={{ minWidth: 170 }} color="gray">
                   Кількість коментарів
                 </Text>
-                <Text size="md" color="black">
+                <Text
+                  size="md"
+                  sx={(theme) => ({
+                    color:
+                      theme.colorScheme === "light"
+                        ? theme.black
+                        : theme.colors.gray[3],
+                  })}
+                >
                   {personView?.commentCount || "н/д"}
                 </Text>
               </Group>

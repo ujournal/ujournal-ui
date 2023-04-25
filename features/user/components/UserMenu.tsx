@@ -93,14 +93,16 @@ export const UserMenu: FC<{
         <Menu.Item
           icon={
             colorScheme === "light" ? (
-              <IconSun size={24} stroke={1.5} />
-            ) : (
               <IconMoon size={24} stroke={1.5} />
+            ) : (
+              <IconSun size={24} stroke={1.5} />
             )
           }
           onClick={handleColorSchemeToggle}
         >
-          Now is {capitalize(colorScheme)}
+          {capitalize(
+            colorScheme === "light" ? t("dark_theme") : t("light_theme")
+          )}
         </Menu.Item>
         <Menu.Item
           icon={<IconLogout size={24} stroke={1.5} />}

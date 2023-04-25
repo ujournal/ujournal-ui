@@ -6,6 +6,7 @@ export type CommentInternal = {
     id: number;
     content: string;
     deleted: boolean;
+    removed: boolean;
     published: string;
   };
   creator: {
@@ -35,6 +36,7 @@ export const transformCommentsToTree = (
                   content: comment.content,
                   published: comment.published,
                   deleted: comment.deleted,
+                  removed: comment.removed,
                 },
                 creator: {
                   id: creator.id,
@@ -68,6 +70,7 @@ export const transformCommentsFromCommentsView = (comments: any[]) => {
         content: comment.content,
         published: comment.published,
         deleted: comment.deleted,
+        removed: comment.removed,
       },
       creator: {
         id: creator.id,

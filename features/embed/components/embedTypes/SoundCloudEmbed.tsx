@@ -40,6 +40,7 @@ export const SoundCloudEmbed: EmbedComponentType = ({ src: url }) => {
             height={visual ? height : "auto"}
             frameBorder="0"
             scrolling="no"
+            sandbox="allow-scripts allow-same-origin allow-popups"
             sx={{
               display: "block",
               overflow: "hidden",

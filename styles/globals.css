@@ -53,3 +53,7 @@ a {
   transform: translateX(6px) !important;
   --ck-color-button-default-background: rgba(255, 255, 255, 0.5);
 }
+
+body > .skiptranslate {
+  display: none;
+}

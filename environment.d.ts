@@ -8,5 +8,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_MENTIONS_DOMAIN: string;
     NEXT_PUBLIC_GTAG: string;
     NEXT_PUBLIC_TITLE: string;
+    NEXT_PUBLIC_COMMUNITY_WITH_HEADER: string;
   }
 }

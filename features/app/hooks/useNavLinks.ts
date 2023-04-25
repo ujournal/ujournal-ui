@@ -1,13 +1,4 @@
-import {
-  IconFlame,
-  IconTrendingUp,
-  IconBolt,
-  IconSunset2,
-  IconMessageCircle,
-  IconMessageCircle2,
-  IconChecks,
-  IconSpeakerphone,
-} from "@tabler/icons";
+import { IconSpeakerphone, IconCircleCheck, IconNews } from "@tabler/icons";
 import { useRouterQuery } from "baza/hooks/useRouterQuery";
 import {
   FetchPostsParams,
@@ -31,71 +22,44 @@ export const useNavLinks = () => {
           sort: SortType.Hot,
           url: {
             pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Hot },
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.Hot,
+            },
           },
           label: capitalize(t("hot")),
-          icon: IconFlame,
+          icon: IconNews,
         },
         {
           type: ListingType.All,
           sort: SortType.Active,
+          parent: capitalize(t("hot")),
           url: {
             pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.Active },
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.Active,
+            },
           },
           label: capitalize(t("active")),
-          icon: IconTrendingUp,
+          icon: IconNews,
         },
         {
           type: ListingType.All,
           sort: SortType.New,
+          parent: capitalize(t("hot")),
           url: {
             pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.New },
+            query: {
+              ...query,
+              type: ListingType.All,
+              sort: SortType.New,
+            },
           },
           label: capitalize(t("new")),
-          icon: IconBolt,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.TopDay,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: { ...query, type: ListingType.All, sort: SortType.TopDay },
-          },
-          label: capitalize(t("top_day")),
-          icon: IconSunset2,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.MostComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.All,
-              sort: SortType.MostComments,
-            },
-          },
-          label: capitalize(t("most_comments")),
-          icon: IconMessageCircle,
-        },
-        {
-          type: ListingType.All,
-          sort: SortType.NewComments,
-          parent: capitalize(t("new")),
-          url: {
-            pathname: "/",
-            query: {
-              ...query,
-              type: ListingType.All,
-              sort: SortType.NewComments,
-            },
-          },
-          label: capitalize(t("new_comments")),
-          icon: IconMessageCircle2,
+          icon: IconNews,
         },
         {
           type: ListingType.Subscribed,
@@ -109,7 +73,7 @@ export const useNavLinks = () => {
             },
           },
           label: capitalize(t("subscribed")),
-          icon: IconChecks,
+          icon: IconCircleCheck,
         },
         {
           type: null,
@@ -125,8 +89,8 @@ export const useNavLinks = () => {
           ...link,
           active:
             (router.pathname === "/" &&
-              query.sort === link.sort &&
-              query.type === link.type) ||
+              query.type === link.type &&
+              query.sort === link.sort) ||
             (router.pathname !== "/" && router.pathname === link.url.pathname),
         };
       }),

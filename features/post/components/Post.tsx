@@ -84,6 +84,7 @@ export const Post: FC<
                   ? "md"
                   : undefined
               }
+              sx={{ fontSize: full ? 18 : undefined }}
             />
             {!full &&
             (body.length > truncateLength ||

@@ -33,7 +33,10 @@ export const CommentList: FC<CommentListProps> = ({
   );
 
   const list = (
-    <Stack spacing={itemProps.compact ? "sm" : 0}>
+    <Stack
+      spacing={itemProps.compact ? "sm" : 0}
+      sx={{ maxWidth: itemProps.compact ? 210 : undefined }}
+    >
       <DataList
         data={commentsList}
         itemComponent={Comment}
